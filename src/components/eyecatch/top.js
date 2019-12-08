@@ -1,7 +1,7 @@
 import React from "react"
 import { Row, Col, Typography } from 'antd';
 import HeroImage from 'images/hero_item.png'
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const TopEyecatch = () => {
     return (

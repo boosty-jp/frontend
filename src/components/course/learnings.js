@@ -3,13 +3,21 @@ import { Card, Progress } from 'antd';
 import { Link } from "gatsby";
 import styled from 'styled-components'
 
+const learnings = [
+    { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
+    { id: 2, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
+    { id: 3, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
+    { id: 4, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
+    { id: 5, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
+    { id: 6, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
+]
 const TopicCard = styled(Card)`
   .ant-card-grid {
     padding: 16px;
   }
 `;
 
-const LearningCurriculums = ({ learnings }) => {
+const LearningCurriculums = () => {
 
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
@@ -28,7 +36,7 @@ const LearningCurriculums = ({ learnings }) => {
 
     return (
         <div ref={ref} style={{ marginBottom: '24px' }}>
-            <TopicCard title="学習中のカリキュラム" extra={<Link to="/" >すべてを表示</Link>}>
+            <TopicCard title="学習中のコース" extra={<Link to="/" >すべてを表示</Link>}>
                 {learnings.map((l) =>
                     <Card.Grid key={l.id} style={gridStyle}>
                         <img alt={l.title} src={l.image} style={{ width: '100%' }} />

@@ -1,16 +1,17 @@
 import React from "react"
-import { Form, Icon, Input, Button, Divider } from 'antd';
+import { Form, Icon, Input, Button, Divider, Checkbox } from 'antd';
 import { presetPalettes } from '@ant-design/colors'
 
 import styled from 'styled-components'
+import { Link } from "gatsby";
 
-const LoginDivider = styled(Divider)`
+const SignUpDivider = styled(Divider)`
   .ant-divider-inner-text {
       fontSize: '14px',
   }
 `;
 
-class NormalLoginForm extends React.Component {
+class NormalSignUpForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -50,9 +51,26 @@ class NormalLoginForm extends React.Component {
                         />,
                     )}
                 </Form.Item>
+                <Form.Item >
+                    {getFieldDecorator('terms', {
+                        valuePropName: 'checked',
+                        initialValue: false,
+                        rules: [{
+                            required: true,
+                            transform: value => (value || undefined),
+                            type: 'boolean',
+                            message: '利用規約に同意してください',
+                        }],
+                    })
+                        (
+                            <Checkbox>
+                                <Link to="/terms">利用規約</Link>に同意する
+                            </Checkbox>,
+                        )}
+                </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
-                    <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>ログイン</Button>
-                    <LoginDivider>もしくは</LoginDivider>
+                    <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>会員登録</Button>
+                    <SignUpDivider>もしくは</SignUpDivider>
                     <Button icon="google" style={{ backgroundColor: presetPalettes.red.primary, borderColor: presetPalettes.red.primary, color: 'white', marginRight: '12px' }} />
                     <Button icon="facebook" style={{ backgroundColor: presetPalettes.blue[7], borderColor: presetPalettes.blue[7], color: 'white', marginRight: '12px' }} />
                     <Button icon="twitter" style={{ backgroundColor: presetPalettes.blue[4], borderColor: presetPalettes.blue[4], color: 'white' }} />
@@ -62,6 +80,6 @@ class NormalLoginForm extends React.Component {
     }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
+const WrappedNormalSignUpForm = Form.create({ name: 'normal_signup' })(NormalSignUpForm);
 
-export default WrappedNormalLoginForm
+export default WrappedNormalSignUpForm

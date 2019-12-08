@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Icon, Card } from 'antd';
+import { Card } from 'antd';
 import AvatarLabel from "components/avatar";
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+import IconText from 'components/text/icon'
+import Icons from 'components/text/icons'
 
 const TopicCard = styled(Card)`
   .ant-card-grid {
@@ -14,6 +16,7 @@ const TopicCard = styled(Card)`
 const curriculums = [];
 for (let i = 0; i < 5; i++) {
     curriculums.push({
+        id: i,
         href: 'http://ant.design',
         title: `ant design part para para i pasdp pi aifa papa ${i}`,
         user: {
@@ -24,30 +27,6 @@ for (let i = 0; i < 5; i++) {
         tags: [{ id: 1, title: 'ruby' }, { id: 2, title: 'gatsby' }]
     });
 }
-
-const IconText = ({ type, text }) => (
-    <span>
-        <Icon type={type} style={{ marginRight: 8 }} />
-        {text}
-    </span>
-);
-
-const Icons = ({ icons }) => (
-    <ul class="ant-list-item-action" style={{ marginLeft: '0px', marginTop: '8px' }}>
-        {icons.map((i, idx) => {
-            const isLast = idx === icons.length - 1
-            return (
-                <li key={"topic-curriculum-icons-" + idx}>
-                    {i}
-                    {!isLast &&
-                        <em class="ant-list-item-action-split"></em>
-                    }
-                </li>
-            )
-        })}
-    </ul>
-)
-
 
 const TopicCurriculums = () => {
     const [width, setWidth] = useState(0)
@@ -68,7 +47,7 @@ const TopicCurriculums = () => {
     return (
         <div ref={ref} style={{ marginBottom: '24px' }}>
             <TopicCard
-                title="おすすめのカリキュラム"
+                title="おすすめのコース"
                 extra={<Link to="/" >さらに表示</Link>}
             >
                 {curriculums.map((c) =>
@@ -78,9 +57,8 @@ const TopicCurriculums = () => {
                         <AvatarLabel name={c.user.name} image={c.user.image} updateDate="1日前" />
                         <Icons
                             icons={[
-                                <IconText type="heart" text="156" key="list-vertical-heart" />,
-                                <IconText type="heart" text="156" key="list-vertical-heart" />,
-                                <IconText type="check" text="156" key="list-vertical-check" />,
+                                <IconText type="check" text="156" key="list-vertical-heart" />,
+                                <IconText type="user" text="8021" key="list-vertical-check" />,
                             ]}
                         />
                     </Card.Grid>

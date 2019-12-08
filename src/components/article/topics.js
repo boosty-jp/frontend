@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
-import { List, Icon } from 'antd';
+import { List } from 'antd';
 import AvatarLabel from "components/avatar";
+import IconText from 'components/text/icon'
 
 const listData = [];
 for (let i = 0; i < 5; i++) {
@@ -15,13 +16,6 @@ for (let i = 0; i < 5; i++) {
         tags: [{ id: 1, title: 'ruby' }, { id: 2, title: 'gatsby' }]
     });
 }
-
-const IconText = ({ type, text }) => (
-    <span>
-        <Icon type={type} style={{ marginRight: 8 }} />
-        {text}
-    </span>
-);
 
 const TopicArticles = () => {
     const [width, setWidth] = useState(0)

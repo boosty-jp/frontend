@@ -1,37 +1,34 @@
-import React from "react"
-import { Layout, Button, Input, Row, Col } from 'antd';
-import styled from 'styled-components'
-import Logo from "../logo";
+import React, { useState, useEffect, useRef } from "react"
+import { Layout } from 'antd';
+import SmallMenuItems from 'components/menu/horizontal-items/small'
+import LargeMenuItems from 'components/menu/horizontal-items/large'
+import MediumMenuItems from 'components/menu/horizontal-items/medium'
 
-const isBrowser = typeof window !== 'undefined';
-const navigate = isBrowser ? require('gatsby').navigate : () => { };
 const { Header } = Layout;
 
-const RoundSearch = styled(Input.Search)`
-  .ant-input {
-    border-radius: 500rem;
-  }
-`;
 
 const HorizontalMenu = () => {
+    const [width, setWidth] = useState(0)
+    const ref = useRef(null)
+
+    useEffect(() => {
+        setWidth(ref.current.clientWidth)
+    })
+
+    let MenuItems;
+    if (width > 700) {
+        MenuItems = LargeMenuItems;
+    } else if (width > 500) {
+        MenuItems = MediumMenuItems
+    } else {
+        MenuItems = SmallMenuItems
+    }
+    // 何もしなければデフォルトで3分割される
+
     return (
         <Header style={{ background: '#fff', padding: '0px' }} >
-            <div style={{ maxWidth: '100%', width: "1250px", margin: 'auto', padding: '0 20px 0 20px', position: 'relative' }}>
-                <Row>
-                    <Col span={16}>
-                        <Logo />
-                        <RoundSearch
-                            placeholder="検索する"
-                            onSearch={value => console.log(value)}
-                            onChange={e => console.log(e.target.value)}
-                            style={{ width: 300, height: 40, marginLeft: '8px' }}
-                        />
-                    </Col>
-                    <Col span={8} style={{ textAlign: 'right' }}>
-                        <Button style={{ marginRight: '8px' }} onClick={() => navigate('/login')}>ログイン</Button>
-                        <Button type="primary">会員登録</Button>
-                    </Col >
-                </Row>
+            <div ref={ref} style={{ maxWidth: '100%', width: "1250px", margin: 'auto', padding: '0 20px 0 20px', position: 'relative' }}>
+                <MenuItems />
             </div>
         </Header>
     )

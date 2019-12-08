@@ -1,23 +1,17 @@
 import React from "react"
-
 import Layout from "../components/layout/horizontal"
 import SEO from "../components/seo"
 import TopEyecatch from "components/eyecatch/top"
 import TwoColumnLayout from "components/layout/two-column"
-import LearningCurriculums from "components/curriculum/learnings"
+import LearningCurriculums from "components/course/learnings"
 import TopicCategoryCard from "components/category/topic-card"
 import TopicNotificationCard from "components/notification/topic-card"
-import TopicCurriculums from "components/curriculum/topics"
+import TopicCurriculums from "components/course/topics"
 import TopicArticles from "components/article/topics"
+import TopicCategoryList from "components/category/topic-list"
+import TopicUserCard from "components/user/topic-card"
 
-const learnings = [
-  { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
-  { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
-  { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
-  { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
-  { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
-  { id: 1, title: 'HTMLの基礎', image: 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png', progress: 32, LastLearnedDate: '2分前' },
-]
+
 
 const IndexPage = () => (
   <Layout>
@@ -26,7 +20,8 @@ const IndexPage = () => (
     <TwoColumnLayout
       left={
         <>
-          <LearningCurriculums learnings={learnings} />
+          <TopicCategoryList />
+          <LearningCurriculums />
           <TopicCurriculums />
           <TopicArticles />
         </>
@@ -35,6 +30,7 @@ const IndexPage = () => (
         <>
           <TopicCategoryCard />
           <TopicNotificationCard />
+          <TopicUserCard />
         </>
       }
     />

@@ -1,5 +1,5 @@
 import React from "react"
-import SignInForm from "components/auth/form"
+import SignInForm from "components/auth/login-form"
 import LargeLogo from "components/logo/large"
 import { Icon } from 'antd';
 import { Link } from "gatsby";
