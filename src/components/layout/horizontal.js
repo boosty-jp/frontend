@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Layout } from 'antd';
 import HorizontalMenu from "../menu/horizontal";
+import HorizontalFooter from "./horizontal-footer";
 const { Content, Footer } = Layout;
 
 const HorizontalLayout = ({ children }) => {
@@ -22,7 +23,7 @@ const HorizontalLayout = ({ children }) => {
       <Content >
         {children}
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2019 Created by Ant UED</Footer>
+      <HorizontalFooter style={{ textAlign: 'center' }}>Ant Design ©2019 Created by Ant UED</HorizontalFooter>
     </Layout>
   )
 }

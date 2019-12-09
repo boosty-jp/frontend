@@ -5,7 +5,7 @@ import ProfileHeader from "components/user/profile/view/header";
 import ProfileContents from "components/user/profile/view/content";
 
 const IndexPage = () => (
-    <VerticalLayout pageTitle="プロフィール">
+    <VerticalLayout pageTitle="プロフィール" selectedMenu="account-profile">
         <SEO title="Home" />
         <div style={{ background: '#fff' }}>
             <ProfileHeader />

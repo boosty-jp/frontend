@@ -2,13 +2,13 @@ import React from "react"
 import SEO from "components/seo"
 import VerticalLayout from "components/layout/vertical"
 import AccountEditLayout from 'components/user/settings/layout'
-import ProfileBaseUpdateForm from 'components/user/settings/base'
+import PasswordUpdateForm from "components/user/settings/password"
 
 const AccountEditPage = () => (
-    <VerticalLayout pageTitle="アカウント設定" selectedMenu="account-settings">
+    <VerticalLayout pageTitle="パスワード設定" selectedMenu="account-settings">
         <SEO title="Home" />
-        <AccountEditLayout page="base">
-            <ProfileBaseUpdateForm />
+        <AccountEditLayout page="password">
+            <PasswordUpdateForm />
         </AccountEditLayout>
     </VerticalLayout>
 )
