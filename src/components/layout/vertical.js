@@ -63,7 +63,9 @@ class VerticalLayout extends React.Component {
                             }
                         >
                             <Menu.Item key="learning">学習中</Menu.Item>
-                            <Menu.Item key="learned">学習完了</Menu.Item>
+                            <Menu.Item key="learned">
+                                <Link to="account/contents/learned">学習完了</Link>
+                            </Menu.Item>
                         </Menu.SubMenu>
                         <Menu.SubMenu
                             key="contents"
@@ -76,7 +78,9 @@ class VerticalLayout extends React.Component {
                         >
                             <Menu.Item key="contents-edit">コンテンツ編集</Menu.Item>
                             <Menu.Item key="contents-data">データ表示</Menu.Item>
-                            <Menu.Item key="contents-liked">お気にいり</Menu.Item>
+                            <Menu.Item key="contents-liked">
+                                <Link to="account/contents/liked">お気に入り</Link>
+                            </Menu.Item>
                         </Menu.SubMenu>
                     </Menu>
                 </Sider>

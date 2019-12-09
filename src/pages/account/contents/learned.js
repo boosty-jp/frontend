@@ -2,16 +2,16 @@ import React from "react"
 import SEO from "components/seo"
 import VerticalLayout from "components/layout/vertical"
 import ContentLayout from "components/contents/viewer/layout";
-import LikedArticles from "components/contents/viewer/liked-article";
-import LikedCourse from "components/contents/viewer/liked-course";
+import LearnedArticles from "components/contents/viewer/learned-article";
+import LearnedCourse from "components/contents/viewer/learned-course";
 
 const LikedPage = () => (
-    <VerticalLayout pageTitle="お気に入り" selectedMenu="contents-liked">
+    <VerticalLayout pageTitle="学習済み" selectedMenu="learned">
         <SEO title="Home" />
         <div style={{ padding: '10px' }}>
             <ContentLayout
-                articleContents={<LikedArticles />}
-                courseContents={<LikedCourse />}
+                articleContents={<LearnedArticles />}
+                courseContents={<LearnedCourse />}
             />
         </div>
     </VerticalLayout>
