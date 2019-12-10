@@ -17,7 +17,7 @@ const TopicCard = styled(Card)`
   }
 `;
 
-const LearningCurriculums = () => {
+const LearningAllCourses = () => {
 
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
@@ -31,12 +31,14 @@ const LearningCurriculums = () => {
         gridStyle = { width: '100%' }
     } else if (width < 720) {
         gridStyle = { width: '50%' }
+    } else if (width > 960) {
+        gridStyle = { width: '25%' }
     }
     // 何もしなければデフォルトで3分割される
 
     return (
         <div ref={ref} style={{ marginBottom: '24px' }}>
-            <TopicCard title="学習中のコース" extra={<Link to="/" >すべてを表示</Link>}>
+            <TopicCard title="学習中のコース">
                 {learnings.map((l) =>
                     <Card.Grid key={l.id} style={gridStyle}>
                         <img alt={l.title} src={l.image} style={{ width: '100%' }} />
@@ -52,4 +54,4 @@ const LearningCurriculums = () => {
     )
 }
 
-export default LearningCurriculums
+export default LearningAllCourses

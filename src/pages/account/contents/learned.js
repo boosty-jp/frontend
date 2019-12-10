@@ -1,12 +1,12 @@
 import React from "react"
 import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical"
+import VerticalLayout from "components/layout/vertical-account"
 import ContentLayout from "components/contents/viewer/layout";
 import LearnedArticles from "components/contents/viewer/learned-article";
 import LearnedCourse from "components/contents/viewer/learned-course";
 
 const LikedPage = () => (
-    <VerticalLayout pageTitle="学習済み" selectedMenu="learned">
+    <VerticalLayout pageTitle="学習済み" selectedMenu="learned" openedMenu="study">
         <SEO title="Home" />
         <div style={{ padding: '10px' }}>
             <ContentLayout

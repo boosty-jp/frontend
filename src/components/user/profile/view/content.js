@@ -1,6 +1,6 @@
 import React from "react"
 import { Row, Col } from 'antd';
-import LearningCurriculums from "components/course/learnings";
+import LearningCurriculums from "components/course/learnings-partial";
 import TopCategories from "components/user/profile/view/top-category";
 import CreatedContents from "./created-contents";
 import CompletedContents from "./completed-contents";
