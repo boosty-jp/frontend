@@ -1,6 +1,6 @@
 import React from "react"
 import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical-account"
+import VerticalLayout from "components/layout/vertical/account"
 import ContentLayout from "components/contents/viewer/layout";
 import LearnedArticles from "components/contents/viewer/learned-article";
 import LearnedCourse from "components/contents/viewer/learned-course";

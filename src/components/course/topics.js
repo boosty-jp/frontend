@@ -55,12 +55,14 @@ const TopicCurriculums = () => {
                         <img alt={c.title} src={c.image} style={{ width: '100%' }} />
                         <div className="ant-card-meta-title" style={{ marginTop: '4px', marginBottom: '8px' }}>{c.title}</div>
                         <AvatarLabel name={c.user.name} image={c.user.image} updateDate="1日前" />
-                        <Icons
-                            icons={[
-                                <IconText type="check" text="156" key="list-vertical-heart" />,
-                                <IconText type="user" text="8021" key="list-vertical-check" />,
-                            ]}
-                        />
+                        <div style={{ marginLeft: '0px', marginTop: '8px' }}>
+                            <Icons
+                                icons={[
+                                    <IconText type="check" text="156" key="list-vertical-heart" />,
+                                    <IconText type="user" text="8021" key="list-vertical-check" />,
+                                ]}
+                            />
+                        </div>
                     </Card.Grid>
                 )}
             </TopicCard>

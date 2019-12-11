@@ -36,12 +36,15 @@ const LearnedArticles = () => {
                         <List.Item.Meta
                             title={<a href="https://ant.design">{item.title}</a>}
                             description={
-                                <Icons
-                                    icons={[
-                                        <IconText type="heart" text={item.like} key="list-vertical-check" />,
-                                        <IconText type="check" text={item.learned} key="list-vertical-heart" />,
-                                    ]}
-                                />}
+                                <div style={{ marginLeft: '0px', marginTop: '8px' }}>
+                                    <Icons
+                                        icons={[
+                                            <IconText type="heart" text={item.like} key="list-vertical-check" />,
+                                            <IconText type="check" text={item.learned} key="list-vertical-heart" />,
+                                        ]}
+                                    />
+                                </div>
+                            }
                         />
                         <div>{item.publishDate}</div>
                     </List.Item>

@@ -2,8 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Layout } from 'antd';
-import HorizontalMenu from "../menu/horizontal";
-import HorizontalFooter from "./horizontal-footer";
+import HorizontalMenu from "../../menu/horizontal";
+import HorizontalFooter from "./footer";
 const { Content, Footer } = Layout;
 
 const HorizontalLayout = ({ children }) => {

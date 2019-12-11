@@ -1,6 +1,6 @@
 import React from "react"
 import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical-account"
+import VerticalLayout from "components/layout/vertical/account"
 import AccountEditLayout from 'components/user/settings/layout'
 import PasswordUpdateForm from "components/user/settings/password"
 

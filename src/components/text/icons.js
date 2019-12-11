@@ -1,7 +1,7 @@
 import React from "react"
 
 const Icons = ({ icons }) => (
-    <ul className="ant-list-item-action" style={{ marginLeft: '0px', marginTop: '8px' }}>
+    <ul className="ant-list-item-action" style={{ marginLeft: '0px' }}>
         {icons.map((i, idx) => {
             const isLast = idx === icons.length - 1
             return (

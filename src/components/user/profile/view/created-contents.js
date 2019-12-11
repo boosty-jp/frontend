@@ -45,12 +45,15 @@ const CreatedContents = () => {
                             <List.Item.Meta
                                 title={<a href="https://ant.design">{item.title}</a>}
                                 description={
-                                    <Icons
-                                        icons={[
-                                            <IconText type="check" text={item.learned} key="list-vertical-heart" />,
-                                            <IconText type="user" text={item.like} key="list-vertical-check" />,
-                                        ]}
-                                    />}
+                                    <div style={{ marginLeft: '0px', marginTop: '8px' }}>
+                                        <Icons
+                                            icons={[
+                                                <IconText type="check" text={item.learned} key="list-vertical-heart" />,
+                                                <IconText type="user" text={item.like} key="list-vertical-check" />,
+                                            ]}
+                                        />
+                                    </div>
+                                }
                             />
                             <div>{item.publishDate}</div>
                         </List.Item>

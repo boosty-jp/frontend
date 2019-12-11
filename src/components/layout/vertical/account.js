@@ -1,12 +1,14 @@
 import React from "react"
-import { Layout } from 'antd';
+import { Layout, Menu, Icon, Avatar } from 'antd';
+import InvertLogo from "components/logo/invert";
 import VerticalMenu from "components/menu/vertical";
-import VerticalFooter from "./vertical-footer";
-import ArticleEditSider from "components/sider/article-edit";
+import { Link } from "gatsby";
+import VerticalFooter from "./footer";
+import AccountSider from "components/sider/account";
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
-class ArticleEditLayout extends React.Component {
+class VerticalLayout extends React.Component {
     state = {
         collapsed: false,
     };
@@ -20,9 +22,11 @@ class ArticleEditLayout extends React.Component {
     render() {
         return (
             <Layout>
-                <ArticleEditSider
+                <AccountSider
                     collapsed={this.state.collapsed}
                     onBreakpoint={broken => this.setState({ collapsed: broken })}
+                    openedMenu={[this.props.openedMenu]}
+                    selectedMenu={[this.props.selectedMenu]}
                 />
                 <Layout style={{ minHeight: '100vh' }}>
                     <VerticalMenu title={this.props.pageTitle} collapsed={this.state.collapsed} toggle={this.toggle} />
@@ -37,4 +41,4 @@ class ArticleEditLayout extends React.Component {
         )
     }
 }
-export default ArticleEditLayout;
+export default VerticalLayout;

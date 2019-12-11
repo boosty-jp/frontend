@@ -1,6 +1,6 @@
 import React from "react"
 import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical-account"
+import VerticalLayout from "components/layout/vertical/account"
 import LearningAllCourses from "components/course/learning-all";
 
 const LearningPage = () => (

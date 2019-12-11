@@ -52,12 +52,15 @@ const CompletedContents = () => {
                                 title={<a href="https://ant.design">{item.title}</a>}
                                 avatar={<Avatar src={item.image} shape="square" style={{ marginTop: '8px' }} />}
                                 description={
-                                    <Icons
-                                        icons={[
-                                            <IconText type="check" text={item.learned} key="list-vertical-heart" />,
-                                            <IconText type="user" text={item.like} key="list-vertical-check" />,
-                                        ]}
-                                    />}
+                                    <div style={{ marginLeft: '0px', marginTop: '8px' }}>
+                                        <Icons
+                                            icons={[
+                                                <IconText type="check" text={item.learned} key="list-vertical-heart" />,
+                                                <IconText type="user" text={item.like} key="list-vertical-check" />,
+                                            ]}
+                                        />
+                                    </div>
+                                }
                             />
                             < div > {item.publishDate}</div>
                         </List.Item>
