@@ -35,18 +35,18 @@ const Sections = () => {
         <div style={{ padding: '24px', backgroundColor: 'white' }}>
             <p style={{ fontSize: '24px', fontWeight: '600' }}>コース内容</p>
             <Collapse onChange={callback}>
-                {sections.map((s, idx) => {
+                {sections.map((s, sectionIdx) => {
                     return (
-                        <Panel header={idx + 1 + ". " + s.title} key={idx} extra={<span>全{s.articles.length}回</span>}>
+                        <Panel header={sectionIdx + 1 + ". " + s.title} key={sectionIdx} extra={<span>全{s.articles.length}回</span>}>
                             <List
                                 itemLayout="horizontal"
                                 dataSource={s.articles}
-                                renderItem={article => (
+                                renderItem={(article, articleIdx) => (
                                     <List.Item
                                         actions={[article.learned ? <Button type="primary" style={{ width: '70px' }}>完了</Button> : <Button style={{ width: '70px' }}>未完了</Button>]}
                                     >
                                         <List.Item.Meta
-                                            title={<a href="https://ant.design">{article.title}</a>}
+                                            title={<><span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{articleIdx + 1}.</span><a href="https://ant.design">{article.title}</a></>}
                                         />
                                     </List.Item>
                                 )}

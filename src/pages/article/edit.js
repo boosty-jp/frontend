@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, notification, Card, Divider } from 'antd';
 import Editor from 'components/editor';
 import ArticleEditLayout from 'components/layout/vertical/article-edit'
-import ArticleEditHeader from 'components/article/editor-header'
+import ArticleEditHeader from 'components/article/edit/header'
 
 export default class ArticleEditPage extends React.Component {
     state = {

@@ -1,7 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Icon, Row, Col } from 'antd'
 import Icons from 'components/text/icons';
+import { deleteSection, updateSections } from 'modules/course/edit/sections'
+import SectionUpdateForm from 'components/course/editor/update-section-form';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -12,7 +15,7 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
-export default class SectionSortList extends React.Component {
+class SortList extends React.Component {
     constructor(props) {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -24,11 +27,13 @@ export default class SectionSortList extends React.Component {
             return;
         }
 
-        const elements = reorder(
+        const reorderedSections = reorder(
             this.props.sections,
             result.source.index,
             result.destination.index
         );
+
+        this.props.updateSections(reorderedSections)
     }
     render() {
         return (
@@ -69,8 +74,8 @@ export default class SectionSortList extends React.Component {
                                                         </Col>
                                                         <Col span={6} style={{ textAlign: 'right' }}>
                                                             <Icons icons={[
-                                                                <Icon type="edit" />,
-                                                                <Icon type="delete" />
+                                                                <SectionUpdateForm section={item} />,
+                                                                <Icon type="delete" onClick={() => this.props.deleteSection(item.id)} />
                                                             ]} />
                                                         </Col>
                                                     </Row>
@@ -88,3 +93,11 @@ export default class SectionSortList extends React.Component {
         )
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    updateSections: (sections) => dispatch(updateSections(sections)),
+    deleteSection: (id) => dispatch(deleteSection(id)),
+})
+
+const SectionSortList = connect(null, mapDispatchToProps)(SortList)
+export default SectionSortList

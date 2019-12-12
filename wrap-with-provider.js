@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './src/sagas/index'
-import reducers from './src/reducers/index'
+import reducers from './src/modules/index'
 import Amplify from 'aws-amplify'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'services/apollo/client';

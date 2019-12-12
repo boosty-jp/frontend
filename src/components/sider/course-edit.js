@@ -1,10 +1,11 @@
 import React from "react"
-import { Layout, Icon, Avatar, Button, Affix } from 'antd';
+import { connect } from 'react-redux'
+import { Badge, Layout, Icon, Avatar, Button, Affix, Tag } from 'antd';
 import InvertLogo from "components/logo/invert";
 
 const { Sider } = Layout;
 
-const CourseEditSider = ({ collapsed, onBreakpoint }) => {
+const CourseEditSiderComponent = ({ collapsed, onBreakpoint, id, status }) => {
     return (
         <Sider
             breakpoint="sm"
@@ -22,8 +23,17 @@ const CourseEditSider = ({ collapsed, onBreakpoint }) => {
                 <p style={{ color: 'white', marginTop: '8px' }}>Tomoki Yamashita</p>
             </div>
             <Affix offsetTop={10}>
-                <div style={{ textAlign: 'center', marginTop: '30px' }}>
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
                     <div>
+                        <p style={{ color: 'white' }}>ステータス:&nbsp;&nbsp;
+                        {status === 'draft' ?
+                                <Badge color="grey" text="下書き" style={{ color: 'white' }} />
+                                :
+                                <Badge color="#108ee9" text="公開中" style={{ color: 'white' }} />
+                            }
+                        </p>
+                    </div>
+                    <div style={{ textAlign: 'center', marginTop: '30px' }}>
                         <Button style={{ width: '140px' }}><Icon type="save" />下書き保存</Button>
                     </div>
                     <div style={{ marginTop: '10px' }}>
@@ -35,4 +45,10 @@ const CourseEditSider = ({ collapsed, onBreakpoint }) => {
     )
 }
 
-export default CourseEditSider;
+const mapStateToProps = state => ({
+    id: state.courseEditBase.id,
+    status: state.courseEditBase.status
+})
+
+const CourseEditSider = connect(mapStateToProps)(CourseEditSiderComponent)
+export default CourseEditSider
