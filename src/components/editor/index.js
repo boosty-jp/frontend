@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import ReactQuill from 'react-quill';
 import { Icon, Affix } from 'antd';
 import hljs from 'highlight.js'
 import styled from 'styled-components'
+import { updateText } from 'modules/article/edit'
+import DOMPurify from 'dompurify'
 
 const CustomQuill = styled(ReactQuill)`
 .ql-container {
@@ -18,7 +21,6 @@ const CustomQuill = styled(ReactQuill)`
 }
 `;
 
-// const CustomButton = () => <span className="octicon octicon-star" />;
 hljs.configure({
     // languages: ['python'],
 })
@@ -29,7 +31,7 @@ const CustomButton = () => <Icon type="youtube" theme="filled" />;
  * Event handler to be attached using Quill toolbar module (see line 73)
  * https://quilljs.com/docs/modules/toolbar/
  */
-function insertStar() {
+const insertStar = () => {
     const cursorPosition = this.quill.getSelection().index;
     // this.quill.insertEmbed(1, 'image', 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png');
     // this.quill.insertEmbed(10, 'header', 'hoge');
@@ -73,6 +75,7 @@ const CustomToolbar = () => (
         <button className="ql-script" value="super" />
         <button className="ql-clean" />
         <button className="ql-image" />
+        <button className="ql-video" />
         <button className="ql-code-block" />
         <button className="ql-blockquote" />
         <button className="ql-link" />
@@ -84,7 +87,7 @@ const CustomToolbar = () => (
     </div>
 );
 
-/* 
+/*
  * Editor component with custom toolbar and content containers
  */
 class Editor extends React.Component {
@@ -99,18 +102,19 @@ class Editor extends React.Component {
     }
 
     render() {
+        const clean = DOMPurify.sanitize(this.props.text);
         return (
             <div className="text-editor">
                 <Affix offsetTop={0}>
                     <CustomToolbar />
                 </Affix>
                 <CustomQuill
-                    onChange={this.props.handleChange}
+                    value={this.props.text}
+                    onChange={(html) => this.props.updateText(html)}
                     placeholder="入力してください。"
                     modules={Editor.modules}
-                // formats={Editor.formats}
-                // theme={"snow"} // pass false to use minimal theme
                 />
+                <div dangerouslySetInnerHTML={{ __html: clean }} />
             </div>
         );
     }
@@ -136,4 +140,13 @@ Editor.modules = {
     }
 };
 
-export default Editor
+const mapStateToProps = state => ({
+    text: state.articleEdit.text,
+})
+
+const mapDispatchToProps = dispatch => ({
+    updateText: (text) => dispatch(updateText(text)),
+})
+
+const ArticleTextEditor = connect(mapStateToProps, mapDispatchToProps)(Editor)
+export default ArticleTextEditor

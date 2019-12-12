@@ -124,6 +124,11 @@ export default function ArticleEdit(state = initialState, action) {
                 ...state,
                 tags: [...state.tags, action.tag],
             }
+        case UPDATE_TEXT:
+            return {
+                ...state,
+                text: action.text
+            }
         default:
             return state;
     }

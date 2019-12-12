@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux'
 import { Select, Spin, Divider } from "antd";
 import debounce from "lodash/debounce";
-import { updateTags, addTag } from 'modules/course/edit/base'
+import { updateTags, addTag } from 'modules/article/edit'
 
 const { Option } = Select;
 
@@ -133,7 +133,7 @@ class ArticleTagSelectComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    tags: state.courseEditBase.tags,
+    tags: state.articleEdit.tags,
 })
 
 const mapDispatchToProps = dispatch => ({

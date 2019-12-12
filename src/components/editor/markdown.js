@@ -97,6 +97,7 @@ export default class MarkdownEditor extends React.Component {
 
     render() {
         const addSectionTextHandler = (value) => {
+            console.log(value)
             // if (this.state.isUpdate) {
             //     this.props.updateSectionText(this.state.id, this.state.number, value);
             // } else {
@@ -104,11 +105,13 @@ export default class MarkdownEditor extends React.Component {
             // }
         }
 
+        const rawHTML = MarkdownRender.render(this.state.value)
         return (
             <>
                 <SimpleMDE
                     value={this.state.value}
-                    onChange={(value) => addSectionTextHandler(value)}
+                    // onChange={(value) => addSectionTextHandler(value)}
+                    onChange={(value) => this.setState({ value })}
                     options={{
                         spellChecker: false,
                         hideIcons: [],
@@ -128,6 +131,9 @@ export default class MarkdownEditor extends React.Component {
                     }}
                 />
                 {/* <MarkdownHelp open={this.state.helpModalOn} onClose={() => { this.setState({ helpModalOn: false }) }} /> */}
+                <div dangerouslySetInnerHTML={{ __html: rawHTML }} />
+                <hr></hr>
+                <div>{rawHTML}</div>
             </>
         )
     }

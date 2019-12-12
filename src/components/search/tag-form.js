@@ -1,10 +1,10 @@
 import React from "react";
-import { Select, Spin, Icon, Divider } from "antd";
+import { Select, Spin, Divider } from "antd";
 import debounce from "lodash/debounce";
 
 const { Option } = Select;
 
-export default class TagSelect extends React.Component {
+class TagSelectForm extends React.Component {
     constructor(props) {
         super(props);
         this.fetchTags = debounce(this.fetchTags, 300);
@@ -12,16 +12,16 @@ export default class TagSelect extends React.Component {
 
     state = {
         searchResults: [],
-        value: [],
         fetching: false,
-        inputVal: ''
+        inputVal: '',
+        open: false,
     };
 
     fetchTags = value => {
-        console.log(value)
-        this.setState({ searchResults: [], fetching: true, inputVal: value });
+        this.setState({ searchResults: [], fetching: true, inputVal: value, open: true });
 
         // Algoliaの検索後
+        // TODO: すでに入力済みのものは検索結果から消す
         this.setState({
             searchResults: [
                 { id: 'res-1', name: "検索結果1" },
@@ -33,21 +33,27 @@ export default class TagSelect extends React.Component {
 
     handleChange = value => {
         // 追加成功したらstoreに連携する
-        console.log(value)
         this.setState({
-            value,
             searchResults: [],
-            fetching: false
+            fetching: false,
+            open: false,
+            inputVal: ''
         });
+
+        this.props.updateTags(value);
     };
 
     addItem = () => {
-        const { value } = this.state;
+        const { inputVal } = this.state;
         // ここでタグ追加APIを叩く
         // 追加成功したらstoreに連携する
         this.setState({
-            value: [...value, { key: "hoge", label: "ho", id: "" }]
+            searchResults: [],
+            fetching: false,
+            open: false,
+            inputVal: ''
         });
+        this.props.addTag({ key: "key-" + inputVal, label: inputVal, id: "id-" + inputVal })
     };
 
     displayCreationForm = () => {
@@ -67,22 +73,34 @@ export default class TagSelect extends React.Component {
             }
         }
 
+        const selectedTagsLabels = this.props.tags.map((tag) => {
+            return tag.label
+        });
+
+        for (var i = 0; i < selectedTagsLabels.length; i++) {
+            if (selectedTagsLabels[i] === this.state.inputVal) {
+                return true;
+            }
+        }
+
         return false;
     }
 
     render() {
-        const { fetching, searchResults, value, inputVal } = this.state;
+        const { fetching, searchResults, inputVal, open } = this.state;
         return (
             <Select
+                size="large"
                 mode="multiple"
                 labelInValue
-                value={value}
-                placeholder="Select users"
+                value={this.props.tags}
+                placeholder="タグを選択する"
                 notFoundContent={fetching ? <Spin size="small" /> : null}
                 filterOption={false}
                 onSearch={this.fetchTags}
                 onChange={this.handleChange}
                 style={{ width: "100%" }}
+                open={open}
                 dropdownRender={menu => (
                     this.displayCreationForm() ?
                         <div>
@@ -111,3 +129,5 @@ export default class TagSelect extends React.Component {
         );
     }
 }
+
+export default TagSelectForm

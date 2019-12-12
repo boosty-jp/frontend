@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Row, Col, Input } from 'antd';
 import CourseCoverImageUploader from 'components/course/editor/cover-image-uploader'
 import { updateTitle, updateDescription } from 'modules/course/edit/base'
-import CourseTagSelect from "components/search/course-tag-form";
+import CourseTagSelectForm from "containers/search/course-tag-form";
 
 const CourseEditHeaderComponent = ({ title, description, updateTitle, updateDescription }) => {
     return (
@@ -21,7 +21,6 @@ const CourseEditHeaderComponent = ({ title, description, updateTitle, updateDesc
                             placeholder="タイトルを入力してください"
                             style={{ marginTop: '10px' }}
                             onChange={(e) => {
-                                console.log(e.target.value);
                                 updateTitle(e.target.value)
                             }}
                         />
@@ -29,7 +28,7 @@ const CourseEditHeaderComponent = ({ title, description, updateTitle, updateDesc
                     <div style={{ marginTop: '20px' }}>
                         <p style={{ fontWeight: '400', fontSize: '16px', margin: '0px' }}>ハッシュタグ: </p>
                         <div style={{ marginTop: '10px' }}>
-                            <CourseTagSelect />
+                            <CourseTagSelectForm />
                         </div>
                     </div>
 
