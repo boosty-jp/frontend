@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Empty, notification, Drawer, Icon, Button, Rate, List } from 'antd';
+import { Modal, Empty, notification, Drawer, Icon, Button, Rate, List } from 'antd';
 import SkillSelect from "components/search/skill-form";
 import { addSkill, deleteSkill, clearSkillDraft } from 'modules/article/edit'
 
@@ -88,9 +88,10 @@ class SkillForm extends React.Component {
                         itemLayout="horizontal"
                         locale={{
                             emptyText: (
-                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="スキルが設定されていません">
-                                    <Button onClick={this.showDrawer}><Icon type="plus" />追加する</Button>
-                                </Empty>
+                                <a onClick={this.showDrawer}><Icon type="plus" />追加する</a>
+                                // <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="スキルが設定されていません">
+                                //     <Button onClick={this.showDrawer}><Icon type="plus" />追加する</Button>
+                                // </Empty>
                             )
                         }}
                         renderItem={s => (
@@ -108,12 +109,14 @@ class SkillForm extends React.Component {
                 {this.props.skills.length > 0 &&
                     <Button type="dashed" style={{ width: '100%', marginTop: '10px' }} onClick={this.showDrawer}><Icon type="plus" />追加する</Button>
                 }
-                <Drawer
+                <Modal
                     title="スキルを追加する"
-                    width={400}
-                    onClose={this.onClose}
+                    width={450}
+                    cancelText="キャンセル"
+                    okText="追加する"
+                    onCancel={this.onClose}
+                    onOk={this.addSkill}
                     visible={this.state.visible}
-                    bodyStyle={{ paddingBottom: 80 }}
                 >
                     <p style={{ fontWeight: '500', fontSize: '16px' }}>スキル選択: </p>
                     <SkillSelect />
@@ -132,22 +135,7 @@ class SkillForm extends React.Component {
                             ''
                         }
                     </div>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            right: 0,
-                            bottom: 0,
-                            width: '100%',
-                            borderTop: '1px solid #e9e9e9',
-                            padding: '10px 16px',
-                            background: '#fff',
-                            textAlign: 'right',
-                        }}
-                    >
-                        <Button onClick={this.onClose} style={{ marginRight: 8 }}>キャンセル</Button>
-                        <Button onClick={this.addSkill} type="primary">追加する</Button>
-                    </div>
-                </Drawer>
+                </Modal>
             </>
         )
     }

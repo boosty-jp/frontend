@@ -1,8 +1,9 @@
 import React from "react"
-import { Layout } from 'antd';
+import { Affix, Button, Layout } from 'antd';
 import VerticalMenu from "components/menu/vertical";
 import VerticalFooter from "./footer";
 import ArticleEditSider from "components/sider/article-edit";
+import ArticleEditMenu from "components/menu/horizontal-article-edit";
 
 const { Content } = Layout;
 
@@ -20,19 +21,26 @@ class ArticleEditLayout extends React.Component {
     render() {
         return (
             <Layout>
-                <ArticleEditSider
-                    collapsed={this.state.collapsed}
-                    onBreakpoint={broken => this.setState({ collapsed: broken })}
-                />
-                <Layout style={{ minHeight: '100vh' }}>
-                    <VerticalMenu title={this.props.pageTitle} collapsed={this.state.collapsed} toggle={this.toggle} />
-                    <Content >
-                        <div >
-                            {this.props.children}
+                <ArticleEditMenu />
+                <Content >
+                    <div >
+                        {this.props.children}
+                    </div>
+                    <Affix offsetBottom={20}>
+                        <div style={{ textAlign: 'right', padding: '10px' }}>
+                            <div>
+                                <Button shape="circle" icon="eye" />
+                            </div>
+                            <div style={{ marginTop: '8px' }}>
+                                <Button shape="circle" icon="bulb" />
+                            </div>
+                            <div style={{ marginTop: '8px' }}>
+                                <span style={{ color: 'grey' }}>2130文字</span>
+                            </div>
                         </div>
-                    </Content>
-                    <VerticalFooter />
-                </Layout>
+                    </Affix>
+                </Content>
+                <VerticalFooter />
             </Layout >
         )
     }
