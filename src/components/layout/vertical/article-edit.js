@@ -1,15 +1,16 @@
 import React from "react"
-import { Affix, Button, Layout } from 'antd';
-import VerticalMenu from "components/menu/vertical";
+import { connect } from 'react-redux'
+import { Icon, Affix, Button, Layout, Tooltip } from 'antd';
 import VerticalFooter from "./footer";
-import ArticleEditSider from "components/sider/article-edit";
 import ArticleEditMenu from "components/menu/horizontal-article-edit";
+import ArticlePreview from "components/article/edit/preview";
 
 const { Content } = Layout;
 
-class ArticleEditLayout extends React.Component {
+class ArticleEditorLayoutComponent extends React.Component {
     state = {
         collapsed: false,
+        preview: false,
     };
 
     toggle = () => {
@@ -20,22 +21,30 @@ class ArticleEditLayout extends React.Component {
 
     render() {
         return (
-            <Layout>
+            <Layout >
                 <ArticleEditMenu />
-                <Content >
+                <Content>
                     <div >
                         {this.props.children}
                     </div>
-                    <Affix offsetBottom={20}>
-                        <div style={{ textAlign: 'right', padding: '10px' }}>
+                    <Affix offsetBottom={20} style={{ width: '200px', margin: '0 0px 0 auto' }}>
+                        <div style={{ textAlign: 'right', padding: '20px' }}>
                             <div>
-                                <Button shape="circle" icon="eye" />
+                                <ArticlePreview />
                             </div>
                             <div style={{ marginTop: '8px' }}>
-                                <Button shape="circle" icon="bulb" />
+                                <Tooltip placement="left" title="書き方のヒント">
+                                    <Button shape="circle" icon="bulb" />
+                                </Tooltip>
                             </div>
                             <div style={{ marginTop: '8px' }}>
-                                <span style={{ color: 'grey' }}>2130文字</span>
+                                {this.props.textCount > 20000 ?
+                                    <Tooltip placement="left" title="投稿できる最大文字数は20000文字です。">
+                                        <span style={{ marginTop: '8px', color: 'red' }}><Icon type="warning" style={{ marginRight: '8px' }} />{this.props.textCount}文字</span>
+                                    </Tooltip>
+                                    :
+                                    <p style={{ marginTop: '8px', color: 'grey' }}>{this.props.textCount}文字</p>
+                                }
                             </div>
                         </div>
                     </Affix>
@@ -45,4 +54,10 @@ class ArticleEditLayout extends React.Component {
         )
     }
 }
-export default ArticleEditLayout;
+
+const mapStateToProps = state => ({
+    textCount: state.articleEdit.textCount,
+})
+
+const ArticleEditorLayout = connect(mapStateToProps)(ArticleEditorLayoutComponent)
+export default ArticleEditorLayout;

@@ -20,7 +20,7 @@ export default class ArticleEditPage extends React.Component {
                 <Card
                     title="内容"
                     bordered={true}
-                    style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto', }}
+                    style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto' }}
                 >
                     <Editor />
                 </Card>

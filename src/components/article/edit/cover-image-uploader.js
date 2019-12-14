@@ -53,7 +53,7 @@ export default class CoverImageUploader extends React.Component {
         const uploadButton = (
             <div>
                 <Icon type={this.state.loading ? 'loading' : 'plus'} />
-                <div className="ant-upload-text">Upload</div>
+                <div className="ant-upload-text">アップロード</div>
             </div>
         );
         const { imageUrl } = this.state;

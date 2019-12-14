@@ -1,0 +1,51 @@
+mark {
+    background: linear-gradient(transparent 75%, #9eceff 75%) !important;
+}
+
+.cdx-settings-button[data-level='1'],
+.cdx-settings-button[data-level='4'],
+.cdx-settings-button[data-level='5'],
+.cdx-settings-button[data-level='6'] {
+  display: none;
+}
+
+.image-tool__tune {
+  display: none;
+}
+
+.cdx-quote-settings{
+  display: none;
+}
+
+.cdx-settings-button{
+  display: none;
+}
+
+.ant-typography code{
+  font-size: 1em !important;
+  background-color: rgb(1, 22, 39) !important;
+}
+
+.ant-typography .inline-code {
+  background-color: rgba(250, 239, 240, 0.78) !important;
+}
+
+::-webkit-scrollbar{
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height:6px;
+}
+
+::-webkit-scrollbar-track{
+  background: #fff;
+  border: none;
+  /* border-radius: 6px; */
+}
+
+::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 6px;
+  box-shadow: none;
+}

@@ -132,7 +132,7 @@ class SkillForm extends React.Component {
                         {this.state.skillLevel ?
                             <span className="ant-rate-text">{rateDescription[this.state.skillLevel - 1]}</span>
                             :
-                            ''
+                            <></>
                         }
                     </div>
                 </Modal>

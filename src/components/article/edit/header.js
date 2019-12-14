@@ -6,7 +6,7 @@ import { updateTitle } from 'modules/article/edit'
 import ArticleTagSelectForm from "containers/search/article-tag-form";
 import ArticleSkillForm from 'components/article/edit/skill-form'
 
-const ArticleEditHeaderComponent = ({ title }) => {
+const ArticleEditHeaderComponent = (props) => {
     return (
         <>
             <Row gutter={[16, 16]}>
@@ -17,9 +17,10 @@ const ArticleEditHeaderComponent = ({ title }) => {
                     <span style={{ fontWeight: '400', fontSize: '16px' }}>タイトル: </span>
                     <Input
                         size="large"
-                        value={title}
+                        value={props.title}
                         placeholder="タイトルを入力してください"
                         style={{ marginTop: '10px', marginBottom: '20px' }}
+                        onChange={(e) => props.updateTitle(e.target.value)}
                     />
                     <span style={{ fontWeight: '400', fontSize: '16px' }}>ハッシュタグ: </span>
                     <ArticleTagSelectForm />
