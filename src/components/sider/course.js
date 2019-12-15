@@ -1,8 +1,10 @@
 import React from "react"
-import { Layout, Icon, Progress, Button } from 'antd';
+import { Layout, Icon, Progress, Button, Affix, Typography } from 'antd';
 import InvertLogo from "components/logo/invert";
+import CourseMenu from "components/menu/vertical-course";
 
 const { Sider } = Layout;
+const { Paragraph } = Typography;
 
 const CourseDetailSider = ({ collapsed, onBreakpoint }) => {
     return (
@@ -13,10 +15,14 @@ const CourseDetailSider = ({ collapsed, onBreakpoint }) => {
             collapsedWidth="0"
             collapsed={collapsed}
             onBreakpoint={() => onBreakpoint()}
+            width={280}
         >
             <div style={{ textAlign: 'center', padding: '20px' }}>
                 <InvertLogo />
             </div>
+            <Paragraph ellipsis style={{ color: 'white', fontSize: '20px', padding: '10px' }} strong>
+                React入門編をGatsbyJSで作りながら学ぶ
+                </Paragraph>
             <div style={{ textAlign: 'center' }}>
                 <Progress
                     type="circle"
@@ -25,14 +31,23 @@ const CourseDetailSider = ({ collapsed, onBreakpoint }) => {
                     format={percent => <span style={{ color: 'white' }}>{percent} %</span>}
                 />
             </div>
-            <div style={{ color: 'white', textAlign: 'center', marginTop: '18px' }}>
-                <div >
-                    <Button style={{ width: '100px' }}><Icon type="heart" /> 991</Button>
-                </div>
-                <div style={{ marginTop: '8px' }}>
-                    <Button style={{ width: '100px' }}><Icon type="check" /> 36</Button>
-                </div>
-            </div>
+            {collapsed ?
+                <>
+                    <div style={{ margin: '16px auto', textAlign: 'center' }}>
+                        <Button style={{ marginRight: '30px' }}><Icon type="left" />戻る</Button>
+                        <Button >進む<Icon type="right" /></Button>
+                    </div>
+                    <CourseMenu />
+                </>
+                :
+                <Affix offsetTop={20}>
+                    <div style={{ margin: '16px auto', textAlign: 'center' }}>
+                        <Button style={{ marginRight: '30px' }}><Icon type="left" />戻る</Button>
+                        <Button >進む<Icon type="right" /></Button>
+                    </div>
+                    <CourseMenu />
+                </Affix>
+            }
         </Sider>
     )
 }

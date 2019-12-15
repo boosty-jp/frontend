@@ -36,7 +36,7 @@ class MediumMenuItems extends React.Component {
                         placeholder="検索する"
                         onSearch={value => console.log(value)}
                         onChange={e => console.log(e.target.value)}
-                        style={{ width: 280, height: 32, marginLeft: '20px' }}
+                        style={{ width: 240, height: 32, marginLeft: '20px' }}
                     />
                 </Col>
                 <Col span={4} style={{ textAlign: 'right' }}>

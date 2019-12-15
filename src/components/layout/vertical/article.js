@@ -1,8 +1,8 @@
 import React from "react"
 import { Layout } from 'antd';
-import VerticalMenu from "components/menu/vertical";
 import VerticalFooter from "./footer";
-import ArticleSider from "components/sider/article";
+import ArticleHorizontalMenu from 'components/menu/horizontal-article'
+import ActionButtonSider from "components/sider/action-buttons";
 
 const { Content } = Layout;
 
@@ -19,21 +19,16 @@ class ArticleLayout extends React.Component {
 
     render() {
         return (
-            <Layout>
-                <ArticleSider
-                    collapsed={this.state.collapsed}
-                    onBreakpoint={broken => this.setState({ collapsed: broken })}
-                />
-                <Layout style={{ minHeight: '100vh' }}>
-                    <VerticalMenu title={this.props.pageTitle} collapsed={this.state.collapsed} toggle={this.toggle} />
-                    <Content>
-                        <div >
-                            {this.props.children}
-                        </div>
-                    </Content>
-                    <VerticalFooter />
-                </Layout>
-            </Layout >
+            <Layout >
+                <ArticleHorizontalMenu />
+                <Content>
+                    <ActionButtonSider onCourse={false} />
+                    <div>
+                        {this.props.children}
+                    </div>
+                </Content>
+                <VerticalFooter />
+            </Layout>
         )
     }
 }

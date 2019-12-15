@@ -108,8 +108,6 @@ export const convertToJSX = (blocks) => {
                 break;
             case 'paragraph':
                 jsxList.push(<Paragraph><span dangerouslySetInnerHTML={{ __html: text }} /></Paragraph>)
-                console.log(text);
-                console.log(text.replace(countRegexp, '').length);
                 if (text) textCount += text.replace(countRegexp, '').length;
                 break;
             case 'imageUrl':

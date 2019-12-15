@@ -27,6 +27,7 @@ class ArticleEditorLayoutComponent extends React.Component {
                     <div >
                         {this.props.children}
                     </div>
+
                     <Affix offsetBottom={20} style={{ width: '200px', margin: '0 0px 0 auto' }}>
                         <div style={{ textAlign: 'right', padding: '20px' }}>
                             <div>
