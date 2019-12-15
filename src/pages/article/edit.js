@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Button, notification, Card, Divider, Affix, Tooltip, Row, Col } from 'antd';
+import { Card } from 'antd';
 import ArticleEditLayout from 'components/layout/vertical/article-edit'
 import ArticleEditHeader from 'components/article/edit/header'
 import MarkdownEditor from 'components/editor/markdown';

@@ -1,3 +1,5 @@
+import { convertToSkillMap } from 'utils/skill-map'
+
 const SUFFIX = '_COURSE_SECTIONS_EDIT';
 const SET_SECTIONS = 'SET_SECTIONS' + SUFFIX;
 const ADD_SECTION = 'ADD_SECTION' + SUFFIX;
@@ -30,7 +32,8 @@ export const deleteSection = (id) => ({
     id: id
 })
 const initialState = {
-    sections: []
+    sections: [],
+    skillMaps: [],
 }
 
 export default function CourseEditSections(state = initialState, action) {
@@ -38,18 +41,21 @@ export default function CourseEditSections(state = initialState, action) {
         case SET_SECTIONS:
             return {
                 ...state,
-                sections: action.sections
+                sections: action.sections,
+                skillMaps: convertToSkillMap(action.sections),
             };
 
         case ADD_SECTION:
             return {
                 ...state,
                 sections: [...state.sections, action.section],
+                skillMaps: convertToSkillMap([...state.sections, action.section]),
             }
         case UPDATE_SECTIONS:
             return {
                 ...state,
                 sections: action.sections,
+                skillMaps: convertToSkillMap(action.sections),
             }
         case UPDATE_SECTION:
             const updateSections = state.sections.concat();
@@ -61,6 +67,7 @@ export default function CourseEditSections(state = initialState, action) {
             return {
                 ...state,
                 sections: updateSections,
+                skillMaps: convertToSkillMap(updateSections),
             }
         case DELETE_SECTION:
             const deleteSections = state.sections.concat();
@@ -76,6 +83,7 @@ export default function CourseEditSections(state = initialState, action) {
                 return {
                     ...state,
                     sections: deleteSections,
+                    skillMaps: convertToSkillMap(deleteSections),
                 }
             } else {
                 return { ...state }

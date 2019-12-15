@@ -34,14 +34,9 @@ const initialState = {
     id: "",
     title: "",
     description: '',
-    imageUrl: "",
+    imageUrl: 'https://assets.st-note.com/production/uploads/images/16134453/rectangle_large_type_2_02b461d00e4d3c026d7706c5c3144351.png?fit=bounds&format=jpeg&quality=45&width=960',
     status: "publish",
     tags: [],
-    skills: [],
-    base: {},
-    statistics: {},
-    author: {},
-    action: {},
 }
 
 export default function CourseEditBase(state = initialState, action) {
@@ -54,13 +49,7 @@ export default function CourseEditBase(state = initialState, action) {
                 imageUrl: action.base.imageUrl,
                 description: action.base.description,
                 status: action.base.status,
-                elements: action.elements.concat(),
                 tags: action.tags.concat(),
-                base: action.base,
-                statistics: action.statistics,
-                author: action.author,
-                statisticsLoaded: false,
-                action: action.action
             };
 
         case UPDATE_TITLE:
