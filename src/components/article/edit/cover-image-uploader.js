@@ -19,11 +19,11 @@ function getBase64(img, callback) {
 function beforeUpload(file) {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
+        message.error('「jpeg」もしくは「png」拡張子以外はアップロードできません');
     }
     const isLt1M = file.size / 1024 / 1024 < 1;
     if (!isLt1M) {
-        message.error('Image must smaller than 2MB!');
+        message.error('1MB以上のファイルはアップロードできません');
     }
     return isJpgOrPng && isLt1M;
 }

@@ -1,5 +1,6 @@
 import React from "react"
 import Layout from "../components/layout/horizontal"
+import { message } from 'antd';
 import SEO from "../components/seo"
 import TopEyecatch from "components/eyecatch/top"
 import TwoColumnLayout from "components/layout/two-column"
@@ -11,30 +12,30 @@ import TopicArticles from "components/article/topics"
 import TopicCategoryList from "components/category/topic-list"
 import TopicUserCard from "components/user/topic-card"
 
-
-
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <TopEyecatch />
-    <TwoColumnLayout
-      left={
-        <>
-          <TopicCategoryList />
-          <LearningCurriculums />
-          <TopicCurriculums />
-          <TopicArticles />
-        </>
-      }
-      right={
-        <>
-          <TopicCategoryCard />
-          <TopicNotificationCard />
-          <TopicUserCard />
-        </>
-      }
-    />
-  </Layout>
-)
+const IndexPage = () => {
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <TopEyecatch />
+      <TwoColumnLayout
+        left={
+          <>
+            <TopicCategoryList />
+            <LearningCurriculums />
+            <TopicCurriculums />
+            <TopicArticles />
+          </>
+        }
+        right={
+          <>
+            <TopicCategoryCard />
+            <TopicNotificationCard />
+            <TopicUserCard />
+          </>
+        }
+      />
+    </Layout>
+  )
+}
 
 export default IndexPage

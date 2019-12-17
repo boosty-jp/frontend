@@ -4,6 +4,7 @@ import Logo from "components/logo";
 import styled from 'styled-components'
 import GuestItems from "components/menu/horizontal-items/guest-items";
 import UserItems from "components/menu/horizontal-items/login-items";
+import { isLoggedIn } from "services/local-user";
 
 const RoundSearch = styled(Input.Search)`
   .ant-input {
@@ -27,7 +28,6 @@ class MediumMenuItems extends React.Component {
     };
 
     render() {
-        const isLogin = true;
         return (
             <Row>
                 <Col span={20}>
@@ -49,7 +49,7 @@ class MediumMenuItems extends React.Component {
                     onClose={this.onClose}
                     visible={this.state.visible}
                 >
-                    {isLogin ?
+                    {isLoggedIn() ?
                         <UserItems />
                         :
                         <GuestItems />

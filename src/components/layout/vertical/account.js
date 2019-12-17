@@ -1,12 +1,10 @@
 import React from "react"
-import { Layout, Menu, Icon, Avatar } from 'antd';
-import InvertLogo from "components/logo/invert";
+import { Layout } from 'antd';
 import VerticalMenu from "components/menu/vertical";
-import { Link } from "gatsby";
 import VerticalFooter from "./footer";
 import AccountSider from "components/sider/account";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 class VerticalLayout extends React.Component {
     state = {

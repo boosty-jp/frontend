@@ -2,11 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Layout } from 'antd';
-import HorizontalMenu from "../../menu/horizontal";
-import HorizontalFooter from "./footer";
+import HorizontalMenu from "components/menu/horizontal";
+import HorizontalFooter from "components/layout/horizontal/footer";
 const { Content, Footer } = Layout;
 
-const HorizontalLayout = ({ children }) => {
+const HorizontalLayout = ({ children, contentBackgroundColor }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -17,13 +17,13 @@ const HorizontalLayout = ({ children }) => {
     }
   `)
 
+  var content = <Content >{children}</Content>
+  if (contentBackgroundColor) content = <Content style={{ backgroundColor: contentBackgroundColor }}>{children}</Content>
   return (
-    <Layout >
+    <Layout style={{ minHeight: '100vh' }}>
       <HorizontalMenu />
-      <Content >
-        {children}
-      </Content>
-      <HorizontalFooter style={{ textAlign: 'center' }}>Ant Design ©2019 Created by Ant UED</HorizontalFooter>
+      {content}
+      <HorizontalFooter style={{ textAlign: 'center' }} />
     </Layout>
   )
 }

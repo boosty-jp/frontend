@@ -4,6 +4,7 @@ import { Input, Row, Col } from 'antd';
 import GuestButtons from 'components/menu/buttons/guest'
 import UserButtons from "components/menu/buttons/user";
 import styled from 'styled-components'
+import { isLoggedIn } from "services/local-user";
 
 const RoundSearch = styled(Input.Search)`
   .ant-input {
@@ -11,7 +12,6 @@ const RoundSearch = styled(Input.Search)`
   }
 `;
 
-const isLogin = false
 
 const LargeMenuItems = () => (
     <Row>
@@ -25,7 +25,7 @@ const LargeMenuItems = () => (
             />
         </Col>
         <Col span={7} style={{ textAlign: 'right' }}>
-            {isLogin ?
+            {isLoggedIn() ?
                 <UserButtons />
                 :
                 <GuestButtons />

@@ -1,8 +1,9 @@
 import React from "react"
 import Logo from "components/logo";
-import { Drawer, Row, Col, Icon, Input, Divider } from 'antd';
+import { Drawer, Row, Col, Icon, Input } from 'antd';
 import GuestItems from "components/menu/horizontal-items/guest-items";
 import UserItems from "components/menu/horizontal-items/login-items";
+import { isLoggedIn } from "services/local-user";
 
 const { Search } = Input
 
@@ -34,7 +35,6 @@ export default class SmallMenuItems extends React.Component {
     };
 
     render() {
-        const isLogin = true;
         return (
             <>
                 <Row>
@@ -53,7 +53,7 @@ export default class SmallMenuItems extends React.Component {
                     onClose={this.closeMenu}
                     visible={this.state.onMenu}
                 >
-                    {isLogin ?
+                    {isLoggedIn() ?
                         <UserItems />
                         :
                         <GuestItems />

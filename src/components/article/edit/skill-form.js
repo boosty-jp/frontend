@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Modal, Empty, notification, Drawer, Icon, Button, Rate, List } from 'antd';
+import { message, Modal, Icon, Button, Rate, List } from 'antd';
 import SkillSelect from "components/search/skill-form";
 import { addSkill, deleteSkill, clearSkillDraft } from 'modules/article/edit'
 
@@ -32,20 +32,12 @@ class SkillForm extends React.Component {
 
     validSkill = () => {
         if (!this.props.skillDraft.name.match(/\S/g)) {
-            notification['error']({
-                message: '追加に失敗しました',
-                description:
-                    'スキル名を入力してください',
-            });
+            message.error('スキル名を入力してください', 5)
             return false;
         }
 
         if (this.props.skills.length >= 3) {
-            notification['error']({
-                message: '追加に失敗しました',
-                description:
-                    '追加できるスキルは3つまでです',
-            });
+            message.error('追加できるスキルは3つまでです', 5)
             return false;
         }
 
@@ -57,20 +49,12 @@ class SkillForm extends React.Component {
         }
 
         if (exists) {
-            notification['error']({
-                message: '追加に失敗しました',
-                description:
-                    '選択されたスキルはすでに含まれています',
-            });
+            message.error('選択されたスキルはすでに含まれています', 5)
             return false;
         }
 
         if (this.state.skillLevel < 1 || this.state.skillLevel > 3) {
-            notification['error']({
-                message: '追加に失敗しました',
-                description:
-                    'スキルレベルを選択してください',
-            });
+            message.error('スキルレベルを選択してください', 5);
             return false;
         }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Divider, Typography, Button, Modal, Tooltip, Tag, Collapse, List, Empty } from 'antd'
 import SkillChart from 'components/course/editor/skill-chart';
+import SkillBarChart from 'components/skill/bar-chart';
 
 const { Panel } = Collapse;
 const { Title, Paragraph } = Typography;
@@ -42,6 +43,7 @@ class CoursePreviewComponent extends React.Component {
                     </Typography>
                     <div>
                         <SkillChart />
+                        <SkillBarChart />
                     </div>
                     <Divider />
                     {this.props.sections.length === 0 ?
