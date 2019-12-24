@@ -10,12 +10,9 @@ const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
 
 const CREATE_USER = gql`
-mutation CreateUser($userInput: UserInput!) {
-  createUser(user: $userInput){
-    error{
-        errorCode
-        errorMessage
-    }
+mutation CreateUser($displayName: String!, $imageUrl: String!) {
+  createUser(displayName: $displayName, imageUrl: $imageUrl){
+      id
   }
 }
 `;
@@ -40,8 +37,8 @@ class NormalSignUpForm extends React.Component {
     };
 
 
-    getTempDisplayName = () => {
-        const target = this.state.email.substring(0, this.state.email.indexOf("@"));
+    getTempDisplayName = (mail) => {
+        const target = mail.substring(0, mail.indexOf("@"));
         return target;
     }
 
@@ -57,7 +54,7 @@ class NormalSignUpForm extends React.Component {
                 .then((result) => {
                     this.setState({ isSignUped: true, uid: result.user.uid })
                     // BEにユーザー作成する
-                    // this.createUser(this.getTempDisplayName(mail), result.user.uid);
+                    this.createUser(this.getTempDisplayName(mail), result.user.uid);
                 })
                 .catch((error) => {
                     this.handleAuthError(error.code);
@@ -67,13 +64,13 @@ class NormalSignUpForm extends React.Component {
 
     createUser = async (displayName, uid) => {
         try {
-            const { data } = await this.props.client.mutate({
+            await this.props.client.mutate({
                 mutation: CREATE_USER,
-                variables: { userInput: { displayName: displayName, description: "", url: "", tags: [], imageUrl: "" } }
+                variables: { displayName: displayName, imageUrl: "" }
             });
 
-            setUser({ userId: uid, imageUrl: data.user.imageUrl, userName: data.user.displayName })
-            navigate("/auth/registered")
+            setUser({ userId: uid, imageUrl: "", userName: displayName })
+            this.mailVerification();
         } catch (err) {
             message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
         }
@@ -95,17 +92,17 @@ class NormalSignUpForm extends React.Component {
 
     mailVerification = () => {
         const firebase = getFirebase();
+        this.setState({ isSignUped: false })
+        message.info("会員登録が完了しました", 7)
         firebase.auth().onAuthStateChanged((user) => {
-            setUser({ userId: user.uid, userName: user.displayName })
-            navigate("/auth/mail-send")
             if (!user.emailVerified) {
                 user.sendEmailVerification().then(() => {
-                    this.setState({ isRegistering: false })
+                    navigate("/mail-send")
                 }).catch((error) => {
-                    this.setState({ isRegistering: false })
+                    navigate("/")
                 });
             } else {
-                this.setState({ isRegistering: false })
+                navigate("/")
             }
         });
     }
@@ -158,7 +155,13 @@ class NormalSignUpForm extends React.Component {
                         )}
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
-                    <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>会員登録</Button>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={this.state.loading}
+                        className="login-form-button"
+                        style={{ width: '100%' }}>会員登録
+                        </Button>
                 </Form.Item>
             </Form>
         );

@@ -14,7 +14,7 @@ const TopicCard = styled(Card)`
 
 
 const curriculums = [];
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 1; i++) {
     curriculums.push({
         id: i,
         href: 'http://ant.design',
@@ -28,7 +28,7 @@ for (let i = 0; i < 5; i++) {
     });
 }
 
-const TopicCurriculums = () => {
+const UserCreatedCourse = () => {
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
 
@@ -45,10 +45,9 @@ const TopicCurriculums = () => {
     // 何もしなければデフォルトで3分割される
 
     return (
-        <div ref={ref} style={{ marginBottom: '24px' }}>
+        <div ref={ref} style={{ marginTop: '24px', marginBottom: '24px' }}>
             <TopicCard
-                title="おすすめのコース"
-                extra={<Link to="/" >さらに表示</Link>}
+                title="コース"
             >
                 {curriculums.map((c) =>
                     <Card.Grid key={c.id} style={gridStyle}>
@@ -69,4 +68,4 @@ const TopicCurriculums = () => {
         </div>
     )
 }
-export default TopicCurriculums
+export default UserCreatedCourse

@@ -84,9 +84,9 @@ class LoginForm extends React.Component {
                 spinning={this.state.loading}
                 indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
             >
-                <OwnLoginForm />
+                <ThirdPartyButtons authType="ログイン" />
                 <LoginDivider>もしくは</LoginDivider>
-                <ThirdPartyButtons />
+                <OwnLoginForm />
             </Spin>
         );
     }

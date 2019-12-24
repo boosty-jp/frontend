@@ -64,11 +64,11 @@ class NormalLoginForm extends React.Component {
     setLoginData = async (userId) => {
         try {
             // このclientはwithAppoloをつかってクラス定義したことで注入されている
-            // const { data } = await this.props.client.query({
-            //     query: GET_USER,
-            //     variables: { userId: userId }
-            // });
-            // setUser({ userId: userId, imageUrl: data.user.imageUrl, userName: data.user.displayName })
+            const { data } = await this.props.client.query({
+                query: GET_USER,
+                variables: { userId: userId }
+            });
+            setUser({ userId: userId, imageUrl: data.user.imageUrl, userName: data.user.displayName })
             setUser({ userId: userId, imageUrl: "https://i.pravatar.cc/150?img=18", userName: "tomokiya" })
         } catch (err) {
             message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)

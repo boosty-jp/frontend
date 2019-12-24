@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { List } from 'antd';
-import AvatarLabel from "components/avatar";
+import AvatarLabel from "components/avatar/author-label";
 import IconText from 'components/text/icon'
 
 const listData = [];

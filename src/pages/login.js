@@ -5,11 +5,11 @@ import SignInForm from "components/auth/login/login-form"
 import SimpleLayout from "components/layout/simple-layout";
 
 const LoginPage = () => (
-    <SimpleLayout maxWidth="450px" width="100%" height="400px" minHeight='400px'>
+    <SimpleLayout maxWidth="400px" width="100%" >
         <div style={{ margin: '20px', padding: '30px', backgroundColor: 'white', borderRadius: '0.25rem' }}>
             <SignInForm />
         </div>
-        <div style={{ margin: '24px auto', textAlign: 'center' }}>
+        <div style={{ margin: '24px auto', padding: '10px', textAlign: 'center' }}>
             <Link to="/forget">
                 <p><Icon type="question-circle" style={{ marginRight: '8px' }} />パスワードをお忘れの場合</p>
             </Link>

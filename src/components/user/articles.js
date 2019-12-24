@@ -4,7 +4,7 @@ import AvatarLabel from "components/avatar/author-label";
 import IconText from 'components/text/icon'
 
 const listData = [];
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 5; i++) {
     listData.push({
         href: 'http://ant.design',
         title: `ant design part para para i pasdp pi aifa papa ${i}`,
@@ -17,7 +17,7 @@ for (let i = 0; i < 50; i++) {
     });
 }
 
-const ArticleSearchResults = () => {
+const UserCreatedArticles = () => {
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
 
@@ -33,17 +33,13 @@ const ArticleSearchResults = () => {
     }
 
     return (
-        <div ref={ref}>
+        <div ref={ref} style={{ background: 'white' }}>
             <List
                 size="large"
+                bordered
                 dataSource={listData}
                 itemLayout="vertical"
-                pagination={{
-                    onChange: page => {
-                        console.log(page);
-                    },
-                    pageSize: 10,
-                }}
+                header={<div style={{ fontWeight: '500', fontSize: '16px', color: 'rgba(0,0,0,0.85)' }}>記事</div>}
                 renderItem={item => (
                     <List.Item
                         key={item.title}
@@ -70,6 +66,4 @@ const ArticleSearchResults = () => {
         </div>
     )
 }
-
-
-export default ArticleSearchResults
+export default UserCreatedArticles

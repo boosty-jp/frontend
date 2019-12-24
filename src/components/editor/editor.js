@@ -10,15 +10,15 @@ import { updateText } from 'modules/article/edit'
 class Editor extends React.Component {
     constructor(props) {
         super(props);
-        this.handleSave = debounce(this.handleSave, 2000);
+        this.handleSave = debounce(this.handleSave, 400);
     }
 
     state = { editorInstance: null, outputs: [] }
 
     handleSave = async () => {
         const savedData = await this.state.editorInstance.save();
-        const { text, textCount } = convertToJSX(savedData.blocks);
-        this.props.updateText(text, textCount);
+        const { text, textCount, blockCount } = convertToJSX(savedData.blocks);
+        this.props.updateText(text, textCount, blockCount);
     }
 
     render() {
@@ -41,13 +41,13 @@ class Editor extends React.Component {
                                 "type": "header",
                                 "data": {
                                     "text": "Editor.js",
-                                    "level": 2
+                                    "level": 2,
                                 }
                             },
                             {
                                 "type": "paragraph",
                                 "data": {
-                                    "text": "Hey. Meet the new Editor. On this page you can see it in action — try to edit this text."
+                                    "text": "Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.",
                                 }
                             },
                             {
@@ -144,7 +144,7 @@ class Editor extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    updateText: (text, textCount) => dispatch(updateText(text, textCount)),
+    updateText: (text, textCount, blockCount) => dispatch(updateText(text, textCount, blockCount)),
 })
 
 const ArticleEditor = connect(null, mapDispatchToProps)(Editor)

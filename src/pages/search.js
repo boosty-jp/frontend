@@ -5,7 +5,7 @@ import SearchCategoryForm from "components/search/category";
 import SearchResults from "components/search/result";
 import TwoColumnLayout from "components/layout/two-column";
 import TopicCategoryCard from "components/category/topic-card"
-import TopicUserCard from "components/user/topic-card";
+import TopicUserCard from "components/account/topic-card";
 
 const IndexPage = () => (
     <Layout>

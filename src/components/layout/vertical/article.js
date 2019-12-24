@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import VerticalFooter from "./footer";
 import ArticleHorizontalMenu from 'components/menu/horizontal-article'
 import ActionButtonSider from "components/sider/action-buttons";
+import ArticleAnchorMenu from "components/sider/article-anchor";
 
 const { Content } = Layout;
 
@@ -23,6 +24,7 @@ class ArticleLayout extends React.Component {
                 <ArticleHorizontalMenu />
                 <Content>
                     <ActionButtonSider onCourse={false} />
+                    <ArticleAnchorMenu />
                     <div>
                         {this.props.children}
                     </div>

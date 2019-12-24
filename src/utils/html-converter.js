@@ -7,20 +7,25 @@ const { Title, Paragraph, Text } = Typography;
 export const convertToJSX = (blocks) => {
     var jsxList = [];
     var textCount = 0;
+    var blockCount = 0;
     const countRegexp = /<[^>]*>|\s+|&nbsp;/g
     blocks.forEach(block => {
+        console.log(block.data);
         const text = block.data.text
         switch (block.type) {
             case 'header':
-                jsxList.push(<Title level={block.data.level}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
+                jsxList.push(<Title level={block.data.level} id={text}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
                 if (text) textCount += text.replace(countRegexp, '').length;
+                blockCount++;
                 break;
             case 'paragraph':
                 jsxList.push(<Paragraph><span dangerouslySetInnerHTML={{ __html: text }} /></Paragraph>)
                 if (text) textCount += text.replace(countRegexp, '').length;
+                blockCount++;
                 break;
             case 'imageUrl':
                 jsxList.push(<img src={block.data.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
+                blockCount++;
                 break;
             case 'image':
                 if (block.data.file) {
@@ -28,11 +33,13 @@ export const convertToJSX = (blocks) => {
                         jsxList.push(<img src={block.data.file.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
                     }
                 }
+                blockCount++;
                 break;
             case 'code':
                 const codeHtml = "<pre><code class=\"hljs \">" + hljs.highlightAuto(block.data.code).value + "</code></pre>";
                 jsxList.push(<Paragraph code={false}><div dangerouslySetInnerHTML={{ __html: codeHtml }} /></Paragraph>)
                 if (block.data.code) textCount += block.data.code.replace(countRegexp, '').length;
+                blockCount++;
                 break;
             case 'list':
                 let listJSX;
@@ -43,6 +50,7 @@ export const convertToJSX = (blocks) => {
                 }
                 block.data.items.forEach(i => { if (i) textCount += i.replace(countRegexp, '').length })
                 jsxList.push(<Paragraph >{listJSX}</Paragraph>)
+                blockCount++;
                 break;
             case 'embed':
                 jsxList.push(
@@ -53,6 +61,7 @@ export const convertToJSX = (blocks) => {
                         </Paragraph >
                     </>
                 )
+                blockCount++;
                 break;
             case 'warning':
                 jsxList.push(
@@ -70,6 +79,7 @@ export const convertToJSX = (blocks) => {
                 if (block.data.message) {
                     textCount += block.data.message.replace(countRegexp, '').length;
                 }
+                blockCount++;
                 break;
             case 'table':
                 if (block.data.content.length === 0) jsxList.push(<></>)
@@ -94,6 +104,7 @@ export const convertToJSX = (blocks) => {
                 jsxList.push(
                     <Table tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} />
                 )
+                blockCount++;
                 break;
             case 'quote':
                 jsxList.push(
@@ -116,8 +127,9 @@ export const convertToJSX = (blocks) => {
                 if (text) {
                     textCount += text.replace(countRegexp, '').length;
                 }
+                blockCount++;
                 break;
         }
     })
-    return { text: jsxList, textCount: textCount }
+    return { text: jsxList, textCount: textCount, blockCount: blockCount }
 }

@@ -12,12 +12,9 @@ const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const CREATE_USER = gql`
-mutation CreateUser($userInput: UserInput!) {
-  createUser(user: $userInput){
-    error{
-        errorCode
-        errorMessage
-    }
+mutation CreateUser($displayName: String!, $imageUrl: String!) {
+  createUser(displayName: $displayName, imageUrl: $imageUrl){
+      id
   }
 }
 `;
@@ -41,8 +38,7 @@ class SignUpForm extends React.Component {
         firebase.auth().getRedirectResult().then((result) => {
             if (result.user) {
                 // サードパーティで認証後にリダイレクトしてきたときの処理
-                console.log('create')
-                // this.createUser(result.user)
+                this.createUser(result.user)
             } else {
                 // 通常処理
                 this.setState({ loading: false })
@@ -58,11 +54,12 @@ class SignUpForm extends React.Component {
         try {
             await this.props.client.mutate({
                 mutation: CREATE_USER,
-                variables: { userInput: { displayName: displayName, description: "", url: "", tags: [], imageUrl: user.photoURL } }
+                variables: { displayName: displayName, imageUrl: user.photoURL }
             });
 
             setUser({ userId: user.uid, imageUrl: user.photoURL, userName: displayName })
-            navigate("/auth/registered")
+            navigate("/")
+            message.info("会員登録が完了しました", 7)
         } catch (err) {
             message.error("エラーが発生しました。お手数ですが、再度お試しください。", 7)
         }
@@ -86,9 +83,9 @@ class SignUpForm extends React.Component {
                 spinning={this.state.loading}
                 indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
             >
-                <OwnSignUpForm />
+                <ThirdPartyButtons authType="会員登録" />
                 <SignUpDivider>もしくは</SignUpDivider>
-                <ThirdPartyButtons />
+                <OwnSignUpForm />
             </Spin>
         );
     }

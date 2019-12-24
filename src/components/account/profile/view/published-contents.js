@@ -27,7 +27,7 @@ const categories = [
     { id: '4', publishDate: '1日前', learned: 20, like: 23, title: 'ReactとReduxで作成するモダンなフロントエンド環境', image: 'https://ja.reactjs.org/logo-og.png' },
     { id: '5', publishDate: '1日前', learned: 20, like: 2303, title: 'javascript', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/480px-Unofficial_JavaScript_logo_2.svg.png' },
 ]
-const CreatedContents = () => {
+const PublishedContents = () => {
     return (
         <div style={{ marginBottom: '24px' }}>
             <CreatedContentsCard
@@ -63,4 +63,4 @@ const CreatedContents = () => {
         </div>
     )
 }
-export default CreatedContents
+export default PublishedContents

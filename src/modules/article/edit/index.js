@@ -39,10 +39,11 @@ export const updateTags = (tags) => ({
     tags: tags
 })
 
-export const updateText = (text, textCount) => ({
+export const updateText = (text, textCount, blockCount) => ({
     type: UPDATE_TEXT,
     text: text,
     textCount: textCount,
+    blockCount: blockCount,
 })
 
 export const updateSkillDraft = (skillDraft) => ({
@@ -61,6 +62,7 @@ const initialState = {
     status: "publish",
     text: '',
     textCount: 0,
+    blockCount: 0,
     tags: [],
     skills: [],
     skillDraft: { id: "", name: "" },
@@ -131,6 +133,7 @@ export default function ArticleEdit(state = initialState, action) {
                 ...state,
                 text: action.text,
                 textCount: action.textCount,
+                blockCount: action.blockCount,
             }
         default:
             return state;

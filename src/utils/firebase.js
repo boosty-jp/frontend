@@ -1,5 +1,4 @@
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import * as firebase from 'firebase'
 
 var config = {
     apiKey: process.env.GATSBY_FIREBASE_API_KEY,

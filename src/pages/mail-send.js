@@ -22,7 +22,7 @@ const MailSendPage = () => {
     }
 
     return (
-        <SimpleLayout maxWidth="500px" width="100%" height="300px" minHeight="300px">
+        <SimpleLayout maxWidth="500px" width="100%" >
             <div style={{ margin: '20px', padding: '0px', backgroundColor: 'white', borderRadius: '0.25rem' }}>
                 <Result
                     icon={<Icon type="mail" theme="twoTone" />}

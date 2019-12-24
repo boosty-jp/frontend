@@ -1,8 +1,8 @@
 import React from "react"
 import SEO from "components/seo"
 import VerticalLayout from "components/layout/vertical/account"
-import AccountEditLayout from 'components/user/settings/layout'
-import MailUpdateForm from "components/user/settings/mail"
+import AccountEditLayout from 'components/account/settings/layout'
+import MailUpdateForm from "components/account/settings/mail"
 
 const AccountEditPage = () => (
     <VerticalLayout pageTitle="メールアドレス設定" selectedMenu="account-settings" openedMenu="account">

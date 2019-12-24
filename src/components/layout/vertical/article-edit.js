@@ -39,8 +39,17 @@ class ArticleEditorLayoutComponent extends React.Component {
                                 </Tooltip>
                             </div>
                             <div style={{ marginTop: '8px' }}>
+                                {this.props.blockCount > 50 ?
+                                    <Tooltip placement="left" title="投稿できる最大ブロックは50ブロックです。">
+                                        <span style={{ marginTop: '8px', color: 'red' }}><Icon type="warning" style={{ marginRight: '8px' }} />{this.props.blockCount}ブロック</span>
+                                    </Tooltip>
+                                    :
+                                    <p style={{ marginTop: '8px', color: 'grey' }}>{this.props.blockCount}ブロック</p>
+                                }
+                            </div>
+                            <div style={{ marginTop: '8px' }}>
                                 {this.props.textCount > 20000 ?
-                                    <Tooltip placement="left" title="投稿できる最大文字数は20000文字です。">
+                                    <Tooltip placement="left" title="投稿できる最大文字数は10000文字です。">
                                         <span style={{ marginTop: '8px', color: 'red' }}><Icon type="warning" style={{ marginRight: '8px' }} />{this.props.textCount}文字</span>
                                     </Tooltip>
                                     :
@@ -58,6 +67,7 @@ class ArticleEditorLayoutComponent extends React.Component {
 
 const mapStateToProps = state => ({
     textCount: state.articleEdit.textCount,
+    blockCount: state.articleEdit.blockCount,
 })
 
 const ArticleEditorLayout = connect(mapStateToProps)(ArticleEditorLayoutComponent)

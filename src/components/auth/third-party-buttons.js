@@ -1,8 +1,9 @@
 import React from "react"
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 import getFirebase, { getGoogleProvider, getFacebookProvider } from "utils/firebase";
 import { presetPalettes } from '@ant-design/colors'
-
+import GoogleIcon from 'images/google.png'
+import FacebookIcon from 'images/facebook.png'
 class ThirdPartyButtons extends React.Component {
     state = {
         googleLoading: false,
@@ -33,23 +34,30 @@ class ThirdPartyButtons extends React.Component {
         return (
             <div style={{ textAlign: 'center' }}>
                 <Button
-                    icon="google"
+                    block
+                    size="large"
                     onClick={() => this.signIn('Google')}
                     loading={this.state.googleLoading}
-                    style={{ backgroundColor: presetPalettes.red.primary, borderColor: presetPalettes.red.primary, color: 'white', marginRight: '12px' }}
-                />
+                    style={{ verticalAlign: 'middle' }}
+                >
+                    <span style={{ verticalAlign: 'middle' }}>
+                        <img src={GoogleIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} />
+                        Googleで{this.props.authType}
+                    </span>
+                </Button>
                 <Button
-                    icon="facebook"
+                    block
+                    size="large"
                     onClick={() => this.signIn('Facebook')}
                     loading={this.state.facebookLoading}
-                    style={{ backgroundColor: presetPalettes.blue[7], borderColor: presetPalettes.blue[7], color: 'white', marginRight: '12px' }}
-                />
-                {/* <Button
-                    icon="twitter"
-                    onClick={()=>this.signUp()}
-                    style={{ backgroundColor: presetPalettes.blue[4], borderColor: presetPalettes.blue[4], color: 'white' }}
-                /> */}
-            </div>
+                    style={{ marginTop: '16px' }}
+                >
+                    <span style={{ textAlign: 'left', verticalAlign: 'middle' }}>
+                        <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} />
+                        Facebookで{this.props.authType}
+                    </span>
+                </Button>
+            </div >
         );
     }
 }

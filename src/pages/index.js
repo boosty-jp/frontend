@@ -10,7 +10,7 @@ import TopicNotificationCard from "components/notification/topic-card"
 import TopicCurriculums from "components/course/topics"
 import TopicArticles from "components/article/topics"
 import TopicCategoryList from "components/category/topic-list"
-import TopicUserCard from "components/user/topic-card"
+import TopicUserCard from "components/account/topic-card"
 
 const IndexPage = () => {
   return (
