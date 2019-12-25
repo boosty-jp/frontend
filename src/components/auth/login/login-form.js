@@ -7,6 +7,7 @@ import getFirebase from "utils/firebase";
 import styled from 'styled-components'
 import OwnLoginForm from "components/auth/login/own-login-form";
 import ThirdPartyButtons from "components/auth/third-party-buttons";
+import { getErrorMessage } from "utils/error-handle";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -51,19 +52,20 @@ class LoginForm extends React.Component {
 
     setLoginData = async (userId) => {
         try {
-            // const { data } = await this.props.client.query({
-            //     query: GET_USER,
-            //     variables: { userId: userId }
-            // });
+            const { data } = await this.props.client.query({
+                query: GET_USER,
+                variables: { userId: userId }
+            });
 
-            // setUser({ userId: userId, imageUrl: data.user.imageUrl, userName: data.user.displayName })
+            console.log('d', data);
+            setUser({ userId: userId, imageUrl: data.user.imageUrl, userName: data.user.displayName })
 
             setUser({ userId: 'tomokiya', imageUrl: '', userName: 'tomokiya' })
             navigate("/")
-            message.error("ログインしました", 7)
+            message.info("ログインしました", 7)
         } catch (err) {
             this.setState({ loading: false })
-            message.error("エラーが発生しました。お手数ですが、再度お試しください。", 7)
+            message.error(getErrorMessage(err), 7)
         }
     }
 

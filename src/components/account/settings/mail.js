@@ -3,12 +3,16 @@ import { Form, Input, Button, Icon, Modal, message, Spin } from 'antd';
 import getFirebase from 'utils/firebase'
 import ReAuthForm from "components/auth/reauth/reauth-form";
 
+const isBrowser = typeof window !== 'undefined';
+const navigate = isBrowser ? require('gatsby').navigate : () => { }
+
 class UpdateForm extends React.Component {
 
     state = {
         needReAuth: false,
         loading: true,
         updating: false,
+        currentMail: '',
     };
 
     componentDidMount() {
@@ -23,6 +27,16 @@ class UpdateForm extends React.Component {
             this.setState({ loading: false })
             this.handleAuthError(error);
         });
+
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                navigate('/login');
+                message.error("エラーが発生しました。ログインが必要です。", 10)
+            } else {
+                this.setState({ currentMail: user.email });
+            }
+        })
     }
 
     handleSubmit = e => {
@@ -56,13 +70,18 @@ class UpdateForm extends React.Component {
         const firebase = getFirebase();
         this.setState({ updating: true });
         firebase.auth().onAuthStateChanged((user) => {
-            user.updateEmail(mail).then(() => {
-                message.success("メールアドレスを変更しました。", 10)
-                this.mailVerification();
-                this.setState({ updating: false, needReAuth: false });
-            }).catch((error) => {
-                this.handleAuthError(error);
-            });
+            if (user) {
+                user.updateEmail(mail).then(() => {
+                    message.success("メールアドレスを変更しました。", 10)
+                    this.mailVerification();
+                    this.setState({ updating: false, needReAuth: false });
+                }).catch((error) => {
+                    this.handleAuthError(error);
+                });
+            } else {
+                navigate('/')
+                message.error("エラーが発生しました。ログインが必要です。", 10)
+            }
         });
     }
 
@@ -88,6 +107,10 @@ class UpdateForm extends React.Component {
                     spinning={this.state.loading}
                     indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
                 >
+                    <div style={{ fontWeight: '500', fontSize: '14px', marginBottom: '30px' }}>
+                        <p><Icon type="mail" style={{ marginRight: '8px' }} />現在のメールアドレス</p>
+                        <p>{this.state.currentMail}</p>
+                    </div>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Item label='新しいメールアドレス'>
                             {getFieldDecorator('mail', {

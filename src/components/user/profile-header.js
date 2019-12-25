@@ -112,7 +112,7 @@ const UserProfileHeader = ({ selfSearch, id }) => {
             query={GET_ACCOUNT}
         >
             {({ loading, error, data }) => {
-                if (loading) return <Skeleton avatar paragraph={{ rows: 4 }} />
+                if (loading) return <Skeleton avatar active paragraph={{ rows: 4 }} />
                 if (error) return <ErrorResult />
                 return <ProfileHeader data={data.account.user} selfSearch={selfSearch} />
             }}

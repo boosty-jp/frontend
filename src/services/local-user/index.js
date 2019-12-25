@@ -2,6 +2,8 @@ const isBrowser = typeof window !== `undefined`
 
 export const setUser = user => (window.localStorage.weverUser = JSON.stringify(user))
 
+export const updateUser = user => (window.localStorage.weverUser = JSON.stringify({ ...getUser(), ...user }))
+
 const getUser = () => {
     if (isBrowser) {
         if (window.localStorage.weverUser) {

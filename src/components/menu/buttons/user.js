@@ -3,6 +3,8 @@ import { message, Avatar, Dropdown, Menu, Divider, Icon, notification } from 'an
 import { Link } from "gatsby";
 import { getUserImage, getCurrentUser, logout } from "services/local-user";
 import getFirebase from "utils/firebase";
+import AvatarImage from "components/avatar/image";
+
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
 
@@ -15,12 +17,8 @@ const UserButtons = () => {
     const menu = (
         <Menu>
             <div style={{ padding: '8px' }}>
-                {avatarImage ?
-                    <Avatar src={avatarImage} style={{ marginRight: '8px' }} />
-                    :
-                    <Avatar icon="user" style={{ marginRight: '8px' }} />
-                }
-                {userName}
+                <AvatarImage imageUrl={avatarImage} displayName={userName} />
+                <span style={{ marginLeft: '8px' }}>{userName}</span>
             </div>
             <Divider style={{ margin: '6px 0px' }} />
             <Menu.Item>
@@ -60,11 +58,9 @@ const UserButtons = () => {
 
     return (
         <Dropdown overlay={menu} placement="bottomRight">
-            {avatarImage ?
-                <Avatar src={avatarImage} />
-                :
-                <Avatar icon="user" />
-            }
+            <span>
+                <AvatarImage imageUrl={avatarImage} displayName={userName} />
+            </span>
         </Dropdown>
     )
 }

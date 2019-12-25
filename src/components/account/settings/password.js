@@ -36,7 +36,6 @@ class PasswordUpdateFormComponent extends React.Component {
     handleAuthError = (error) => {
         const errorCode = error.code;
         this.setState({ updating: false, needReAuth: false });
-        console.log('e2', error);
         if (errorCode == 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
             // すでにそのメールでアカウントが作成されていた場合
             message.error("別の認証方式でアカウントが登録されています。別のログイン形式からログインしてください。", 7)
@@ -58,7 +57,6 @@ class PasswordUpdateFormComponent extends React.Component {
                     message.success('パスワードを変更しました', 7)
                     this.setState({ updating: false, needReAuth: false });
                 }).catch((error) => {
-                    console.log('e1', error);
                     this.handleAuthError(error);
                 });
             } else {

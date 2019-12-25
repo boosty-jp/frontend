@@ -1,23 +1,23 @@
 import React from "react"
-import { message, Button, Divider, Avatar, notification } from 'antd';
+import { message, Button, Divider, notification } from 'antd';
 import { Link } from "gatsby";
 import { getUserImage, getCurrentUser, logout } from "services/local-user";
 import getFirebase from "utils/firebase";
+import AvatarImage from "components/avatar/image";
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
 
 
 const LoginItems = () => {
     const avatarImage = getUserImage();
+    const userName = getCurrentUser().userName;
 
     return (
         <>
-            {avatarImage ?
-                <Avatar src={avatarImage} style={{ marginRight: '8px' }} />
-                :
-                <Avatar icon="user" style={{ marginRight: '8px' }} />
-            }
-            {getCurrentUser().userName}
+            <AvatarImage imageUrl={avatarImage} displayName={userName} />
+            <span style={{ marginLeft: '8px' }}>
+                {getCurrentUser().userName}
+            </span>
             <Divider />
             <Link to="/signup">
                 <p style={{ color: 'grey' }}>プロフィール</p>

@@ -1,17 +1,10 @@
 import React from "react"
-import LargeLogo from "components/logo/large"
-import { Layout } from 'antd';
 import NOSEO from 'components/seo/noseo'
 import withLocation from "components/wrapper/location";
-import HorizontalFooter from "components/layout/horizontal/footer";
-import VerticalFooter from "components/layout/vertical/footer";
 import getFirebase from "utils/firebase";
 import ResetPasswordForm from 'components/auth/password-reset'
 import VerifyMailInfo from 'components/auth/verify-mail'
 import SimpleLayout from "components/layout/simple-layout";
-
-const { Content } = Layout;
-
 
 const MailVerifyPage = ({ search }) => {
     const { mode, oobCode, continueUrl, lang } = search

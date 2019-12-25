@@ -1,9 +1,10 @@
 import React from "react"
 import { Skeleton, Result, Form, Input, Tooltip, Icon, Button, Row, Col, message } from 'antd';
 import AvatarUploader from "./avatar-uploader";
-import { Query, Mutation } from 'react-apollo'
+import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
+import { setUser, updateUser } from "services/local-user";
 
 const GET_ACCOUNT = gql`
   query GetAccount {
@@ -62,7 +63,7 @@ class UpdateForm extends React.Component {
                 variables: {
                     userInput: {
                         url: values.url ? values.url : "",
-                        imageUrl: values.imageUrl ? values.imageUrl : "",
+                        imageUrl: this.state.imageUrl ? this.state.imageUrl : "",
                         description: values.profile ? values.profile : "",
                         displayName: values.displayName ? values.displayName : "",
                         twitterId: values.twitterId ? values.twitterId : "",
@@ -70,6 +71,10 @@ class UpdateForm extends React.Component {
                     }
                 }
             });
+            updateUser({
+                imageUrl: this.state.imageUrl ? this.state.imageUrl : "",
+                userName: values.displayName ? values.displayName : ""
+            })
             message.success("プロフィールを更新しました", 7)
         } catch (err) {
             message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
@@ -78,119 +83,98 @@ class UpdateForm extends React.Component {
         this.setState({ loading: false })
     }
 
-    normFile = e => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e && e.fileList;
-    };
-
     render() {
         const { getFieldDecorator } = this.props.form;
 
         return (
-            // <Query
-            //     query={GET_ACCOUNT}
-            // >
-            //     {({ loading, error, data }) => {
-            //         if (loading) return <Skeleton avatar paragraph={{ rows: 4 }} />
-            //         if (error) return <ErrorResult />
-            //         const userData = data.account.user
-            //         console.log(userData);
-            //         return (
-            //             <div style={{ maxWidth: '500px', width: '100%' }}>
-            //                 <Form onSubmit={this.handleSubmit}>
-            //                     <Row>
-            //                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            //                             <Form.Item >
-            //                                 {getFieldDecorator('avatar', {
-            //                                     valuePropName: 'fileList',
-            //                                     getValueFromEvent: this.normFile,
-            //                                 })(<AvatarUploader imageUrl={userData.imageUrl} displayName={userData.displayName} />)}
-            //                             </Form.Item>
-            //                         </Col>
-            //                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            //                             <Form.Item
-            //                                 label={
-            //                                     <span>
-            //                                         表示名&nbsp;
-            //                                         <Tooltip title="30文字まで入力できます">
-            //                                             <Icon type="question-circle-o" />
-            //                                         </Tooltip>
-            //                                     </span>
-            //                                 }
-            //                             >
-            //                                 {getFieldDecorator('displayName', {
-            //                                     rules: [
-            //                                         { required: true, message: '表示名を入力してください', whitespace: true },
-            //                                         { max: 30, message: '最大文字数は30文字です', whitespace: true },
-            //                                     ],
-            //                                     initialValue: userData.displayName,
-            //                                 })(<Input />)}
-            //                             </Form.Item>
-            //                         </Col>
-            //                     </Row>
-            //                     <Form.Item label={
-            //                         <span>
-            //                             自己紹介&nbsp;
-            //                             <Tooltip title="200文字まで入力できます">
-            //                                 <Icon type="question-circle-o" />
-            //                             </Tooltip>
-            //                         </span>
-            //                     }>
-            //                         {getFieldDecorator('profile', {
-            //                             // rules: [{ required: true, message: 'Please input website!' }],
-            //                             rules: [
-            //                                 { max: 200, message: '最大文字数は200文字です', whitespace: true },
-            //                             ],
-            //                             initialValue: userData.description,
-            //                         })(
-            //                             <Input.TextArea
-            //                                 autoSize={{ minRows: 3, maxRows: 7 }}
-            //                             />
-            //                         )}
-            //                     </Form.Item>
-            //                     <Form.Item label={
-            //                         <span>
-            //                             <Icon type="link" style={{ marginRight: '8px' }} />
-            //                             WebサイトURL&nbsp;
-            //                         </span>
-            //                     }>
-            //                         {getFieldDecorator('url', {
-            //                             initialValue: userData.url,
-            //                         })(<Input />)}
-            //                     </Form.Item>
-            //                     <Form.Item label={
-            //                         <span>
-            //                             <Icon type="twitter" style={{ marginRight: '8px' }} />
-            //                             Twitter ID&nbsp;
-            //                         </span>
-            //                     }>
-            //                         {getFieldDecorator('twitterId', {
-            //                             initialValue: userData.twitterId,
-            //                         })(<Input addonBefore="https://twitter.com/" />)}
-            //                     </Form.Item>
-            //                     <Form.Item label={
-            //                         <span>
-            //                             <Icon type="facebook" theme="filled" style={{ marginRight: '8px' }} />
-            //                             Facebook ID&nbsp;
-            //                         </span>
-            //                     }>
-            //                         {getFieldDecorator('facebookId', {
-            //                             initialValue: userData.facebookId,
-            //                         })(<Input addonBefore="https://facebook.com/" />)}
-            //                     </Form.Item>
-            //                     <Form.Item >
-            //                         <Button type="primary" htmlType="submit" loading={this.state.loading}>更新する</Button>
-            //                     </Form.Item>
-            //                 </Form >
-            //             </div>
-            //         )
-            //     }}
-            // </Query >
-
-            <AvatarUploader displayName="tomokiya" />
+            <Query
+                query={GET_ACCOUNT}
+                onCompleted={(data) => this.setState({ imageUrl: data.account.user.imageUrl })}
+            >
+                {({ loading, error, data }) => {
+                    if (loading) return <Skeleton avatar active paragraph={{ rows: 4 }} />
+                    if (error) return <ErrorResult />
+                    const userData = data.account.user
+                    return (
+                        <div style={{ maxWidth: '500px', width: '100%' }}>
+                            <Form onSubmit={this.handleSubmit}>
+                                <AvatarUploader imageUrl={userData.imageUrl} displayName={userData.displayName} onComplete={(imageUrl) => { this.setState({ imageUrl: imageUrl }) }} />
+                                <Form.Item
+                                    label={
+                                        <span>
+                                            表示名&nbsp;
+                                                    <Tooltip title="30文字まで入力できます">
+                                                <Icon type="question-circle-o" />
+                                            </Tooltip>
+                                        </span>
+                                    }
+                                >
+                                    {getFieldDecorator('displayName', {
+                                        rules: [
+                                            { required: true, message: '表示名を入力してください', whitespace: true },
+                                            { max: 30, message: '最大文字数は30文字です', whitespace: true },
+                                        ],
+                                        initialValue: userData.displayName,
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label={
+                                    <span>
+                                        自己紹介&nbsp;
+                                        <Tooltip title="200文字まで入力できます">
+                                            <Icon type="question-circle-o" />
+                                        </Tooltip>
+                                    </span>
+                                }>
+                                    {getFieldDecorator('profile', {
+                                        // rules: [{ required: true, message: 'Please input website!' }],
+                                        rules: [
+                                            { max: 200, message: '最大文字数は200文字です', whitespace: true },
+                                        ],
+                                        initialValue: userData.description,
+                                    })(
+                                        <Input.TextArea
+                                            autoSize={{ minRows: 3, maxRows: 7 }}
+                                        />
+                                    )}
+                                </Form.Item>
+                                <Form.Item label={
+                                    <span>
+                                        <Icon type="link" style={{ marginRight: '8px' }} />
+                                        WebサイトURL&nbsp;
+                                    </span>
+                                }>
+                                    {getFieldDecorator('url', {
+                                        initialValue: userData.url,
+                                    })(<Input />)}
+                                </Form.Item>
+                                <Form.Item label={
+                                    <span>
+                                        <Icon type="twitter" style={{ marginRight: '8px' }} />
+                                        Twitter ID&nbsp;
+                                    </span>
+                                }>
+                                    {getFieldDecorator('twitterId', {
+                                        initialValue: userData.twitterId,
+                                    })(<Input addonBefore="https://twitter.com/" />)}
+                                </Form.Item>
+                                <Form.Item label={
+                                    <span>
+                                        <Icon type="facebook" theme="filled" style={{ marginRight: '8px' }} />
+                                        Facebook ID&nbsp;
+                                    </span>
+                                }>
+                                    {getFieldDecorator('facebookId', {
+                                        initialValue: userData.facebookId,
+                                    })(<Input addonBefore="https://facebook.com/" />)}
+                                </Form.Item>
+                                <Form.Item >
+                                    <Button type="primary" htmlType="submit" loading={this.state.loading}>更新する</Button>
+                                </Form.Item>
+                            </Form >
+                        </div>
+                    )
+                }}
+            </Query >
         )
     }
 }
