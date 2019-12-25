@@ -57,10 +57,8 @@ class LoginForm extends React.Component {
                 variables: { userId: userId }
             });
 
-            console.log('d', data);
             setUser({ userId: userId, imageUrl: data.user.imageUrl, userName: data.user.displayName })
 
-            setUser({ userId: 'tomokiya', imageUrl: '', userName: 'tomokiya' })
             navigate("/")
             message.info("ログインしました", 7)
         } catch (err) {

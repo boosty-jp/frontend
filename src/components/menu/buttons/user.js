@@ -1,5 +1,5 @@
 import React from "react"
-import { message, Avatar, Dropdown, Menu, Divider, Icon, notification } from 'antd';
+import { message, Avatar, Dropdown, Menu, Divider, Icon, notification, Button } from 'antd';
 import { Link } from "gatsby";
 import { getUserImage, getCurrentUser, logout } from "services/local-user";
 import getFirebase from "utils/firebase";
@@ -7,8 +7,6 @@ import AvatarImage from "components/avatar/image";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
-
-
 
 const UserButtons = () => {
     const avatarImage = getUserImage();
@@ -57,11 +55,14 @@ const UserButtons = () => {
     );
 
     return (
-        <Dropdown overlay={menu} placement="bottomRight">
-            <span>
-                <AvatarImage imageUrl={avatarImage} displayName={userName} />
-            </span>
-        </Dropdown>
+        <>
+            <Button icon="edit" type="primary" style={{ marginRight: '12px' }} onClick={() => navigate('/post')}>投稿</Button>
+            <Dropdown overlay={menu} placement="bottomRight">
+                <span>
+                    <AvatarImage imageUrl={avatarImage} displayName={userName} />
+                </span>
+            </Dropdown>
+        </>
     )
 }
 export default UserButtons

@@ -1,59 +1,93 @@
 import React from "react";
-import { Select, Spin, Divider } from "antd";
+import { Select, Spin, Divider, message, Icon } from "antd";
+import { withApollo } from 'react-apollo'
+import gql from 'graphql-tag';
 import debounce from "lodash/debounce";
+import algoliasearch from 'algoliasearch/lite';
+import { getErrorMessage } from "utils/error-handle";
 
 const { Option } = Select;
+
+const CREATE_TAG = gql`
+mutation CreateTag ($name: String!) {
+  createTag(name: $name){
+      id
+  }
+}
+`;
+
+const searchClient = algoliasearch(
+    process.env.GATSBY_ALGOLIA_APP_ID,
+    process.env.GATSBY_ALGOLIA_SEARCH_ONLY_API_KEY
+)
+
+const index = searchClient.initIndex('tag')
 
 class TagSelectForm extends React.Component {
     constructor(props) {
         super(props);
         this.fetchTags = debounce(this.fetchTags, 300);
+        this.state = {
+            searchResults: [],
+            fetching: false,
+            inputVal: '',
+            open: false,
+            loading: false,
+        };
     }
 
-    state = {
-        searchResults: [],
-        fetching: false,
-        inputVal: '',
-        open: false,
-    };
-
     fetchTags = value => {
+        value = value.replace(/\s+/g, "");
+        if (value.length === 0) {
+            //空白文字のときは何も表示しない
+            this.setState({ fetching: false, searchResults: [] })
+            return;
+        }
+
         this.setState({ searchResults: [], fetching: true, inputVal: value, open: true });
 
-        // Algoliaの検索後
-        // TODO: すでに入力済みのものは検索結果から消す
-        this.setState({
-            searchResults: [
-                { id: 'res-1', name: "検索結果1" },
-                { id: 'res-2', name: "検索結果2" }
-            ],
-            fetching: false
-        });
+        index.search({ query: value, hitsPerPage: 8 }).then(({ hits }) => {
+            console.log('h', hits);
+            const result = hits.map(hit => {
+                return { id: hit.objectID, key: hit.objectID, name: hit.name }
+            })
+
+            this.setState({ fetching: false, searchResults: result })
+        }).catch(() => { this.setState({ fetching: false }) })
     };
 
     handleChange = value => {
-        // 追加成功したらstoreに連携する
         this.setState({
             searchResults: [],
             fetching: false,
             open: false,
             inputVal: ''
         });
-
         this.props.updateTags(value);
     };
 
-    addItem = () => {
+    addItem = async () => {
         const { inputVal } = this.state;
-        // ここでタグ追加APIを叩く
-        // 追加成功したらstoreに連携する
+        this.setState({ loading: true, fetching: true, open: false });
+        try {
+            const { data } = await this.props.client.mutate({
+                mutation: CREATE_TAG,
+                variables: { name: inputVal }
+            });
+
+            this.props.addTag({ key: data.createTag.id, label: inputVal, id: data.createTag.id })
+
+        } catch (err) {
+            message.error(getErrorMessage(err), 7)
+        }
+
         this.setState({
             searchResults: [],
             fetching: false,
             open: false,
-            inputVal: ''
+            inputVal: '',
+            loading: false
         });
-        this.props.addTag({ key: "key-" + inputVal, label: inputVal, id: "id-" + inputVal })
     };
 
     displayCreationForm = () => {
@@ -87,47 +121,49 @@ class TagSelectForm extends React.Component {
     }
 
     render() {
-        const { fetching, searchResults, inputVal, open } = this.state;
+        const { fetching, searchResults, inputVal, open, loading } = this.state;
         return (
-            <Select
-                size="large"
-                mode="multiple"
-                labelInValue
-                value={this.props.tags}
-                placeholder="タグを選択する"
-                notFoundContent={fetching ? <Spin size="small" /> : null}
-                filterOption={false}
-                onSearch={this.fetchTags}
-                onChange={this.handleChange}
-                style={{ width: "100%" }}
-                open={open}
-                dropdownRender={menu => (
-                    this.displayCreationForm() ?
-                        <div>
-                            {menu}
-                            <Divider style={{ margin: "4px 0" }} />
-                            <div
-                                style={{ padding: "4px 8px", cursor: "pointer" }}
-                                onMouseDown={e => e.preventDefault()}
-                                onClick={this.addItem}
-                            >
-                                <strong>「{inputVal}」</strong>を追加する
+            <Spin spinning={loading} tip="更新中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+                <Select
+                    size="large"
+                    mode="multiple"
+                    labelInValue
+                    value={this.props.tags}
+                    placeholder="タグを選択する"
+                    notFoundContent={fetching ? <Spin size="small" /> : null}
+                    filterOption={false}
+                    onSearch={this.fetchTags}
+                    onChange={this.handleChange}
+                    style={{ width: "100%" }}
+                    open={open}
+                    dropdownRender={menu => (
+                        this.displayCreationForm() ?
+                            <div>
+                                {menu}
+                                <Divider style={{ margin: "4px 0" }} />
+                                <div
+                                    style={{ padding: "4px 8px", cursor: "pointer" }}
+                                    onMouseDown={e => e.preventDefault()}
+                                    onClick={this.addItem}
+                                >
+                                    <strong>「{inputVal}」</strong>を追加する
                             </div>
-                        </div>
-                        :
-                        <>
-                            {menu}
-                        </>
-                )}
-            >
-                {
-                    searchResults.map(d => (
-                        <Option key={d.id}>{d.name}</Option>
-                    ))
-                }
-            </Select >
+                            </div>
+                            :
+                            <>
+                                {menu}
+                            </>
+                    )}
+                >
+                    {
+                        searchResults.map(d => (
+                            <Option key={d.id}>{d.name}</Option>
+                        ))
+                    }
+                </Select >
+            </Spin>
         );
     }
 }
 
-export default TagSelectForm
+export default withApollo(TagSelectForm)

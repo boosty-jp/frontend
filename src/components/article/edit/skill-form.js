@@ -64,7 +64,6 @@ class SkillForm extends React.Component {
     render() {
         return (
             <>
-                <p style={{ fontWeight: '400', fontSize: '16px', margin: '0px' }}>スキル: </p>
                 <div style={{ marginTop: '10px', fontSize: '16px' }}>
                     <List
                         bordered

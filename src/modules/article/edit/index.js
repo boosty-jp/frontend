@@ -1,3 +1,5 @@
+import { getTitleError, getTagsError } from 'utils/validate';
+
 const SUFFIX = '_ARTICLE_EDIT';
 const SET_ARTICLE = 'SET_ARTICLE' + SUFFIX;
 const UPDATE_TITLE = 'UPDATE_TITLE' + SUFFIX;
@@ -16,7 +18,8 @@ export const setArticle = (article) => ({
 
 export const updateTitle = (title) => ({
     type: UPDATE_TITLE,
-    title: title
+    title: title,
+    error: getTitleError(title)
 })
 
 export const addSkill = (skill) => ({
@@ -31,12 +34,13 @@ export const deleteSkill = (id) => ({
 
 export const addTag = (tag) => ({
     type: ADD_TAG,
-    tag: tag
+    tag: tag,
 })
 
 export const updateTags = (tags) => ({
     type: UPDATE_TAGS,
-    tags: tags
+    tags: tags,
+    error: getTagsError(tags)
 })
 
 export const updateText = (text, textCount, blockCount) => ({
@@ -66,6 +70,10 @@ const initialState = {
     tags: [],
     skills: [],
     skillDraft: { id: "", name: "" },
+    error: {
+        title: { status: "", message: "" },
+        tags: { status: "", message: "" },
+    },
 }
 
 export default function ArticleEdit(state = initialState, action) {
@@ -85,6 +93,7 @@ export default function ArticleEdit(state = initialState, action) {
             return {
                 ...state,
                 title: action.title,
+                error: { ...state.error, title: action.error }
             }
         case ADD_SKILL:
             return {
@@ -122,11 +131,14 @@ export default function ArticleEdit(state = initialState, action) {
             return {
                 ...state,
                 tags: action.tags,
+                error: { ...state.error, tags: action.error },
             }
         case ADD_TAG:
+            const tagsError = getTagsError([...state.tags, action.tag]);
             return {
                 ...state,
                 tags: [...state.tags, action.tag],
+                error: { ...state.error, tags: tagsError },
             }
         case UPDATE_TEXT:
             return {

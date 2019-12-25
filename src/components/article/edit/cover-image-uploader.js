@@ -6,7 +6,7 @@ const CustomUploader = styled(Upload)`
     .ant-upload.ant-upload-select-picture-card {
         width: 100%;
         height: 150px;
-        margin-top: 10px;
+        margin-top: 0px;
     }
 `;
 
@@ -59,11 +59,6 @@ export default class CoverImageUploader extends React.Component {
         const { imageUrl } = this.state;
         return (
             <>
-                <span style={{ fontWeight: '400', fontSize: '16px' }}>カバー画像&nbsp;
-                    <Tooltip title="1MB以下の画像を投稿できます">
-                        <Icon type="question-circle-o" />
-                    </Tooltip>
-                </span>
                 <CustomUploader
                     name="avatar"
                     listType="picture-card"
