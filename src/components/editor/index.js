@@ -16,9 +16,12 @@ class Editor extends React.Component {
     state = { editorInstance: null, outputs: [] }
 
     handleSave = async () => {
-        const savedData = await this.state.editorInstance.save();
-        const { text, textCount, blockCount } = convertToJSX(savedData.blocks);
-        this.props.updateText(text, textCount, blockCount, savedData.blocks);
+        try {
+            const savedData = await this.state.editorInstance.save();
+            const { text, textCount, blockCount } = convertToJSX(savedData.blocks);
+            this.props.updateText(text, textCount, blockCount, savedData.blocks);
+        } catch (e) {
+        }
     }
 
     render() {

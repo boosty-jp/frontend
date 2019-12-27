@@ -136,6 +136,7 @@ class TagSelectForm extends React.Component {
                     onChange={this.handleChange}
                     style={{ width: "100%" }}
                     open={open}
+                    onBlur={() => this.setState({ open: false })}
                     dropdownRender={menu => (
                         this.displayCreationForm() ?
                             <div>
