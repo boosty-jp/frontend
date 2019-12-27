@@ -52,7 +52,7 @@ export default class CourseCoverImageUploader extends React.Component {
     render() {
         const uploadButton = (
             <div>
-                <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <Icon type={this.state.loading ? 'loading' : 'plus-circle'} />
                 <div className="ant-upload-text">Upload</div>
             </div>
         );

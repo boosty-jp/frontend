@@ -1,175 +1,139 @@
 import React from "react"
-import { Rate, Typography, Tag, Divider } from 'antd';
-import { convertToJSX } from "utils/html-converter";
+import { Rate, Typography, Tag, Divider, Alert } from 'antd';
+import PageLoader from "components/loader/page";
+import ErrorResult from "components/error/result";
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import { connect } from 'react-redux'
+import { clearArticle, setArticle } from 'modules/article/view'
+import ThumbnailImage from "components/image/thumbnail";
 
 const { Title } = Typography;
 const rateDescription = ['初級', '中級', '上級'];
 
-const data = {
-    time: 1576146799791,
-    blocks: [
-        {
-            "type": "header",
-            "data": {
-                "text": "Editor.js",
-                "level": 2
-            }
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "Hey. Meet the new Editor. On this page you can see it in action — try to edit this text."
-            }
-        },
-        {
-            "type": "header",
-            "data": {
-                "text": "Key features",
-                "level": 3
-            }
-        },
-        {
-            "type": "list",
-            "data": {
-                "style": "unordered",
-                "items": [
-                    "It is a block-styled editor",
-                    "It returns clean data output in JSON",
-                    "Designed to be extendable and pluggable with a simple API"
-                ]
-            }
-        },
-        {
-            "type": "header",
-            "data": {
-                "text": "What does it mean «block-styled editor»",
-                "level": 3
-            }
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "Workspace in classic editors is made of a single contenteditable element, used to create different HTML markups. Editor.js <mark class=\"cdx-marker\">workspace consists of separate Blocks: paragraphs, headings, images, lists, quotes, etc</mark>. Each of them is an independent contenteditable element (or more complex structure) provided by Plugin and united by Editor's Core."
-            }
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "There are dozens of <a href=\"https://github.com/editor-js\">ready-to-use Blocks</a> and the <a href=\"https://editorjs.io/creating-a-block-tool\">simple API</a> for creation any Block you need. For example, you can implement Blocks for Tweets, Instagram posts, surveys and polls, CTA-buttons and even games."
-            }
-        },
-        {
-            "type": "header",
-            "data": {
-                "text": "What does it mean clean data output",
-                "level": 3
-            }
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "Classic WYSIWYG-editors produce raw HTML-markup with both content data and content appearance. On the contrary, Editor.js outputs JSON object with data of each Block. You can see an example below"
-            }
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "Given data can be used as you want: render with HTML for <code class=\"inline-code\">Web clients</code>, render natively for <code class=\"inline-code\">mobile apps</code>, create markup for <code class=\"inline-code\">Facebook Instant Articles</code> or <code class=\"inline-code\">Google AMP</code>, generate an <code class=\"inline-code\">audio version</code> and so on."
-            }
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "Clean data is useful to sanitize, validate and process on the backend."
-            }
-        },
-        {
-            "type": "delimiter",
-            "data": {}
-        },
-        {
-            "type": "paragraph",
-            "data": {
-                "text": "We have been working on this project more than three years. Several large media projects help us to test and debug the Editor, to make it's core more stable. At the same time we significantly improved the API. Now, it can be used to create any plugin for any task. Hope you enjoy. 😏"
-            }
-        },
-        {
-            "type": "image",
-            "data": {
-                "file": {
-                    "url": "https://capella.pics/6d8f1a84-9544-4afa-b806-5167d45baf7c.jpg"
-                },
-                "caption": "",
-                "withBorder": true,
-                "stretched": false,
-                "withBackground": false
-            }
-        }
-    ],
-    "version": "2.16.1"
-}
+const GET_ARTICLE = gql`
+  query Article($articleId: ID!) {
+    article(articleId: $articleId) {
+      id
+      title
+      imageUrl
+      blocks {
+        type
+        data
+      }
+      status
+      createDate
+      updateDate
 
-const imageUrl = 'https://assets.st-note.com/production/uploads/images/16134453/rectangle_large_type_2_02b461d00e4d3c026d7706c5c3144351.png?fit=bounds&format=jpeg&quality=45&width=960'
-const title = "Reactの基礎"
+      tags {
+        id
+        name
+      }
 
-const skills = [
-    { id: 'skill-1', name: 'React', level: 1 },
-    { id: 'skill-2', name: 'javascript', level: 2 },
-]
+      author {
+        id
+        displayName
+        imageUrl
+        description
+        url
+        twitterId
+        facebookId
+      }
 
-const tags = [
-    { id: 'tag-1', label: 'react' },
-    { id: 'tag-2', label: 'フロントエンド' },
-    { id: 'tag-3', label: 'javascript' },
-]
+      skills {
+        id
+        name
+        relatedCount
+        level
+      }
 
-class ArticleContent extends React.Component {
-    state = {
-        preview: false,
-        text: <></>,
-    };
+      actionCount {
+        likeCount
+        learnedCount
+      }
+      accountAction {
+        liked
+        learned
+      }
+    }
+  }
+`;
 
-    componentDidMount = () => {
-        const { text } = convertToJSX(data.blocks);
-        this.setState({ text })
+
+class ArticleContentComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        props.clearArticle();
     }
 
     render() {
         return (
-            <>
-                <img src={imageUrl} style={{ width: '100%' }} />
-                <div style={{ padding: '24px' }}>
-                    <Typography>
-                        <Title>{title}</Title>
-                    </Typography>
-                    <div>
-                        {tags.map(t => {
-                            return (
-                                <Tag key={t.id}>{t.label}</Tag>
-                            )
-                        })}
-                    </div>
-                    <div style={{ marginTop: '12px' }}>
-                        {skills.map(s => {
-                            return (
-                                <div key={s.id}>
-                                    <span style={{ fontWeight: '500', fontSize: '16px', marginRight: '16px' }}>{s.name}</span>
-                                    <Rate
-                                        count={3}
-                                        disabled
-                                        value={s.level}
-                                        tooltips={rateDescription}
-                                    />
+            <Query
+                query={GET_ARTICLE}
+                variables={{ articleId: this.props.id }}
+                onCompleted={(data) => {
+                    this.props.setArticle(data.article);
+                }}
+            >
+                {({ loading, error }) => {
+                    if (loading) return <PageLoader />
+                    if (error) return <ErrorResult />
+                    return (
+                        <>
+                            <ThumbnailImage imageUrl={this.props.imageUrl} />
+                            <div style={{ padding: '24px' }}>
+                                <Typography>
+                                    <Title>{this.props.title}</Title>
+                                </Typography>
+                                {this.props.status === 'draft' &&
+                                    <Alert message="下書き中の記事です。作成者以外には閲覧できないようになっています。" type="warning" showIcon />
+                                }
+                                <div>
+                                    {this.props.tags.map(t => {
+                                        return (
+                                            <Tag key={t.id}>{t.name}</Tag>
+                                        )
+                                    })}
                                 </div>
-                            )
-                        })}
-                    </div>
-                    <Divider />
-                    {this.state.text}
-                </div>
-            </>
+                                <div style={{ marginTop: '12px' }}>
+                                    {this.props.skills.map(s => {
+                                        return (
+                                            <div key={s.id}>
+                                                <span style={{ fontWeight: '500', fontSize: '16px', marginRight: '16px' }}>{s.name}</span>
+                                                <Rate
+                                                    count={3}
+                                                    disabled
+                                                    value={s.level}
+                                                    tooltips={rateDescription}
+                                                />
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                                <Divider />
+                                {this.props.text}
+                            </div>
+                        </>
+                    )
+                }}
+            </Query>
         )
     }
 }
 
+const mapStateToProps = state => ({
+    title: state.articleView.title,
+    imageUrl: state.articleView.imageUrl,
+    tags: state.articleView.tags,
+    status: state.articleView.status,
+    skills: state.articleView.skills,
+    text: state.articleView.text,
+})
+
+const mapDispatchToProps = dispatch => ({
+    clearArticle: () => dispatch(clearArticle()),
+    setArticle: (article) => dispatch(setArticle(article)),
+})
+
+const ArticleContent = connect(mapStateToProps, mapDispatchToProps)(ArticleContentComponent)
 export default ArticleContent;

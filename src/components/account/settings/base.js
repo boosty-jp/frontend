@@ -1,10 +1,11 @@
 import React from "react"
-import { Skeleton, Result, Form, Input, Tooltip, Icon, Button, Row, Col, message } from 'antd';
+import { Skeleton, Form, Input, Tooltip, Icon, Button, message } from 'antd';
 import AvatarUploader from "./avatar-uploader";
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { setUser, updateUser } from "services/local-user";
+import { updateUser } from "services/local-user";
+import ErrorResult from "components/error/result";
 
 const GET_ACCOUNT = gql`
   query GetAccount {
@@ -27,18 +28,6 @@ mutation UpdateUser($userInput: UserInput!){
   updateUser(user: $userInput)
 }
 `;
-
-const ErrorResult = () => {
-    return (
-        <Result
-            status="error"
-            title="エラーが発生しました"
-            extra={
-                <Button type="primary" key="console" onClick={() => window.location.reload()} >リロードする</ Button>
-            }
-        />
-    )
-}
 
 class UpdateForm extends React.Component {
     state = {

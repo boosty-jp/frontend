@@ -8,13 +8,14 @@ export const convertToJSX = (blocks) => {
     var jsxList = [];
     var textCount = 0;
     var blockCount = 0;
+    var anchors = [];
     const countRegexp = /<[^>]*>|\s+|&nbsp;/g
     blocks.forEach(block => {
-        console.log(block.data);
         const text = block.data.text
         switch (block.type) {
             case 'header':
                 jsxList.push(<Title level={block.data.level} id={text}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
+                anchors.push({ id: text, level: block.data.level });
                 if (text) textCount += text.replace(countRegexp, '').length;
                 blockCount++;
                 break;
@@ -131,5 +132,5 @@ export const convertToJSX = (blocks) => {
                 break;
         }
     })
-    return { text: jsxList, textCount: textCount, blockCount: blockCount }
+    return { text: jsxList, textCount: textCount, blockCount: blockCount, anchors: anchors }
 }

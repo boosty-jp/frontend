@@ -20,7 +20,7 @@ class ArticleLayout extends React.Component {
 
     render() {
         return (
-            <Layout >
+            <Layout style={{ minHeight: '100vh' }}>
                 <ArticleHorizontalMenu />
                 <Content>
                     <ActionButtonSider onCourse={false} />

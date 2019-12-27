@@ -2,6 +2,8 @@ import { getTitleError, getTagsError } from 'utils/validate';
 
 const SUFFIX = '_ARTICLE_EDIT';
 const SET_ARTICLE = 'SET_ARTICLE' + SUFFIX;
+const CLEAR_ARTICLE = 'CLEAR_ARTICLE' + SUFFIX;
+const UPDATE_IMAGE_URL = 'UPDATE_IMAGE_URL' + SUFFIX;
 const UPDATE_TITLE = 'UPDATE_TITLE' + SUFFIX;
 const ADD_SKILL = 'ADD_SKILL' + SUFFIX;
 const DELETE_SKILL = 'DELETE_SKILL' + SUFFIX;
@@ -11,9 +13,18 @@ const UPDATE_TEXT = 'UPDATE_TEXT' + SUFFIX;
 const UPDATE_SKILL_DRAFT = 'UPDATE_SKILL_DRAFT' + SUFFIX;
 const CLEAR_SKILL_DRAFT = 'CLEAR_SKILL_DRAFT' + SUFFIX;
 
+export const clearArticle = () => ({
+    type: CLEAR_ARTICLE,
+})
+
 export const setArticle = (article) => ({
     type: SET_ARTICLE,
     article: article
+})
+
+export const updateImageUrl = (imageUrl) => ({
+    type: UPDATE_IMAGE_URL,
+    imageUrl: imageUrl
 })
 
 export const updateTitle = (title) => ({
@@ -43,11 +54,12 @@ export const updateTags = (tags) => ({
     error: getTagsError(tags)
 })
 
-export const updateText = (text, textCount, blockCount) => ({
+export const updateText = (text, textCount, blockCount, blocks) => ({
     type: UPDATE_TEXT,
     text: text,
     textCount: textCount,
     blockCount: blockCount,
+    blocks: blocks,
 })
 
 export const updateSkillDraft = (skillDraft) => ({
@@ -64,6 +76,7 @@ const initialState = {
     title: "",
     imageUrl: "",
     status: "publish",
+    blocks: [],
     text: '',
     textCount: 0,
     blockCount: 0,
@@ -73,22 +86,30 @@ const initialState = {
     error: {
         title: { status: "", message: "" },
         tags: { status: "", message: "" },
+        blocks: { status: "", message: "" },
     },
 }
 
 export default function ArticleEdit(state = initialState, action) {
     switch (action.type) {
+        case CLEAR_ARTICLE:
+            return { ...initialState }
         case SET_ARTICLE:
             return {
                 ...state,
                 id: action.article.id,
                 title: action.article.title,
                 imageUrl: action.article.imageUrl,
+                blocks: action.article.blocks,
                 status: action.article.status,
-                text: action.article.text,
                 tags: action.article.tags,
                 skills: action.article.skills,
             };
+        case UPDATE_IMAGE_URL:
+            return {
+                ...state,
+                imageUrl: action.imageUrl,
+            }
         case UPDATE_TITLE:
             return {
                 ...state,
@@ -144,6 +165,7 @@ export default function ArticleEdit(state = initialState, action) {
             return {
                 ...state,
                 text: action.text,
+                blocks: action.blocks,
                 textCount: action.textCount,
                 blockCount: action.blockCount,
             }

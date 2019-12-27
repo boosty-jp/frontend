@@ -5,6 +5,7 @@ import SkillBarChart from 'components/skill/bar-chart'
 import AvatarImage from 'components/avatar/image'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
+import ErrorResult from 'components/error/result'
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -92,18 +93,6 @@ const Links = ({ twitterId, facebookId, url }) => {
             }
         </div>
     );
-}
-
-const ErrorResult = () => {
-    return (
-        <Result
-            status="error"
-            title="エラーが発生しました"
-            extra={
-                <Button type="primary" key="console" onClick={() => window.location.reload()} >リロードする</ Button>
-            }
-        />
-    )
 }
 
 const UserProfileHeader = ({ selfSearch, id }) => {

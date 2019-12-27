@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import { Form, Icon, Tooltip, Row, Col, Input } from 'antd';
 import CoverImageUploader from 'components/article/edit/cover-image-uploader'
-import { updateTitle } from 'modules/article/edit'
+import { updateTitle, updateImageUrl } from 'modules/article/edit'
 import ArticleTagSelectForm from "containers/search/article-tag-form";
 import ArticleSkillForm from 'components/article/edit/skill-form'
 
@@ -14,14 +14,14 @@ const ArticleEditHeaderComponent = (props) => {
                     <Form>
                         <Form.Item
                             label={
-                                <span >カバー画像&nbsp;
-                                    <Tooltip title="1MB以下の画像を投稿できます">
+                                <span >サムネイル画像&nbsp;
+                                    <Tooltip title="2MB以下の画像を投稿できます。サムネイル画像は16:9をトリミングしたものに変換されます。">
                                         <Icon type="question-circle-o" />
                                     </Tooltip>
                                 </span>
                             }
                         >
-                            <CoverImageUploader />
+                            <CoverImageUploader imageUrl={props.imageUrl} onComplete={props.updateImageUrl} />
                         </Form.Item>
                     </Form>
                 </Col>
@@ -75,11 +75,13 @@ const ArticleEditHeaderComponent = (props) => {
 
 const mapStateToProps = state => ({
     title: state.articleEdit.title,
+    imageUrl: state.articleEdit.imageUrl,
     error: state.articleEdit.error,
 })
 
 const mapDispatchToProps = dispatch => ({
     updateTitle: (title) => dispatch(updateTitle(title)),
+    updateImageUrl: (imageUrl) => dispatch(updateImageUrl(imageUrl)),
 })
 
 const ArticleEditHeader = connect(mapStateToProps, mapDispatchToProps)(ArticleEditHeaderComponent)

@@ -14,8 +14,6 @@ const GET_USER = gql`
         twitterId
         facebookId
     }
-
-    
 }
 `;
 

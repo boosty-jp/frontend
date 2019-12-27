@@ -71,7 +71,7 @@ class SkillForm extends React.Component {
                         itemLayout="horizontal"
                         locale={{
                             emptyText: (
-                                <a onClick={this.showDrawer}><Icon type="plus" />追加する</a>
+                                <a onClick={this.showDrawer}><Icon type="plus-circle" style={{ marginRight: '8px' }} />追加する</a>
                                 // <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="スキルが設定されていません">
                                 //     <Button onClick={this.showDrawer}><Icon type="plus" />追加する</Button>
                                 // </Empty>
@@ -90,7 +90,7 @@ class SkillForm extends React.Component {
                     />
                 </div>
                 {this.props.skills.length > 0 &&
-                    <Button type="dashed" style={{ width: '100%', marginTop: '10px' }} onClick={this.showDrawer}><Icon type="plus" />追加する</Button>
+                    <Button type="dashed" style={{ width: '100%', marginTop: '10px' }} onClick={this.showDrawer}><Icon type="plus-circle" style={{ marginRight: '8px' }} />追加する</Button>
                 }
                 <Modal
                     title="スキルを追加する"

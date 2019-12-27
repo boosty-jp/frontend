@@ -1,8 +1,9 @@
 import React from "react"
-import { Form, Button, Tooltip, Icon, message, Spin, Switch, Result } from 'antd';
+import { Form, Button, Tooltip, Icon, message, Spin, Switch } from 'antd';
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
+import ErrorResult from "components/error/result";
 
 const GET_SETTINGS = gql`
   query GetSettings {
@@ -22,17 +23,6 @@ mutation UpdateUserSetting($userSetting: UserSettingInput!){
 }
 `;
 
-const ErrorResult = () => {
-    return (
-        <Result
-            status="error"
-            title="エラーが発生しました"
-            extra={
-                <Button type="primary" key="console" onClick={() => window.location.reload()} >リロードする</ Button>
-            }
-        />
-    )
-}
 
 class PublicForm extends React.Component {
     state = {

@@ -1,20 +1,48 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { Row, Col, Anchor } from 'antd';
 const { Link } = Anchor;
 
-const ArticleAnchor = () => (
-    <div style={{ position: "fixed", right: '0px', textAlign: 'left', height: '0px', padding: '20px', width: 'calc((100% - 740px) / 2)' }}>
-        <Anchor style={{ backgroundColor: 'transparent' }}>
-            <Link href="#Editor.js" title="Editor.js" />
-            <Link href="#Key features" title="Key features" />
-            <Link href="#components-anchor-demo-basic" title="Basic demo with Target" target="_blank" />
-            <Link href="#API" title="API">
-                <Link href="#Anchor-Props" title="Anchor Props" />
-                <Link href="#Link-Props" title="Link Props" />
-            </Link>
-        </Anchor>
-    </div>
-)
+const AnchorMenu = (props) => {
+    var header2List = [];
+    var header3List = [];
+    var parentId = '';
+    props.anchors.map(a => {
+        if (a.level === 2) {
+            parentId = a.id;
+            header2List.push(a.id);
+        }
+        if (a.level === 3) {
+            header3List.push({ id: a.id, parentId: parentId });
+        }
+    })
+
+    return (
+        <div style={{ position: "fixed", right: '0px', textAlign: 'left', height: '0px', padding: '20px', width: 'calc((100% - 740px) / 2)' }}>
+            <Anchor style={{ backgroundColor: 'transparent' }}>
+                {header2List.map(h2 => {
+                    return (
+                        <Link href={"#" + h2} title={h2} >
+                            {header3List.map(h3 => {
+                                if (h3.parentId === h2) {
+                                    return <Link href={"#" + h3} title={h3} />
+                                }
+                                return <></>
+                            })}
+                        </Link>
+                    )
+                })}
+            </Anchor>
+        </div>
+    )
+}
+
+const mapStateToProps = state => ({
+    anchors: state.articleView.anchors,
+})
+
+const ArticleAnchor = connect(mapStateToProps)(AnchorMenu)
+
 
 const ArticleAnchorMenu = ({ onCourse }) => {
     return (

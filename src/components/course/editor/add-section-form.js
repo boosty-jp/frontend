@@ -166,7 +166,7 @@ class SectionForm extends React.Component {
     render() {
         return (
             <>
-                <Button type="primary" onClick={this.showDrawer} style={{ width: '100%' }}><Icon type="plus" /> 追加する</Button>
+                <Button type="primary" onClick={this.showDrawer} style={{ width: '100%' }}><Icon type="plus-circle" style={{ marginRight: '8px' }} />追加する</Button>
                 <Drawer
                     title="セクションを追加する"
                     width={900}

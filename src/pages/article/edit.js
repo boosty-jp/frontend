@@ -1,28 +1,68 @@
 import React from 'react';
-import { Card } from 'antd';
-import ArticleEditLayout from 'components/layout/vertical/article-edit'
-import ArticleEditHeader from 'components/article/edit/header'
-import Editor from 'components/editor/editor';
+import withLocation from "components/wrapper/location";
+import { Query } from 'react-apollo';
+import { Icon, Spin } from 'antd';
+import ErrorResult from 'components/error/result';
+import gql from 'graphql-tag';
+import { clearArticle, setArticle } from 'modules/article/edit'
+import ArticleEdit from 'components/article/edit';
 
-export default class ArticleEditPage extends React.Component {
-    render() {
-        return (
-            <ArticleEditLayout>
-                <Card
-                    title="基本情報"
-                    bordered={true}
-                    style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto', }}
-                >
-                    <ArticleEditHeader />
-                </Card>
-                <Card
-                    title="内容"
-                    bordered={true}
-                    style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto' }}
-                >
-                    <Editor />
-                </Card>
-            </ArticleEditLayout >
-        );
+const GET_ARTICLE = gql`
+query GetArticle($articleId: ID!){
+  article(articleId: $articleId){
+    id
+    title
+    imageUrl
+    blocks {
+      type
+      data
     }
+
+    status
+    createdDate
+    updateDate
+
+    tags {
+      id
+      name
+    }
+
+    skills {
+      id
+      name
+      level
+    }
+  }
 }
+`;
+
+const ArticleEditPage = ({ search }) => {
+    const { id } = search
+    clearArticle();
+    if (id) {
+        return (
+            <Query
+                query={GET_ARTICLE}
+                fetchPolicy='network-only'
+                variables={{ articleId: id }}
+                onCompleted={(data) => setArticle(data.article)}
+            >
+                {({ loading, error }) => {
+                    if (loading) {
+                        return (
+                            <Spin spinning={loading} tip="アップロード中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+                                <ArticleEdit />
+                            </Spin>
+                        )
+                    }
+
+                    if (error) return <ErrorResult />
+                    return <ArticleEdit />
+                }}
+            </Query>
+        )
+    }
+    return (<ArticleEdit />);
+}
+
+export default withLocation(ArticleEditPage)

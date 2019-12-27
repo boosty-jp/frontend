@@ -7,27 +7,6 @@ import uuidv4 from 'uuid/v4'
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
-// const transformFile = (file) => {
-//     return new Promise(resolve => {
-//         //アップロード前の画像加工
-//         const reader = new FileReader();
-//         reader.readAsDataURL(file);
-//         reader.onload = () => {
-//             const canvas = document.createElement('canvas');
-//             const img = document.createElement('img');
-//             img.src = reader.result;
-//             img.onload = () => {
-//                 const ctx = canvas.getContext('2d');
-//                 ctx.drawImage(img, 0, 0);
-//                 ctx.fillStyle = 'red';
-//                 ctx.textBaseline = 'middle';
-//                 ctx.fillText('Ant Design', 20, 20);
-//                 canvas.toBlob(resolve);
-//             };
-//         };
-//     });
-// }
-
 const beforeUpload = (file) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {

@@ -1,152 +1,53 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import ReactQuill from 'react-quill';
-import { Icon, Affix } from 'antd';
-import hljs from 'highlight.js'
-import styled from 'styled-components'
+import debounce from "lodash/debounce";
+import EditorJs from 'react-editor-js';
+import { EDITOR_JS_TOOLS } from 'components/editor/tool'
+import { Typography } from 'antd';
+import { convertToJSX } from 'utils/html-converter'
 import { updateText } from 'modules/article/edit'
-import DOMPurify from 'dompurify'
 
-const CustomQuill = styled(ReactQuill)`
-.ql-container {
-    min-height: 300px;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-}
-.ql-editor {
-    min-height: 300px;
-}
-.ql-tooltip {
-    left: 0px !important;
-}
-`;
-
-hljs.configure({
-    // languages: ['python'],
-})
-
-const CustomButton = () => <Icon type="youtube" theme="filled" />;
-
-/*
- * Event handler to be attached using Quill toolbar module (see line 73)
- * https://quilljs.com/docs/modules/toolbar/
- */
-const insertStar = () => {
-    const cursorPosition = this.quill.getSelection().index;
-    // this.quill.insertEmbed(1, 'image', 'https://www.logolynx.com/images/logolynx/ff/ff1a8f176abee68c19015dd9ca472bf2.png');
-    // this.quill.insertEmbed(10, 'header', 'hoge');
-    // this.quill.insertText(cursorPosition, "<p>hoge</p>");
-    this.quill.insertText(cursorPosition, 'hoge', {
-        'color': 'black',
-        'bold': true
-    });
-    this.quill.setSelection(cursorPosition + 1);
-}
-
-/*
- * Custom toolbar component including insertStar button and dropdowns
- */
-const CustomToolbar = () => (
-    <div id="toolbar" style={{ backgroundColor: 'white', borderTopLeftRadius: '0.5rem', borderTopRightRadius: '0.5rem' }}>
-        <select className="ql-header" defaultValue={"ノーマル"} onChange={e => e.persist()}>
-            <option value="1">見出し1</option>
-            <option value="2">見出し2</option>
-            <option value="3">見出し3</option>
-            <option selected>ノーマル</option>
-        </select>
-        <button className="ql-bold" />
-        <button className="ql-italic" />
-        <button className="ql-underline" />
-        <button className="ql-strike" />
-        <select className="ql-color">
-            <option value="red" />
-            <option value="green" />
-            <option value="blue" />
-            <option value="orange" />
-            <option value="violet" />
-            <option value="#d0d1d2" />
-            <option selected />
-        </select>
-        <select className="ql-background">
-        </select>
-        <button className='ql-list' value='ordered' />
-        <button className='ql-list' value='bullet' />
-        <button className="ql-script" value="sub" />
-        <button className="ql-script" value="super" />
-        <button className="ql-clean" />
-        <button className="ql-image" />
-        <button className="ql-video" />
-        <button className="ql-code-block" />
-        <button className="ql-blockquote" />
-        <button className="ql-link" />
-        {/* <button className="ql-youtube" /> */}
-        <button className="ql-insertStar">
-            <CustomButton />
-        </button>
-        <select className="ql-align" />
-    </div>
-);
-
-/*
- * Editor component with custom toolbar and content containers
- */
 class Editor extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { editorHtml: "" };
-        this.handleChange = this.handleChange.bind(this);
+        this.handleSave = debounce(this.handleSave, 400);
     }
 
-    handleChange(html) {
-        this.setState({ editorHtml: html });
+    state = { editorInstance: null, outputs: [] }
+
+    handleSave = async () => {
+        const savedData = await this.state.editorInstance.save();
+        const { text, textCount, blockCount } = convertToJSX(savedData.blocks);
+        this.props.updateText(text, textCount, blockCount, savedData.blocks);
     }
 
     render() {
-        const clean = DOMPurify.sanitize(this.props.text);
         return (
-            <div className="text-editor">
-                <Affix offsetTop={0}>
-                    <CustomToolbar />
-                </Affix>
-                <CustomQuill
-                    value={this.props.text}
-                    onChange={(html) => this.props.updateText(html)}
-                    placeholder="入力してください。"
-                    modules={Editor.modules}
+            <>
+                <Typography>
+                    {this.state.outputs.map((o => o))}
+                </Typography>
+                <EditorJs
+                    // enableReInitialize
+                    tools={EDITOR_JS_TOOLS}
+                    instanceRef={instance => this.setState({ editorInstance: instance })}
+                    onChange={() => this.handleSave()}
+                    onReady={() => this.handleSave()}
+                    placeholder="記事の内容を入力してください"
+                    data={{ blocks: this.props.blocks }}
                 />
-                <div dangerouslySetInnerHTML={{ __html: clean }} />
-            </div>
-        );
+            </>
+        )
     }
 }
 
-/* 
- * Quill modules to attach to editor
- * See https://quilljs.com/docs/modules/ for complete options
- */
-Editor.modules = {
-    toolbar: {
-        container: "#toolbar",
-        handlers: {
-            insertStar: insertStar,
-        }
-    },
-    clipboard: {
-        matchVisual: false,
-    },
-    syntax: {
-        highlight: text => hljs.highlightAuto(text).value,
-        // highlight: text => hljs.highlight('java', text).value,
-    }
-};
-
 const mapStateToProps = state => ({
-    text: state.articleEdit.text,
+    blocks: state.articleEdit.blocks,
 })
 
 const mapDispatchToProps = dispatch => ({
-    updateText: (text) => dispatch(updateText(text)),
+    updateText: (text, textCount, blockCount, blocks) => dispatch(updateText(text, textCount, blockCount, blocks)),
 })
 
-const ArticleTextEditor = connect(mapStateToProps, mapDispatchToProps)(Editor)
-export default ArticleTextEditor
+const ArticleEditor = connect(mapStateToProps, mapDispatchToProps)(Editor)
+export default ArticleEditor
