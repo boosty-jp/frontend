@@ -1,4 +1,4 @@
-import { getTitleError, getTagsError } from 'utils/validate';
+import { getTitleError, getTagsError } from 'utils/content-validator';
 
 const SUFFIX = '_ARTICLE_EDIT';
 const SET_ARTICLE = 'SET_ARTICLE' + SUFFIX;

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card } from 'antd';
+import { connect } from 'react-redux'
+import { Card, Icon, Tooltip } from 'antd';
 import CourseEditHeader from 'components/course/editor/header'
 import SectionsEditor from 'components/course/editor/sections';
 import CourseEditLayout from 'components/layout/vertical/course-edit';
 
-export default class CourseEditPage extends React.Component {
+class CourseEditPageComponent extends React.Component {
     render() {
         return (
             <CourseEditLayout>
@@ -19,6 +20,14 @@ export default class CourseEditPage extends React.Component {
                     title="コース内容"
                     bordered={true}
                     style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto' }}
+                    extra={
+                        <>
+                            <span style={{ marginRight: '8px' }}>{this.props.courseCount} / 10</span>
+                            <Tooltip title="1コースにつき10セクションまで作成できます">
+                                <Icon type="question-circle-o" />
+                            </Tooltip>
+                        </>
+                    }
                 >
                     <SectionsEditor />
                 </Card>
@@ -26,3 +35,11 @@ export default class CourseEditPage extends React.Component {
         );
     }
 }
+
+
+const mapStateToProps = state => ({
+    courseCount: state.courseEditSections.sections.length,
+})
+
+const CourseEditPage = connect(mapStateToProps)(CourseEditPageComponent)
+export default CourseEditPage

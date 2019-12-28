@@ -6,8 +6,7 @@ import MediumMenuItems from 'components/menu/horizontal-items/medium'
 
 const { Header } = Layout;
 
-
-const ArticleHorizontalMenu = () => {
+const HorizontalContentMenu = () => {
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
 
@@ -33,4 +32,4 @@ const ArticleHorizontalMenu = () => {
         </Header>
     )
 }
-export default ArticleHorizontalMenu
+export default HorizontalContentMenu

@@ -42,20 +42,20 @@ export default function CourseEditSections(state = initialState, action) {
             return {
                 ...state,
                 sections: action.sections,
-                skillMaps: convertToSkillMap(action.sections),
+                // skillMaps: convertToSkillMap(action.sections),
             };
 
         case ADD_SECTION:
             return {
                 ...state,
                 sections: [...state.sections, action.section],
-                skillMaps: convertToSkillMap([...state.sections, action.section]),
+                // skillMaps: convertToSkillMap([...state.sections, action.section]),
             }
         case UPDATE_SECTIONS:
             return {
                 ...state,
                 sections: action.sections,
-                skillMaps: convertToSkillMap(action.sections),
+                // skillMaps: convertToSkillMap(action.sections),
             }
         case UPDATE_SECTION:
             const updateSections = state.sections.concat();
@@ -67,7 +67,7 @@ export default function CourseEditSections(state = initialState, action) {
             return {
                 ...state,
                 sections: updateSections,
-                skillMaps: convertToSkillMap(updateSections),
+                // skillMaps: convertToSkillMap(updateSections),
             }
         case DELETE_SECTION:
             const deleteSections = state.sections.concat();
@@ -83,7 +83,7 @@ export default function CourseEditSections(state = initialState, action) {
                 return {
                     ...state,
                     sections: deleteSections,
-                    skillMaps: convertToSkillMap(deleteSections),
+                    // skillMaps: convertToSkillMap(deleteSections),
                 }
             } else {
                 return { ...state }

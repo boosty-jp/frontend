@@ -92,7 +92,7 @@ class UpdateForm extends React.Component {
                                     label={
                                         <span>
                                             表示名&nbsp;
-                                                    <Tooltip title="30文字まで入力できます">
+                                            <Tooltip title="30文字まで入力できます">
                                                 <Icon type="question-circle-o" />
                                             </Tooltip>
                                         </span>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import CourseLayout from 'components/layout/vertical/course';
-import ActionButtonSider from "components/sider/action-buttons";
+import ActionButtonSider from "components/sider/buttons/article/action-buttons";
 import ArticleContent from 'components/article/view'
 
 const CoursePage = () => {

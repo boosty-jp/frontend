@@ -1,8 +1,8 @@
 import React from "react"
 import { Layout } from 'antd';
 import VerticalFooter from "./footer";
-import ArticleHorizontalMenu from 'components/menu/horizontal-article'
-import ActionButtonSider from "components/sider/action-buttons";
+import HorizontalContentMenu from 'components/menu/horizontal-content'
+import ArticleActionButtonSider from "components/sider/buttons/article/action-buttons";
 import ArticleAnchorMenu from "components/sider/article-anchor";
 
 const { Content } = Layout;
@@ -21,9 +21,9 @@ class ArticleLayout extends React.Component {
     render() {
         return (
             <Layout style={{ minHeight: '100vh' }}>
-                <ArticleHorizontalMenu />
+                <HorizontalContentMenu />
                 <Content>
-                    <ActionButtonSider onCourse={false} />
+                    <ArticleActionButtonSider onCourse={false} />
                     <ArticleAnchorMenu />
                     <div>
                         {this.props.children}

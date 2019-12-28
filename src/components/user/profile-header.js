@@ -1,18 +1,18 @@
 import React from "react"
-import { Skeleton, Result, Button, Row, Col, Icon } from 'antd';
-import { presetPalettes } from '@ant-design/colors'
+import { Skeleton, Button, Row, Col } from 'antd';
 import SkillBarChart from 'components/skill/bar-chart'
 import AvatarImage from 'components/avatar/image'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import ErrorResult from 'components/error/result'
+import SnsLinks from "./snsLink";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const GET_USER = gql`
-  query GetUser {
-    user {
+  query GetUser($userId: ID!) {
+    user (userId: $userId){
         id
         displayName
         description
@@ -56,7 +56,7 @@ const ProfileHeader = ({ data, selfSearch }) => {
                 <Row type="flex" align="top">
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                         <p style={{ fontWeight: '500', fontSize: '18px', marginBottom: '8px' }}>{data.displayName}</p>
-                        <Links twitterId={data.twitterId} facebookId={data.facebookId} url={data.url} />
+                        <SnsLinks twitterId={data.twitterId} facebookId={data.facebookId} url={data.url} />
                         <UserDescription description={data.description} selfSearch={selfSearch} />
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
@@ -65,33 +65,6 @@ const ProfileHeader = ({ data, selfSearch }) => {
                 </Row>
             </Col>
         </Row>
-    );
-}
-
-const Links = ({ twitterId, facebookId, url }) => {
-    if (!twitterId && !facebookId && !url) return <></>
-    return (
-        <div style={{ marginBottom: '12px' }}>
-            {twitterId ?
-                <a href={"https://twitter.com/" + twitterId}>
-                    <Icon type="twitter" style={{ color: presetPalettes.blue[4], marginRight: '8px', fontSize: '20px' }} />
-                </a>
-                :
-                <></>
-            }
-            {facebookId ?
-                <a href={"https://facebook.com/" + facebookId}>
-                    <Icon type="facebook" theme="filled" style={{ color: presetPalettes.blue[7], marginRight: '12px', fontSize: '20px' }} />
-                </a>
-                :
-                <></>
-            }
-            {url ?
-                <><Icon type="link" style={{ marginRight: '4px', fontSize: '16px' }} /> <a href={url}>{url}</a></>
-                :
-                <></>
-            }
-        </div>
     );
 }
 
@@ -112,7 +85,7 @@ const UserProfileHeader = ({ selfSearch, id }) => {
             variables={{ userId: id }}
         >
             {({ loading, error, data }) => {
-                if (loading) return <Skeleton avatar paragraph={{ rows: 4 }} />
+                if (loading) return <Skeleton avatar active paragraph={{ rows: 4 }} />
                 if (error) return <ErrorResult />
                 return <ProfileHeader data={data.user} selfSearch={selfSearch} />
             }}

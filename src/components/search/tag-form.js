@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import debounce from "lodash/debounce";
 import algoliasearch from 'algoliasearch/lite';
 import { getErrorMessage } from "utils/error-handle";
+import { isAbuseWord } from "utils/abuse-word-checker";
 
 const { Option } = Select;
 
@@ -70,6 +71,9 @@ class TagSelectForm extends React.Component {
         const { inputVal } = this.state;
         this.setState({ loading: true, fetching: true, open: false });
         try {
+            if (isAbuseWord(inputVal)) {
+                throw new Error("その用語は登録できません");
+            }
             const { data } = await this.props.client.mutate({
                 mutation: CREATE_TAG,
                 variables: { name: inputVal }

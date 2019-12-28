@@ -28,3 +28,31 @@ export const getTagsError = (tags) => {
 
     return { status, message };
 }
+
+export const getSectionsError = (sections) => {
+    let status = "";
+    let message = "";
+    if (sections.length > 10) {
+        status = "error";
+        message = "設定できるセクションは10までです"
+    } else {
+        status = "";
+        message = "";
+    }
+
+    return { status, message };
+}
+
+export const getDescriptionError = (description) => {
+    let status = "";
+    let message = "";
+    if (description.length > 200) {
+        status = "error";
+        message = "説明は200文字までです"
+    } else {
+        status = "";
+        message = "";
+    }
+
+    return { status, message };
+}

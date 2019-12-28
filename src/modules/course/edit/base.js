@@ -1,6 +1,9 @@
+import { getTitleError, getTagsError, getDescriptionError } from 'utils/content-validator';
+
 const SUFFIX = '_COURSE_BASE_EDIT';
 const SET_BASE = 'SET_BASE' + SUFFIX;
 const UPDATE_TITLE = 'UPDATE_TITLE' + SUFFIX;
+const UPDATE_IMAGE_URL = 'UPDATE_IMAGE_URL' + SUFFIX;
 const UPDATE_DESCRIPTION = 'UPDATE_DESCRIPTION' + SUFFIX;
 const UPDATE_TAGS = 'UPDATE_TAGS' + SUFFIX;
 const ADD_TAGS = 'ADD_TAGS' + SUFFIX;
@@ -12,17 +15,25 @@ export const setBase = (base) => ({
 
 export const updateTitle = (title) => ({
     type: UPDATE_TITLE,
-    title: title
+    title: title,
+    error: getTitleError(title)
+})
+
+export const updateImageUrl = (imageUrl) => ({
+    type: UPDATE_IMAGE_URL,
+    imageUrl: imageUrl
 })
 
 export const updateDescription = (description) => ({
     type: UPDATE_DESCRIPTION,
-    description: description
+    description: description,
+    error: getDescriptionError(description)
 })
 
 export const updateTags = (tags) => ({
     type: UPDATE_TAGS,
-    tags: tags
+    tags: tags,
+    error: getTagsError(tags)
 })
 
 export const addTag = (tag) => ({
@@ -34,9 +45,14 @@ const initialState = {
     id: "",
     title: "",
     description: '',
-    imageUrl: 'https://assets.st-note.com/production/uploads/images/16134453/rectangle_large_type_2_02b461d00e4d3c026d7706c5c3144351.png?fit=bounds&format=jpeg&quality=45&width=960',
+    imageUrl: '',
     status: "publish",
     tags: [],
+    error: {
+        title: { status: "", message: "" },
+        tags: { status: "", message: "" },
+        description: { status: "", message: "" },
+    },
 }
 
 export default function CourseEditBase(state = initialState, action) {
@@ -56,16 +72,24 @@ export default function CourseEditBase(state = initialState, action) {
             return {
                 ...state,
                 title: action.title,
+                error: { ...state.error, title: action.error },
+            }
+        case UPDATE_IMAGE_URL:
+            return {
+                ...state,
+                imageUrl: action.imageUrl,
             }
         case UPDATE_DESCRIPTION:
             return {
                 ...state,
                 description: action.description,
+                error: { ...state.error, description: action.error },
             }
         case UPDATE_TAGS:
             return {
                 ...state,
                 tags: action.tags,
+                error: { ...state.error, tags: action.error },
             }
         case ADD_TAGS:
             return {

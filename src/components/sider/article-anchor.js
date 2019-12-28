@@ -16,6 +16,8 @@ const AnchorMenu = (props) => {
             header3List.push({ id: a.id, parentId: parentId });
         }
     })
+    console.log(header2List);
+    console.log(header3List);
 
     return (
         <div style={{ position: "fixed", right: '0px', textAlign: 'left', height: '0px', padding: '20px', width: 'calc((100% - 740px) / 2)' }}>
@@ -25,7 +27,7 @@ const AnchorMenu = (props) => {
                         <Link href={"#" + h2} title={h2} >
                             {header3List.map(h3 => {
                                 if (h3.parentId === h2) {
-                                    return <Link href={"#" + h3} title={h3} />
+                                    return <Link href={"#" + h3.id} title={h3.id} />
                                 }
                                 return <></>
                             })}

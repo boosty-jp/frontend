@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux'
 import { clearArticle, setArticle } from 'modules/article/view'
 import ThumbnailImage from "components/image/thumbnail";
+import AvatarLabel from "components/avatar/author-label";
 
 const { Title } = Typography;
 const rateDescription = ['初級', '中級', '上級'];
@@ -51,6 +52,7 @@ const GET_ARTICLE = gql`
         likeCount
         learnedCount
       }
+
       accountAction {
         liked
         learned
@@ -85,6 +87,13 @@ class ArticleContentComponent extends React.Component {
                                 <Typography>
                                     <Title>{this.props.title}</Title>
                                 </Typography>
+                                <div style={{ margin: '12px auto 12px 0px' }}>
+                                    <AvatarLabel
+                                        name={this.props.author.displayName}
+                                        updateDate={this.props.updateDate}
+                                        image={this.props.author.imageUrl}
+                                    />
+                                </div>
                                 {this.props.status === 'draft' &&
                                     <Alert message="下書き中の記事です。作成者以外には閲覧できないようになっています。" type="warning" showIcon />
                                 }
@@ -127,7 +136,9 @@ const mapStateToProps = state => ({
     tags: state.articleView.tags,
     status: state.articleView.status,
     skills: state.articleView.skills,
+    author: state.articleView.author,
     text: state.articleView.text,
+    updateDate: state.articleView.updateDate
 })
 
 const mapDispatchToProps = dispatch => ({

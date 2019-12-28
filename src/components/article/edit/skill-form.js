@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { message, Modal, Icon, Button, Rate, List } from 'antd';
 import SkillSelect from "components/search/skill-form";
 import { addSkill, deleteSkill, clearSkillDraft } from 'modules/article/edit'
+import { isAbuseWord } from "utils/abuse-word-checker";
 
 const rateDescription = ['初級', '中級', '上級'];
 class SkillForm extends React.Component {
@@ -33,6 +34,11 @@ class SkillForm extends React.Component {
     validSkill = () => {
         if (!this.props.skillDraft.name.match(/\S/g)) {
             message.error('スキル名を入力してください', 5)
+            return false;
+        }
+
+        if (isAbuseWord(this.props.skillDraft.name)) {
+            message.error('このスキル名は追加できません', 5)
             return false;
         }
 

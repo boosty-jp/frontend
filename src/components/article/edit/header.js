@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from 'react-redux'
 import { Form, Icon, Tooltip, Row, Col, Input } from 'antd';
-import CoverImageUploader from 'components/article/edit/cover-image-uploader'
+import CoverImageUploader from 'components/image/cover-image-uploader'
 import { updateTitle, updateImageUrl } from 'modules/article/edit'
 import ArticleTagSelectForm from "containers/search/article-tag-form";
 import ArticleSkillForm from 'components/article/edit/skill-form'

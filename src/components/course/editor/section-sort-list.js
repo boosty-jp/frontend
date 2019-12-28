@@ -74,7 +74,7 @@ class SortList extends React.Component {
                                                         </Col>
                                                         <Col span={6} style={{ textAlign: 'right' }}>
                                                             <Icons icons={[
-                                                                <SectionUpdateForm section={item} />,
+                                                                <SectionUpdateForm id={item.id} />,
                                                                 <Icon type="delete" onClick={() => this.props.deleteSection(item.id)} />
                                                             ]} />
                                                         </Col>

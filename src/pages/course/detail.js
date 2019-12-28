@@ -1,16 +1,28 @@
-import React from 'react';
-import { Typography, Row, Col } from 'antd';
+import React, { useState, useEffect, useRef } from "react"
 import CourseLayout from 'components/layout/vertical/course';
-import IMAGE from 'images/hero4.png'
-import TwoColumnLayout from 'components/layout/two-column';
-import Sections from 'components/course/sections';
-import AuthorCard from 'components/course/author'
+import withLocation from "components/wrapper/location";
 
-export default class CourseDetailPage extends React.Component {
-    render() {
-        return (
-            <CourseLayout>
-                <div style={{ background: '#fff', padding: '24px' }}>
+const CourseDetailPage = ({ search }) => {
+    const { id } = search
+    const [width, setWidth] = useState(0)
+    const ref = useRef(null)
+
+    useEffect(() => {
+        setWidth(ref.current.clientWidth)
+    })
+
+    let marginToMenu = '0px';
+    if (width > 740) {
+        marginToMenu = '30px'
+    }
+
+    return (
+        <CourseLayout>
+            <div ref={ref}>
+                <div style={{ background: '#fff', maxWidth: '740px', width: '100%', margin: marginToMenu + ' auto' }}>
+                </div>
+            </div>
+            {/* <div style={{ background: '#fff', padding: '24px' }}>
                     <Typography>
                         <Row gutter={[16, 16]}>
                             <Col xs={24} sm={24} md={18} lg={16} xl={16} style={{ textAlign: 'left' }}>
@@ -26,8 +38,9 @@ export default class CourseDetailPage extends React.Component {
                 <TwoColumnLayout
                     left={<Sections />}
                     right={<AuthorCard />}
-                />
-            </CourseLayout>
-        );
-    }
+                /> */}
+        </CourseLayout>
+    );
 }
+
+export default withLocation(CourseDetailPage)

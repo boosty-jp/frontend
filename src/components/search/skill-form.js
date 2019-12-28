@@ -32,7 +32,6 @@ class SkillForm extends React.Component {
         this.state = {
             options: [],
             inputValue: '',
-            searchResults: [],
             loading: false,
         }
 
