@@ -4,7 +4,7 @@ import { message, Layout, Button, Row, Col, Affix } from 'antd';
 import Logo from "components/logo";
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { createCourseLink } from "utils/link-generator";
+import { createCourseDetailLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
 import { getDescriptionError, getTagsError, getSectionsError, getTitleError } from "utils/content-validator";
 const { Header } = Layout;
@@ -49,7 +49,7 @@ class EditMenu extends React.Component {
             });
 
             message.success("下書き保存しました", 7)
-            navigate(createCourseLink(data.draftCourse.id))
+            navigate(createCourseDetailLink(data.draftCourse.id))
         } catch (err) {
             message.error(getErrorMessage(err), 7)
         }
@@ -70,7 +70,7 @@ class EditMenu extends React.Component {
             });
 
             message.success("公開しました", 7)
-            navigate(createCourseLink(data.publishCourse.id))
+            navigate(createCourseDetailLink(data.publishCourse.id))
         } catch (err) {
             message.error(getErrorMessage(err), 7)
         }

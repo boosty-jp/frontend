@@ -66,7 +66,7 @@ class SkillForm extends React.Component {
             // API叩いてスキル作成する
             if (idx === -1) {
                 options[1] = (
-                    <Option key={value} className="show-all">
+                    <Option key="add-skill" value={value} className="show-all">
                         <a onClick={() => this.addSkill(value)}>
                             <strong>「{value}」</strong>を新規作成する。
                     </a>
@@ -79,7 +79,7 @@ class SkillForm extends React.Component {
         }).catch(() => {
             options[0] = (<></>);
             options[1] = (
-                <Option key={value} className="show-all">
+                <Option key="add-skill" value={value} className="show-all">
                     <a onClick={() => this.addSkill(value)}>
                         <strong>「{value}」</strong>を新規作成する。
                     </a>
@@ -92,6 +92,7 @@ class SkillForm extends React.Component {
 
     addSkill = async (value) => {
         this.setState({ loading: true });
+        this.props.updateSkillDraft({ id: '', name: '' })
         try {
             const { data } = await this.props.client.mutate({
                 mutation: CREATE_SKILL,
@@ -129,7 +130,11 @@ class SkillForm extends React.Component {
                                 style={{ width: '100%' }}
                                 dataSource={this.state.options}
                                 onSelect={(value, option) => {
-                                    this.props.updateSkillDraft({ id: option.key, name: value })
+                                    if (option.key === 'add-skill') {
+                                        this.addSkill(value);
+                                    } else {
+                                        this.props.updateSkillDraft({ id: option.key, name: value })
+                                    }
                                 }}
                                 onSearch={this.handleSearch}
                                 placeholder="スキル名を入力してください"

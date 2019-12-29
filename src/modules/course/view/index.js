@@ -9,7 +9,7 @@ export const setCourse = (course) => ({
     course: course
 })
 
-export const clearBase = (course) => ({
+export const clearCourse = (course) => ({
     type: CLEAR_COURSE,
     course: course
 })
@@ -27,7 +27,14 @@ const initialState = {
     title: "",
     description: '',
     imageUrl: '',
+    status: 'publish',
+    createDate: '',
+    updateDate: '',
+
     tags: [],
+    sections: [],
+    author: {},
+
     actionCount: {
         likeCount: 0,
         learnedCount: 0,
@@ -36,6 +43,10 @@ const initialState = {
         liked: false,
         learned: false,
     },
+    learnStatus: {
+        progress: 0,
+        status: ''
+    }
 }
 
 export default function CourseView(state = initialState, action) {
@@ -43,11 +54,21 @@ export default function CourseView(state = initialState, action) {
         case SET_COURSE:
             return {
                 ...state,
-                id: action.base.id,
-                title: action.base.title,
-                imageUrl: action.base.imageUrl,
-                description: action.base.description,
-                tags: action.tags.concat(),
+                id: action.course.id,
+                title: action.course.title,
+                description: action.course.description,
+                imageUrl: action.course.imageUrl,
+                status: action.course.status,
+                createDate: action.course.createDate,
+                updateDate: action.course.updateDate,
+
+                tags: action.course.tags.concat(),
+                sections: action.course.sections.concat(),
+                author: action.course.author,
+
+                actionCount: action.course.actionCount,
+                accountAction: action.course.accountAction,
+                learnStatus: action.course.learnStatus,
             };
         case CLEAR_COURSE:
             return { ...initialState }

@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import VerticalFooter from "./footer";
 import HorizontalContentMenu from 'components/menu/horizontal-content'
 import CourseActionButtonSider from "components/sider/buttons/course/action-buttons";
+import CourseProgress from 'components/course/view/progress'
 
 const { Content } = Layout;
 
@@ -19,15 +20,18 @@ class CourseLayout extends React.Component {
 
     render() {
         return (
-            <Layout style={{ minHeight: '100vh' }}>
-                <HorizontalContentMenu />
-                <Content>
-                    <CourseActionButtonSider onCourse={false} />
-                    <div>
-                        {this.props.children}
-                    </div>
-                </Content>
-                <VerticalFooter />
+            <Layout >
+                <div style={{ minHeight: '100vh' }}>
+                    <HorizontalContentMenu />
+                    <Content>
+                        <CourseActionButtonSider onCourse={false} />
+                        <div>
+                            {this.props.children}
+                        </div>
+                    </Content>
+                    <VerticalFooter />
+                </div>
+                <CourseProgress />
             </Layout>
         )
     }

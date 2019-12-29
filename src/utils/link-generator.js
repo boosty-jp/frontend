@@ -4,8 +4,8 @@ export const createArticleUrl = (id) => ("https://wever.co.jp/article/?id=" + id
 export const createArticleEditLink = (id) => ("/article/edit/?id=" + id)
 export const createArticleEditUrl = (id) => ("https://wever.co.jp/article/edit/?id=" + id)
 
-export const createCourseLink = (id) => ("/course/?id=" + id)
-export const createCourseUrl = (id) => ("https://wever.co.jp/course/?id=" + id)
+export const createCourseDetailLink = (id) => ("/course/detail/?id=" + id)
+export const createCourseDetailUrl = (id) => ("https://wever.co.jp/course/detail/?id=" + id)
 
 export const createCourseEditLink = (id) => ("/course/edit/?id=" + id)
 
