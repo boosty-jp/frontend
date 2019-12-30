@@ -1,41 +1,56 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
-    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+    BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
-const data = [
-    {
-        name: 'Java', middle: 4000, hard: 2400, easy: 2400,
-    },
-    {
-        name: 'Ruby', middle: 3000, hard: 1398, easy: 2210,
-    },
-    {
-        name: 'C++', middle: 2000, hard: 9800, easy: 2290,
-    },
-];
 
-export default class SkillBarChart extends PureComponent {
-    render() {
+const SkillBarChart = ({ data, colors }) => {
+    if (data.length > 5) {
         return (
-            <BarChart
-                width={400}
-                height={180}
-                data={data}
-                margin={{
-                    top: 20, right: 30, left: 20, bottom: 5,
-                }}
-                layout="vertical"
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="name" type="category" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="easy" stackId="a" fill="#138185" />
-                <Bar dataKey="middle" stackId="a" fill="#8884d8" />
-                <Bar dataKey="hard" stackId="a" fill="#82ca9d" />
-            </BarChart>
+            <ResponsiveContainer width="100%" height={30 * data.length + 40}>
+                {/* <ResponsiveContainer width="100%" > */}
+                <BarChart
+                    height={180}
+                    data={data}
+                    layout="vertical"
+                >
+                    {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                    <XAxis type="number" hide domain={[0, 'dataMax']} />
+                    <YAxis dataKey="name" type="category" tickLine={false} allowDataOverflow width={100} />
+                    <Tooltip cursor={{ fill: 'transparent' }} />
+                    <Bar dataKey="easy" name="初級" stackId="a" fill={colors[0]} barSize={15} >
+                    </Bar>
+                    <Bar dataKey="middle" name="中級" stackId="a" fill={colors[1]} barSize={15}>
+                    </Bar>
+                    <Bar dataKey="hard" name="上級" stackId="a" fill={colors[2]} barSize={15}>
+                    </Bar>
+                    <Legend iconType="square" />
+                </BarChart>
+            </ResponsiveContainer>
         );
     }
+    return (
+        <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
+            {/* <ResponsiveContainer width="100%" > */}
+            <BarChart
+                height={180}
+                data={data}
+                layout="vertical"
+            >
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                <XAxis type="number" hide domain={[0, 'dataMax']} />
+                <YAxis dataKey="name" type="category" tickLine={false} allowDataOverflow width={90} />
+                <Tooltip cursor={{ fill: 'transparent' }} />
+                <Bar dataKey="easy" name="初級" stackId="a" fill={colors[0]} barSize={15} >
+                </Bar>
+                <Bar dataKey="middle" name="中級" stackId="a" fill={colors[1]} barSize={15}>
+                </Bar>
+                <Bar dataKey="hard" name="上級" stackId="a" fill={colors[2]} barSize={15}>
+                </Bar>
+                <Legend iconType="square" />
+            </BarChart>
+        </ResponsiveContainer>
+    );
 }
+
+export default SkillBarChart;

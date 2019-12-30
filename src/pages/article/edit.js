@@ -66,7 +66,6 @@ const ArticleEditPageComponent = (props) => {
         fetchPolicy='network-only'
         variables={{ articleId: id }}
         onCompleted={(data) => {
-          console.log('save')
           props.setArticle(data.article)
         }}
       >

@@ -2,6 +2,7 @@ import { convertToSkillMap } from 'utils/skill-map'
 
 const SUFFIX = '_COURSE_SECTIONS_EDIT';
 const SET_SECTIONS = 'SET_SECTIONS' + SUFFIX;
+const CLEAR_SECTIONS = 'CLEAR_SECTIONS' + SUFFIX;
 const ADD_SECTION = 'ADD_SECTION' + SUFFIX;
 const UPDATE_SECTIONS = 'UPDATE_SECTIONS' + SUFFIX;
 const UPDATE_SECTION = 'UPDATE_SECTION' + SUFFIX;
@@ -10,6 +11,10 @@ const DELETE_SECTION = 'DELETE_SECTIONS' + SUFFIX;
 export const setSections = (sections) => ({
     type: SET_SECTIONS,
     sections: sections
+})
+
+export const clearSections = () => ({
+    type: CLEAR_SECTIONS,
 })
 
 export const addSection = (section) => ({
@@ -44,7 +49,10 @@ export default function CourseEditSections(state = initialState, action) {
                 sections: action.sections,
                 // skillMaps: convertToSkillMap(action.sections),
             };
-
+        case CLEAR_SECTIONS:
+            return {
+                ...initialState,
+            };
         case ADD_SECTION:
             return {
                 ...state,

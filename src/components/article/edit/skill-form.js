@@ -1,11 +1,11 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { message, Modal, Icon, Button, Rate, List } from 'antd';
+import { message, Modal, Icon, Button, Rate, List, Radio, Badge } from 'antd';
 import SkillSelect from "components/search/skill-form";
 import { addSkill, deleteSkill, clearSkillDraft } from 'modules/article/edit'
 import { isAbuseWord } from "utils/abuse-word-checker";
+import { presetPalettes } from '@ant-design/colors'
 
-const rateDescription = ['初級', '中級', '上級'];
 class SkillForm extends React.Component {
     state = { visible: false, skillLevel: 2 };
 
@@ -111,18 +111,15 @@ class SkillForm extends React.Component {
                     <SkillSelect />
                     <p style={{ fontWeight: '500', fontSize: '16px', marginTop: '16px' }}>レベル: </p>
                     <div>
-                        <Rate
-                            tooltips={rateDescription}
+                        <Radio.Group
                             value={this.state.skillLevel}
-                            allowClear={false}
-                            onChange={(level) => this.setState({ skillLevel: level })}
-                            count={3}
-                        />
-                        {this.state.skillLevel ?
-                            <span className="ant-rate-text">{rateDescription[this.state.skillLevel - 1]}</span>
-                            :
-                            <></>
-                        }
+                            onChange={(e) => this.setState({ skillLevel: e.target.value })}
+                            defaultValue={2}
+                        >
+                            <Radio.Button value={1}><Badge color={presetPalettes.geekblue[3]} text="初級" /></Radio.Button>
+                            <Radio.Button value={2}><Badge color={presetPalettes.geekblue[5]} text="中級" /></Radio.Button>
+                            <Radio.Button value={3}><Badge color={presetPalettes.geekblue[7]} text="上級" /></Radio.Button>
+                        </Radio.Group>
                     </div>
                 </Modal>
             </>

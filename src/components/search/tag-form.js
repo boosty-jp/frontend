@@ -48,7 +48,6 @@ class TagSelectForm extends React.Component {
         this.setState({ searchResults: [], fetching: true, inputVal: value, open: true });
 
         index.search({ query: value, hitsPerPage: 8 }).then(({ hits }) => {
-            console.log('h', hits);
             const result = hits.map(hit => {
                 return { id: hit.objectID, key: hit.objectID, name: hit.name }
             })
@@ -57,14 +56,14 @@ class TagSelectForm extends React.Component {
         }).catch(() => { this.setState({ fetching: false }) })
     };
 
-    handleChange = value => {
+    handleChange = values => {
         this.setState({
             searchResults: [],
             fetching: false,
             open: false,
             inputVal: ''
         });
-        this.props.updateTags(value);
+        this.props.updateTags(values.map(v => { return { id: v.key, name: v.label } }));
     };
 
     addItem = async () => {
@@ -79,7 +78,7 @@ class TagSelectForm extends React.Component {
                 variables: { name: inputVal }
             });
 
-            this.props.addTag({ key: data.createTag.id, label: inputVal, id: data.createTag.id })
+            this.props.addTag({ id: data.createTag.id, name: inputVal })
 
         } catch (err) {
             message.error(getErrorMessage(err), 7)
@@ -132,7 +131,7 @@ class TagSelectForm extends React.Component {
                     size="large"
                     mode="multiple"
                     labelInValue
-                    value={this.props.tags}
+                    value={this.props.tags.map(t => { return { key: t.id, label: t.name } })}
                     placeholder="タグを選択する"
                     notFoundContent={fetching ? <Spin size="small" /> : null}
                     filterOption={false}

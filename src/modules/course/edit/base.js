@@ -2,15 +2,20 @@ import { getTitleError, getTagsError, getDescriptionError } from 'utils/content-
 
 const SUFFIX = '_COURSE_BASE_EDIT';
 const SET_BASE = 'SET_BASE' + SUFFIX;
+const CLEAR_BASE = 'CLEAR_BASE' + SUFFIX;
 const UPDATE_TITLE = 'UPDATE_TITLE' + SUFFIX;
 const UPDATE_IMAGE_URL = 'UPDATE_IMAGE_URL' + SUFFIX;
 const UPDATE_DESCRIPTION = 'UPDATE_DESCRIPTION' + SUFFIX;
 const UPDATE_TAGS = 'UPDATE_TAGS' + SUFFIX;
 const ADD_TAGS = 'ADD_TAGS' + SUFFIX;
 
-export const setBase = (base) => ({
+export const setBase = (course) => ({
     type: SET_BASE,
-    base: base
+    course: course
+})
+
+export const clearBase = () => ({
+    type: CLEAR_BASE,
 })
 
 export const updateTitle = (title) => ({
@@ -60,14 +65,17 @@ export default function CourseEditBase(state = initialState, action) {
         case SET_BASE:
             return {
                 ...state,
-                id: action.base.id,
-                title: action.base.title,
-                imageUrl: action.base.imageUrl,
-                description: action.base.description,
-                status: action.base.status,
-                tags: action.tags.concat(),
+                id: action.course.id,
+                title: action.course.title,
+                imageUrl: action.course.imageUrl,
+                description: action.course.description,
+                status: action.course.status,
+                tags: action.course.tags
             };
-
+        case CLEAR_BASE:
+            return {
+                ...initialState
+            };
         case UPDATE_TITLE:
             return {
                 ...state,

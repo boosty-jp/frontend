@@ -1,39 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Card, Icon, Tooltip } from 'antd';
-import CourseEditHeader from 'components/course/editor/header'
-import SectionsEditor from 'components/course/editor/sections';
-import CourseEditLayout from 'components/layout/vertical/course-edit';
+import withLocation from "components/wrapper/location";
+import { Icon, Spin } from 'antd';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+import ErrorResult from "components/error/result";
+import { setBase, clearBase } from 'modules/course/edit/base'
+import { setSections, clearSections } from 'modules/course/edit/sections'
+import { clearSection } from 'modules/course/edit/section'
+import CourseEdit from 'components/course/editor'
 
-class CourseEditPageComponent extends React.Component {
-    render() {
-        return (
-            <CourseEditLayout>
-                <Card
-                    title="基本情報"
-                    bordered={true}
-                    style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto', }}
-                >
-                    <CourseEditHeader />
-                </Card>
-                <Card
-                    title="コース内容"
-                    bordered={true}
-                    style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto' }}
-                    extra={
-                        <>
-                            <span style={{ marginRight: '8px' }}>{this.props.courseCount} / 10</span>
-                            <Tooltip title="1コースにつき10セクションまで作成できます">
-                                <Icon type="question-circle-o" />
-                            </Tooltip>
-                        </>
-                    }
-                >
-                    <SectionsEditor />
-                </Card>
-            </CourseEditLayout>
-        );
+const GET_COURSE = gql`
+  query Course($courseId: ID!) {
+    course(courseId: $courseId) {
+      id
+      title
+      imageUrl
+      description
+      status
+      createDate
+      updateDate
+
+      tags {
+        id
+        name
+      }
+
+      sections {
+        id
+        number
+        title
+
+        contents {
+          id
+          title
+          number
+        }
+      }
     }
+  }
+`;
+
+const CourseEditPageComponent = (props) => {
+    const { id } = props.search
+    if (id) {
+        return (
+            <Query
+                query={GET_COURSE}
+                fetchPolicy='network-only'
+                variables={{ courseId: id }}
+                onCompleted={(data) => {
+                    props.setBase(data.course)
+                    props.setSections(data.course.sections)
+                }}
+            >
+                {({ loading, error }) => {
+                    if (loading) {
+                        return (
+                            <Spin spinning={loading} tip="ロード中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+                                <CourseEdit />
+                            </Spin>
+                        )
+                    }
+
+                    if (error) return <ErrorResult />
+                    return <CourseEdit />
+                }}
+            </Query>
+        )
+    } else {
+        props.clearBase();
+        props.clearSection();
+        props.clearSections();
+        return <CourseEdit />
+    }
+
 }
 
 
@@ -41,5 +82,13 @@ const mapStateToProps = state => ({
     courseCount: state.courseEditSections.sections.length,
 })
 
-const CourseEditPage = connect(mapStateToProps)(CourseEditPageComponent)
-export default CourseEditPage
+const mapDispatchToProps = dispatch => ({
+    setBase: (course) => dispatch(setBase(course)),
+    setSections: (sections) => dispatch(setSections(sections)),
+    clearBase: () => dispatch(clearBase()),
+    clearSection: () => dispatch(clearSection()),
+    clearSections: () => dispatch(clearSections()),
+})
+
+const CourseEditPage = connect(mapStateToProps, mapDispatchToProps)(CourseEditPageComponent)
+export default withLocation(CourseEditPage)

@@ -85,7 +85,7 @@ class EditMenu extends React.Component {
             title: this.props.title,
             imageUrl: this.props.imageUrl,
             blocks: this.props.blocks.map(b => { return { type: b.type, data: JSON.stringify(b.data) } }),
-            tagIds: this.props.tags.map(t => { return t.key }),
+            tagIds: this.props.tags.map(t => { return t.id }),
             skills: this.props.skills.map(s => { return { id: s.id, level: s.level } })
         }
     }

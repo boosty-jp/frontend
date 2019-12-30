@@ -48,12 +48,15 @@ class SkillForm extends React.Component {
         index.search({ query: value, hitsPerPage: 8 }).then(({ hits }) => {
             options[0] = (
                 <OptGroup key="skill-search-result" label="検索結果">
-                    {hits.map(s => (
-                        <Option key={s.id} value={s.name}>
-                            {s.name}
-                            <span className="certain-search-item-count">{s.referedNum} 記事</span>
-                        </Option>
-                    ))}
+                    {hits.map(s => {
+                        return (
+                            <Option key={s.objectID} value={s.name}>
+                                {s.name}
+                                {/* <span className="certain-search-item-count">{s.referedNum} 記事</span> */}
+                            </Option>
+                        )
+                    }
+                    )}
                 </OptGroup>);
 
             let idx = -1;

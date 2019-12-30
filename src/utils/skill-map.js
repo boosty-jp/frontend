@@ -3,45 +3,72 @@ const rateDescription = ['初級', '中級', '上級'];
 export const convertToSkillMap = (sections) => {
     var skills = [];
     sections.forEach(s => {
-        s.articles.forEach(a => {
+        s.contents.forEach(a => {
             a.skills.forEach(s => {
                 skills.push(s);
             })
         })
     })
+
     var skillMap = [];
     skills.forEach(s => {
-        if (!validLevel) return;
+        if (!validLevel(s.level)) return;
 
         var skillExistis = false;
         var targetIdx = -1;
         for (var i = 0; i < skillMap.length; i++) {
             if (s.id === skillMap[i].id) {
-                skillExistis = true
-                if (s.level === skillMap[i].level) {
-                    targetIdx = i;
-                    break;
-                }
-            }
-        }
-
-        // チャートをきれいにするためにすべてのレベルを初期化しておく
-        if (!skillExistis) {
-            for (var i = 1; i < 4; ++i) {
-                if (i === s.level) {
-                    skillMap.push({ id: s.id, level: s.level, value: 1, label: s.name });
-                } else {
-                    skillMap.push({ id: s.id, level: i, value: 0, label: s.name });
-                }
+                targetIdx = i;
             }
         }
 
         if (targetIdx >= 0) {
-            skillMap[targetIdx].value += 1;
+            if (s.level === 1) {
+                skillMap[targetIdx] = { ...skillMap[targetIdx], easy: skillMap[targetIdx].easy + 1 };
+            } else if (s.level === 2) {
+                skillMap[targetIdx] = { ...skillMap[targetIdx], middle: skillMap[targetIdx].middle + 1 };
+            } else if (s.level === 3) {
+                skillMap[targetIdx] = { ...skillMap[targetIdx], hard: skillMap[targetIdx].hard + 1 };
+            }
+        } else {
+            if (s.level === 1) {
+                skillMap.push({ id: s.id, name: s.name, easy: 1, middle: 0, hard: 0 });
+            } else if (s.level === 2) {
+                skillMap.push({ id: s.id, name: s.name, easy: 0, middle: 1, hard: 0 });
+            } else if (s.level === 3) {
+                skillMap.push({ id: s.id, name: s.name, easy: 0, middle: 0, hard: 1 });
+            }
         }
     })
+    return skillMap;
+}
 
-    return skillMap.map(s => { return { name: s.label, label: rateDescription[s.level - 1], value: s.value } });
+export const convertToSkillLevelMap = (sections) => {
+    var skillLevels = [
+        { name: 'easy', value: 0 },
+        { name: 'medium', value: 0 },
+        { name: 'hard', value: 0 },
+    ]
+
+    var skills = [];
+    sections.forEach(s => {
+        s.contents.forEach(a => {
+            a.skills.forEach(s => {
+                skills.push(s);
+            })
+        })
+    })
+
+    skills.forEach(s => {
+        if (s.level === 1) {
+            skillLevels[0].value++;
+        } else if (s.level === 2) {
+            skillLevels[1].value++;
+        } else if (s.level === 3) {
+            skillLevels[2].value++;
+        }
+    })
+    return skillLevels;
 }
 
 const validLevel = (level) => {
