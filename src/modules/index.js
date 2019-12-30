@@ -6,6 +6,7 @@ import CourseEditBase from 'modules/course/edit/base'
 import CourseEditSections from 'modules/course/edit/sections'
 import CourseEditSection from 'modules/course/edit/section'
 import TestEditBase from 'modules/test/edit/base'
+import TestEditQuestion from 'modules/test/edit/question'
 import TestEditQuestions from 'modules/test/edit/questions'
 
 const reducers = combineReducers({
@@ -16,6 +17,7 @@ const reducers = combineReducers({
     courseEditSections: CourseEditSections,
     courseEditSection: CourseEditSection,
     testEditBase: TestEditBase,
+    testEditQuestion: TestEditQuestion,
     testEditQuestions: TestEditQuestions,
 });
 
