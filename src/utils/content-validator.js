@@ -56,3 +56,17 @@ export const getDescriptionError = (description) => {
 
     return { status, message };
 }
+
+export const getReferenceCourseError = (refrenceCourse) => {
+    let status = "";
+    let message = "";
+    if (!refrenceCourse.id) {
+        status = "error";
+        message = "対象のコースを選択してください"
+    } else {
+        status = "";
+        message = "";
+    }
+
+    return { status, message };
+}

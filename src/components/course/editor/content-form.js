@@ -59,7 +59,7 @@ class ContentFormComponent extends React.Component {
         let searchResults = []
         index.search({ query: value, hitsPerPage: 8 }).then(({ hits }) => {
             searchResults[0] = (
-                <OptGroup key="skill-search-result" label="検索結果" >
+                <OptGroup key="content-search-result" label="検索結果" >
                     {hits.map(s => {
                         const updateDateObject = new Date(s.updateDate);
                         const updateDateStr = updateDateObject.getFullYear() + "年" + (updateDateObject.getMonth() + 1) + "月" + updateDateObject.getDate() + "日";
@@ -79,11 +79,11 @@ class ContentFormComponent extends React.Component {
                     })}
                 </OptGroup>)
 
-            this.setState({ fetching: false, searchResults })
+            this.setState({ fetching: false, searchResults: searchResults })
         }).catch(() => {
-            searchResults[0] = (<></>);
+            searchResults[0] = (<OptGroup key="content-search-result" label="検索結果" ></OptGroup>);
 
-            this.setState({ fetching: false, searchResults })
+            this.setState({ fetching: false, searchResults: searchResults })
         })
     };
 

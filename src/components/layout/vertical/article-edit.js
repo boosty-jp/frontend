@@ -8,17 +8,6 @@ import ArticlePreview from "components/article/edit/preview";
 const { Content } = Layout;
 
 class ArticleEditorLayoutComponent extends React.Component {
-    state = {
-        collapsed: false,
-        preview: false,
-    };
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    };
-
     render() {
         return (
             <Layout >

@@ -7,15 +7,6 @@ import CoursePreview from 'components/course/editor/preview'
 const { Content } = Layout;
 
 class CourseEditLayout extends React.Component {
-    state = {
-        collapsed: false,
-    };
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    };
 
     render() {
         return (
