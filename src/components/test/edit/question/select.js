@@ -8,7 +8,7 @@ export default class SelectForm extends React.Component {
             { text: '', answer: true },
             { text: '', answer: false },
             { text: '', answer: false },
-        ]
+        ],
     };
 
     onChange = e => {
@@ -18,9 +18,10 @@ export default class SelectForm extends React.Component {
         this.setState({ candidates: updatedCandidates });
     };
 
-    changeText = (text, idx) => {
+    changeText = (e, idx) => {
+        e.preventDefault();
         const updatedCandidates = this.state.candidates.concat();
-        updatedCandidates[idx].text = text;
+        updatedCandidates[idx].text = e.target.value;
         this.setState({ candidates: updatedCandidates });
     }
 
@@ -59,21 +60,21 @@ export default class SelectForm extends React.Component {
             marginBottom: '14px'
         };
         return (
-            <Form.Item label={<span>答え</span>}>
-                <Radio.Group onChange={this.onChange} value={this.answer()}>
+            <Form.Item label={<span>答え</span>} >
+                <Radio.Group onChange={this.onChange} value={this.answer()} style={{ width: '100%' }}>
                     {this.state.candidates.map((c, idx) => {
                         return (
-                            <Radio style={radioStyle} value={idx + 1} key={"candidate-" + c.text + idx}>
+                            <Radio style={radioStyle} value={idx + 1} key={"candidate-" + idx}>
                                 {c.answer ?
                                     <Tag color="green">正解　</Tag>
                                     :
                                     <Tag color="red">不正解</Tag>
                                 }
                                 <Input
-                                    style={{ width: 300, marginLeft: 10 }}
+                                    style={{ width: '70%', marginLeft: 10 }}
                                     placeholder="入力してください"
                                     value={c.text}
-                                    onChange={(e) => this.changeText(e.target.value, idx)} />
+                                    onChange={(e) => this.changeText(e, idx)} />
                                 <Icon type="delete" style={{ marginLeft: '12px' }} onClick={() => this.deleteCandiadte(idx)} />
                             </Radio>
                         )
@@ -85,6 +86,7 @@ export default class SelectForm extends React.Component {
                         icon="plus"
                         disabled={this.state.candidates.length >= 5}
                         onClick={() => { this.addCandiadte() }}
+                        style={{ width: '100%' }}
                     >追加する</Button>
                 </div>
             </Form.Item>

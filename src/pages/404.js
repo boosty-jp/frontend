@@ -1,5 +1,4 @@
 import React from "react"
-
 import Layout from "components/layout/horizontal"
 import NOSEO from "components/seo/noseo"
 

@@ -1,14 +1,79 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Icon, Input, AutoComplete, Row, Col } from 'antd';
+import { Icon, Input, AutoComplete, Row, Col, Spin, message } from 'antd';
+import { withApollo } from 'react-apollo'
+import gql from 'graphql-tag';
 import debounce from "lodash/debounce";
 import styled from 'styled-components'
-import { updatereferenceCourse } from 'modules/test/edit/base'
+import { updatereferenceCourse, clearReferenceCourse } from 'modules/test/edit/base'
 import algoliasearch from 'algoliasearch/lite';
 import { getErrorMessage } from "utils/error-handle";
 import ThumbnailImage from "components/image/thumbnail";
 
 const { Option, OptGroup } = AutoComplete;
+
+const GET_COURSE = gql`
+  query Course($courseId: ID!) {
+    course(courseId: $courseId) {
+      id
+      title
+      imageUrl
+      description
+      status
+      createDate
+      updateDate
+
+      tags {
+        id
+        name
+      }
+
+      sections {
+        id
+        number
+        title
+
+        contents {
+          id
+          title
+          number
+          skills {
+            id
+            name
+            relatedCount
+            level
+          }
+          learned
+        }
+      }
+
+      author {
+        id
+        displayName
+        imageUrl
+        description
+        url
+        twitterId
+        facebookId
+      }
+
+      actionCount {
+        likeCount
+        learnedCount
+      }
+
+      accountAction {
+        liked
+        learned
+      }
+
+      learnStatus {
+        progress
+        status
+      }
+    }
+  }
+`;
 
 const RoundSearch = styled(AutoComplete)`
   .ant-input {
@@ -30,6 +95,7 @@ class ReferenceCourseFormComponent extends React.Component {
         this.state = {
             options: [],
             inputValue: '',
+            loading: false,
         }
 
     }
@@ -61,17 +127,32 @@ class ReferenceCourseFormComponent extends React.Component {
         })
     };
 
-    updateCourse = (id, name, imageUrl) => {
+    updateCourse = async (id) => {
+        this.setState({ loading: true })
+        try {
+            const { data } = await this.props.client.query({
+                query: GET_COURSE,
+                variables: { courseId: id }
+            });
+
+            this.props.updateReferenceCourse(data.course)
+        } catch (err) {
+            message.error(getErrorMessage(err), 7)
+        }
+        this.setState({ loading: false })
+    }
+
+    clearCourse = () => {
         if (this.props.questions.length > 0) {
             // すでに問題作成中だった場合は
             // 問題をすべてクリアすることになるので警告を出す。
         }
-        this.props.updateReferenceCourse({ id: id, name: name, imageUrl: imageUrl })
+        this.props.clearReferenceCourse()
     }
 
     render() {
         return (
-            <>
+            <Spin spinning={this.state.loading} tip="ロード中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
                 {this.props.referenceCourse.id ?
                     <div
                         style={{
@@ -87,14 +168,14 @@ class ReferenceCourseFormComponent extends React.Component {
                                 <Icon
                                     type="close"
                                     style={{ color: "#69c0ff", fontSize: '16px' }}
-                                    onClick={() => this.updateCourse('', '', '')}
+                                    onClick={() => this.clearCourse()}
                                 />
                             </div>
                         }
                         <Row align={this.props.referenceCourse.imageUrl ? "top" : "middle"} type="flex" justify="space-between">
                             <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                                 <p style={{ fontSize: '16px', marginBottom: '0px', lineHeight: '22px', fontWeight: '500' }}>
-                                    {this.props.referenceCourse.name}
+                                    {this.props.referenceCourse.title}
                                 </p>
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
@@ -105,7 +186,7 @@ class ReferenceCourseFormComponent extends React.Component {
                                         <Icon
                                             type="close"
                                             style={{ color: "#69c0ff", fontSize: '16px' }}
-                                            onClick={() => this.updateCourse('', '', '')}
+                                            onClick={() => this.clearCourse()}
                                         />
                                     </div>
                                 }
@@ -121,9 +202,7 @@ class ReferenceCourseFormComponent extends React.Component {
                             size="large"
                             style={{ width: '100%' }}
                             dataSource={this.state.options}
-                            onSelect={(value, option) => {
-                                this.props.updateReferenceCourse({ id: option.key, name: value, imageUrl: option.props.imageUrl })
-                            }}
+                            onSelect={(value, option) => { this.updateCourse(option.key) }}
                             onSearch={this.handleSearch}
                             placeholder="コース名を入力してください"
                             optionLabelProp="value"
@@ -132,7 +211,7 @@ class ReferenceCourseFormComponent extends React.Component {
                         </RoundSearch>
                     </div>
                 }
-            </>
+            </Spin>
         );
     }
 }
@@ -145,7 +224,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     updateReferenceCourse: (referenceCourse) => dispatch(updatereferenceCourse(referenceCourse)),
+    clearReferenceCourse: () => dispatch(clearReferenceCourse()),
 })
 
 const ReferenceCourseForm = connect(mapStateToProps, mapDispatchToProps)(ReferenceCourseFormComponent)
-export default ReferenceCourseForm
+export default withApollo(ReferenceCourseForm)

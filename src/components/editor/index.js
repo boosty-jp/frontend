@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import debounce from "lodash/debounce";
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from 'components/editor/tool'
-import { Typography } from 'antd';
+import { Form, Icon, Tooltip, } from 'antd';
 import { convertToJSX } from 'utils/html-converter'
 import { updateText } from 'modules/article/edit'
 
@@ -26,20 +26,15 @@ class Editor extends React.Component {
 
     render() {
         return (
-            <>
-                <Typography>
-                    {this.state.outputs.map((o => o))}
-                </Typography>
-                <EditorJs
-                    // enableReInitialize
-                    tools={EDITOR_JS_TOOLS}
-                    instanceRef={instance => this.setState({ editorInstance: instance })}
-                    onChange={() => this.handleSave()}
-                    onReady={() => this.handleSave()}
-                    placeholder="記事の内容を入力してください"
-                    data={{ blocks: this.props.blocks }}
-                />
-            </>
+            <EditorJs
+                // enableReInitialize
+                tools={EDITOR_JS_TOOLS}
+                instanceRef={instance => this.setState({ editorInstance: instance })}
+                onChange={() => this.handleSave()}
+                onReady={() => this.handleSave()}
+                placeholder="記事の内容を入力してください"
+                data={{ blocks: this.props.blocks }}
+            />
         )
     }
 }

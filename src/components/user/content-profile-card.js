@@ -3,9 +3,6 @@ import { Skeleton, Row, Col } from 'antd';
 import AvatarImage from 'components/avatar/image'
 import SnsLinks from "./snsLink";
 
-const isBrowser = typeof window !== 'undefined';
-const navigate = isBrowser ? require('gatsby').navigate : () => { }
-
 const ContentProfileCard = ({ data }) => {
     if (!data || !data.id) {
         return <Skeleton avatar active paragraph={{ rows: 4 }} />

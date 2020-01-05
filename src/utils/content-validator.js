@@ -70,3 +70,74 @@ export const getReferenceCourseError = (refrenceCourse) => {
 
     return { status, message };
 }
+
+export const getAnswerTypeError = (type) => {
+    let status = "";
+    let message = "";
+    if (!type || (type !== 'select' && type !== 'text')) {
+        status = "error";
+        message = "タイプを選んでください"
+    }
+
+    return { status, message };
+}
+
+export const getQuestionError = (blockCount, textCount) => {
+    let status = "";
+    let message = "";
+    if (blockCount === 0 || textCount === 0) {
+        status = "error";
+        message = "問題内容を入力してください"
+    }
+
+    if (blockCount > 10) {
+        status = "error";
+        message = "入力できる問題文は10ブロックまでです。"
+    }
+
+    if (textCount > 1000) {
+        status = "error";
+        message = "入力できる問題文は1000文字までです。"
+    }
+
+    return { status, message };
+}
+
+export const getExplanationTextError = (blockCount, textCount) => {
+    let status = "";
+    let message = "";
+    if (blockCount === 0 || textCount === 0) {
+        status = "error";
+        message = "解説内容を入力してください"
+    }
+
+    if (blockCount > 10) {
+        status = "error";
+        message = "入力できる解説内容は10ブロックまでです。"
+    }
+
+    if (textCount > 1000) {
+        status = "error";
+        message = "入力できる解説内容は1000文字までです。"
+    }
+
+    return { status, message };
+}
+
+export const getReferenceError = (referenceBlocks) => {
+    console.log('re', referenceBlocks);
+    let status = "";
+    let message = "";
+    if (!referenceBlocks || referenceBlocks.length === 0) {
+        status = "error";
+        message = "参考情報は1つ以上必要です。"
+        return { status, message };
+    }
+
+    if (referenceBlocks.length > 5) {
+        status = "error";
+        message = "追加できる参考情報は5つまでです。"
+    }
+
+    return { status, message };
+}

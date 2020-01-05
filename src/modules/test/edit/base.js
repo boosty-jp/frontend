@@ -6,6 +6,7 @@ const CLEAR_BASE = 'CLEAR_BASE' + SUFFIX;
 const UPDATE_TITLE = 'UPDATE_TITLE' + SUFFIX;
 const UPDATE_DESCRIPTION = 'UPDATE_DESCRIPTION' + SUFFIX;
 const UPDATE_REFERENCE_COURSE = 'UPDATE_REFERENCE_COURSE' + SUFFIX;
+const CLEAR_REFERENCE_COURSE = 'CLEAR_REFERENCE_COURSE' + SUFFIX;
 
 export const setBase = (test) => ({
     type: SET_BASE,
@@ -32,6 +33,10 @@ export const updatereferenceCourse = (referenceCourse) => ({
     type: UPDATE_REFERENCE_COURSE,
     referenceCourse: referenceCourse,
     error: getReferenceCourseError(referenceCourse)
+})
+
+export const clearRereferenceCourse = () => ({
+    type: CLEAR_REFERENCE_COURSE,
 })
 
 const initialState = {
@@ -78,8 +83,29 @@ export default function TestEditBase(state = initialState, action) {
         case UPDATE_REFERENCE_COURSE:
             return {
                 ...state,
-                referenceCourse: action.referenceCourse,
+                referenceCourse: {
+                    id: action.referenceCourse.id,
+                    title: action.referenceCourse.title,
+                    description: action.referenceCourse.description,
+                    imageUrl: action.referenceCourse.imageUrl,
+                    status: action.referenceCourse.status,
+                    createDate: action.referenceCourse.createDate,
+                    updateDate: action.referenceCourse.updateDate,
+
+                    tags: action.referenceCourse.tags.concat(),
+                    sections: action.referenceCourse.sections.concat(),
+                    author: action.referenceCourse.author,
+
+                    actionCount: action.referenceCourse.actionCount,
+                    accountAction: action.referenceCourse.accountAction,
+                    learnStatus: action.referenceCourse.learnStatus,
+                },
                 error: { ...state.error, referenceCourse: action.error },
+            };
+        case CLEAR_REFERENCE_COURSE:
+            return {
+                ...state,
+                referenceCourse: {}
             }
         default:
             return state;

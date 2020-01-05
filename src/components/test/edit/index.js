@@ -8,21 +8,21 @@ import QuestionsForm from 'components/test/edit/questions-form'
 class TestEditComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
+        // this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
     }
 
-    componentWillMount() {
-        window.addEventListener('beforeunload', this.handleBeforeUnload);
-    }
+    // componentWillMount() {
+    //     window.addEventListener('beforeunload', this.handleBeforeUnload);
+    // }
 
-    componentWillUnmount() {
-        window.removeEventListener('beforeunload', this.handleBeforeUnload);
-    }
+    // componentWillUnmount() {
+    //     window.removeEventListener('beforeunload', this.handleBeforeUnload);
+    // }
 
-    handleBeforeUnload(e) {
-        e.preventDefault();
-        e.returnValue = '問題を保存せずに閉じますか？';
-    }
+    // handleBeforeUnload(e) {
+    //     e.preventDefault();
+    //     e.returnValue = '問題を保存せずに閉じますか？';
+    // }
 
     render() {
         return (

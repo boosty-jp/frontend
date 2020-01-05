@@ -1,5 +1,3 @@
-const rateDescription = ['初級', '中級', '上級'];
-
 export const convertToSkillMap = (sections) => {
     var skills = [];
     sections.forEach(s => {
@@ -14,7 +12,6 @@ export const convertToSkillMap = (sections) => {
     skills.forEach(s => {
         if (!validLevel(s.level)) return;
 
-        var skillExistis = false;
         var targetIdx = -1;
         for (var i = 0; i < skillMap.length; i++) {
             if (s.id === skillMap[i].id) {

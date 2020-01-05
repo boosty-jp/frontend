@@ -8,6 +8,8 @@ import CourseEditSection from 'modules/course/edit/section'
 import TestEditBase from 'modules/test/edit/base'
 import TestEditQuestion from 'modules/test/edit/question'
 import TestEditQuestions from 'modules/test/edit/questions'
+import TestEditExplanation from 'modules/test/edit/explanation'
+import ReferenceArticle from 'modules/test/edit/reference-article'
 
 const reducers = combineReducers({
     articleView: ArticleView,
@@ -19,6 +21,8 @@ const reducers = combineReducers({
     testEditBase: TestEditBase,
     testEditQuestion: TestEditQuestion,
     testEditQuestions: TestEditQuestions,
+    testEditExplanation: TestEditExplanation,
+    referenceArticle: ReferenceArticle,
 });
 
 export default reducers;

@@ -1,5 +1,3 @@
-import { convertToSkillMap } from 'utils/skill-map'
-
 const SUFFIX = '_COURSE_SECTIONS_EDIT';
 const SET_SECTIONS = 'SET_SECTIONS' + SUFFIX;
 const CLEAR_SECTIONS = 'CLEAR_SECTIONS' + SUFFIX;

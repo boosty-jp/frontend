@@ -1,6 +1,5 @@
 import React from "react"
 import Layout from "../components/layout/horizontal"
-import { message } from 'antd';
 import SEO from "../components/seo"
 import TopEyecatch from "components/eyecatch/top"
 import TwoColumnLayout from "components/layout/two-column"

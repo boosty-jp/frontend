@@ -49,3 +49,7 @@ mark {
   border-radius: 6px;
   box-shadow: none;
 }
+
+.reference-article-block:hover{
+  background-color: #e6f7ff;
+}

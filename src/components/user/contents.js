@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Card } from 'antd';
 import AvatarLabel from "components/avatar/author-label";
-import { Link } from 'gatsby'
 import styled from 'styled-components'
 import IconText from 'components/text/icon'
 import Icons from 'components/text/icons'
