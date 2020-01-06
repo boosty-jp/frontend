@@ -1,27 +1,43 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import SelectAnswerForm from 'components/test/edit/confirm/select-answer'
-import { Button, Divider } from 'antd';
-import TextAnswerForm from './text-answer';
+import { message } from 'antd';
+import ExplanationConfirmForm from 'components/test/edit/confirm/explanation'
+import QuestionConfirmForm from 'components/test/edit/confirm/question'
 
 class QuestionConfirmComponent extends React.Component {
-    state = { answer: '' }
+    state = { answered: false, ownAnswer: '', }
 
-    updateAnswer = (answer) => {
-        this.setState({ answer: answer });
+    updateAnswer = (ownAnswer) => {
+        this.setState({ ownAnswer: ownAnswer });
+    }
+
+    submitAnswer = () => {
+        if (!this.state.ownAnswer) {
+            message.error('解答を入力してください')
+            return;
+        }
+        this.setState({ answered: true });
+    }
+
+    reset = () => {
+        this.setState({ answered: false, ownAnswer: '' });
     }
 
     render() {
         return (
             <>
-                <p style={{ fontWeight: '500', fontSize: '20px', marginTop: '50px', marginBottom: '0px' }}>問題. </p>
-                <div style={{ marginTop: '30px' }}>
-                    {this.props.question}
-                </div>
-                <Divider />
-                {this.props.type === 'select' && <SelectAnswerForm updateAnswer={this.updateAnswer} />}
-                {this.props.type === 'text' && <TextAnswerForm updateAnswer={this.updateAnswer} text={this.state.answer} />}
-                <Button type="primary">解答する</Button>
+                {this.state.answered ?
+                    <ExplanationConfirmForm
+                        reset={this.reset}
+                        ownAnswer={this.state.ownAnswer}
+                    />
+                    :
+                    <QuestionConfirmForm
+                        ownAnswer={this.state.ownAnswer}
+                        updateAnswer={this.updateAnswer}
+                        submitAnswer={this.submitAnswer}
+                    />
+                }
             </>
         );
     }

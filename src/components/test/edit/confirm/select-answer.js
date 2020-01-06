@@ -16,11 +16,11 @@ class SelectForm extends React.Component {
                 <Form.Item >
                     <Radio.Group
                         style={{ width: '100%' }}
-                        onChange={e => this.props.updateAnswer(e.target.value)}
+                        onChange={e => this.props.updateAnswer(this.props.candidates[e.target.value].text)}
                     >
                         {this.props.candidates.map((c, idx) => {
                             return (
-                                <Radio style={radioStyle} value={idx + 1} key={"candidate-" + idx}>
+                                <Radio style={radioStyle} value={idx} key={"candidate-" + idx}>
                                     {c.text}
                                 </Radio>
                             )

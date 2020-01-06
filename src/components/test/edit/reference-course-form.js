@@ -158,7 +158,7 @@ class ReferenceCourseFormComponent extends React.Component {
                         style={{
                             borderColor: "#69c0ff",
                             backgroundColor: '#e6f7ff',
-                            borderWidth: '2px',
+                            borderWidth: '1px',
                             borderStyle: 'solid',
                             borderRadius: '0.5rem',
                             padding: this.props.referenceCourse.imageUrl ? '0px 10px 10px 10px' : '0px 10px 0px 10px',

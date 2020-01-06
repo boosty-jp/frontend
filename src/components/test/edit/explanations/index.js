@@ -49,6 +49,8 @@ class ExplanationsFormComponent extends React.Component {
                                 </Tooltip>
                             </span>
                         }
+                        validateStatus={this.props.error.status}
+                        help={this.props.error.message}
                     >
                         <ExplanationList />
                     </Form.Item>
@@ -59,7 +61,10 @@ class ExplanationsFormComponent extends React.Component {
                     onClick={this.showDrawer}
                     disabled={this.props.explanations.length >= 5}
                     style={{ width: '100%' }}
-                >追加する</Button>
+                >
+                    追加する
+                {this.props.explanations.length >= 5 && <span >(5つまで作成できます)</span>}
+                </Button>
                 <div style={{ height: '60px' }}></div>
                 <Drawer
                     height="90%"
@@ -106,6 +111,7 @@ const mapStateToProps = state => ({
     textCount: state.testEditExplanation.textCount,
     blockCount: state.testEditExplanation.blockCount,
     explanations: state.testEditQuestion.explanations,
+    error: state.testEditQuestion.error.explanations,
 })
 
 const mapDispatchToProps = dispatch => ({

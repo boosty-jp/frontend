@@ -125,7 +125,6 @@ export const getExplanationTextError = (blockCount, textCount) => {
 }
 
 export const getReferenceError = (referenceBlocks) => {
-    console.log('re', referenceBlocks);
     let status = "";
     let message = "";
     if (!referenceBlocks || referenceBlocks.length === 0) {
@@ -154,6 +153,22 @@ export const getAnswerTextError = (text) => {
     } else {
         status = "";
         message = "";
+    }
+
+    return { status, message };
+}
+export const getExplanationsError = (explanations) => {
+    let status = "";
+    let message = "";
+    if (!explanations || explanations.length === 0) {
+        status = "error";
+        message = "解説は1つ以上必要です。"
+        return { status, message };
+    }
+
+    if (explanations.length > 5) {
+        status = "error";
+        message = "追加できる解説は5つまでです。"
     }
 
     return { status, message };

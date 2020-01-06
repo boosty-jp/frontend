@@ -4,8 +4,9 @@ import { Button, Steps, Icon, message } from 'antd';
 import QuestionForm from 'components/test/edit/question'
 import ExplanationsForm from 'components/test/edit/explanations';
 import QuestionConfirm from 'components/test/edit/confirm';
-import { getAnswerTypeError, getQuestionError, getAnswerTextError } from 'utils/content-validator';
-import { updateQuestionError } from 'modules/test/edit/question';
+import { getAnswerTypeError, getQuestionError, getAnswerTextError, getExplanationsError } from 'utils/content-validator';
+import { updateExplanationError, updateQuestionError, clearQuestion } from 'modules/test/edit/question';
+import { addQuestion } from 'modules/test/edit/questions';
 
 const { Step } = Steps;
 
@@ -47,14 +48,15 @@ class AddQuestionFormComponent extends React.Component {
                     message.error("入力の不備を修正してください");
                     return;
                 }
-            } else if (this.state.currentStep === 1 && value === 2) {
-                // 解説ページのチェック
-                if (!this.validateExplanationPage()) {
-                    message.error("入力の不備を修正してください");
-                    return;
-                }
+            }
+        } else if (this.state.currentStep === 1 && value === 2) {
+            // 解説ページのチェック
+            if (!this.validateExplanationPage()) {
+                message.error("入力の不備を修正してください");
+                return;
             }
         }
+
 
         this.setState({ currentStep: value });
     };
@@ -101,9 +103,47 @@ class AddQuestionFormComponent extends React.Component {
     }
 
     validateExplanationPage = () => {
-        return false;
+        const explanationError = getExplanationsError(this.props.explanations);
+        this.props.updateExplanationError(explanationError);
+
+        // ページナビゲーションへのエラー表示
+        if (explanationError.status === 'error') {
+            const erroredSteps = this.state.steps.concat();
+            erroredSteps[1].status = 'error';
+            this.setState({ steps: erroredSteps })
+            return false;
+        } else {
+            const successSteps = this.state.steps.concat();
+            successSteps[1].status = '';
+            this.setState({ steps: successSteps })
+            return true;
+        }
     }
 
+    addQuestion = () => {
+        if (this.props.questions.length >= 20) {
+            message.error("追加できる問題数は20までです");
+            return;
+        }
+
+        let answer;
+        if (this.props.type === 'select') {
+            answer = this.props.answer.select;
+        } else if (this.props.type === 'text') {
+            answer = this.props.answer.text;
+        }
+
+        this.props.addQuestion({
+            questionBlocks: this.props.questionBlocks,
+            type: this.props.type,
+            answer: answer,
+            explanations: this.props.explanations,
+        });
+
+        this.setState({ currentStep: 0 })
+        this.props.clearQuestion();
+        this.props.onClose();
+    }
     render() {
         return (
             <div style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto', }}>
@@ -146,7 +186,7 @@ class AddQuestionFormComponent extends React.Component {
                     {this.state.currentStep === 2 &&
                         <>
                             <Button style={{ marginRight: 16 }} onClick={() => this.onChange(1)}><Icon type="left" />前へ</Button>
-                            <Button onClick={this.props.onClose} type="primary"><Icon type="check" />作成</Button>
+                            <Button onClick={this.addQuestion} type="primary">作成</Button>
                         </>
                     }
                 </div>
@@ -157,14 +197,20 @@ class AddQuestionFormComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    questions: state.testEditQuestions.questions,
+    questionBlocks: state.testEditQuestion.questionBlocks,
     questionTextCount: state.testEditQuestion.questionTextCount,
     questionBlockCount: state.testEditQuestion.questionBlockCount,
     type: state.testEditQuestion.type,
     answer: state.testEditQuestion.answer,
+    explanations: state.testEditQuestion.explanations,
 })
 
 const mapDispatchToProps = dispatch => ({
+    addQuestion: (question) => dispatch(addQuestion(question)),
+    clearQuestion: () => dispatch(clearQuestion()),
     updateQuestionError: (questionError, typeError, errorMappedAnswer) => dispatch(updateQuestionError(questionError, typeError, errorMappedAnswer)),
+    updateExplanationError: (explanationError) => dispatch(updateExplanationError(explanationError)),
 })
 
 const AddQuestionForm = connect(mapStateToProps, mapDispatchToProps)(AddQuestionFormComponent)

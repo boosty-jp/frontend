@@ -1,6 +1,9 @@
 const SUFFIX = '_TEST_QUESTIONS_EDIT';
 const SET_QUESTIONS = 'SET_QUESTIONS' + SUFFIX;
 const CLEAR_QUESTIONS = 'CLEAR_QUESTIONS' + SUFFIX;
+const ADD_QUESTION = 'ADD_QUESTION' + SUFFIX;
+const UPDATE_QUESTIONS = 'UPDATE_QUESTIONS' + SUFFIX;
+const REMOVE_QUESTION = 'REMOVE_QUESTION' + SUFFIX;
 
 export const setQuestions = (questions) => ({
     type: SET_QUESTIONS,
@@ -9,6 +12,21 @@ export const setQuestions = (questions) => ({
 
 export const clearQuestions = () => ({
     type: CLEAR_QUESTIONS,
+})
+
+export const addQuestion = (question) => ({
+    type: ADD_QUESTION,
+    question: question
+})
+
+export const updateQuestions = (questions) => ({
+    type: UPDATE_QUESTIONS,
+    questions: questions
+})
+
+export const removeQuestion = (idx) => ({
+    type: REMOVE_QUESTION,
+    idx: idx
 })
 
 const initialState = {
@@ -30,6 +48,26 @@ export default function TestEditQuestions(state = initialState, action) {
         case CLEAR_QUESTIONS:
             return {
                 ...initialState
+            };
+        case ADD_QUESTION:
+            const addedQuestions = state.questions.concat();
+            addedQuestions.push(action.question);
+            return {
+                ...state,
+                questions: addedQuestions,
+            };
+        case UPDATE_QUESTIONS:
+            return {
+                ...state,
+                questions: action.questions,
+            };
+        case REMOVE_QUESTION:
+            const deletedQuestions = state.questions.concat();
+            deletedQuestions.splice(action.idx, 1);
+
+            return {
+                ...state,
+                questions: deletedQuestions,
             };
         default:
             return state;

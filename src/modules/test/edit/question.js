@@ -1,4 +1,4 @@
-import { getAnswerTextError, getAnswerTypeError, getQuestionError } from "utils/content-validator";
+import { getExplanationsError, getAnswerTextError, getAnswerTypeError, getQuestionError } from "utils/content-validator";
 
 const SUFFIX = '_TEST_QUESTION_EDIT';
 const SET_QUESTION = 'SET_QUESTION' + SUFFIX;
@@ -15,6 +15,7 @@ const CHANGE_SELECT_ANSWER = 'CHANGE_SELECT_ANSWER' + SUFFIX;
 const UPDATE_TEXT_ANSWER = 'UPDATE_TEXT_ANSWER' + SUFFIX;
 const UPDATE_TEXT_ANSWER_SHOW_COUNT = 'UPDATE_TEXT_ANSWER_SHOW_COUNT' + SUFFIX;
 const UPDATE_QUESTION_ERROR = 'UPDATE_QUESTION_ERROR' + SUFFIX;
+const UPDATE_EXPLANATION_ERROR = 'UPDATE_EXPLANATION_ERROR' + SUFFIX;
 
 export const setQuestion = (questions) => ({
     type: SET_QUESTION,
@@ -93,6 +94,11 @@ export const updateQuestionError = (questionError, typeError, errorMappedAnswer)
     errorMappedAnswer: errorMappedAnswer,
 })
 
+export const updateExplanationError = (explanationError) => ({
+    type: UPDATE_EXPLANATION_ERROR,
+    explanationError: explanationError,
+})
+
 const initialState = {
     questionBlocks: [],
     questionText: '',
@@ -146,9 +152,12 @@ export default function TestEditQuestion(state = initialState, action) {
         case ADD_EXPLANATION:
             const addedExplanations = state.explanations.concat();
             addedExplanations.push({ references: action.references, blocks: action.blocks })
+
+            const addedExplanationError = getExplanationsError(addedExplanations);
             return {
                 ...state,
-                explanations: addedExplanations
+                explanations: addedExplanations,
+                error: { ...state.error, explanations: addedExplanationError }
             }
         case UPDATE_EXPLANATIONS:
             return {
@@ -159,9 +168,12 @@ export default function TestEditQuestion(state = initialState, action) {
             const removedExplanations = state.explanations.concat();
             removedExplanations.splice(action.idx, 1);
 
+            const removeExplanationError = getExplanationsError(removedExplanations);
+
             return {
                 ...state,
                 explanations: removedExplanations,
+                error: { ...state.error, explanations: removeExplanationError }
             }
         case ADD_SELECT_ANSWER_CANDIDATE:
             if (state.answer.select.length >= 5) {
@@ -254,6 +266,14 @@ export default function TestEditQuestion(state = initialState, action) {
                         question: action.questionError,
                         type: action.typeError,
                     }
+                }
+            }
+        case UPDATE_EXPLANATION_ERROR:
+            return {
+                ...state,
+                error: {
+                    ...state.error,
+                    explanations: action.explanationError,
                 }
             }
         default:

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Empty } from 'antd'
 import AddQuestionDrawer from 'components/test/edit/add-question-drawer';
+import QuestionList from 'components/test/edit/question-sort-list';
 
 const QuestionsFormComponent = (props) => {
     return (
@@ -9,8 +10,7 @@ const QuestionsFormComponent = (props) => {
             {props.questions.length === 0 ?
                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="問題を追加してください" />
                 :
-                // <SectionSortList sections={props.questions} />
-                <></>
+                <QuestionList />
             }
             <AddQuestionDrawer />
         </>
