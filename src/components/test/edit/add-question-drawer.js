@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { Drawer, Button, Icon, message } from 'antd';
 import AddQuestionForm from 'components/test/edit/add-question-form'
+import { clearQuestion } from 'modules/test/edit/question'
 
 class DrawerForm extends React.Component {
     state = { visible: true };
@@ -12,12 +13,19 @@ class DrawerForm extends React.Component {
             return;
         }
 
+        if (!this.props.questions.length >= 20) {
+            message.error("作成できる問題数は20までです。");
+            return;
+        }
+
+        this.props.clearQuestion();
         this.setState({
             visible: true,
         });
     };
 
     onClose = () => {
+        this.props.clearQuestion();
         this.setState({
             visible: false,
         });
@@ -26,7 +34,13 @@ class DrawerForm extends React.Component {
     render() {
         return (
             <div>
-                <Button type="primary" onClick={this.showDrawer} style={{ width: '100%' }}><Icon type="plus" style={{ marginRight: '8px' }} />追加する</Button>
+                <Button
+                    type="primary"
+                    onClick={this.showDrawer}
+                    style={{ width: '100%' }}
+                >
+                    <Icon type="plus" style={{ marginRight: '8px' }} />追加する
+                </Button>
                 <Drawer
                     height="90%"
                     closable={false}
@@ -34,7 +48,7 @@ class DrawerForm extends React.Component {
                     visible={this.state.visible}
                     placement="top"
                 >
-                    <AddQuestionForm onClose={this.onClose} />
+                    {this.state.visible && <AddQuestionForm onClose={this.onClose} />}
                 </Drawer>
             </div>
         );
@@ -43,7 +57,13 @@ class DrawerForm extends React.Component {
 
 const mapStateToProps = state => ({
     referenceCourseId: state.testEditBase.referenceCourse.id,
+    questions: state.testEditQuestions.questions,
 })
-const AddQuestionDrawer = connect(mapStateToProps)(DrawerForm)
+
+const mapDispatchToProps = dispatch => ({
+    clearQuestion: () => dispatch(clearQuestion()),
+})
+
+const AddQuestionDrawer = connect(mapStateToProps, mapDispatchToProps)(DrawerForm)
 
 export default AddQuestionDrawer;

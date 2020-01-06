@@ -6,7 +6,7 @@ import ExplanationsForm from 'components/test/edit/explanations';
 import QuestionConfirm from 'components/test/edit/confirm';
 import { getAnswerTypeError, getQuestionError, getAnswerTextError, getExplanationsError } from 'utils/content-validator';
 import { updateExplanationError, updateQuestionError, clearQuestion } from 'modules/test/edit/question';
-import { addQuestion } from 'modules/test/edit/questions';
+import { addQuestion, updateQuestion } from 'modules/test/edit/questions';
 
 const { Step } = Steps;
 
@@ -56,7 +56,6 @@ class AddQuestionFormComponent extends React.Component {
                 return;
             }
         }
-
 
         this.setState({ currentStep: value });
     };
@@ -144,6 +143,30 @@ class AddQuestionFormComponent extends React.Component {
         this.props.clearQuestion();
         this.props.onClose();
     }
+
+    updateQuestion = () => {
+        let answer;
+        if (this.props.type === 'select') {
+            answer = this.props.answer.select;
+        } else if (this.props.type === 'text') {
+            answer = this.props.answer.text;
+        }
+
+        this.props.updateQuestion(
+            {
+                questionBlocks: this.props.questionBlocks,
+                type: this.props.type,
+                answer: answer,
+                explanations: this.props.explanations,
+            },
+            this.props.updateTargetIdx
+        );
+
+        this.setState({ currentStep: 0 })
+        this.props.clearQuestion();
+        this.props.onClose();
+    }
+
     render() {
         return (
             <div style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto', }}>
@@ -186,7 +209,23 @@ class AddQuestionFormComponent extends React.Component {
                     {this.state.currentStep === 2 &&
                         <>
                             <Button style={{ marginRight: 16 }} onClick={() => this.onChange(1)}><Icon type="left" />前へ</Button>
-                            <Button onClick={this.addQuestion} type="primary">作成</Button>
+                            <Button
+                                onClick={() => {
+                                    if (this.props.isEditMode) {
+                                        this.updateQuestion();
+                                    } else {
+                                        this.addQuestion();
+                                    }
+                                }
+                                }
+                                type="primary"
+                            >
+                                {this.props.isEditMode ?
+                                    <>更新</>
+                                    :
+                                    <>作成</>
+                                }
+                            </Button>
                         </>
                     }
                 </div>
@@ -203,11 +242,14 @@ const mapStateToProps = state => ({
     questionBlockCount: state.testEditQuestion.questionBlockCount,
     type: state.testEditQuestion.type,
     answer: state.testEditQuestion.answer,
+    isEditMode: state.testEditQuestion.isEditMode,
+    updateTargetIdx: state.testEditQuestion.updateTargetIdx,
     explanations: state.testEditQuestion.explanations,
 })
 
 const mapDispatchToProps = dispatch => ({
     addQuestion: (question) => dispatch(addQuestion(question)),
+    updateQuestion: (question, idx) => dispatch(updateQuestion(question, idx)),
     clearQuestion: () => dispatch(clearQuestion()),
     updateQuestionError: (questionError, typeError, errorMappedAnswer) => dispatch(updateQuestionError(questionError, typeError, errorMappedAnswer)),
     updateExplanationError: (explanationError) => dispatch(updateExplanationError(explanationError)),

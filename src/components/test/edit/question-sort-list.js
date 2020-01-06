@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { Icon, Collapse } from 'antd';
+import { Drawer, Icon, Collapse } from 'antd';
 import { convertToJSX } from 'utils/html-converter'
+import { setQuestion, clearQuestion } from 'modules/test/edit/question'
 import { updateQuestions, removeQuestion } from 'modules/test/edit/questions'
+import AddQuestionForm from 'components/test/edit/add-question-form'
 import Icons from 'components/text/icons'
 
 const { Panel } = Collapse;
@@ -28,6 +30,7 @@ class QuestionListComponent extends React.Component {
     constructor(props) {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
+        this.state = { visible: false }
     }
 
     onDragEnd(result) {
@@ -44,6 +47,20 @@ class QuestionListComponent extends React.Component {
 
         this.props.updateQuestions(reorderedQuestions)
     }
+
+    updateQuestion = (question, idx) => {
+        this.props.setQuestion(question, idx);
+        this.setState({
+            visible: true,
+        });
+    }
+
+    onClose = () => {
+        this.props.clearQuestion();
+        this.setState({
+            visible: false,
+        });
+    };
 
     render() {
         return (
@@ -88,12 +105,21 @@ class QuestionListComponent extends React.Component {
                                                                 extra={
                                                                     <Icons
                                                                         icons={[
-                                                                            <Icon type="edit" key="question-edit" />,
+                                                                            <Icon type="edit" key="question-edit" onClick={() => this.updateQuestion(question, index)} />,
                                                                             <Icon type="delete" key="question-delete" onClick={() => { this.props.removeQuestion(index) }} />,
                                                                         ]}
                                                                     />
                                                                 }
                                                             >
+                                                                <Drawer
+                                                                    height="90%"
+                                                                    closable={false}
+                                                                    onClose={this.onClose}
+                                                                    visible={this.state.visible}
+                                                                    placement="top"
+                                                                >
+                                                                    {this.state.visible && <AddQuestionForm onClose={this.onClose} />}
+                                                                </Drawer>
                                                                 <QuestionBlocks />
                                                             </Panel>
                                                         </Collapse>
@@ -118,6 +144,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    setQuestion: (question, idx) => dispatch(setQuestion(question, idx)),
+    clearQuestion: () => dispatch(clearQuestion()),
     updateQuestions: (questions) => dispatch(updateQuestions(questions)),
     removeQuestion: (idx) => dispatch(removeQuestion(idx)),
 })

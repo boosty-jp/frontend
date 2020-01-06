@@ -2,6 +2,7 @@ const SUFFIX = '_TEST_QUESTIONS_EDIT';
 const SET_QUESTIONS = 'SET_QUESTIONS' + SUFFIX;
 const CLEAR_QUESTIONS = 'CLEAR_QUESTIONS' + SUFFIX;
 const ADD_QUESTION = 'ADD_QUESTION' + SUFFIX;
+const UPDATE_QUESTION = 'UPDATE_QUESTION' + SUFFIX;
 const UPDATE_QUESTIONS = 'UPDATE_QUESTIONS' + SUFFIX;
 const REMOVE_QUESTION = 'REMOVE_QUESTION' + SUFFIX;
 
@@ -17,6 +18,12 @@ export const clearQuestions = () => ({
 export const addQuestion = (question) => ({
     type: ADD_QUESTION,
     question: question
+})
+
+export const updateQuestion = (question, idx) => ({
+    type: UPDATE_QUESTION,
+    question: question,
+    idx: idx,
 })
 
 export const updateQuestions = (questions) => ({
@@ -55,6 +62,13 @@ export default function TestEditQuestions(state = initialState, action) {
             return {
                 ...state,
                 questions: addedQuestions,
+            };
+        case UPDATE_QUESTION:
+            const updatedQuestions = state.questions.concat();
+            updatedQuestions[action.idx] = action.question;
+            return {
+                ...state,
+                questions: updatedQuestions,
             };
         case UPDATE_QUESTIONS:
             return {

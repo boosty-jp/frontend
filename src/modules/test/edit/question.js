@@ -17,9 +17,10 @@ const UPDATE_TEXT_ANSWER_SHOW_COUNT = 'UPDATE_TEXT_ANSWER_SHOW_COUNT' + SUFFIX;
 const UPDATE_QUESTION_ERROR = 'UPDATE_QUESTION_ERROR' + SUFFIX;
 const UPDATE_EXPLANATION_ERROR = 'UPDATE_EXPLANATION_ERROR' + SUFFIX;
 
-export const setQuestion = (questions) => ({
+export const setQuestion = (question, idx) => ({
     type: SET_QUESTION,
-    questions: questions
+    question: question,
+    idx: idx,
 })
 
 export const clearQuestion = () => ({
@@ -115,6 +116,8 @@ const initialState = {
         text: { text: '', showCount: false, error: { status: '', message: '' } },
     },
     explanations: [],
+    isEditMode: false,
+    updateTargetIdx: 0,
     error: {
         question: { status: "", message: "" },
         type: { status: "", message: "" },
@@ -126,9 +129,33 @@ const initialState = {
 export default function TestEditQuestion(state = initialState, action) {
     switch (action.type) {
         case SET_QUESTION:
+            if (action.question.type === 'select') {
+                return {
+                    ...state,
+                    questionBlocks: action.question.questionBlocks,
+                    questionTextCount: 100, //TODO: 仮でいれているので、あとで直す
+                    questionBlockCount: action.question.questionBlocks.length,
+                    type: action.question.type,
+                    explanations: action.question.explanations,
+                    answer: { ...state.answer, select: action.question.answer },
+                    isEditMode: true,
+                    updateTargetIdx: action.idx,
+                };
+            } else if (action.question.type === 'text') {
+                return {
+                    ...state,
+                    questionTextCount: 100, //TODO: 仮でいれているので、あとで直す
+                    questionBlockCount: action.question.questionBlocks.length,
+                    questionBlocks: action.question.questionBlocks,
+                    type: action.question.type,
+                    explanations: action.question.explanations,
+                    answer: { ...state.answer, text: action.question.answer },
+                    isEditMode: true,
+                    updateTargetIdx: action.idx,
+                };
+            }
             return {
-                ...state,
-                questions: action.question,
+                ...initialState
             };
         case CLEAR_QUESTION:
             return {
