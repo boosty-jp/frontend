@@ -141,3 +141,20 @@ export const getReferenceError = (referenceBlocks) => {
 
     return { status, message };
 }
+
+export const getAnswerTextError = (text) => {
+    let status = "";
+    let message = "";
+    if (!text || text.length === 0 || text.search(/\S+/) === -1) {
+        status = "error";
+        message = "入力してください"
+    } else if (text.length > 100) {
+        status = "error";
+        message = "入力できる文字数は100文字までです"
+    } else {
+        status = "";
+        message = "";
+    }
+
+    return { status, message };
+}

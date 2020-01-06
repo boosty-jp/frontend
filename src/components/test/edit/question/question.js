@@ -34,7 +34,7 @@ class QuestionStatementEditor extends React.Component {
             >
                 <div
                     style={{
-                        border: '1px solid #d9d9d9',
+                        border: this.props.error.question.status === 'error' ? '1px solid red' : '1px solid #d9d9d9',
                         borderRadius: '0.5rem',
                         padding: '10px'
                     }}
@@ -44,7 +44,7 @@ class QuestionStatementEditor extends React.Component {
                         tools={EDITOR_QUESTION_TOOLS}
                         instanceRef={instance => this.setState({ editorInstance: instance })}
                         onChange={() => this.handleSave()}
-                        onReady={() => this.handleSave()}
+                        // onReady={() => this.handleSave()}
                         placeholder="問題内容を入力してください"
                         data={{ blocks: this.props.questionBlocks }}
                         minHeight={50}

@@ -4,7 +4,7 @@ import { Drawer, Button, Icon, message } from 'antd';
 import AddQuestionForm from 'components/test/edit/add-question-form'
 
 class DrawerForm extends React.Component {
-    state = { visible: false };
+    state = { visible: true };
 
     showDrawer = () => {
         if (!this.props.referenceCourseId) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Steps, Icon } from 'antd';
 import QuestionForm from 'components/test/edit/question'
 import ExplanationsForm from 'components/test/edit/explanations';
+import QuestionConfirm from 'components/test/edit/confirm';
 
 const { Step } = Steps;
 
@@ -42,7 +43,7 @@ class AddQuestionForm extends React.Component {
                 <div style={{ marginTop: '30px' }}>
                     {this.state.currentStep === 0 && <QuestionForm />}
                     {this.state.currentStep === 1 && <ExplanationsForm />}
-                    {this.state.currentStep === 2 && <QuestionForm />}
+                    {this.state.currentStep === 2 && <QuestionConfirm />}
                 </div>
                 <div
                     style={{

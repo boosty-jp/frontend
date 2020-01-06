@@ -1,21 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { updateTitle, updateType } from 'modules/test/edit/question'
-import { Typography } from 'antd';
+import SelectAnswerForm from 'components/test/edit/confirm/select-answer'
+import { Button, Divider } from 'antd';
+import TextAnswerForm from './text-answer';
 
-const QuestionConfirmComponent = (props) => {
-    return (
-        <>
-            <p>{props.title}</p>
-            <div>
-                {question}
-            </div>
-        </>
-    );
+class QuestionConfirmComponent extends React.Component {
+    state = { answer: '' }
+
+    updateAnswer = (answer) => {
+        this.setState({ answer: answer });
+    }
+
+    render() {
+        return (
+            <>
+                <p style={{ fontWeight: '500', fontSize: '20px', marginTop: '50px', marginBottom: '0px' }}>問題. </p>
+                <div style={{ marginTop: '30px' }}>
+                    {this.props.question}
+                </div>
+                <Divider />
+                {this.props.type === 'select' && <SelectAnswerForm updateAnswer={this.updateAnswer} />}
+                {this.props.type === 'text' && <TextAnswerForm updateAnswer={this.updateAnswer} text={this.state.answer} />}
+                <Button type="primary">解答する</Button>
+            </>
+        );
+    }
 }
 
 const mapStateToProps = state => ({
-    title: state.testEditQuestion.title,
     question: state.testEditQuestion.questionText,
     type: state.testEditQuestion.type,
     answers: state.testEditQuestion.answers,

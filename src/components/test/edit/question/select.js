@@ -1,50 +1,20 @@
 import React from 'react';
-import { Form, Radio, Input, Button, Icon, Tag } from 'antd';
+import { connect } from 'react-redux'
+import { addSelectAnswerCandiadte, updateSelectAnswerCandiadte, changeSelectAnswer, deleteSelectAnswerCandiadte } from 'modules/test/edit/question'
+import { Form, Radio, Input, Button, Icon, Tag, message } from 'antd';
 
-export default class SelectForm extends React.Component {
-    state = {
-        candidates: [
-            { text: '', answer: false },
-            { text: '', answer: true },
-            { text: '', answer: false },
-            { text: '', answer: false },
-        ],
-    };
+const radioStyle = {
+    display: 'block',
+    height: '30px',
+    lineHeight: '30px',
+    marginBottom: '34px'
+};
 
-    onChange = e => {
-        const updatedCandidates = this.state.candidates.map(c => { return { ...c, answer: false } });
-        updatedCandidates[e.target.value - 1].answer = true;
-        console.log(updatedCandidates);
-        this.setState({ candidates: updatedCandidates });
-    };
-
-    changeText = (e, idx) => {
-        e.preventDefault();
-        const updatedCandidates = this.state.candidates.concat();
-        updatedCandidates[idx].text = e.target.value;
-        this.setState({ candidates: updatedCandidates });
-    }
-
-    addCandiadte = () => {
-        if (this.state.candidates.length >= 5) {
-            return;
-        }
-        const updatedCandidates = this.state.candidates.concat();
-        updatedCandidates.push({ text: '', answer: false });
-        this.setState({ candidates: updatedCandidates });
-    }
-
-    deleteCandiadte = (idx) => {
-        const updatedCandidates = this.state.candidates.concat();
-        const targetIsAnswer = updatedCandidates[idx].answer;
-        updatedCandidates.splice(idx, 1);
-        if (targetIsAnswer) updatedCandidates[0].answer = true;
-        this.setState({ candidates: updatedCandidates });
-    }
+class SelectFormComponent extends React.Component {
 
     answer = () => {
         let answer = 1;
-        this.state.candidates.forEach((c, idx) => {
+        this.props.candidates.forEach((c, idx) => {
             if (c.answer) {
                 answer = idx + 1;
             }
@@ -53,16 +23,18 @@ export default class SelectForm extends React.Component {
     }
 
     render() {
-        const radioStyle = {
-            display: 'block',
-            height: '30px',
-            lineHeight: '30px',
-            marginBottom: '14px'
-        };
         return (
-            <Form.Item label={<span>答え</span>} >
-                <Radio.Group onChange={this.onChange} value={this.answer()} style={{ width: '100%' }}>
-                    {this.state.candidates.map((c, idx) => {
+            <Form.Item
+                label={<span>答え</span>}
+                validateStatus={this.props.error.status}
+                help={this.props.error.message}
+            >
+                <Radio.Group
+                    value={this.answer()}
+                    style={{ width: '100%' }}
+                    onChange={(e) => this.props.changeAnswer(e.target.value)}
+                >
+                    {this.props.candidates.map((c, idx) => {
                         return (
                             <Radio style={radioStyle} value={idx + 1} key={"candidate-" + idx}>
                                 {c.answer ?
@@ -70,12 +42,27 @@ export default class SelectForm extends React.Component {
                                     :
                                     <Tag color="red">不正解</Tag>
                                 }
-                                <Input
-                                    style={{ width: '70%', marginLeft: 10 }}
-                                    placeholder="入力してください"
-                                    value={c.text}
-                                    onChange={(e) => this.changeText(e, idx)} />
-                                <Icon type="delete" style={{ marginLeft: '12px' }} onClick={() => this.deleteCandiadte(idx)} />
+                                <Form.Item
+                                    validateStatus={c.error.status}
+                                    help={c.error.message}
+                                    style={{ display: 'inline-block', width: '70%', marginLeft: 10 }}
+                                >
+                                    <Input
+                                        placeholder="入力してください"
+                                        value={c.text}
+                                        onChange={(e) => this.props.updateCandiadte(idx, e.target.value)} />
+                                </Form.Item>
+                                <Icon
+                                    type="delete"
+                                    style={{ marginLeft: '12px' }}
+                                    onClick={() => {
+                                        if (this.props.candidates.length <= 2) {
+                                            message.error("選択肢は2つ以上にしてください")
+                                            return;
+                                        }
+                                        this.props.deleteCandiadte(idx)
+                                    }}
+                                />
                             </Radio>
                         )
                     })}
@@ -84,8 +71,8 @@ export default class SelectForm extends React.Component {
                     <Button
                         type="dashed"
                         icon="plus"
-                        disabled={this.state.candidates.length >= 5}
-                        onClick={() => { this.addCandiadte() }}
+                        disabled={this.props.candidates.length >= 5}
+                        onClick={() => { this.props.addCandiadte() }}
                         style={{ width: '100%' }}
                     >追加する</Button>
                 </div>
@@ -93,3 +80,18 @@ export default class SelectForm extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    candidates: state.testEditQuestion.answer.select,
+    error: state.testEditQuestion.error.answer,
+})
+
+const mapDispatchToProps = dispatch => ({
+    addCandiadte: (idx) => dispatch(addSelectAnswerCandiadte(idx)),
+    updateCandiadte: (idx, text) => dispatch(updateSelectAnswerCandiadte(idx, text)),
+    deleteCandiadte: (idx) => dispatch(deleteSelectAnswerCandiadte(idx)),
+    changeAnswer: (idx) => dispatch(changeSelectAnswer(idx)),
+})
+
+const SelectForm = connect(mapStateToProps, mapDispatchToProps)(SelectFormComponent)
+export default SelectForm
