@@ -1,4 +1,5 @@
 import { getExplanationsError, getAnswerTextError, getAnswerTypeError, getQuestionError } from "utils/content-validator";
+import { convertToJSX } from "utils/html-converter";
 
 const SUFFIX = '_TEST_QUESTION_EDIT';
 const SET_QUESTION = 'SET_QUESTION' + SUFFIX;
@@ -129,12 +130,14 @@ const initialState = {
 export default function TestEditQuestion(state = initialState, action) {
     switch (action.type) {
         case SET_QUESTION:
+            const { text, textCount, blockCount } = convertToJSX(action.question.questionBlocks);
             if (action.question.type === 'select') {
                 return {
                     ...state,
                     questionBlocks: action.question.questionBlocks,
-                    questionTextCount: 100, //TODO: 仮でいれているので、あとで直す
-                    questionBlockCount: action.question.questionBlocks.length,
+                    questionText: text,
+                    questionTextCount: textCount,
+                    questionBlockCount: blockCount,
                     type: action.question.type,
                     explanations: action.question.explanations,
                     answer: { ...state.answer, select: action.question.answer },
@@ -144,9 +147,10 @@ export default function TestEditQuestion(state = initialState, action) {
             } else if (action.question.type === 'text') {
                 return {
                     ...state,
-                    questionTextCount: 100, //TODO: 仮でいれているので、あとで直す
-                    questionBlockCount: action.question.questionBlocks.length,
                     questionBlocks: action.question.questionBlocks,
+                    questionText: text,
+                    questionTextCount: textCount,
+                    questionBlockCount: blockCount,
                     type: action.question.type,
                     explanations: action.question.explanations,
                     answer: { ...state.answer, text: action.question.answer },

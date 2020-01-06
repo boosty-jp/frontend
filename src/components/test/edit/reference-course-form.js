@@ -1,16 +1,18 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Icon, Input, AutoComplete, Row, Col, Spin, message } from 'antd';
+import { Icon, Input, AutoComplete, Row, Col, Spin, message, Modal } from 'antd';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import debounce from "lodash/debounce";
 import styled from 'styled-components'
-import { updatereferenceCourse, clearReferenceCourse } from 'modules/test/edit/base'
+import { updateReferenceCourse, clearReferenceCourse } from 'modules/test/edit/base'
+import { clearQuestions } from 'modules/test/edit/questions'
 import algoliasearch from 'algoliasearch/lite';
 import { getErrorMessage } from "utils/error-handle";
 import ThumbnailImage from "components/image/thumbnail";
 
 const { Option, OptGroup } = AutoComplete;
+const { confirm } = Modal;
 
 const GET_COURSE = gql`
   query Course($courseId: ID!) {
@@ -97,7 +99,6 @@ class ReferenceCourseFormComponent extends React.Component {
             inputValue: '',
             loading: false,
         }
-
     }
 
     handleSearch = value => {
@@ -146,8 +147,28 @@ class ReferenceCourseFormComponent extends React.Component {
         if (this.props.questions.length > 0) {
             // すでに問題作成中だった場合は
             // 問題をすべてクリアすることになるので警告を出す。
+            this.showConfirm();
+            return;
         }
         this.props.clearReferenceCourse()
+    }
+
+    showConfirm = () => {
+        confirm({
+            title: '作成した問題が削除されます',
+            content: '問題作成中に出題対象のコースを変更する場合、これまで作成した問題は削除されます。ご注意の上、変更ください',
+            okText: '変更する',
+            okType: 'danger',
+            cancelText: 'キャンセル',
+            onOk: this.clearQuestions,
+            onCancel() {
+            },
+        });
+    }
+
+    clearQuestions = () => {
+        this.props.clearReferenceCourse();
+        this.props.clearQuestions();
     }
 
     render() {
@@ -223,8 +244,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    updateReferenceCourse: (referenceCourse) => dispatch(updatereferenceCourse(referenceCourse)),
+    updateReferenceCourse: (referenceCourse) => dispatch(updateReferenceCourse(referenceCourse)),
     clearReferenceCourse: () => dispatch(clearReferenceCourse()),
+    clearQuestions: () => dispatch(clearQuestions()),
 })
 
 const ReferenceCourseForm = connect(mapStateToProps, mapDispatchToProps)(ReferenceCourseFormComponent)

@@ -5,7 +5,7 @@ import AddQuestionForm from 'components/test/edit/add-question-form'
 import { clearQuestion } from 'modules/test/edit/question'
 
 class DrawerForm extends React.Component {
-    state = { visible: true };
+    state = { visible: false };
 
     showDrawer = () => {
         if (!this.props.referenceCourseId) {

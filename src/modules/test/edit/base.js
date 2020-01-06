@@ -29,13 +29,13 @@ export const updateDescription = (description) => ({
     error: getDescriptionError(description)
 })
 
-export const updatereferenceCourse = (referenceCourse) => ({
+export const updateReferenceCourse = (referenceCourse) => ({
     type: UPDATE_REFERENCE_COURSE,
     referenceCourse: referenceCourse,
     error: getReferenceCourseError(referenceCourse)
 })
 
-export const clearRereferenceCourse = () => ({
+export const clearReferenceCourse = () => ({
     type: CLEAR_REFERENCE_COURSE,
 })
 
