@@ -14,6 +14,7 @@ const DELETE_SELECT_ANSWER_CANDIDATE = 'DELETE_SELECT_ANSWER_CANDIDATE' + SUFFIX
 const CHANGE_SELECT_ANSWER = 'CHANGE_SELECT_ANSWER' + SUFFIX;
 const UPDATE_TEXT_ANSWER = 'UPDATE_TEXT_ANSWER' + SUFFIX;
 const UPDATE_TEXT_ANSWER_SHOW_COUNT = 'UPDATE_TEXT_ANSWER_SHOW_COUNT' + SUFFIX;
+const UPDATE_QUESTION_ERROR = 'UPDATE_QUESTION_ERROR' + SUFFIX;
 
 export const setQuestion = (questions) => ({
     type: SET_QUESTION,
@@ -85,8 +86,14 @@ export const updateQuestion = (text, textCount, blockCount, blocks) => ({
     error: getQuestionError(blockCount, textCount)
 })
 
+export const updateQuestionError = (questionError, typeError, errorMappedAnswer) => ({
+    type: UPDATE_QUESTION_ERROR,
+    questionError: questionError,
+    typeError: typeError,
+    errorMappedAnswer: errorMappedAnswer,
+})
+
 const initialState = {
-    title: '',
     questionBlocks: [],
     questionText: '',
     questionTextCount: 0,
@@ -103,7 +110,6 @@ const initialState = {
     },
     explanations: [],
     error: {
-        title: { status: "", message: "" },
         question: { status: "", message: "" },
         type: { status: "", message: "" },
         answer: { status: "", message: "" },
@@ -218,6 +224,37 @@ export default function TestEditQuestion(state = initialState, action) {
                         showCount: action.showCount,
                     }
                 },
+            }
+        case UPDATE_QUESTION_ERROR:
+            if (state.type === 'select') {
+                return {
+                    ...state,
+                    answer: { ...state.answer, select: action.errorMappedAnswer },
+                    error: {
+                        ...state.error,
+                        question: action.questionError,
+                        type: action.typeError,
+                    }
+                }
+            } else if (state.type === 'text') {
+                return {
+                    ...state,
+                    answer: { ...state.answer, text: action.errorMappedAnswer },
+                    error: {
+                        ...state.error,
+                        question: action.questionError,
+                        type: action.typeError,
+                    }
+                }
+            } else {
+                return {
+                    ...state,
+                    error: {
+                        ...state.error,
+                        question: action.questionError,
+                        type: action.typeError,
+                    }
+                }
             }
         default:
             return state;
