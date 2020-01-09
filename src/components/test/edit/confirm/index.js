@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import { message } from 'antd';
 import ExplanationConfirmForm from 'components/test/edit/confirm/explanation'
 import QuestionConfirmForm from 'components/test/edit/confirm/question'
 
-class QuestionConfirmComponent extends React.Component {
+export default class QuestionConfirm extends React.Component {
     state = { answered: false, ownAnswer: '', }
 
     updateAnswer = (ownAnswer) => {
@@ -23,6 +22,13 @@ class QuestionConfirmComponent extends React.Component {
         this.setState({ answered: false, ownAnswer: '' });
     }
 
+    componentDidUpdate(prevProps) {
+        // 問題番号が変わったら初期化する
+        if (this.props.questionIdx !== prevProps.questionIdx) {
+            this.setState({ answered: false, ownAnswer: '' });
+        }
+    }
+
     render() {
         return (
             <>
@@ -30,25 +36,24 @@ class QuestionConfirmComponent extends React.Component {
                     <ExplanationConfirmForm
                         reset={this.reset}
                         ownAnswer={this.state.ownAnswer}
+                        type={this.props.type}
+                        selectAnswer={this.props.selectAnswer}
+                        textAnswer={this.props.textAnswer}
+                        explanations={this.props.explanations}
                     />
                     :
                     <QuestionConfirmForm
                         ownAnswer={this.state.ownAnswer}
                         updateAnswer={this.updateAnswer}
                         submitAnswer={this.submitAnswer}
+                        question={this.props.question}
+                        type={this.props.type}
+                        textAnswer={this.props.textAnswer}
+                        selectAnswer={this.props.selectAnswer}
+                        questionIdx={this.props.questionIdx}
                     />
                 }
             </>
         );
     }
 }
-
-const mapStateToProps = state => ({
-    question: state.testEditQuestion.questionText,
-    type: state.testEditQuestion.type,
-    answers: state.testEditQuestion.answers,
-    explanations: state.testEditQuestion.explanations,
-})
-
-const QuestionConfirm = connect(mapStateToProps)(QuestionConfirmComponent)
-export default QuestionConfirm

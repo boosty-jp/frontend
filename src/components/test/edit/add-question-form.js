@@ -178,7 +178,15 @@ class AddQuestionFormComponent extends React.Component {
                 <div style={{ marginTop: '30px' }}>
                     {this.state.currentStep === 0 && <QuestionForm />}
                     {this.state.currentStep === 1 && <ExplanationsForm />}
-                    {this.state.currentStep === 2 && <QuestionConfirm />}
+                    {this.state.currentStep === 2 &&
+                        <QuestionConfirm
+                            type={this.props.type}
+                            selectAnswer={this.props.answer.select}
+                            textAnswer={this.props.answer.text}
+                            explanations={this.props.explanations}
+                            question={this.props.questionText}
+                        />
+                    }
                 </div>
                 <div
                     style={{
@@ -238,6 +246,7 @@ class AddQuestionFormComponent extends React.Component {
 const mapStateToProps = state => ({
     questions: state.testEditQuestions.questions,
     questionBlocks: state.testEditQuestion.questionBlocks,
+    questionText: state.testEditQuestion.questionText,
     questionTextCount: state.testEditQuestion.questionTextCount,
     questionBlockCount: state.testEditQuestion.questionBlockCount,
     type: state.testEditQuestion.type,

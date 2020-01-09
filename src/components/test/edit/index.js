@@ -40,7 +40,7 @@ class TestEditComponent extends React.Component {
                     style={{ maxWidth: '740px', width: '100%', margin: ' 20px auto' }}
                     extra={
                         <>
-                            <span style={{ marginRight: '8px' }}>{this.props.questionCount} / 20</span>
+                            <span style={{ marginRight: '8px', color: this.props.questionCount >= 20 ? 'red' : "rgba(0, 0, 0, 0.65)" }}>{this.props.questionCount} / 20</span>
                             <Tooltip title="20問まで作成できます">
                                 <Icon type="question-circle-o" />
                             </Tooltip>

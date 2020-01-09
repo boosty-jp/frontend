@@ -19,7 +19,7 @@ class TextFormComponent extends React.Component {
                     />
                 </Form.Item>
                 <Checkbox
-                    value={this.props.showCount}
+                    checked={this.props.showCount}
                     onChange={(e) => this.props.updateShowCount(e.target.checked)}
                 > ヒントとして、文字数を表示する</Checkbox>
             </>

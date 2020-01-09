@@ -13,7 +13,7 @@ class DrawerForm extends React.Component {
             return;
         }
 
-        if (!this.props.questions.length >= 20) {
+        if (this.props.questions.length >= 20) {
             message.error("作成できる問題数は20までです。");
             return;
         }

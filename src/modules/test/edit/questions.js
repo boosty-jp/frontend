@@ -37,7 +37,1482 @@ export const removeQuestion = (idx) => ({
 })
 
 const initialState = {
-    questions: [],
+    questions: [
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        }, {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            questionBlocks: [
+                {
+                    type: 'paragraph',
+                    data: {
+                        text: 'j'
+                    }
+                }
+            ],
+            type: 'text',
+            answer: {
+                text: 'j',
+                showCount: false,
+                error: {
+                    status: '',
+                    message: ''
+                }
+            },
+            explanations: [
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                },
+                {
+                    references: [
+                        {
+                            id: 'e4b7b865-0b86-2f02-cd5d-bd3c4d9c9b93',
+                            type: 'header',
+                            data: {
+                                text: 'Key features',
+                                level: 3
+                            },
+                            idx: 4,
+                            articleId: '98b7a40e-14d7-31b2-37e2-be216715a884',
+                            articleTitle: 'facebook JS'
+                        }
+                    ],
+                    blocks: [
+                        {
+                            type: 'paragraph',
+                            data: {
+                                text: 'j'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+    ],
     error: {
         title: { status: "", message: "" },
         description: { status: "", message: "" },
