@@ -43,7 +43,7 @@ const ExplanationConfirmForm = ({ type, selectAnswer, textAnswer, ownAnswer, exp
                     return text;
                 }
                 const ReferenceBlocks = () => {
-                    return explanation.references.map(r => { return convertToReferenceCard(r) });
+                    return explanation.references.map(r => { return convertToReferenceCard(r, 'reference-block-' + r.id) });
                 }
                 return (
                     <div

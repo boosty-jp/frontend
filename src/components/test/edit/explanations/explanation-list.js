@@ -67,7 +67,7 @@ class ExplanationListComponent extends React.Component {
                                         return text;
                                     }
                                     const ReferenceBlocks = () => {
-                                        return explanation.references.map(r => { return convertToReferenceCard(r) });
+                                        return explanation.references.map(r => { return convertToReferenceCard(r, 'reference-block-' + r.id) });
                                     }
                                     return (
                                         <Draggable key={"explanation-drag-key-" + index} draggableId={"explanation-sort-list-" + index} index={index}>

@@ -8,6 +8,7 @@ class DrawerForm extends React.Component {
     state = { visible: false };
 
     showDrawer = () => {
+        console.log(this.props.questions);
         if (!this.props.referenceCourseId) {
             message.error("出題対象のコースを選択してください");
             return;

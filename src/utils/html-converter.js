@@ -12,35 +12,35 @@ export const convertToJSX = (blocks) => {
     var blockCount = 0;
     var anchors = [];
     const countRegexp = /<[^>]*>|\s+|&nbsp;/g
-    blocks.forEach(block => {
+    blocks.forEach((block, idx) => {
         const text = block.data.text
         switch (block.type) {
             case 'header':
-                jsxList.push(<Title level={block.data.level} id={text}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
+                jsxList.push(<Title key={"block-" + idx} level={block.data.level} id={text}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
                 anchors.push({ id: text, level: block.data.level });
                 if (text) textCount += text.replace(countRegexp, '').length;
                 blockCount++;
                 break;
             case 'paragraph':
-                jsxList.push(<Paragraph><span dangerouslySetInnerHTML={{ __html: text }} /></Paragraph>)
+                jsxList.push(<Paragraph key={"block-" + idx}><span dangerouslySetInnerHTML={{ __html: text }} /></Paragraph>)
                 if (text) textCount += text.replace(countRegexp, '').length;
                 blockCount++;
                 break;
             case 'imageUrl':
-                jsxList.push(<img src={block.data.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
+                jsxList.push(<img key={"block-" + idx} src={block.data.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
                 blockCount++;
                 break;
             case 'image':
                 if (block.data.file) {
                     if (block.data.file.url) {
-                        jsxList.push(<img src={block.data.file.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
+                        jsxList.push(<img key={"block-" + idx} src={block.data.file.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
                     }
                 }
                 blockCount++;
                 break;
             case 'code':
                 const codeHtml = "<pre><code class=\"hljs \">" + hljs.highlightAuto(block.data.code).value + "</code></pre>";
-                jsxList.push(<Paragraph code={false}><div dangerouslySetInnerHTML={{ __html: codeHtml }} /></Paragraph>)
+                jsxList.push(<Paragraph key={"block-" + idx} code={false}><div dangerouslySetInnerHTML={{ __html: codeHtml }} /></Paragraph>)
                 if (block.data.code) textCount += block.data.code.replace(countRegexp, '').length;
                 blockCount++;
                 break;
@@ -52,23 +52,24 @@ export const convertToJSX = (blocks) => {
                     listJSX = <ol>{block.data.items.map(i => <li dangerouslySetInnerHTML={{ __html: i }} />)}</ol>
                 }
                 block.data.items.forEach(i => { if (i) textCount += i.replace(countRegexp, '').length })
-                jsxList.push(<Paragraph >{listJSX}</Paragraph>)
+                jsxList.push(<Paragraph key={"block-" + idx}>{listJSX}</Paragraph>)
                 blockCount++;
                 break;
             case 'embed':
                 jsxList.push(
-                    <>
+                    <React.Fragment key={"block-" + idx}>
                         {block.data.caption ? <Text strong>{block.data.caption}</Text> : <></>}
                         <Paragraph>
                             <iframe title={block.data.caption} type="text/html" style={{ maxWidth: '100%', maxHeight: '500px', width: block.data.width, height: block.data.height }} src={block.data.embed} frameBorder={0} />
                         </Paragraph >
-                    </>
+                    </React.Fragment>
                 )
                 blockCount++;
                 break;
             case 'warning':
                 jsxList.push(
                     <Alert
+                        key={"block-" + idx}
                         message={block.data.title}
                         description={block.data.message}
                         type="info"
@@ -105,13 +106,13 @@ export const convertToJSX = (blocks) => {
                     }
                 })
                 jsxList.push(
-                    <Table tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} />
+                    <Table key={"block-" + idx} tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} />
                 )
                 blockCount++;
                 break;
             case 'quote':
                 jsxList.push(
-                    <>
+                    <React.Fragment key={"block-" + idx}>
                         <blockquote style={{
                             marginTop: '10px',
                             marginBottom: '10px',
@@ -122,7 +123,7 @@ export const convertToJSX = (blocks) => {
                             <p dangerouslySetInnerHTML={{ __html: text }} />
                         </blockquote>
                         <cite dangerouslySetInnerHTML={{ __html: block.data.caption }} />
-                    </>
+                    </React.Fragment>
                 )
                 if (block.data.caption) {
                     textCount += block.data.caption.replace(countRegexp, '').length;
@@ -274,7 +275,7 @@ export const convertToReferenceJSX = (block) => {
     return <AddBlock />;
 }
 
-export const convertToReferenceCard = (block) => {
+export const convertToReferenceCard = (block, key) => {
     const ReferenceJSX = () => convertToReferenceJSX(block);
     return (
         <div
@@ -285,6 +286,7 @@ export const convertToReferenceCard = (block) => {
                 marginTop: '12px',
                 background: 'white'
             }}
+            key={key}
         >
             <ReferenceJSX />
             <Divider style={{ margin: '8px 0' }} />

@@ -56,14 +56,16 @@ class TestPreviewComponent extends React.Component {
                     width={740}
                     style={{ top: 80 }}
                 >
-                    <QuestionConfirm
-                        type={this.props.questions[this.state.currentIdx].type}
-                        selectAnswer={this.props.questions[this.state.currentIdx].answer}
-                        textAnswer={this.props.questions[this.state.currentIdx].answer}
-                        explanations={this.props.questions[this.state.currentIdx].explanations}
-                        question={convertToJSX(this.props.questions[this.state.currentIdx].questionBlocks).text}
-                        questionIdx={this.state.currentIdx + 1}
-                    />
+                    {this.props.questions.length > 0 &&
+                        <QuestionConfirm
+                            type={this.props.questions[this.state.currentIdx].type}
+                            selectAnswer={this.props.questions[this.state.currentIdx].answer}
+                            textAnswer={this.props.questions[this.state.currentIdx].answer}
+                            explanations={this.props.questions[this.state.currentIdx].explanations}
+                            question={convertToJSX(this.props.questions[this.state.currentIdx].questionBlocks).text}
+                            questionIdx={this.state.currentIdx + 1}
+                        />
+                    }
                 </Modal>
             </>
         )

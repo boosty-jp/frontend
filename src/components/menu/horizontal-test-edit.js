@@ -4,24 +4,26 @@ import { message, Layout, Button, Row, Col, Affix } from 'antd';
 import Logo from "components/logo";
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { createArticleLink } from "utils/link-generator";
+import { createTestLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
+import { getTestError } from "utils/test-validator";
+import { makeTestRequest } from "utils/request-converter";
 const { Header } = Layout;
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
-const DRAFT_ARTICLE = gql`
-mutation DraftArticle($articleInput: ArticleInput!){
-  draftArticle(article: $articleInput) {
+const DRAFT_TEST = gql`
+mutation DraftTest($testInput: TestInput!){
+  draftTest(test: $testInput) {
       id
   }
 }
 `;
 
-const PUBLISH_ARTICLE = gql`
-mutation PublishArticle($articleInput: ArticleInput!){
-  publishArticle(article: $articleInput){
+const PUBLISH_TEST = gql`
+mutation PublishTest($testInput: TestInput!){
+  publishTest(test: $testInput){
       id
   }
 }
@@ -41,14 +43,14 @@ class EditMenu extends React.Component {
         try {
             const request = this.makeRequest();
             const { data } = await this.props.client.mutate({
-                mutation: DRAFT_ARTICLE,
+                mutation: DRAFT_TEST,
                 variables: {
-                    articleInput: request
+                    testInput: request
                 }
             });
 
             message.success("下書き保存しました", 7)
-            navigate(createArticleLink(data.draftArticle.id))
+            // navigate(createTestLink(data.draftTest.id))
         } catch (err) {
             message.error(getErrorMessage(err), 7)
         }
@@ -60,14 +62,14 @@ class EditMenu extends React.Component {
         try {
             const request = this.makeRequest();
             const { data } = await this.props.client.mutate({
-                mutation: PUBLISH_ARTICLE,
+                mutation: PUBLISH_TEST,
                 variables: {
-                    articleInput: request
+                    testInput: request
                 }
             });
 
             message.success("公開しました", 7)
-            navigate(createArticleLink(data.publishArticle.id))
+            navigate(createTestLink(data.publishTest.id))
         } catch (err) {
             message.error(getErrorMessage(err), 7)
         }
@@ -75,19 +77,11 @@ class EditMenu extends React.Component {
     }
 
     makeRequest = () => {
-        if (this.props.error.title.status === 'error' ||
-            this.props.error.tags.status === 'error' ||
-            this.props.error.blocks.status === 'error') {
-            message.error('エラーの項目を確認してください');
+        const error = getTestError(this.props.title, this.props.description, this.props.questions);
+        if (error.status === "error") {
+            throw new Error('エラーの項目を確認してください');
         }
-        return {
-            id: this.props.id,
-            title: this.props.title,
-            imageUrl: this.props.imageUrl,
-            blocks: this.props.blocks.map(b => { return { type: b.type, data: JSON.stringify(b.data) } }),
-            tagIds: this.props.tags.map(t => { return t.id }),
-            skills: this.props.skills.map(s => { return { id: s.id, level: s.level } })
-        }
+        return makeTestRequest(this.props.id, this.props.title, this.props.description, this.props.referenceCourseId, this.props.questions);
     }
 
     validate = () => {
@@ -108,7 +102,7 @@ class EditMenu extends React.Component {
                                     style={{ marginLeft: '12px' }}
                                     loading={this.state.draftLoading}
                                     disabled={this.state.publishLoading}
-                                // onClick={this.draft}
+                                    onClick={this.draft}
                                 >
                                     下書き
                                 </Button>
@@ -117,7 +111,7 @@ class EditMenu extends React.Component {
                                     style={{ marginLeft: '12px' }}
                                     loading={this.state.publishLoading}
                                     disabled={this.state.draftLoading}
-                                // onClick={this.publish}
+                                    onClick={this.publish}
                                 >
                                     公開
                                 </Button>
@@ -132,13 +126,11 @@ class EditMenu extends React.Component {
 
 
 const mapStateToProps = state => ({
-    id: state.articleEdit.id,
-    title: state.articleEdit.title,
-    imageUrl: state.articleEdit.imageUrl,
-    blocks: state.articleEdit.blocks,
-    tags: state.articleEdit.tags,
-    skills: state.articleEdit.skills,
-    error: state.articleEdit.error,
+    id: state.testEditBase.id,
+    title: state.testEditBase.title,
+    description: state.testEditBase.description,
+    referenceCourseId: state.testEditBase.referenceCourse.id,
+    questions: state.testEditQuestions.questions,
 })
 
 const TestEditMenu = connect(mapStateToProps)(EditMenu)

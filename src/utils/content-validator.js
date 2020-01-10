@@ -157,6 +157,7 @@ export const getAnswerTextError = (text) => {
 
     return { status, message };
 }
+
 export const getExplanationsError = (explanations) => {
     let status = "";
     let message = "";

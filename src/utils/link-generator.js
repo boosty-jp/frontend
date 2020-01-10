@@ -7,6 +7,8 @@ export const createArticleEditUrl = (id) => ("https://wever.co.jp/article/edit/?
 export const createCourseDetailLink = (id) => ("/course/detail/?id=" + id)
 export const createCourseDetailUrl = (id) => ("https://wever.co.jp/course/detail/?id=" + id)
 
+export const createTestLink = (id) => ("/test/?id=" + id)
+
 export const createCourseEditLink = (id) => ("/course/edit/?id=" + id)
 
 export const createUserLink = (id) => ("/user/?id=" + id)

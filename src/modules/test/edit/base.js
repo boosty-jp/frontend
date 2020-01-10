@@ -41,9 +41,9 @@ export const clearReferenceCourse = () => ({
 
 const initialState = {
     id: "",
-    title: "",
-    description: '',
-    referenceCourse: { id: "", name: "", imageUrl: "" },
+    title: "Javaパフォーマンス計測 そんなタイマーで大丈夫か？",
+    description: '99.9%以上の確率で0が表示される。そもそもSystem.currentTimeMillis()は時刻をミリ秒で返す。1行のプログラムを実行するのに1ミリ秒もかかってたら、たかだか1000行分動いただけで1秒かかってしまう。今のコンピュータはそんなに遅くない。',
+    referenceCourse: { id: "a4b7a584-5c67-45aa-9b90-c47c4af27008", name: "react入門", imageUrl: "" },
     status: "publish",
     error: {
         title: { status: "", message: "" },

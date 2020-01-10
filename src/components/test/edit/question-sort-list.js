@@ -75,7 +75,7 @@ class QuestionListComponent extends React.Component {
                                 {this.props.questions.map((question, index) => {
                                     const QuestionBlocks = () => {
                                         const { text } = convertToJSX(question.questionBlocks);
-                                        return text;
+                                        return <div key={"hoge" + index}>{text}</div>;
                                     }
 
                                     return (

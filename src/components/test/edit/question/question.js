@@ -6,15 +6,16 @@ import EditorJs from 'react-editor-js';
 import { EDITOR_QUESTION_TOOLS } from 'components/editor/question-tool'
 import { convertToJSX } from 'utils/html-converter'
 import { updateQuestion } from 'modules/test/edit/question'
+import uuidv4 from 'uuid/v4'
 
 
 class QuestionStatementEditor extends React.Component {
     constructor(props) {
         super(props);
         this.handleSave = debounce(this.handleSave, 400);
+        this.state = { editorInstance: null, outputs: [], editorId: uuidv4() }
     }
 
-    state = { editorInstance: null, outputs: [] }
 
     handleSave = async () => {
         try {
@@ -48,7 +49,10 @@ class QuestionStatementEditor extends React.Component {
                         placeholder="問題内容を入力してください"
                         data={{ blocks: this.props.questionBlocks }}
                         minHeight={50}
-                    />
+                        holder={this.state.editorId}
+                    >
+                        <div id={this.state.editorId} />
+                    </EditorJs>
                 </div>
             </Form.Item>
         )
