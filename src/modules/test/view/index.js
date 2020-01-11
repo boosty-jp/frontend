@@ -19,13 +19,7 @@ const initialState = {
     createDate: "",
     updateDate: "",
     status: "publish",
-    questions: [],
     author: {},
-    error: {
-        title: { status: "", message: "" },
-        description: { status: "", message: "" },
-        referenceCourse: { status: "", message: "" },
-    },
 }
 
 export default function TestEditBase(state = initialState, action) {
@@ -40,7 +34,6 @@ export default function TestEditBase(state = initialState, action) {
                 createDate: action.test.createDate,
                 updateDate: action.test.updateDate,
                 status: action.test.status,
-                questions: action.test.questions,
                 author: action.test.author,
             };
         case CLEAR_TEST:

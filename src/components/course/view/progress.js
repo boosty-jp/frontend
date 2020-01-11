@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import { Affix, Progress, Button, Row, Col } from 'antd';
 
-const CourseProgress = (props) => {
+const CourseProgressComponent = (props) => {
     if (props.sections.length === 0) return <></>;
 
     let LearnButton = () => <></>;
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
     learnStatus: state.courseView.learnStatus,
 })
 
-const CourseProgressCard = connect(mapStateToProps)(CourseProgress)
+const CourseProgress = connect(mapStateToProps)(CourseProgressComponent)
 
 
-export default CourseProgressCard
+export default CourseProgress
