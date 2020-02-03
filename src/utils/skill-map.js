@@ -1,7 +1,7 @@
 export const convertToSkillMap = (sections) => {
     var skills = [];
     sections.forEach(s => {
-        s.contents.forEach(a => {
+        s.articles.forEach(a => {
             a.skills.forEach(s => {
                 skills.push(s);
             })
@@ -49,7 +49,7 @@ export const convertToSkillLevelMap = (sections) => {
 
     var skills = [];
     sections.forEach(s => {
-        s.contents.forEach(a => {
+        s.articles.forEach(a => {
             a.skills.forEach(s => {
                 skills.push(s);
             })

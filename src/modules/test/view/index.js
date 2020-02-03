@@ -13,6 +13,7 @@ export const clearTest = () => ({
 
 const initialState = {
     id: "",
+    questionsId: "",
     title: "",
     description: "",
     referenceCourse: {},
@@ -28,6 +29,7 @@ export default function TestEditBase(state = initialState, action) {
             return {
                 ...state,
                 id: action.test.id,
+                questionsId: action.test.questionsId,
                 title: action.test.title,
                 description: action.test.description,
                 referenceCourse: action.test.referenceCourse,

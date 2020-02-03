@@ -1,6 +1,16 @@
 import React from "react"
 import { Button, Icon } from 'antd';
 
+const isBrowser = typeof window !== 'undefined';
+const scrollTop = () => {
+    if (isBrowser) {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }
+};
+
 const ProgressButton = ({ prevQuestion, nextQuestion, currentIdx, questions }) => {
     return (
         <>
@@ -9,7 +19,10 @@ const ProgressButton = ({ prevQuestion, nextQuestion, currentIdx, questions }) =
                     ghost
                     type="primary"
                     shape="round"
-                    onClick={prevQuestion}
+                    onClick={() => {
+                        scrollTop();
+                        prevQuestion();
+                    }}
                     disabled={currentIdx === 0}
                     style={{ marginRight: 16, boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)', }}
                 >
@@ -19,8 +32,11 @@ const ProgressButton = ({ prevQuestion, nextQuestion, currentIdx, questions }) =
                     ghost
                     type="primary"
                     shape="round"
-                    onClick={nextQuestion}
-                    disabled={currentIdx === questions.length}
+                    onClick={() => {
+                        scrollTop();
+                        nextQuestion();
+                    }}
+                    disabled={currentIdx >= questions.length - 1}
                     style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)', }}
                 >次へ<Icon type="right" />
                 </Button >

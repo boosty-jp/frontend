@@ -9,7 +9,7 @@ const { Content } = Layout;
 class TestLayout extends React.Component {
     render() {
         return (
-            <Layout>
+            <Layout >
                 <div style={{ minHeight: '100vh' }}>
                     <HorizontalContentMenu />
                     <Content>

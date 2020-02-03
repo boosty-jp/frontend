@@ -16,7 +16,15 @@ class TestStartCardComponent extends React.Component {
 
     render() {
         return (
-            <div style={{ padding: '24px' }}>
+            <div style={{
+                background: '#fff',
+                maxWidth: '740px',
+                width: '100%',
+                margin: '30px auto',
+                boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+                borderRadius: '0.5rem',
+                padding: '24px'
+            }}>
                 <Row type="flex" justify="space-around" align="middle" gutter={16}>
                     <Col span={12}>
                         <Typography>
@@ -86,5 +94,5 @@ const mapDispatchToProps = dispatch => ({
     answering: () => dispatch(answering()),
 })
 
-const TestStartCard = connect(mapStateToProps, mapDispatchToProps)(TestStartCardComponent)
-export default TestStartCard;
+const PcTestStartCard = connect(mapStateToProps, mapDispatchToProps)(TestStartCardComponent)
+export default PcTestStartCard;

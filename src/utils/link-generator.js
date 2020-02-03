@@ -9,6 +9,8 @@ export const createCourseDetailUrl = (id) => ("https://wever.co.jp/course/detail
 
 export const createTestLink = (id) => ("/test/?id=" + id)
 
+export const createAnswerLink = (id) => ("/answer/?id=" + id)
+
 export const createCourseEditLink = (id) => ("/course/edit/?id=" + id)
 
 export const createUserLink = (id) => ("/user/?id=" + id)

@@ -6,12 +6,15 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux'
 import { clearTest, setTest } from 'modules/test/view'
 import { setQuestions } from 'modules/test/view/answer'
-import TestStartCard from 'components/test/view/start-card'
+import TestStartCard from 'components/test/view/start'
+import AnsweringComponent from 'components/test/view/answering/'
+import AnswerList from "components/test/view/answer-list/";
 
 const GET_TEST = gql`
   query Test($testId: ID!) {
     test(testId: $testId) {
       id
+      questionsId
       title
       description
       status
@@ -29,6 +32,7 @@ const GET_TEST = gql`
         text
         type
         candidates
+        answerLength
         showCount
      }
 
@@ -73,11 +77,11 @@ class TestContentComponent extends React.Component {
               }
               {
                 this.props.mode === 'answering' &&
-                <TestStartCard />
+                <AnsweringComponent />
               }
               {
-                this.props.mode === 'complete' &&
-                <TestStartCard />
+                this.props.mode === 'answerList' &&
+                <AnswerList />
               }
             </>
           )

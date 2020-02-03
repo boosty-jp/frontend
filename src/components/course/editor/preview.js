@@ -55,15 +55,15 @@ class CoursePreviewComponent extends React.Component {
                                     <Panel
                                         key={sectionIdx}
                                         header={sectionIdx + 1 + ". " + s.title}
-                                        extra={<span>全{s.contents.length}回</span>}
+                                        extra={<span>全{s.articles.length}回</span>}
                                     >
                                         <List
                                             itemLayout="horizontal"
-                                            dataSource={s.contents}
-                                            renderItem={(content, contentIdx) => (
+                                            dataSource={s.articles}
+                                            renderItem={(article, articleIdx) => (
                                                 <List.Item>
                                                     <List.Item.Meta
-                                                        title={<><span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{contentIdx + 1}. </span><a href="https://ant.design">{content.title}</a></>}
+                                                        title={<><span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{articleIdx + 1}. </span><a href="https://ant.design">{article.title}</a></>}
                                                     />
                                                 </List.Item>
                                             )}

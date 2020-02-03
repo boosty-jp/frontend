@@ -31,7 +31,7 @@ const CourseProgressComponent = (props) => {
     }
 
     const learnedList = props.sections.map(section => {
-        return { learned: section.contents.reduce((c, x) => c + (x.learned ? 1 : 0), 0), sum: section.contents.length }
+        return { learned: section.articles.reduce((c, x) => c + (x.learned ? 1 : 0), 0), sum: section.articles.length }
     });
     const learnedSum = learnedList.reduce((l, x) => l + (x.learned ? 1 : 0), 0);
     const sumCount = learnedList.reduce((l, x) => l + (x.sum ? 1 : 0), 0);

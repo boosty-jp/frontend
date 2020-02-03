@@ -8,7 +8,7 @@ import styled from 'styled-components'
 const { Panel } = Collapse;
 
 const CustomPanel = styled(Panel)`
-  .ant-collapse-content-box {
+  .ant-collapse-article-box {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
   }
@@ -33,7 +33,7 @@ const Sections = (props) => {
                                             <div style={{ width: 80, margin: '0 0 0 auto' }}>
                                                 <Progress
                                                     size="small"
-                                                    percent={s.contents.reduce((c, x) => c + (x.learned ? 1 : 0), 0) * 100 / s.contents.length}
+                                                    percent={s.articles.reduce((c, x) => c + (x.learned ? 1 : 0), 0) * 100 / s.articles.length}
                                                 />
                                             </div>
                                         </Col>
@@ -42,11 +42,11 @@ const Sections = (props) => {
                             >
                                 <List
                                     itemLayout="horizontal"
-                                    dataSource={s.contents}
-                                    renderItem={(content, contentIdx) => (
+                                    dataSource={s.articles}
+                                    renderItem={(article, articleIdx) => (
                                         <List.Item
                                             actions={[
-                                                <a href={createArticleLink(content.id)} target="_blank">
+                                                <a href={createArticleLink(article.id)} target="_blank">
                                                     <Icon type="export" />
                                                 </a>
                                             ]}
@@ -59,11 +59,11 @@ const Sections = (props) => {
                                                             shape="circle"
                                                             // onClick={this.learn}
                                                             // loading={this.state.loading}
-                                                            icon={content.learned ? 'check' : ''}
-                                                            style={{ color: content.learned ? 'green' : 'grey', marginRight: '16px' }}
+                                                            icon={article.learned ? 'check' : ''}
+                                                            style={{ color: article.learned ? 'green' : 'grey', marginRight: '16px' }}
                                                         />
-                                                        <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{contentIdx + 1}. </span>
-                                                        <Link to={createArticleLink(content.id)}>{content.title}</Link>
+                                                        <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{articleIdx + 1}. </span>
+                                                        <Link to={createArticleLink(article.id)}>{article.title}</Link>
                                                     </>
                                                 }
                                             />

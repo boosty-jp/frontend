@@ -7,7 +7,7 @@ import { setArticleId } from 'modules/test/edit/reference-article'
 const { Panel } = Collapse;
 
 const CustomPanel = styled(Panel)`
-  .ant-collapse-content-box {
+  .ant-collapse-article-box {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
   }
@@ -28,18 +28,18 @@ const ReferenceArticle = (props) => {
                             >
                                 <List
                                     itemLayout="horizontal"
-                                    dataSource={s.contents}
-                                    renderItem={(content, contentIdx) => (
+                                    dataSource={s.articles}
+                                    renderItem={(article, articleIdx) => (
                                         <List.Item
                                             actions={[
-                                                <Button type="primary" onClick={() => props.setArticleId(content.id)}>選ぶ</Button>
+                                                <Button type="primary" onClick={() => props.setArticleId(article.id)}>選ぶ</Button>
                                             ]}
                                         >
                                             <List.Item.Meta
                                                 title={
                                                     <>
-                                                        <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{contentIdx + 1}. </span>
-                                                        <span>{content.title}</span>
+                                                        <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{articleIdx + 1}. </span>
+                                                        <span>{article.title}</span>
                                                     </>
                                                 }
                                             />

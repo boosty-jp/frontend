@@ -2,14 +2,14 @@ const SUFFIX = '_COURSE_SECTION_EDIT';
 const SET_SECTION = 'SET_SECTION' + SUFFIX;
 const CLEAR_SECTION = 'CLEAR_SECTION' + SUFFIX;
 const UPDATE_TITLE = 'UPDATE_TITLE' + SUFFIX;
-const ADD_CONTENT = 'ADD_CONTENT' + SUFFIX;
-const UPDATE_CONTENTS = 'UPDATE_CONTENTS' + SUFFIX;
-const DELETE_CONTENT = 'DELETE_CONTENT' + SUFFIX;
+const ADD_ARTICLE = 'ADD_ARTICLE' + SUFFIX;
+const UPDATE_ARTICLES = 'UPDATE_ARTICLES' + SUFFIX;
+const DELETE_ARTICLE = 'DELETE_ARTICLE' + SUFFIX;
 
-export const setSection = (title, contents) => ({
+export const setSection = (title, articles) => ({
     type: SET_SECTION,
     title: title,
-    contents: contents,
+    articles: articles,
 })
 
 export const updateTitle = (title) => ({
@@ -17,18 +17,18 @@ export const updateTitle = (title) => ({
     title: title
 })
 
-export const addContent = (content) => ({
-    type: ADD_CONTENT,
-    content: content,
+export const addArticle = (article) => ({
+    type: ADD_ARTICLE,
+    article: article,
 })
 
-export const updateContents = (contents) => ({
-    type: UPDATE_CONTENTS,
-    contents: contents
+export const updateArticles = (articles) => ({
+    type: UPDATE_ARTICLES,
+    articles: articles
 })
 
-export const deleteContent = (id) => ({
-    type: DELETE_CONTENT,
+export const deleteArticle = (id) => ({
+    type: DELETE_ARTICLE,
     id: id,
 })
 
@@ -38,7 +38,7 @@ export const clearSection = () => ({
 
 const initialState = {
     title: '',
-    contents: []
+    articles: []
 }
 
 export default function CourseEditSection(state = initialState, action) {
@@ -47,7 +47,7 @@ export default function CourseEditSection(state = initialState, action) {
             return {
                 ...state,
                 title: action.title,
-                contents: action.contents,
+                articles: action.articles,
             };
         case CLEAR_SECTION:
             return {
@@ -58,30 +58,30 @@ export default function CourseEditSection(state = initialState, action) {
                 ...state,
                 title: action.title,
             }
-        case ADD_CONTENT:
+        case ADD_ARTICLE:
             return {
                 ...state,
-                contents: [...state.contents, action.content],
+                articles: [...state.articles, action.article],
             }
-        case UPDATE_CONTENTS:
+        case UPDATE_ARTICLES:
             return {
                 ...state,
-                contents: action.contents,
+                articles: action.articles,
             }
-        case DELETE_CONTENT:
-            const deleteContents = state.contents.concat();
+        case DELETE_ARTICLE:
+            const deleteArticles = state.articles.concat();
             let idx = -1;
-            for (let i = 0; i < deleteContents.length; ++i) {
-                if (deleteContents[i].id === action.id) {
+            for (let i = 0; i < deleteArticles.length; ++i) {
+                if (deleteArticles[i].id === action.id) {
                     idx = i;
                 }
             }
 
             if (idx >= 0) {
-                deleteContents.splice(idx, 1);
+                deleteArticles.splice(idx, 1);
                 return {
                     ...state,
-                    contents: deleteContents,
+                    articles: deleteArticles,
                 }
             } else {
                 return { ...state }

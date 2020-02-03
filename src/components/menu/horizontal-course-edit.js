@@ -83,13 +83,12 @@ class EditMenu extends React.Component {
             title: this.props.title,
             imageUrl: this.props.imageUrl,
             description: this.props.description,
-            tagIds: this.props.tags.map(t => { return t.key }),
+            tagIds: this.props.tags.map(t => { return t.id }),
             sections: this.props.sections.map((s, s_idx) => {
                 return {
                     title: s.title,
                     number: s_idx + 1,
-                    contents: s.articles.map((a, a_idx) => {
-                        console.log(a.id);
+                    articles: s.articles.map((a, a_idx) => {
                         return { articleId: a.id, number: a_idx + 1 }
                     })
                 }

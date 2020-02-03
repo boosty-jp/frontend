@@ -31,7 +31,7 @@ const GET_COURSE = gql`
         number
         title
 
-        contents {
+        articles {
           id
           title
           number
@@ -69,9 +69,6 @@ const CourseEditPageComponent = (props) => {
             </Query>
         )
     } else {
-        props.clearBase();
-        props.clearSection();
-        props.clearSections();
         return <CourseEdit />
     }
 

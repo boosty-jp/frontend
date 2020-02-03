@@ -5,7 +5,7 @@ import { AutoComplete, Col, Row, notification, Empty, Icon } from 'antd';
 import styled from 'styled-components'
 import debounce from "lodash/debounce";
 import algoliasearch from 'algoliasearch/lite';
-import { addContent, updateContents, deleteContent } from 'modules/course/edit/section'
+import { addArticle, updateArticles, deleteArticle } from 'modules/course/edit/section'
 import MiniThumbnailImage from 'components/image/mini-thumbnail';
 
 const { Option, OptGroup } = AutoComplete;
@@ -15,7 +15,7 @@ const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_SEARCH_ONLY_API_KEY
 )
 
-const index = searchClient.initIndex('content')
+const index = searchClient.initIndex('article')
 
 const RoundSearch = styled(AutoComplete)`
   .ant-input {
@@ -36,7 +36,7 @@ class ContentFormComponent extends React.Component {
     constructor(props) {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
-        this.fetchContents = debounce(this.fetchContents, 300);
+        this.fetchArticles = debounce(this.fetchArticles, 300);
     }
 
     state = {
@@ -46,7 +46,7 @@ class ContentFormComponent extends React.Component {
         searchResults: [],
     };
 
-    fetchContents = value => {
+    fetchArticles = value => {
         value = value.replace(/\s+/g, "");
         if (value.length === 0) {
             //空白文字のときは何も表示しない
@@ -59,7 +59,7 @@ class ContentFormComponent extends React.Component {
         let searchResults = []
         index.search({ query: value, hitsPerPage: 8 }).then(({ hits }) => {
             searchResults[0] = (
-                <OptGroup key="content-search-result" label="検索結果" >
+                <OptGroup key="article-search-result" label="検索結果" >
                     {hits.map(s => {
                         const updateDateObject = new Date(s.updateDate);
                         const updateDateStr = updateDateObject.getFullYear() + "年" + (updateDateObject.getMonth() + 1) + "月" + updateDateObject.getDate() + "日";
@@ -81,7 +81,7 @@ class ContentFormComponent extends React.Component {
 
             this.setState({ fetching: false, searchResults: searchResults })
         }).catch(() => {
-            searchResults[0] = (<OptGroup key="content-search-result" label="検索結果" ></OptGroup>);
+            searchResults[0] = (<OptGroup key="article-search-result" label="検索結果" ></OptGroup>);
 
             this.setState({ fetching: false, searchResults: searchResults })
         })
@@ -93,16 +93,16 @@ class ContentFormComponent extends React.Component {
             return;
         }
 
-        const reorderedContents = reorder(
-            this.props.contents,
+        const reorderedArticles = reorder(
+            this.props.articles,
             result.source.index,
             result.destination.index
         );
-        this.props.updateContents(reorderedContents);
+        this.props.updateArticles(reorderedArticles);
     }
 
-    addContent = (item) => {
-        if (this.props.contents.length > 9) {
+    addArticle = (item) => {
+        if (this.props.articles.length > 9) {
             notification['error']({
                 message: '追加に失敗しました',
                 description:
@@ -119,13 +119,13 @@ class ContentFormComponent extends React.Component {
             return;
         }
 
-        this.props.addContent(item);
+        this.props.addArticle(item);
     }
 
     alreadyExists = (item) => {
-        const contents = this.props.contents;
-        for (let i = 0; i < contents.length; ++i) {
-            if (contents[i].id === item.id) {
+        const articles = this.props.articles;
+        for (let i = 0; i < articles.length; ++i) {
+            if (articles[i].id === item.id) {
                 return true;
             }
         }
@@ -142,13 +142,12 @@ class ContentFormComponent extends React.Component {
                         placeholder="検索する"
                         onSearch={(value) => {
                             this.setState({ inputVal: value });
-                            this.fetchContents(value);
+                            this.fetchArticles(value);
                         }}
                         dataSource={this.state.searchResults}
                         optionLabelProp="value"
-                        value={this.state.inputVal}
                         onSelect={(value, option) => {
-                            this.addContent({ id: option.key, title: value });
+                            this.addArticle({ id: option.key, title: value });
                             this.setState({ inputVal: '' })
                         }}
                         style={{ width: '100%' }}
@@ -157,7 +156,7 @@ class ContentFormComponent extends React.Component {
                 <div style={{ textAlign: 'center', margin: '12px auto' }}>
                     <Icon type="double-left" rotate={270} />
                 </div>
-                {this.props.contents.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="データがありません" />}
+                {this.props.articles.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="データがありません" />}
                 <DragDropContext onDragEnd={this.onDragEnd} >
                     <Droppable droppableId="droppable">
                         {(provided, snapshot) => {
@@ -166,7 +165,7 @@ class ContentFormComponent extends React.Component {
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                 >
-                                    {this.props.contents.map((item, index) => (
+                                    {this.props.articles.map((item, index) => (
                                         <Draggable key={item.id} draggableId={item.id} index={index}>
                                             {(provided, snapshot) => (
                                                 <div
@@ -193,7 +192,7 @@ class ContentFormComponent extends React.Component {
                                                                 {index + 1}. {item.title}
                                                             </Col>
                                                             <Col span={4} style={{ textAlign: 'right' }}>
-                                                                <Icon type="delete" onClick={() => { this.props.deleteContent(item.id) }} />
+                                                                <Icon type="delete" onClick={() => { this.props.deleteArticle(item.id) }} />
                                                             </Col>
                                                         </Row>
                                                     </div>
@@ -213,13 +212,13 @@ class ContentFormComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    contents: state.courseEditSection.contents,
+    articles: state.courseEditSection.articles,
 })
 
 const mapDispatchToProps = dispatch => ({
-    addContent: (content) => dispatch(addContent(content)),
-    deleteContent: (content) => dispatch(deleteContent(content)),
-    updateContents: (contents) => dispatch(updateContents(contents)),
+    addArticle: (article) => dispatch(addArticle(article)),
+    deleteArticle: (article) => dispatch(deleteArticle(article)),
+    updateArticles: (articles) => dispatch(updateArticles(articles)),
 })
 
 const ContentForm = connect(mapStateToProps, mapDispatchToProps)(ContentFormComponent)

@@ -1,5 +1,4 @@
 import React from "react"
-import { image } from "components/editor/tool/image";
 
 const ThumbnailImage = ({ imageUrl }) => {
     if (!imageUrl) return <></>

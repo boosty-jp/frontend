@@ -58,7 +58,6 @@ const GET_ARTICLE = gql`
 
 const ArticleEditPageComponent = (props) => {
   const { id } = props.search
-  props.clearArticle();
   if (id) {
     return (
       <Query

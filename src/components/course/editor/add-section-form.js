@@ -48,7 +48,7 @@ class SectionForm extends React.Component {
             return;
         }
 
-        if (!this.props.contents.length) {
+        if (!this.props.articles.length) {
             notification['error']({
                 message: '追加に失敗しました',
                 description:
@@ -66,7 +66,7 @@ class SectionForm extends React.Component {
             return;
         }
 
-        this.props.addSection({ id: uuidv4(), title: this.props.title, contents: this.props.contents, })
+        this.props.addSection({ id: uuidv4(), title: this.props.title, articles: this.props.articles, })
         this.onClose();
     }
 
@@ -112,7 +112,7 @@ class SectionForm extends React.Component {
 const mapStateToProps = state => ({
     sections: state.courseEditSections.sections,
     title: state.courseEditSection.title,
-    contents: state.courseEditSection.contents,
+    articles: state.courseEditSection.articles,
 })
 
 const mapDispatchToProps = dispatch => ({
