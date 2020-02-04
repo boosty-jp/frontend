@@ -8,12 +8,12 @@ const backgroundStyle = {
     width: '100vw',
     paddingTop: '60px',
     backgroundSize: '100%',
-    backgroundColor: '#f0f2f5',
+    backgroundColor: '#f0f5ff',
 }
 
 const SimpleLayout = ({ children, maxWidth, width, height, minHeight }) => (
-    <Layout style={{ minHeight: '100vh' }}>
-        <Content>
+    <Layout style={{ minHeight: '100vh', backgroundColor: "#f0f5ff" }}>
+        <Content >
             <div style={backgroundStyle}>
                 <div style={{ maxWidth: maxWidth, width: width, height: height, minHeight: minHeight, margin: '0 auto' }}>
                     <div style={{ marginBottom: '20px', textAlign: 'center' }}>
@@ -23,10 +23,12 @@ const SimpleLayout = ({ children, maxWidth, width, height, minHeight }) => (
                 </div>
             </div>
         </Content>
-        <div style={{ marginTop: '10px' }}>
+        <div style={{
+            marginTop: '10px'
+        }} >
             <VerticalFooter />
         </div>
-    </Layout>
+    </Layout >
 )
 
 export default SimpleLayout

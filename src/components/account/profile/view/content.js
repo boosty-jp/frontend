@@ -1,14 +1,9 @@
 import React from "react"
-import { Row, Col } from 'antd';
-import LearningCourses from "components/course/learnings-partial";
-import TopCategories from "components/account/profile/view/top-category";
 import PublishedContents from "./published-contents";
 import DraftedContents from "./drafted-contents";
-import TopSkills from "./skills";
 
 const ProfileContents = () => (
     <>
-        <LearningCourses />
         <DraftedContents />
         <PublishedContents />
     </>

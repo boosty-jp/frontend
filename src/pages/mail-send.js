@@ -4,6 +4,15 @@ import getFirebase from 'utils/firebase'
 import SimpleLayout from 'components/layout/simple-layout'
 
 
+const cardStyle = {
+    backgroundColor: 'white',
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+    borderRadius: '1rem',
+    margin: '20px',
+    fontSize: 'bold',
+    fontColor: 'black',
+}
+
 const MailSendPage = () => {
     const reSend = () => {
         const firebase = getFirebase();
@@ -23,7 +32,7 @@ const MailSendPage = () => {
 
     return (
         <SimpleLayout maxWidth="500px" width="100%" >
-            <div style={{ margin: '20px', padding: '0px', backgroundColor: 'white', borderRadius: '0.25rem' }}>
+            <div style={cardStyle}>
                 <Result
                     icon={<Icon type="mail" theme="twoTone" />}
                     title="認証用のメールを送りました。"

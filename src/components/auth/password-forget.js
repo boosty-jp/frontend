@@ -2,6 +2,10 @@ import React from "react"
 import getFirebase from 'utils/firebase'
 import { Form, Icon, Input, Button, Typography, message } from 'antd';
 
+const shadowButtonStyle = {
+    width: '100%',
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+}
 class ForgetForm extends React.Component {
     constructor(props) {
         super(props);
@@ -68,11 +72,12 @@ class ForgetForm extends React.Component {
                         </Form.Item>
                         <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
                             <Button
+                                shape="round"
                                 type="primary"
                                 htmlType="submit"
                                 className="login-form-button"
                                 loading={this.state.loading}
-                                style={{ width: '100%' }}>
+                                style={shadowButtonStyle}>
                                 パスワード変更メールを送る
                     </Button>
                         </Form.Item>

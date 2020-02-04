@@ -4,7 +4,7 @@ import getFirebase from 'utils/firebase'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { setUser } from "services/local-user";
-import { Link } from "gatsby";
+import { createTermsUrl } from "utils/link-generator";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
@@ -16,6 +16,10 @@ mutation CreateUser($displayName: String!, $imageUrl: String!) {
   }
 }
 `;
+
+const shadowButtonStyle = {
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+}
 
 class NormalSignUpForm extends React.Component {
     constructor(props) {
@@ -150,17 +154,18 @@ class NormalSignUpForm extends React.Component {
                     })
                         (
                             <Checkbox>
-                                <Link to="/terms">利用規約</Link>に同意する
+                                <a href={createTermsUrl()} target="_blank">利用規約</a>に同意する
                             </Checkbox>,
                         )}
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
                     <Button
+                        shape="round"
                         type="primary"
                         htmlType="submit"
                         loading={this.state.loading}
                         className="login-form-button"
-                        style={{ width: '100%' }}>会員登録
+                        style={{ width: '100%', ...shadowButtonStyle }}>会員登録
                         </Button>
                 </Form.Item>
             </Form>

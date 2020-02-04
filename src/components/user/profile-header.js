@@ -60,7 +60,7 @@ const ProfileHeader = ({ data, selfSearch }) => {
                         <UserDescription description={data.description} selfSearch={selfSearch} />
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <SkillBarChart />
+                        {/* <SkillBarChart /> */}
                     </Col>
                 </Row>
             </Col>

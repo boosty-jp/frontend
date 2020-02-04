@@ -1,6 +1,6 @@
 import React from "react"
 import { Input, Icon } from 'antd';
-import UserButtons from "components/menu/buttons/user";
+import UserButtons from "components/menu/items/account-dropdown";
 import styled from 'styled-components'
 
 const RoundSearch = styled(Input.Search)`

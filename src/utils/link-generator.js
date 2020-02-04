@@ -19,3 +19,10 @@ export const createUserUrl = (id) => ("https://wever.co.jp/user/?id=" + id)
 export const createSearchLink = (name, id) => ("/search/?type=tag&q=" + name + "&id=" + id)
 
 export const createSiteUrl = (path) => ("https://wever.co.jp" + path)
+
+export const createTermsUrl = () => {
+    if (process.env.NODE_ENV === 'production') {
+        return "https://boosty.jp/terms";
+    }
+    return "http://localhost:8000/terms";
+}

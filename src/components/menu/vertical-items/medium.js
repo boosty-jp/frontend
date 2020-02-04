@@ -1,6 +1,6 @@
 import React from "react"
 import { Input, Drawer, Icon, } from 'antd';
-import UserButtons from "components/menu/buttons/user";
+import UserButtons from "components/menu/items/account-dropdown";
 
 class MediumVerticalMenuItems extends React.Component {
     state = { onSearch: false };

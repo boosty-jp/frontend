@@ -55,5 +55,33 @@ mark {
 }
 
 body{
- font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Segoe UI,Hiragino Kaku Gothic ProN,Hiragino Sans,ヒラギノ角ゴ ProN W3,Arial,メイリオ,Meiryo,sans-serif !important;
+ /* font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Segoe UI,Hiragino Kaku Gothic ProN,Hiragino Sans,ヒラギノ角ゴ ProN W3,Arial,メイリオ,Meiryo,sans-serif !important; */
+ /* font-family: Rubik,'M PLUS Rounded 1c',sans-serif !important; */
+ font-family: Rubik,'Noto Sans JP',sans-serif !important;
+}
+
+.book-image-cover{
+  animation: book_img_cover_animation 3s linear infinite;
+  transform-origin: 50% 50%;
+  margin: 1rem 0 !important;
+  box-shadow: 2px 2px 8px gray !important;
+}
+
+@keyframes book_img_cover_animation {
+  0% { transform: translateY(0) }
+  50% { transform: translateY(-10px) }
+  100% { transform: translateY(0) }
+}
+
+.ant-carousel .slick-slide {
+  padding: 10px;
+}
+
+
+div.ant-slider-disabled .ant-slider-handle {
+  border-color:#1890ff !important ;
+}
+
+div.ant-slider-disabled .ant-slider-track{
+  background-color:#1890ff !important ;
 }

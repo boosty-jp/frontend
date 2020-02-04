@@ -1,9 +1,13 @@
 import React from "react"
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import getFirebase, { getGoogleProvider, getFacebookProvider } from "utils/firebase";
-import { presetPalettes } from '@ant-design/colors'
 import GoogleIcon from 'images/google.png'
 import FacebookIcon from 'images/facebook.png'
+
+const shadowButtonStyle = {
+    verticalAlign: 'middle',
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+}
 class ThirdPartyButtons extends React.Component {
     state = {
         googleLoading: false,
@@ -38,7 +42,8 @@ class ThirdPartyButtons extends React.Component {
                     size="large"
                     onClick={() => this.signIn('Google')}
                     loading={this.state.googleLoading}
-                    style={{ verticalAlign: 'middle' }}
+                    style={shadowButtonStyle}
+                    shape="round"
                 >
                     <span style={{ verticalAlign: 'middle' }}>
                         <img src={GoogleIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} />
@@ -50,7 +55,8 @@ class ThirdPartyButtons extends React.Component {
                     size="large"
                     onClick={() => this.signIn('Facebook')}
                     loading={this.state.facebookLoading}
-                    style={{ marginTop: '16px' }}
+                    style={{ marginTop: '16px', ...shadowButtonStyle }}
+                    shape="round"
                 >
                     <span style={{ textAlign: 'left', verticalAlign: 'middle' }}>
                         <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} />

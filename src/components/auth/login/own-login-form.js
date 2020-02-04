@@ -16,6 +16,11 @@ const GET_USER = gql`
 }
 `;
 
+const shadowButtonStyle = {
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+    width: '100%',
+}
+
 class NormalLoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -129,7 +134,16 @@ class NormalLoginForm extends React.Component {
                     )}
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
-                    <Button loading={this.state.loading} type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>ログイン</Button>
+                    <Button
+                        shape="round"
+                        type="primary"
+                        htmlType="submit"
+                        loading={this.state.loading}
+                        className="login-form-button"
+                        style={shadowButtonStyle}
+                    >
+                        ログイン
+                    </Button>
                 </Form.Item>
             </Form>
         );

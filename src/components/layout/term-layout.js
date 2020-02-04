@@ -8,7 +8,7 @@ const data = [
 ]
 const TermLayout = ({ children }) => {
     return (
-        <div style={{ padding: '30px 20px', maxWidth: '100%', width: "1250px", margin: 'auto', position: 'relative' }}>
+        <div style={{ padding: '30px 20px', maxWidth: '100%', width: "900px", margin: 'auto', position: 'relative' }}>
             <Row gutter={[16, 16]}>
                 <Col xs={0} sm={0} md={8} lg={6} xl={6}>
                     <List

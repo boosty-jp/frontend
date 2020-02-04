@@ -1,8 +1,8 @@
 import React from "react"
 import Logo from "components/logo";
 import { Input, Row, Col } from 'antd';
-import GuestButtons from 'components/menu/buttons/guest'
-import UserButtons from "components/menu/buttons/user";
+import GuestButtons from 'components/menu/items/guest'
+import UserButtons from "components/menu/items/account-dropdown";
 import styled from 'styled-components'
 import { isLoggedIn } from "services/local-user";
 
