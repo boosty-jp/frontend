@@ -6,28 +6,28 @@ import Book3Image from 'images/book-cover-3.png'
 import Book4Image from 'images/book-cover-4.png'
 import { List, Select } from 'antd'
 import { Link } from "gatsby"
-import OwnBookItem from 'components/book/view/own/item'
+import OwnBookItem from 'components/book/view/list/item'
 
 const { Option } = Select
 
 let books = [
     {
-        title: 'AWS 入門書',
+        title: 'React Redux入門書',
         imageUrl: Book1Image,
         author: { name: '金沢 たかし' },
     },
     {
-        title: 'Linux 実践入門',
+        title: '詳細解説 Vue.js',
         imageUrl: Book2Image,
         author: { name: '山下 智己' },
     },
     {
-        title: 'はじめての簿記',
+        title: 'Ruby on Rails パーフェクトガイド',
         imageUrl: Book3Image,
         author: { name: '池上 拓' },
     },
     {
-        title: 'React/Redux実践',
+        title: '今すぐ使えるJavascriptテクニック',
         imageUrl: Book4Image,
         author: { name: '渡辺 秀作' },
     },
@@ -75,7 +75,7 @@ const OwnBookList = () => (
             dataSource={books}
             renderItem={book => (
                 <List.Item>
-                    <Link to="/book/detail">
+                    <Link to="/book">
                         <div style={{ width: '100%', margin: '0 auto' }}>
                             <OwnBookItem imageUrl={book.imageUrl} title={book.title} author={book.author} />
                         </div>

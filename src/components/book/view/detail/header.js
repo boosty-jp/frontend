@@ -9,8 +9,15 @@ const BookHeaderCard = ({ imageUrl, title, author, price }) => {
     return (
         <Row type="flex" align="top" gutter={8} style={{ marginTop: '8px' }}>
             <Col xs={10} sm={10} md={8} lg={6} xl={6} >
-                <div style={{ margin: '0 auto', width: '100%', borderRadius: '0.5rem', overflow: 'hidden' }}>
+                <div style={{
+                    margin: '0 auto',
+                    width: '100%',
+                    borderRadius: '0.5rem',
+                    overflow: 'hidden',
+                    boxShadow: "2px 2px 8px gray !important",
+                }}>
                     <BookCoverImage imageUrl={imageUrl} />
+                    {/* <BookCoverImage1 /> */}
                 </div>
             </Col>
             <Col xs={14} sm={14} md={16} lg={18} xl={18} style={{ textAlign: 'left' }}>

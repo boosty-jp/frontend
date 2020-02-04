@@ -1,16 +1,20 @@
 import React from "react"
 import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical/account"
+import Layout from "components/layout/horizontal"
 import AccountEditLayout from 'components/account/settings/layout'
 import PasswordUpdateForm from "components/account/settings/password"
 
 const AccountEditPage = () => (
-    <VerticalLayout pageTitle="パスワード設定" selectedMenu="account-settings" openedMenu="account">
+    <Layout>
         <SEO title="Home" />
-        <AccountEditLayout page="password">
-            <PasswordUpdateForm />
-        </AccountEditLayout>
-    </VerticalLayout>
+        <div style={{ background: 'white' }}>
+            <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
+                <AccountEditLayout page="password">
+                    <PasswordUpdateForm />
+                </AccountEditLayout>
+            </div>
+        </div>
+    </Layout>
 )
 
 export default AccountEditPage

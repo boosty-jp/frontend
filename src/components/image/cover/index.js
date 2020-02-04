@@ -11,6 +11,7 @@ const BookCoverImage = ({ imageUrl }) => {
                 backgroundSize: 'cover',
                 backgroundImage: `url(${imageUrl})`,
                 backgroundPosition: 'center center',
+                boxShadow: "2px 2px 8px gray !important",
             }} />
     )
 }

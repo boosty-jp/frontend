@@ -1,16 +1,20 @@
 import React from "react"
 import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical/account"
+import Layout from "components/layout/horizontal"
 import AccountEditLayout from 'components/account/settings/layout'
 import UserDeleteForm from "components/account/settings/delete"
 
-const AccountDeletePage = () => (
-    <VerticalLayout pageTitle="アカウント削除" selectedMenu="account-settings" openedMenu="account">
+const AccountEditPage = () => (
+    <Layout>
         <SEO title="Home" />
-        <AccountEditLayout page="delete">
-            <UserDeleteForm />
-        </AccountEditLayout>
-    </VerticalLayout>
+        <div style={{ background: 'white' }}>
+            <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
+                <AccountEditLayout page="delete">
+                    <UserDeleteForm />
+                </AccountEditLayout>
+            </div>
+        </div>
+    </Layout>
 )
 
-export default AccountDeletePage
+export default AccountEditPage

@@ -1,20 +1,20 @@
 import React from "react"
 import SEO from "components/seo"
 import Layout from "components/layout/horizontal"
-import AccountEditLayout from 'components/account/settings/layout'
-import MailUpdateForm from "components/account/settings/mail"
+import BookEditLayout from 'components/book/edit/layout'
+import BookEditFeatures from "components/book/edit/feature"
 
-const AccountEditPage = () => (
+const BookEditPage = () => (
     <Layout>
         <SEO title="Home" />
         <div style={{ background: 'white' }}>
             <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
-                <AccountEditLayout page="mail">
-                    <MailUpdateForm />
-                </AccountEditLayout>
+                <BookEditLayout page="feature">
+                    <BookEditFeatures />
+                </BookEditLayout>
             </div>
         </div>
     </Layout>
 )
 
-export default AccountEditPage
+export default BookEditPage

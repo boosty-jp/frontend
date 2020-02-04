@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Layout, Menu, Typography } from 'antd';
 import { Link } from 'gatsby'
+import BookStatusCard from "./status-card";
 
 const { Content, Sider } = Layout;
-const { Title } = Typography;
+const { Paragraph } = Typography;
+
 const pages = [
-    { key: 'base', link: 'account/settings/base', title: '基本情報' },
-    { key: 'password', link: 'account/settings/password', title: 'パスワード' },
-    { key: 'mail', link: 'account/settings/mail', title: 'メール' },
-    { key: 'delete', link: 'account/settings/delete', title: 'アカウント削除' },
+    { key: 'base', link: 'book/edit/base', title: '基本情報' },
+    { key: 'page', link: 'book/edit/page', title: 'ページ' },
+    { key: 'feature', link: 'book/edit/feature', title: '特徴' },
+    { key: 'target', link: 'book/edit/target', title: '対象読者' },
 ]
 
 const VerticalContents = ({ page, children }) => (
@@ -68,7 +70,7 @@ const cardStyle = {
     fontColor: 'black',
 }
 
-const AccountEditLayout = ({ children, page }) => {
+const BookEditLayout = ({ children, page }) => {
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
 
@@ -85,8 +87,9 @@ const AccountEditLayout = ({ children, page }) => {
 
     return (
         <div style={{ marginTop: '20px' }}>
-            <Title level={1} style={{ textAlign: 'center' }}>アカウント設定</Title>
-            <div ref={ref} style={cardStyle}>
+            <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「React/Redux」の編集</Paragraph>
+            <BookStatusCard />
+            <div ref={ref} style={{ ...cardStyle, marginTop: '20px' }}>
                 <Layout style={{ background: '#fff' }}>
                     <Contents page={page} children={children} />
                 </Layout>
@@ -95,4 +98,4 @@ const AccountEditLayout = ({ children, page }) => {
     )
 }
 
-export default AccountEditLayout
+export default BookEditLayout

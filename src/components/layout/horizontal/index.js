@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Layout } from 'antd';
 import GlobalMenu from "components/menu/global";
 import HorizontalFooter from "components/layout/horizontal/footer";
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const HorizontalLayout = ({ children, contentBackgroundColor }) => {
   var content = <Content style={{ backgroundColor: 'white' }}>{children}</Content>

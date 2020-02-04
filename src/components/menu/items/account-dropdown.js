@@ -23,7 +23,14 @@ const AccountDropdown = () => {
                 <Link to="/account/profile"><Icon type="user" style={{ marginRight: '8px' }} />プロフィール</Link>
             </Menu.Item>
             <Menu.Item>
-                <Link to="/account/contents/manage"><Icon type="tool" style={{ marginRight: '8px' }} />コンテンツ管理</Link>
+                <Link to="/book/manage"><Icon type="edit" style={{ marginRight: '8px' }} />著書管理</Link>
+            </Menu.Item>
+            <Divider style={{ margin: '6px 0px' }} />
+            <Menu.Item>
+                <Link to="/account/settings/base"><Icon type="setting" style={{ marginRight: '8px' }} />アカウント設定</Link>
+            </Menu.Item>
+            <Menu.Item>
+                <Link to="/account/sales"><Icon type="money-collect" style={{ marginRight: '8px' }} />売上管理</Link>
             </Menu.Item>
             <Divider style={{ margin: '6px 0px' }} />
             <Menu.Item
