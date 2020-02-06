@@ -1,6 +1,6 @@
 import React from 'react';
 import { Statistic, Affix, Row, Col, Divider, Button, Icon } from 'antd'
-import SimpleBorderedShadowButton from 'components/button/simple-border-shadow';
+import AddSectionModal from './add-section';
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -15,7 +15,7 @@ const BookEditSectionHeader = () => {
             <div style={cardStyle}>
                 <Row align="middle" type="flex" gutter={16}>
                     <Col span={14} style={{ textAlign: 'center' }}>
-                        <Button type="primary" ghost icon="plus" style={{ marginRight: '12px' }}>セクションを追加する</Button>
+                        <AddSectionModal />
                         <Button ><Icon type="retweet" rotate={90} />並び替え</Button>
                     </Col>
                     <Col span={5} style={{ textAlign: 'right' }}>

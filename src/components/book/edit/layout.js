@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import { connect } from 'react-redux'
 import { Layout, Menu, Typography } from 'antd';
 import { Link } from 'gatsby'
 import BookStatusCard from "./status-card";
@@ -7,13 +8,15 @@ const { Content, Sider } = Layout;
 const { Paragraph } = Typography;
 
 const pages = [
+    { key: 'image', link: 'book/edit/image', title: 'カバー画像' },
     { key: 'base', link: 'book/edit/base', title: '基本情報' },
     { key: 'page', link: 'book/edit/page', title: 'ページ' },
     { key: 'feature', link: 'book/edit/feature', title: '特徴' },
     { key: 'target', link: 'book/edit/target', title: '対象読者' },
+    { key: 'tag', link: 'book/edit/tag', title: 'タグ' },
 ]
 
-const VerticalContents = ({ page, children }) => (
+const VerticalContents = ({ page, children, id }) => (
     <>
         <Sider
             width="180"
@@ -27,7 +30,7 @@ const VerticalContents = ({ page, children }) => (
                 {pages.map(p => {
                     return (
                         <Menu.Item key={p.key}>
-                            <Link to={p.link}>{p.title}</Link>
+                            <Link to={p.link + "/?id=" + id}>{p.title}</Link>
                         </Menu.Item>
                     )
                 })}
@@ -37,7 +40,7 @@ const VerticalContents = ({ page, children }) => (
     </>
 )
 
-const HorizontalContents = ({ page, children }) => (
+const HorizontalContents = ({ page, children, id }) => (
     <>
         <Sider
             width="100%"
@@ -51,7 +54,7 @@ const HorizontalContents = ({ page, children }) => (
                 {pages.map(p => {
                     return (
                         <Menu.Item key={p.key}>
-                            <Link to={p.link}>{p.title}</Link>
+                            <Link to={p.link + "/?id=" + id}>{p.title}</Link>
                         </Menu.Item>
                     )
                 })}
@@ -70,7 +73,7 @@ const cardStyle = {
     fontColor: 'black',
 }
 
-const BookEditLayout = ({ children, page }) => {
+const BookEditLayoutComponent = (props) => {
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
 
@@ -87,15 +90,20 @@ const BookEditLayout = ({ children, page }) => {
 
     return (
         <div style={{ marginTop: '20px' }}>
-            <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「React/Redux」の編集</Paragraph>
+            <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「{props.title}」の編集</Paragraph>
             <BookStatusCard />
             <div ref={ref} style={{ ...cardStyle, marginTop: '20px' }}>
                 <Layout style={{ background: '#fff' }}>
-                    <Contents page={page} children={children} />
+                    <Contents page={props.page} children={props.children} id={props.id} />
                 </Layout>
             </div>
         </div>
     )
 }
 
+const mapStateToProps = state => ({
+    title: state.bookEdit.title,
+})
+
+const BookEditLayout = connect(mapStateToProps)(BookEditLayoutComponent)
 export default BookEditLayout

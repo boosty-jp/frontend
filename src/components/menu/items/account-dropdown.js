@@ -23,7 +23,7 @@ const AccountDropdown = () => {
                 <Link to="/account/profile"><Icon type="user" style={{ marginRight: '8px' }} />プロフィール</Link>
             </Menu.Item>
             <Menu.Item>
-                <Link to="/book/manage"><Icon type="edit" style={{ marginRight: '8px' }} />著書管理</Link>
+                <Link to="/book/edit/list"><Icon type="edit" style={{ marginRight: '8px' }} />著書管理</Link>
             </Menu.Item>
             <Divider style={{ margin: '6px 0px' }} />
             <Menu.Item>

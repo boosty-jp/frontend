@@ -9,9 +9,9 @@ function beforeUpload(file) {
     if (!isJpgOrPng) {
         message.error('「jpeg」もしくは「png」拡張子以外はアップロードできません');
     }
-    const isLt1M = file.size / 1024 / 1024 < 2;
+    const isLt1M = file.size / 1024 / 1024 < 3;
     if (!isLt1M) {
-        message.error('2MB以上のファイルはアップロードできません');
+        message.error('3MB以上のファイルはアップロードできません');
     }
     return isJpgOrPng && isLt1M;
 }
@@ -35,7 +35,7 @@ export default class CoverImageUploader extends React.Component {
             if (!user) {
                 message.error("エラーが発生しました。ログインが必要です。", 10)
             } else {
-                const fileName = 'article-cover-' + uuidv4();
+                const fileName = 'book-cover-' + uuidv4();
                 const imgFile = storageRef.child(`user/${user.uid}/${fileName}.png`)
 
                 try {
@@ -44,6 +44,7 @@ export default class CoverImageUploader extends React.Component {
                     this.props.onComplete(imageUrl);
                     onSuccess(null, image);
                 } catch (e) {
+                    console.log(e)
                     message.error("エラーが発生しました。画像の容量をご確認の上、再度お試しください。");
                     onError(e);
                 }

@@ -1,9 +1,16 @@
 import React from "react"
+import gql from 'graphql-tag';
+import { withApollo } from 'react-apollo'
 import { Form, Input, Icon, Button, message } from 'antd';
 
-let id = 0;
+const UPDATE_BOOK_FEATURES = gql`
+mutation updateBookFeatures($bookId: ID!, $features: [String]!){
+  updateBookFeatures(bookId: $bookId, features: $features)
+}
+`;
 
-class BookEditFeaturesComponent extends React.Component {
+class BookEditFeaturesFormComponent extends React.Component {
+    state = { loading: false }
     remove = k => {
         const { form } = this.props;
         const keys = form.getFieldValue('keys');
@@ -20,7 +27,7 @@ class BookEditFeaturesComponent extends React.Component {
     add = () => {
         const { form } = this.props;
         const keys = form.getFieldValue('keys');
-        const nextKeys = keys.concat(id++);
+        const nextKeys = keys.concat("");
         form.setFieldsValue({
             keys: nextKeys,
         });
@@ -33,11 +40,31 @@ class BookEditFeaturesComponent extends React.Component {
                 const { keys, names } = values;
                 if (!keys || keys.length === 0) {
                     message.error("特徴を入力してください。");
+                    return;
                 }
-                console.log('特徴', keys.map(key => names[key]));
+                this.updateFeatures(keys.map(key => names[key]));
+
             }
         });
     };
+
+    updateFeatures = async (features) => {
+        this.setState({ loading: true })
+        try {
+            await this.props.client.mutate({
+                mutation: UPDATE_BOOK_FEATURES,
+                variables: {
+                    bookId: this.props.id,
+                    features: features
+                }
+            });
+            message.success("更新しました", 7)
+        } catch (err) {
+            message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
+        }
+
+        this.setState({ loading: false })
+    }
 
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -57,16 +84,16 @@ class BookEditFeaturesComponent extends React.Component {
                 sm: { span: 20, offset: 4 },
             },
         };
-        getFieldDecorator('keys', { initialValue: [] });
+        getFieldDecorator('keys', { initialValue: this.props.features });
         const keys = getFieldValue('keys');
         const formItems = keys.map((k, index) => (
             <Form.Item
                 {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
                 label={index === 0 ? '特徴' : ''}
                 required={false}
-                key={k}
+                key={index}
             >
-                {getFieldDecorator(`names[${k}]`, {
+                {getFieldDecorator(`names[${index}]`, {
                     validateTrigger: ['onChange', 'onBlur'],
                     rules: [
                         {
@@ -75,6 +102,7 @@ class BookEditFeaturesComponent extends React.Component {
                             message: "入力してください",
                         },
                     ],
+                    initialValue: k
                 })(<Input placeholder="特徴を入力してください" style={{ width: '60%', marginRight: 8 }} />)}
                 {keys.length > 1 ? (
                     <Icon
@@ -94,12 +122,12 @@ class BookEditFeaturesComponent extends React.Component {
           </Button>
                 </Form.Item>
                 <Form.Item {...formItemLayoutWithOutLabel}>
-                    <Button type="primary" htmlType="submit">更新する</Button>
+                    <Button type="primary" htmlType="submit" loading={this.state.loading}>更新する</Button>
                 </Form.Item>
             </Form>
         );
     }
 }
 
-const BookEditFeatures = Form.create({ name: 'FeatureItems' })(BookEditFeaturesComponent);
-export default BookEditFeatures;
+const BookEditFeaturesForm = Form.create({ name: 'FeatureItems' })(BookEditFeaturesFormComponent);
+export default withApollo(BookEditFeaturesForm);

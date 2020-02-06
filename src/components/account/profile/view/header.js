@@ -1,21 +1,6 @@
 import React from "react"
 import { PageHeader, Row, Col, Statistic, Icon, Divider } from 'antd';
-import gql from 'graphql-tag';
 import { presetPalettes } from '@ant-design/colors'
-
-const GET_USER = gql`
-  query GetUser {
-    user {
-        id
-        displayName
-        imageUrl
-        description
-        url
-        twitterId
-        facebookId
-    }
-}
-`;
 
 const ProfileHeader = () => (
     <PageHeader

@@ -1,9 +1,9 @@
 import React from "react"
 import SEO from "components/seo"
-import withLocation from "components/wrapper/location";
 import Layout from "components/layout/horizontal"
 import BookEditLayout from 'components/book/edit/layout'
-import BookBaseUpdateForm from 'components/book/edit/base'
+import BookImageUploader from "components/book/edit/image"
+import withLocation from "components/wrapper/location";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -17,8 +17,8 @@ const BookEditPage = (props) => {
             <SEO title="Home" />
             <div style={{ background: 'white' }}>
                 <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
-                    <BookEditLayout page="base" id={id}>
-                        <BookBaseUpdateForm id={id} />
+                    <BookEditLayout page="image" id={id}>
+                        <BookImageUploader id={id} />
                     </BookEditLayout>
                 </div>
             </div>

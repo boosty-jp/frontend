@@ -7,7 +7,7 @@ const ThumbnailImage = ({ imageUrl }) => {
         <div
             style={{
                 width: '100%',
-                paddingTop: '56.25%',
+                paddingTop: '160%',
                 backgroundSize: 'cover',
                 backgroundImage: `url(${imageUrl})`,
                 backgroundPosition: 'center center',

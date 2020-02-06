@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import BookEdit from 'modules/book/edit'
 import ArticleView from 'modules/article/view'
 import ArticleEdit from 'modules/article/edit'
 import CourseView from 'modules/course/view'
@@ -14,6 +15,7 @@ import TestEditExplanation from 'modules/test/edit/explanation'
 import ReferenceArticle from 'modules/test/edit/reference-article'
 
 const reducers = combineReducers({
+    bookEdit: BookEdit,
     articleView: ArticleView,
     articleEdit: ArticleEdit,
     courseView: CourseView,

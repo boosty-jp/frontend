@@ -7,6 +7,9 @@ export const createArticleEditUrl = (id) => ("https://wever.co.jp/article/edit/?
 export const createCourseDetailLink = (id) => ("/course/detail/?id=" + id)
 export const createCourseDetailUrl = (id) => ("https://wever.co.jp/course/detail/?id=" + id)
 
+export const createBookDetailLink = (id) => ("/book/?id=" + id)
+export const createBookDetailUrl = (id) => ("https://boosty.jp/book/?id=" + id)
+
 export const createTestLink = (id) => ("/test/?id=" + id)
 
 export const createAnswerLink = (id) => ("/answer/?id=" + id)
@@ -26,3 +29,5 @@ export const createTermsUrl = () => {
     }
     return "http://localhost:8000/terms";
 }
+
+export const createBookEditLink = (id) => ("/book/edit/base/?id=" + id)

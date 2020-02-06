@@ -1,6 +1,7 @@
 import React from 'react';
-import { Collapse, List, Icon } from 'antd'
+import { Collapse, List, Icon, Row, Col, Typography } from 'antd'
 
+const { Paragraph } = Typography;
 const { Panel } = Collapse;
 
 const sections = [
@@ -140,7 +141,15 @@ const BookEditSections = () => {
                         <Panel
                             key={sectionIdx}
                             header={
-                                <span style={{ fontWeight: '500', fontSize: '16px' }}>{sectionIdx + 1 + ". " + s.title}</span>
+                                < Row type="flex" align="middle">
+                                    <Col xs={18} sm={18} md={20} lg={20} xl={20} xxl={20}>
+                                        <Paragraph style={{ marginBottom: "0px", color: 'black' }}>{sectionIdx + 1 + ". " + s.title}</Paragraph>
+                                    </Col>
+                                    <Col xs={6} sm={6} md={4} lg={4} xl={4} xxl={4} style={{ textAlign: 'right' }}>
+                                        <Icon type="edit" style={{ marginRight: '16px' }} />
+                                        <Icon type="delete" />
+                                    </Col>
+                                </Row>
                             }
                         >
                             <List
