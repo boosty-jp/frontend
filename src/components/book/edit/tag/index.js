@@ -1,6 +1,4 @@
-import React from 'react';
-import BookEditSections from './sections';
-import BookEditSectionHeader from './header';
+import React from "react"
 import { connect } from 'react-redux'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
@@ -8,6 +6,7 @@ import { Skeleton } from 'antd';
 import { setBookData } from 'modules/book/edit'
 import { Query } from 'react-apollo'
 import ErrorResult from "components/error/result";
+import BookEditTagFormComponent from 'components/book/edit/tag/form'
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -43,7 +42,7 @@ const GET_BOOK = gql`
 }
 `;
 
-class BookEditSectionComponent extends React.Component {
+class BookEditTagsComponent extends React.Component {
     render() {
         return (
             <Query
@@ -55,12 +54,7 @@ class BookEditSectionComponent extends React.Component {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />
                     if (error) return <ErrorResult />
                     return (
-                        <>
-                            <BookEditSectionHeader id={this.props.id} />
-                            <div style={{ marginTop: '20px' }}>
-                                <BookEditSections id={this.props.id} />
-                            </div>
-                        </>
+                        <BookEditTagFormComponent id={this.props.id} />
                     )
                 }}
             </Query >
@@ -72,5 +66,5 @@ const mapDispatchToProps = dispatch => ({
     setBookData: (book) => dispatch(setBookData(book)),
 })
 
-const BookEditSection = connect(null, mapDispatchToProps)(BookEditSectionComponent)
-export default withApollo(BookEditSection)
+const BookEditTags = connect(null, mapDispatchToProps)(BookEditTagsComponent)
+export default withApollo(BookEditTags)

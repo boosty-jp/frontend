@@ -31,3 +31,5 @@ export const createTermsUrl = () => {
 }
 
 export const createBookEditLink = (id) => ("/book/edit/base/?id=" + id)
+
+export const createPageEditLink = (id) => ("/page/edit/?id=" + id)

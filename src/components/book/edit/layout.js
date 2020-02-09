@@ -10,7 +10,7 @@ const { Paragraph } = Typography;
 const pages = [
     { key: 'image', link: 'book/edit/image', title: 'カバー画像' },
     { key: 'base', link: 'book/edit/base', title: '基本情報' },
-    { key: 'page', link: 'book/edit/page', title: 'ページ' },
+    { key: 'sections', link: 'book/edit/sections', title: 'ページ' },
     { key: 'feature', link: 'book/edit/feature', title: '特徴' },
     { key: 'target', link: 'book/edit/target', title: '対象読者' },
     { key: 'tag', link: 'book/edit/tag', title: 'タグ' },
@@ -88,9 +88,10 @@ const BookEditLayoutComponent = (props) => {
         Contents = HorizontalContents;
     }
 
+    const bookTitle = props.title ? props.title : "タイトル未設定の本"
     return (
         <div style={{ marginTop: '20px' }}>
-            <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「{props.title}」の編集</Paragraph>
+            <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「{bookTitle}」の編集</Paragraph>
             <BookStatusCard />
             <div ref={ref} style={{ ...cardStyle, marginTop: '20px' }}>
                 <Layout style={{ background: '#fff' }}>

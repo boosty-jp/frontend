@@ -3,25 +3,20 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { connect } from 'react-redux'
 import { message, Modal, Button, Form, Input, Tooltip, Icon } from 'antd';
-import { addSection } from 'modules/book/edit'
+import { updateSectionTitle } from 'modules/book/edit'
 import { getErrorMessage } from "utils/error-handle";
 
-const ADD_SECTION = gql`
-mutation addSection($bookId: ID!, $title: String!) {
-  addSection(bookId: $bookId, title: $title) {
-    id
-  }
+const UPDATE_SECTION_TITLE = gql`
+mutation updateSectionTitle($bookId: ID!, $sectionId: ID!, $title: String!) {
+  updateSectionTitle(bookId: $bookId, sectionId: $sectionId, title: $title)
 }
 `;
 
-class AddSectionComponent extends React.Component {
+class EditSectionComponent extends React.Component {
     state = { visible: false, loading: false };
 
-    showModal = () => {
-        if (this.props.sections.length >= 20) {
-            message.error("作成できるセクションは20までです", 7)
-            return;
-        }
+    showModal = e => {
+        e.stopPropagation();
         this.setState({
             visible: true,
         });
@@ -29,26 +24,28 @@ class AddSectionComponent extends React.Component {
 
     handleOk = e => {
         e.preventDefault();
+        e.stopPropagation();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                this.addSection(values.sectionTitle);
+                this.updateSection(values.sectionTitle);
             }
         });
     };
 
-    addSection = async (sectionTitle) => {
+    updateSection = async (sectionTitle) => {
         this.setState({ loading: true });
         try {
-            const { data } = await this.props.client.mutate({
-                mutation: ADD_SECTION,
+            await this.props.client.mutate({
+                mutation: UPDATE_SECTION_TITLE,
                 variables: {
                     bookId: this.props.id,
+                    sectionId: this.props.sectionId,
                     title: sectionTitle
                 }
             });
 
-            this.props.addSection(data.addSection.id, sectionTitle)
-            message.success("セクションを追加しました。", 7)
+            this.props.updateSectionTitle(this.props.sectionId, sectionTitle)
+            message.success("セクション名を更新しました。", 7)
             this.setState({ visible: false, loading: false });
         } catch (err) {
             message.error(getErrorMessage(err), 7);
@@ -57,6 +54,7 @@ class AddSectionComponent extends React.Component {
     };
 
     handleCancel = e => {
+        e.stopPropagation();
         this.setState({
             visible: false,
         });
@@ -66,21 +64,13 @@ class AddSectionComponent extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <>
-                <Button
-                    ghost
-                    type="primary"
-                    icon="plus"
-                    style={{ marginRight: '12px' }}
-                    onClick={this.showModal}
-                >
-                    セクションを追加する
-                </Button>
+                <Icon type="edit" style={{ marginRight: '16px' }} onClick={this.showModal} />
                 <Modal
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>キャンセル</Button>,
-                        <Button key="submit" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.handleOk}>追加する</Button>,
+                        <Button key="submit" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.handleOk}>更新する</Button>,
                     ]}
                 >
                     <Form onSubmit={this.handleSubmit}>
@@ -99,7 +89,7 @@ class AddSectionComponent extends React.Component {
                                     { required: true, message: 'セクション名を入力してください', whitespace: true },
                                     { max: 40, message: 'セクション名は40文字までです', whitespace: true },
                                 ],
-                                initialValue: "",
+                                initialValue: this.props.sectionTitle,
                             })(<Input />)}
                         </Form.Item>
                     </Form>
@@ -114,8 +104,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    addSection: (id, title) => dispatch(addSection(id, title)),
+    updateSectionTitle: (id, title) => dispatch(updateSectionTitle(id, title)),
 })
 
-const AddSectionForm = connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'add-section' })(AddSectionComponent));
-export default withApollo(AddSectionForm)
+const EditSectionForm = connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'edit-section' })(EditSectionComponent));
+export default withApollo(EditSectionForm)

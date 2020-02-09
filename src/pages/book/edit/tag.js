@@ -2,7 +2,7 @@ import React from "react"
 import SEO from "components/seo"
 import Layout from "components/layout/horizontal"
 import BookEditLayout from 'components/book/edit/layout'
-import BookEditTargetPoints from "components/book/edit/target"
+import BookEditTags from "components/book/edit/tag"
 import withLocation from "components/wrapper/location";
 
 const isBrowser = typeof window !== 'undefined';
@@ -17,8 +17,8 @@ const BookEditPage = (props) => {
             <SEO title="Home" />
             <div style={{ background: 'white' }}>
                 <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
-                    <BookEditLayout page="target" id={id}>
-                        <BookEditTargetPoints id={id} />
+                    <BookEditLayout page="tag" id={id}>
+                        <BookEditTags id={id} />
                     </BookEditLayout>
                 </div>
             </div>
