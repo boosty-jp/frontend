@@ -179,6 +179,7 @@ class ManageArticles extends React.Component {
                                 okText="削除"
                                 cancelText="キャンセル"
                                 onConfirm={() => this.delete(id)}
+                                icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
                             >
                                 <a href="#" ><Icon type="delete" style={{ marginRight: '8px' }} />削除</a>
                             </Popconfirm>

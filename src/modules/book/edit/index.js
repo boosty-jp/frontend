@@ -8,6 +8,9 @@ const UPDATE_TAGS = 'UPDATE_TAGS' + SUFFIX;
 const ADD_SECTION = 'ADD_SECTION' + SUFFIX;
 const UPDATE_SECTION_TITLE = 'UPDATE_SECTION_TITLE' + SUFFIX;
 const DELETE_SECTION = 'DELETE_SECTION' + SUFFIX;
+const DELETE_PAGE = 'DELETE_PAGE' + SUFFIX;
+const REORDER_SECTIONS = 'REORDER_SECTIONS' + SUFFIX;
+const REORDER_PAGES = 'REORDER_PAGES' + SUFFIX;
 
 export const setBookData = (book) => ({
     type: SET_BOOK_DATA,
@@ -49,6 +52,22 @@ export const updateSectionTitle = (id, title) => ({
 export const deleteSection = (id) => ({
     type: DELETE_SECTION,
     id: id,
+})
+
+export const deletePage = (id) => ({
+    type: DELETE_PAGE,
+    id: id,
+})
+
+export const reorderSections = (sections) => ({
+    type: REORDER_SECTIONS,
+    sections: sections,
+})
+
+export const reorderPages = (sectionId, pages) => ({
+    type: REORDER_PAGES,
+    sectionId: sectionId,
+    pages: pages
 })
 
 const initialState = {
@@ -113,20 +132,57 @@ export default function BookEdit(state = initialState, action) {
                 error: { ...state.error, tags: action.error },
             }
         case ADD_SECTION:
-            const addedSections = state.sections.concat({ id: action.id, title: action.title })
+            const addedSections = state.sections.concat({ id: action.id, title: action.title, pages: [] })
             return {
                 ...state,
                 sections: addedSections,
             }
         case UPDATE_SECTION_TITLE:
+            const updatedTitleSections = state.sections.map(s => {
+                if (s.id === action.id) {
+                    return ({ ...s, title: action.title })
+                }
+                return s;
+            })
+
             return {
                 ...state,
-                sections: state.sections.filter(section => section.id !== action.id).concat({ id: action.id, title: action.title })
+                sections: updatedTitleSections,
             }
         case DELETE_SECTION:
             return {
                 ...state,
                 sections: state.sections.filter(section => section.id !== action.id),
+            }
+        case DELETE_PAGE:
+            return {
+                ...state,
+                sections: state.sections.map(section => {
+                    return {
+                        ...section,
+                        pages: section.pages.filter(
+                            page => page.id != action.id
+                        )
+                    }
+                }),
+            }
+        case REORDER_SECTIONS:
+            return {
+                ...state,
+                sections: action.sections
+            }
+        case REORDER_PAGES:
+            return {
+                ...state,
+                sections: state.sections.map(section => {
+                    if (section.id === action.sectionId) {
+                        return {
+                            ...section,
+                            pages: action.pages
+                        }
+                    }
+                    return section;
+                })
             }
         default:
             return state;

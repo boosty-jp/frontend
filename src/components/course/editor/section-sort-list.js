@@ -35,6 +35,7 @@ class SortList extends React.Component {
 
         this.props.updateSections(reorderedSections)
     }
+
     render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>

@@ -1,17 +1,22 @@
 import React from 'react';
-import { Collapse, List, Icon, Empty, Button } from 'antd'
+import { Collapse, List, Icon, Empty } from 'antd'
+import { Link } from 'gatsby'
 import { connect } from 'react-redux'
 import DeleteSection from 'components/book/edit/section/delete-section'
 import EditSectionForm from 'components/book/edit/section/edit-section'
 import AddPageButton from 'components/book/edit/page/add-page'
+import DeletePage from 'components/book/edit/page/delete-page'
+import ReorderPage from 'components/book/edit/section/reorder-page'
+import { createPageEditLink } from 'utils/link-generator';
 
 const { Panel } = Collapse;
 
 const BookEditSectionsComponent = (props) => {
     if (props.sections.length > 0) {
         return (
-            <Collapse defaultActiveKey={[...Array(props.sections.length).keys()]} >
+            <Collapse defaultActiveKey={props.sections.map(s => { return s.id })} >
                 {props.sections.map((s, sectionIdx) => {
+                    console.log(s);
                     return (
                         <Panel
                             key={s.id}
@@ -19,6 +24,7 @@ const BookEditSectionsComponent = (props) => {
                             extra={
                                 <>
                                     <EditSectionForm sectionTitle={s.title} id={props.id} sectionId={s.id} />
+                                    <ReorderPage bookId={props.id} sectionId={s.id} pages={s.pages} />
                                     <DeleteSection id={props.id} sectionId={s.id} />
                                 </>
                             }
@@ -36,9 +42,14 @@ const BookEditSectionsComponent = (props) => {
                                     return (
                                         <List.Item
                                             actions={[
-                                                <Icon type="eye" />
+                                                <Link to={createPageEditLink(page.id, props.id)}>
+                                                    <Icon type="edit" />
+                                                </Link>,
+                                                <DeletePage id={page.id} />
+
                                             ]}
                                             style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
+                                            key={page.id}
                                         >
                                             <List.Item.Meta
                                                 title={

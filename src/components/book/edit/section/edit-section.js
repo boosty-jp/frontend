@@ -90,7 +90,12 @@ class EditSectionComponent extends React.Component {
                                     { max: 40, message: 'セクション名は40文字までです', whitespace: true },
                                 ],
                                 initialValue: this.props.sectionTitle,
-                            })(<Input />)}
+                            })(<Input
+                                onFocus={e => e.stopPropagation()}
+                                onBlur={e => e.stopPropagation()}
+                                onChange={e => e.stopPropagation()}
+                                onClick={e => e.stopPropagation()}
+                            />)}
                         </Form.Item>
                     </Form>
                 </Modal>

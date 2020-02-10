@@ -3,29 +3,28 @@ import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { connect } from 'react-redux'
 import { message, Popconfirm, Icon } from 'antd';
-import { deleteSection } from 'modules/book/edit'
+import { deletePage } from 'modules/book/edit'
 import { getErrorMessage } from "utils/error-handle";
 
-const DELETE_SECTION = gql`
-mutation deleteSection($bookId: ID!, $sectionId: ID!) {
-  deleteSection(bookId: $bookId, sectionId: $sectionId)
+const DELETE_PAGE = gql`
+mutation deletePage($pageId: ID!) {
+  deletePage(pageId: $pageId)
 }
 `;
 
-class DeleteSectionComponent extends React.Component {
-    deleteSection = async (e) => {
+class DeletePageComponent extends React.Component {
+    deletePage = async (e) => {
         e.stopPropagation();
         try {
             await this.props.client.mutate({
-                mutation: DELETE_SECTION,
+                mutation: DELETE_PAGE,
                 variables: {
-                    bookId: this.props.id,
-                    sectionId: this.props.sectionId
+                    pageId: this.props.id
                 }
             });
 
-            this.props.deleteSection(this.props.sectionId)
-            message.success("セクションを削除しました。", 7)
+            this.props.deletePage(this.props.id)
+            message.success("ページを削除しました。", 7)
         } catch (err) {
             message.error(getErrorMessage(err), 7);
         }
@@ -36,7 +35,7 @@ class DeleteSectionComponent extends React.Component {
             <Popconfirm
                 okText="削除"
                 cancelText="キャンセル"
-                onConfirm={this.deleteSection}
+                onConfirm={this.deletePage}
                 title="本当に削除しますか？"
                 icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
             >
@@ -47,8 +46,8 @@ class DeleteSectionComponent extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    deleteSection: (id) => dispatch(deleteSection(id)),
+    deletePage: (id) => dispatch(deletePage(id)),
 })
 
-const DeleteSection = connect(null, mapDispatchToProps)(DeleteSectionComponent);
-export default withApollo(DeleteSection)
+const DeletePage = connect(null, mapDispatchToProps)(DeletePageComponent);
+export default withApollo(DeletePage)

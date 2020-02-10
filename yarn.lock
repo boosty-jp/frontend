@@ -12301,9 +12301,9 @@ react-dom@^16.12.0:
     scheduler "^0.18.0"
 
 react-editor-js@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/react-editor-js/-/react-editor-js-1.4.1.tgz#5179319cd8efb640601b577d482f834f2920d8b2"
-  integrity sha512-GquTEv+Dzbq3egrqDM94AoZGYNBeRbQkn7dX+/wFgKXH1QOhGNUEEo1DlVBbFYCv3b3lFUmSDv1A5GEnjPEWTw==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/react-editor-js/-/react-editor-js-1.4.2.tgz#1610f622afec9bab93cbeabb819e8769d3812780"
+  integrity sha512-BlDRigcNOsGQy7eK3Ged+YbJE64QLUR195lcJ+h2e+I78XG/p1NcsF13/YbBftepDDItPNtLVN0VCxsZT6VsnA==
 
 react-error-overlay@^3.0.0:
   version "3.0.0"

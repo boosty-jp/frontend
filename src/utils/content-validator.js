@@ -15,6 +15,37 @@ export const getTitleError = (title) => {
     return { status, message };
 }
 
+export const getBlocksError = (blocks) => {
+    let status = "";
+    let message = "";
+    if (!blocks || blocks.length === 0) {
+        status = "error";
+        message = "内容を入力してください"
+    } else if (blocks.length > 100) {
+        status = "error";
+        message = "作成できるブロックは最大100までです"
+    } else {
+        status = "";
+        message = "";
+    }
+
+    return { status, message };
+}
+
+export const getBlockTextError = (textCount) => {
+    let status = "";
+    let message = "";
+    if (textCount > 20000) {
+        status = "error";
+        message = "20000文字以内にしてください"
+    } else {
+        status = "";
+        message = "";
+    }
+
+    return { status, message };
+}
+
 export const getTagsError = (tags) => {
     let status = "";
     let message = "";

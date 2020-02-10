@@ -34,7 +34,7 @@ class AddPageButton extends React.Component {
                 }
             });
 
-            navigate(createPageEditLink(data.createPage.id));
+            navigate(createPageEditLink(data.createPage.id, this.props.bookId));
             this.setState({ loading: false });
         } catch (err) {
             message.error(getErrorMessage(err), 7);

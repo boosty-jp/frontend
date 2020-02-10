@@ -1,7 +1,8 @@
 import React from 'react';
-import { Statistic, Affix, Row, Col, Divider, Button, Icon } from 'antd'
+import { Statistic, Affix, Row, Col, Divider } from 'antd'
 import AddSectionModal from './add-section';
 import { connect } from 'react-redux'
+import ReorderSection from 'components/book/edit/section/reoder-section'
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -26,7 +27,7 @@ const BookEditSectionHeaderComponent = (props) => {
                 <Row align="middle" type="flex" gutter={16}>
                     <Col span={14} style={{ textAlign: 'center' }}>
                         <AddSectionModal id={props.id} />
-                        <Button ><Icon type="retweet" rotate={90} />並び替え</Button>
+                        <ReorderSection id={props.id} />
                     </Col>
                     <Col span={5} style={{ textAlign: 'right' }}>
                         <Statistic title="セクション数" value={props.sections.length} />

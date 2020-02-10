@@ -4,7 +4,7 @@ import debounce from "lodash/debounce";
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from 'components/editor/tool'
 import { convertToJSX } from 'utils/html-converter'
-import { updateText } from 'modules/article/edit'
+import { updateText } from 'modules/page/edit'
 
 class Editor extends React.Component {
     constructor(props) {
@@ -16,7 +16,6 @@ class Editor extends React.Component {
 
     handleSave = async () => {
         try {
-            console.log(this.props.blocks);
             const savedData = await this.state.editorInstance.save();
             const { text, textCount, blockCount } = convertToJSX(savedData.blocks);
             this.props.updateText(text, textCount, blockCount, savedData.blocks);
@@ -27,25 +26,25 @@ class Editor extends React.Component {
     render() {
         return (
             <EditorJs
-                // enableReInitialize
                 tools={EDITOR_JS_TOOLS}
                 instanceRef={instance => this.setState({ editorInstance: instance })}
                 onChange={() => this.handleSave()}
-                // onReady={() => this.handleSave()}
-                placeholder="記事の内容を入力してください"
+                placeholder="内容を入力してください"
                 data={{ blocks: this.props.blocks }}
+                minHeight={500}
+                logLevel="ERROR"
             />
         )
     }
 }
 
 const mapStateToProps = state => ({
-    blocks: state.articleEdit.blocks,
+    blocks: state.pageEdit.blocks,
 })
 
 const mapDispatchToProps = dispatch => ({
     updateText: (text, textCount, blockCount, blocks) => dispatch(updateText(text, textCount, blockCount, blocks)),
 })
 
-const ArticleEditor = connect(mapStateToProps, mapDispatchToProps)(Editor)
-export default ArticleEditor
+const PageEditor = connect(mapStateToProps, mapDispatchToProps)(Editor)
+export default PageEditor

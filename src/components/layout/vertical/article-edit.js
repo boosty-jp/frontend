@@ -2,8 +2,8 @@ import React from "react"
 import { connect } from 'react-redux'
 import { Icon, Affix, Button, Layout, Tooltip } from 'antd';
 import VerticalFooter from "./footer";
-import ArticleEditMenu from "components/menu/horizontal-article-edit";
-import ArticlePreview from "components/article/edit/preview";
+import ArticleEditMenu from "components/menu/page-edit-menu";
+import ArticlePreview from "components/book/edit/page/preview";
 
 const { Content } = Layout;
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { connect } from 'react-redux'
 import { Layout, Menu, Typography } from 'antd';
 import { Link } from 'gatsby'
-import BookStatusCard from "./status-card";
+import BookStatusCard from "./status/status-card";
 
 const { Content, Sider } = Layout;
 const { Paragraph } = Typography;
@@ -92,7 +92,7 @@ const BookEditLayoutComponent = (props) => {
     return (
         <div style={{ marginTop: '20px' }}>
             <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「{bookTitle}」の編集</Paragraph>
-            <BookStatusCard />
+            <BookStatusCard id={props.id} />
             <div ref={ref} style={{ ...cardStyle, marginTop: '20px' }}>
                 <Layout style={{ background: '#fff' }}>
                     <Contents page={props.page} children={props.children} id={props.id} />
