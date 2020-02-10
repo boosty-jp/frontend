@@ -114,8 +114,8 @@ class TagSelectForm extends React.Component {
             return tag.label
         });
 
-        for (var i = 0; i < selectedTagsLabels.length; i++) {
-            if (selectedTagsLabels[i] === this.state.inputVal) {
+        for (var j = 0; j < selectedTagsLabels.length; j++) {
+            if (selectedTagsLabels[j] === this.state.inputVal) {
                 return true;
             }
         }

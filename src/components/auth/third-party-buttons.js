@@ -46,7 +46,7 @@ class ThirdPartyButtons extends React.Component {
                     shape="round"
                 >
                     <span style={{ verticalAlign: 'middle' }}>
-                        <img src={GoogleIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} />
+                        <img src={GoogleIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} alt="Googleロゴ" />
                         Googleで{this.props.authType}
                     </span>
                 </Button>
@@ -59,7 +59,7 @@ class ThirdPartyButtons extends React.Component {
                     shape="round"
                 >
                     <span style={{ textAlign: 'left', verticalAlign: 'middle' }}>
-                        <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} />
+                        <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} alt="Facebookロゴ" />
                         Facebookで{this.props.authType}
                     </span>
                 </Button>

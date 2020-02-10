@@ -51,7 +51,7 @@ class UpdateForm extends React.Component {
     handleAuthError = (error) => {
         const errorCode = error.code;
         this.setState({ updating: false, needReAuth: false });
-        if (errorCode == 'auth/account-exists-with-different-credential' || errorCode === 'auth/credential-already-in-use') {
+        if (errorCode === 'auth/account-exists-with-different-credential' || errorCode === 'auth/credential-already-in-use') {
             message.error("別の認証方式でアカウントが登録されています。別のログイン形式からログインしてください。", 7)
         } else if (errorCode === "auth/weak-password") {
             message.error("パスワードは6文字以上にしてください", 7)

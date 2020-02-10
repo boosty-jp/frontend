@@ -36,7 +36,7 @@ class PasswordUpdateFormComponent extends React.Component {
     handleAuthError = (error) => {
         const errorCode = error.code;
         this.setState({ updating: false, needReAuth: false });
-        if (errorCode == 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
+        if (errorCode === 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
             // すでにそのメールでアカウントが作成されていた場合
             message.error("別の認証方式でアカウントが登録されています。別のログイン形式からログインしてください。", 7)
         } else if (errorCode === "auth/weak-password") {

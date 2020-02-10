@@ -37,7 +37,7 @@ const MailSendPage = () => {
                     icon={<Icon type="mail" theme="twoTone" />}
                     title="認証用のメールを送りました。"
                     subTitle={<p>メールから認証を完了してください</p>}
-                    extra={[<p>※ メールが届かない場合は<a href="#" onClick={() => reSend()}>こちら</a>から再送してください</p>]}
+                    extra={[<p>※ メールが届かない場合は<a href="/#" onClick={() => reSend()}>こちら</a>から再送してください</p>]}
                 />
             </div>
         </SimpleLayout>

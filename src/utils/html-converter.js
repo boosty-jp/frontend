@@ -291,7 +291,7 @@ export const convertToReferenceCard = (block, key) => {
             <ReferenceJSX />
             <Divider style={{ margin: '8px 0' }} />
             <span style={{ fontSize: '12px' }}>
-                「<a href={createArticleLink(block.articleId)} target="_blank">{block.articleTitle}</a>」の第{block.idx}ブロックより
+                「<a href={createArticleLink(block.articleId)} target="_blank" rel="noopener noreferrer">{block.articleTitle}</a>」の第{block.idx}ブロックより
             </span>
         </div>
     )

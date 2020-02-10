@@ -81,7 +81,7 @@ const ContentLayout = ({ articleContents, courseContents }) => {
 
     useEffect(() => {
         setWidth(ref.current.clientWidth)
-    })
+    }, [])
 
     let contents;
     if (width > 600) {

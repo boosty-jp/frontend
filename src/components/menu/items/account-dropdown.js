@@ -1,5 +1,5 @@
 import React from "react"
-import { message, Dropdown, Menu, Divider, Icon, notification, Button } from 'antd';
+import { message, Dropdown, Menu, Divider, Icon, notification } from 'antd';
 import { Link } from "gatsby";
 import { getUserImage, getCurrentUser, logout } from "services/local-user";
 import getFirebase from "utils/firebase";

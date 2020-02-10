@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Card, Progress } from 'antd';
-import { Link } from "gatsby";
 import styled from 'styled-components'
 
 const learnings = [
@@ -24,7 +23,7 @@ const LearningAllCourses = () => {
 
     useEffect(() => {
         setWidth(ref.current.clientWidth)
-    })
+    }, [])
 
     let gridStyle;
     if (width < 480) {

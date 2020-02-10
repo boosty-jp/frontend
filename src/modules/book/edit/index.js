@@ -1,4 +1,4 @@
-import { getTagsError, getSectionsError } from 'utils/content-validator';
+import { getTagsError } from 'utils/content-validator';
 const SUFFIX = '_BOOK_EDIT';
 const SET_BOOK_DATA = 'SET_BOOK_DATA' + SUFFIX;
 const SET_IMAGE_URL = 'SET_IMAGE_URL' + SUFFIX;
@@ -161,7 +161,7 @@ export default function BookEdit(state = initialState, action) {
                     return {
                         ...section,
                         pages: section.pages.filter(
-                            page => page.id != action.id
+                            page => page.id !== action.id
                         )
                     }
                 }),

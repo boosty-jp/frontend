@@ -74,7 +74,7 @@ const AccountEditLayout = ({ children, page }) => {
 
     useEffect(() => {
         setWidth(ref.current.clientWidth)
-    })
+    }, [])
 
     let Contents;
     if (width > 600) {

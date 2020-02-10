@@ -79,7 +79,7 @@ const BookEditLayoutComponent = (props) => {
 
     useEffect(() => {
         setWidth(ref.current.clientWidth)
-    })
+    }, [])
 
     let Contents;
     if (width > 600) {

@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton, Form, Input, Tooltip, Icon, Button, message } from 'antd';
+import { Skeleton, Form, Input, Tooltip, Icon, message } from 'antd';
 import AvatarUploader from "./avatar-uploader";
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';

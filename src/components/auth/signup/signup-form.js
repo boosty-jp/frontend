@@ -68,7 +68,7 @@ class SignUpForm extends React.Component {
 
     handleAuthError = (error) => {
         const errorCode = error.code;
-        if (errorCode == 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
+        if (errorCode === 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
             // すでにそのメールでアカウントが作成されていた場合
             message.error("すでにweverにアカウントが作成されています。別の認証方式でログインしてください", 7)
         } else {

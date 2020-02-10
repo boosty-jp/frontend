@@ -151,12 +151,8 @@ class NormalSignUpForm extends React.Component {
                             type: 'boolean',
                             message: '利用規約に同意してください',
                         }],
-                    })
-                        (
-                            <Checkbox>
-                                <a href={createTermsUrl()} target="_blank">利用規約</a>に同意する
-                            </Checkbox>,
-                        )}
+                    })(<Checkbox><a href={createTermsUrl()} target="_blank" rel="noopener noreferrer">利用規約</a>に同意する</Checkbox>)
+                    }
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
                     <Button

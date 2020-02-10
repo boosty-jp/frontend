@@ -21,7 +21,7 @@ const AvatarImage = ({ imageUrl, displayName, style, size }) => {
 
     if (imageUrl) return <Avatar src={imageUrl} style={style} size={avatarSize} />
     if (displayName) return (
-        <Avatar style={style} size={avatarSize} style={{ ...style, backgroundColor: palettes[displayName.length % 11] }}>{displayName.charAt(0)}</Avatar>
+        <Avatar size={avatarSize} style={{ ...style, backgroundColor: palettes[displayName.length % 11] }}>{displayName.charAt(0)}</Avatar>
     )
     return (<Avatar icon="user" style={style} size={avatarSize} />)
 }

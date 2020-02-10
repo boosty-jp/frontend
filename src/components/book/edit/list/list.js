@@ -187,7 +187,7 @@ class EditableBookList extends React.Component {
                                     onConfirm={() => this.delete(id)}
                                     icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
                                 >
-                                    <a href="#" ><Icon type="delete" style={{ marginRight: '8px' }} /></a>
+                                    <a href="/#" ><Icon type="delete" style={{ marginRight: '8px' }} /></a>
                                 </Popconfirm>
                             </Tooltip>
                         </>

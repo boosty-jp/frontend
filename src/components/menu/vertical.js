@@ -12,7 +12,7 @@ const VerticalMenu = ({ title, collapsed, toggle }) => {
 
     useEffect(() => {
         setWidth(ref.current.clientWidth)
-    })
+    }, [])
 
     let MenuItems;
     if (width > 700) {

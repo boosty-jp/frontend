@@ -21,7 +21,7 @@ class BookPublishButton extends React.Component {
         }
         this.setState({ loading: true });
         try {
-            const { data } = await this.props.client.mutate({
+            await this.props.client.mutate({
                 mutation: PUBLISH_BOOK,
                 variables: {
                     bookId: this.props.id,

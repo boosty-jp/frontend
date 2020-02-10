@@ -1,5 +1,5 @@
 import React from "react"
-import { Upload, Button, Icon, message, Avatar, Spin } from 'antd';
+import { Upload, Button, Icon, message, Spin } from 'antd';
 import AvatarImage from "components/avatar/image";
 import getFirebase from "utils/firebase";
 import uuidv4 from 'uuid/v4'

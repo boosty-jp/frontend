@@ -1,9 +1,7 @@
 import React from "react"
-import { Layout, Row, Col, Icon, Divider } from 'antd';
+import { Row, Col, Icon } from 'antd';
 import InvertLogo from "components/logo/invert";
 import { Link } from "gatsby";
-
-const { Content, Sider } = Layout;
 
 const footerSections = [
     {

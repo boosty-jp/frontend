@@ -64,7 +64,7 @@ export const EDITOR_JS_TOOLS = {
                 youtube: true,
                 codepen: true,
                 codesandbox: {
-                    regex: /https?:\/\/codesandbox.io\/([^\/\?\&]*)\/([^\/\?\&]*)/,
+                    regex: /https?:\/\/codesandbox.io\/([^/?&]*)\/([^/?&]*)/,
                     embedUrl: 'https://codesandbox.io/<%= remote_id %>?fontsize=14&hidenavigation=1&theme=dark',
                     html: "<iframe style='width:100%; height:300px; border:0; border-radius: 4px; overflow:hidden;' allow='geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb' sandbox='allow-modals allow-forms allow-popups allow-scripts allow-same-origin'></iframe>",
                     height: 300,
