@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import uuidv4 from 'uuid/v4'
 import { withApollo } from 'react-apollo'
 import { Form, Input, Icon, Button, message, Slider } from 'antd';
+import { getErrorMessage } from "utils/error-handle";
 
 const levels = {
     0: '入門',
@@ -74,7 +75,7 @@ class BookEditTargetUserFormComponent extends React.Component {
             });
             message.success("更新しました", 7)
         } catch (err) {
-            message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
+            message.error(getErrorMessage(err), 7)
         }
 
         this.setState({ loading: false })

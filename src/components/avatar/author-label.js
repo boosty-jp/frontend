@@ -6,7 +6,7 @@ const AuthorLabel = ({ imageUrl, name, size = 26 }) => {
         <div >
             <AvatarImage imageUrl={imageUrl} displayName={name} style={{ width: size + 'px', height: size + 'px', fontSize: (size / 2) + 'px' }} size={size} />
             <span style={{
-                fontSize: (size / 2),
+                fontSize: ((size / 2) + 1),
                 color: '#222',
                 marginLeft: '6px',
                 overflow: 'hidden',

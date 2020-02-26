@@ -5,6 +5,7 @@ import reducers from './src/modules/index'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'services/apollo/client';
 import { devToolsEnhancer } from 'redux-devtools-extension/logOnlyInProduction';
+import { StripeProvider } from 'react-stripe-elements';
 
 const store = createStore(
     reducers,
@@ -12,5 +13,11 @@ const store = createStore(
 )
 
 export default ({ element }) => {
-    return <Provider store={store}><ApolloProvider client={client}>{element}</ApolloProvider></Provider>
+    return (
+        <StripeProvider apiKey={process.env.GATSBY_STRIPE_API_KEY}>
+            <Provider store={store}>
+                <ApolloProvider client={client}>{element}</ApolloProvider>
+            </Provider>
+        </StripeProvider>
+    )
 }

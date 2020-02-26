@@ -16,15 +16,6 @@ const cardStyle = {
     fontColor: 'black',
 }
 
-const backgroundStyle = {
-    backgroundColor: '#f0f5ff',
-    borderRadius: '4rem',
-    width: '100%',
-    maxWidth: '900px',
-    margin: '0 auto',
-    padding: '30px',
-}
-
 class PageEditFormComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -50,18 +41,28 @@ class PageEditFormComponent extends React.Component {
 
     render() {
         const title = this.props.title ? this.props.title : "タイトル未設定"
-        return (
-            <div style={backgroundStyle}>
+        if (this.props.previewMode) {
+            return (
+                <div style={cardStyle}>
+                    <div style={{ backgroundColor: 'white', maxWidth: '700px', margin: '0 auto', padding: '20px', wordBreak: 'break-all' }}>
+                        <Title level={1}>{title}</Title>
+                        <Divider style={{ margin: '8px 0px 24px 0px' }} />
+                        {this.props.text}
+                    </div>
+                </div>
+            )
+        } else {
+            return (
                 <div style={cardStyle}>
                     <div style={{ backgroundColor: 'white', maxWidth: '700px', margin: '0 auto', padding: '20px' }}>
-                        <Title editable={{ onChange: this.onChange }} level={2}>{title}</Title>
+                        <Title editable={{ onChange: this.onChange }} level={1}>{title}</Title>
                         <TitleError titleError={this.props.titleError} />
                         <Divider style={{ margin: '8px 0px' }} />
                     </div>
-                    <Editor />
+                    <Editor blocks={this.props.blocks} />
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 const TitleError = ({ titleError }) => {
@@ -74,6 +75,9 @@ const TitleError = ({ titleError }) => {
 const mapStateToProps = state => ({
     title: state.pageEdit.title,
     titleError: state.pageEdit.error.title,
+    text: state.pageEdit.text,
+    blocks: state.pageEdit.blocks,
+    previewMode: state.pageEdit.previewMode,
 })
 
 const mapDispatchToProps = dispatch => ({

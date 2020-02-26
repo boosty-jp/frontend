@@ -7,6 +7,8 @@ import 'antd/dist/antd.css';
 import 'styles/index.css'
 import 'highlight.js/styles/night-owl.css';
 import 'ant-design-pro/dist/ant-design-pro.css';
+// import 'instantsearch.css/themes/algolia.css';
+import 'instantsearch.css/themes/reset.css';
 
 export const wrapRootElement = wrapWithProvider
 const ReactDOM = require('react-dom')

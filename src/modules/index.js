@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
+import BookView from 'modules/book/view'
 import BookEdit from 'modules/book/edit'
+import PageView from 'modules/page/view'
 import PageEdit from 'modules/page/edit'
 import ArticleView from 'modules/article/view'
 import ArticleEdit from 'modules/article/edit'
@@ -16,7 +18,9 @@ import TestEditExplanation from 'modules/test/edit/explanation'
 import ReferenceArticle from 'modules/test/edit/reference-article'
 
 const reducers = combineReducers({
+    bookView: BookView,
     bookEdit: BookEdit,
+    pageView: PageView,
     pageEdit: PageEdit,
     articleView: ArticleView,
     articleEdit: ArticleEdit,

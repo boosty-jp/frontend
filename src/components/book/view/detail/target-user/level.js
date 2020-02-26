@@ -1,21 +1,12 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { Slider } from 'antd';
 
 const levels = {
-    0: {
-        style: {
-            color: '#1890ff',
-        },
-        label: <strong>入門</strong>,
-    },
-    33.3: {
-        style: {
-            color: '#1890ff',
-        },
-        label: <strong>初級</strong>,
-    },
-    66.6: '中級',
-    100: '上級',
+    0: '入門',
+    1: '初級',
+    2: '中級',
+    3: '上級',
 };
 
 const levelStyle = {
@@ -25,12 +16,27 @@ const levelStyle = {
     fontColor: 'black',
 }
 
-const TargetLevel = () => {
+const TargetLevelComponent = (props) => {
     return (
         <div style={levelStyle}>
-            <Slider marks={levels} defaultValue={[0, 33.3]} step={null} tooltipVisible={false} range disabled />
+            <Slider
+                marks={levels}
+                step={1}
+                max={3}
+                min={0}
+                tooltipVisible={false}
+                range
+                value={[props.start, props.end]}
+                disabled
+            />
         </div >
     )
 }
 
+const mapStateToProps = state => ({
+    start: state.bookView.levelStart,
+    end: state.bookView.levelEnd,
+})
+
+const TargetLevel = connect(mapStateToProps)(TargetLevelComponent);
 export default TargetLevel

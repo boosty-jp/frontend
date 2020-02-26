@@ -6,7 +6,7 @@ import BookEditList from "components/book/edit/list";
 const BookEditPage = () => (
     <Layout>
         <SEO title="Home" />
-        <div style={{ background: 'white' }}>
+        <div style={{ backgroundColor: '#F7FAFF' }}>
             <BookEditList />
         </div>
     </Layout>

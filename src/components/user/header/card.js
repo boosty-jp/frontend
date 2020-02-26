@@ -1,45 +1,12 @@
 import React from "react"
-import { Skeleton, Button, Row, Col, Typography } from 'antd';
+import { Button, Row, Col, Typography } from 'antd';
 import AvatarImage from 'components/avatar/image'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag';
-import ErrorResult from 'components/error/result'
-import SnsLinks from "./snsLink";
+import SnsLinks from "../snsLink";
 
 const { Paragraph } = Typography;
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
-
-const GET_USER = gql`
-  query GetUser($userId: ID!) {
-    user (userId: $userId){
-        id
-        displayName
-        description
-        url
-        imageUrl
-        twitterId
-        facebookId
-    }
-}
-`;
-
-const GET_ACCOUNT = gql`
-  query GetAccount {
-    account {
-        user{
-            id
-            displayName
-            description
-            url
-            imageUrl
-            twitterId
-            facebookId
-        }
-    }
-}
-`;
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -55,7 +22,7 @@ const UserDescription = ({ description, selfSearch }) => {
     return <p>{description}</p>
 }
 
-const ProfileHeader = ({ data, selfSearch }) => {
+const ProfileHeaderCard = ({ data, selfSearch }) => {
     return (
         <div style={cardStyle}>
             <Row type="flex" align="top" gutter={32}>
@@ -80,37 +47,4 @@ const ProfileHeader = ({ data, selfSearch }) => {
     );
 }
 
-const SkeletonCard = () => {
-    return (
-        <div style={cardStyle}>
-            <Skeleton avatar active paragraph={{ rows: 4 }} />
-        </div>
-    )
-}
-
-const UserProfileHeader = ({ selfSearch, id }) => {
-    return selfSearch ?
-        <Query
-            query={GET_ACCOUNT}
-        >
-            {({ loading, error, data }) => {
-                if (loading) return <SkeletonCard />
-                if (error) return <ErrorResult />
-                return <ProfileHeader data={data.account.user} selfSearch={selfSearch} />
-            }}
-        </Query >
-        :
-        <Query
-            query={GET_USER}
-            variables={{ userId: id }}
-        >
-            {({ loading, error, data }) => {
-                if (loading) return <SkeletonCard />
-                if (error) return <ErrorResult />
-                return <ProfileHeader data={data.user} selfSearch={selfSearch} />
-            }}
-        </Query >
-
-}
-
-export default UserProfileHeader;
+export default ProfileHeaderCard;

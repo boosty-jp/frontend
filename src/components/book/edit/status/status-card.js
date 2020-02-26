@@ -23,7 +23,7 @@ class BookStatusCard extends React.Component {
                     <Col span={14} style={{ textAlign: 'right' }} >
                         <StatusButton />
                         <Tooltip title="プレビューを見る">
-                            <Button shape="circle" icon="eye" style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }} />
+                            <Button shape="circle" icon="file-search" style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }} />
                         </Tooltip>
                     </Col>
                 </Row>

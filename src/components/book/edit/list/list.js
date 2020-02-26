@@ -76,6 +76,10 @@ class EditableBookList extends React.Component {
                 },
                 purchasedCount: a.purchasedCount ? a.purchasedCount : 0,
                 status: a.status,
+                action: {
+                    id: a.id,
+                    status: a.status,
+                },
                 createTime: parseInt(a.createDate, 10),
                 updateTime: parseInt(a.updateDate, 10),
             }
@@ -130,7 +134,7 @@ class EditableBookList extends React.Component {
                         value: 'draft',
                     },
                     {
-                        text: '公開休止',
+                        text: '公開停止',
                         value: 'suspend',
                     },
                 ],
@@ -138,12 +142,12 @@ class EditableBookList extends React.Component {
                 onFilter: (value, record) => {
                     return record.status === value
                 },
-                sorter: (a, b) => a.status - b.status,
+                sorter: (a, b) => a.status.length - b.status.length,
                 sortDirections: ['descend', 'ascend'],
                 render: (status) => {
-                    if (status === 'publish') return <><Badge color="cyan" />公開中</>
-                    if (status === 'draft') return <><Badge color="grey" />下書き</>
-                    if (status === 'suspend') return <><Badge color="red" />公開停止</>
+                    if (status === 'publish') return <><Badge status="processing" />公開中</>
+                    if (status === 'draft') return <><Badge status="default" />下書き</>
+                    if (status === 'suspend') return <><Badge status="error" />公開停止</>
                     return <></>
                 }
             },
@@ -170,26 +174,33 @@ class EditableBookList extends React.Component {
             {
                 title: '操作',
                 width: '100px',
-                dataIndex: 'id',
+                dataIndex: 'action',
                 key: 'manage',
-                render: (id) => {
+                render: (data) => {
+                    let deleteButton = <></>;
+                    if (data.status === 'draft') {
+                        deleteButton = (
+                            <>
+                                <Divider type="vertical" />
+                                <Tooltip placement="left" title="削除">
+                                    <Popconfirm
+                                        title="本当に削除しますか？"
+                                        okText="削除"
+                                        cancelText="キャンセル"
+                                        onConfirm={() => this.delete(data.id)}
+                                        icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
+                                    >
+                                        <a href="/#" ><Icon type="delete" style={{ marginRight: '8px' }} /></a>
+                                    </Popconfirm>
+                                </Tooltip></>
+                        );
+                    }
                     return (
                         <>
                             <Tooltip placement="left" title="編集">
-                                <Link to={createBookEditLink(id)}><Icon type="edit" style={{ marginRight: '8px' }} /></Link>
+                                <Link to={createBookEditLink(data.id)}><Icon type="edit" style={{ marginRight: '8px' }} /></Link>
                             </Tooltip>
-                            <Divider type="vertical" />
-                            <Tooltip placement="left" title="削除">
-                                <Popconfirm
-                                    title="本当に削除しますか？"
-                                    okText="削除"
-                                    cancelText="キャンセル"
-                                    onConfirm={() => this.delete(id)}
-                                    icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
-                                >
-                                    <a href="/#" ><Icon type="delete" style={{ marginRight: '8px' }} /></a>
-                                </Popconfirm>
-                            </Tooltip>
+                            {deleteButton}
                         </>
                     )
                 },

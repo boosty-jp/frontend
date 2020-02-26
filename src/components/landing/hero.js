@@ -11,7 +11,6 @@ const HeroComponent = () => {
         <>
             <div style={{
                 backgroundColor: '#f0f5ff',
-                // borderBottomRightRadius: '50%',
                 borderBottomLeftRadius: '50%',
             }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>

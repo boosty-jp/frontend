@@ -16,11 +16,9 @@ const AnchorMenu = (props) => {
             header3List.push({ id: a.id, parentId: parentId });
         }
     })
-    console.log(header2List);
-    console.log(header3List);
 
     return (
-        <div style={{ position: "fixed", right: '0px', textAlign: 'left', height: '0px', padding: '20px', width: 'calc((100% - 740px) / 2)' }}>
+        <div style={{ position: "fixed", right: '0px', textAlign: 'left', height: '0px', padding: '20px', width: 'calc((100% - 900px) / 2)' }}>
             <Anchor style={{ backgroundColor: 'transparent' }}>
                 {header2List.map(h2 => {
                     return (

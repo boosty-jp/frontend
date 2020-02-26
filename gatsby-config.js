@@ -61,5 +61,11 @@ module.exports = {
         style: true
       }
     },
+    {
+      resolve: `gatsby-plugin-stripe`,
+      options: {
+        async: true,
+      },
+    },
   ],
 }

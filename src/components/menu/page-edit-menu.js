@@ -14,8 +14,8 @@ const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const SAVE_PAGE = gql`
-mutation SavePage($pageId: ID!, $pageInput: PageInput!){
-  savePage(pageId: $pageId, page: $pageInput)
+mutation SavePage($bookId: ID!, $pageId: ID!, $pageInput: PageInput!){
+  savePage(bookId: $bookId, pageId: $pageId, page: $pageInput)
 }
 `;
 
@@ -34,6 +34,7 @@ class EditMenu extends React.Component {
             await this.props.client.mutate({
                 mutation: SAVE_PAGE,
                 variables: {
+                    bookId: this.props.bookId,
                     pageId: this.props.id,
                     pageInput: request
                 }
@@ -61,6 +62,7 @@ class EditMenu extends React.Component {
 
         return {
             title: this.props.title,
+            rawTexts: this.props.rawTexts,
             blocks: this.props.blocks.map(b => { return { type: b.type, data: JSON.stringify(b.data) } }),
         }
     }
@@ -95,6 +97,7 @@ class EditMenu extends React.Component {
 const mapStateToProps = state => ({
     id: state.pageEdit.id,
     title: state.pageEdit.title,
+    rawTexts: state.pageEdit.rawTexts,
     blocks: state.pageEdit.blocks,
     textCount: state.pageEdit.textCount,
 })

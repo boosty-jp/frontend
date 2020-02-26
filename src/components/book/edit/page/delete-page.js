@@ -39,7 +39,7 @@ class DeletePageComponent extends React.Component {
                 title="本当に削除しますか？"
                 icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
             >
-                <Icon type="delete" onClick={e => e.stopPropagation()} />
+                <Icon type="delete" onClick={e => e.stopPropagation()} style={{ color: "rgb(0, 0, 0, 0.65)" }} />
             </Popconfirm>
         );
     }

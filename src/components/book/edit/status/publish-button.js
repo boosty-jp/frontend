@@ -1,9 +1,11 @@
 import React from "react"
 import { withApollo } from 'react-apollo'
+import { connect } from 'react-redux'
 import gql from 'graphql-tag';
 import { message, Popconfirm } from 'antd';
 import SimpleBorderedShadowButton from "components/button/simple-border-shadow";
 import { getErrorMessage } from "utils/error-handle";
+import { publish } from 'modules/book/edit'
 
 const PUBLISH_BOOK = gql`
 mutation publishBook($bookId: ID!) {
@@ -11,14 +13,10 @@ mutation publishBook($bookId: ID!) {
 }
 `;
 
-class BookPublishButton extends React.Component {
+class BookPublishButtonComponent extends React.Component {
     state = { loading: false }
 
     publishBook = async () => {
-        if (this.props.pages.length >= 20) {
-            message.error("作成できるページは1セクションにつき20までです", 7)
-            return;
-        }
         this.setState({ loading: true });
         try {
             await this.props.client.mutate({
@@ -28,6 +26,8 @@ class BookPublishButton extends React.Component {
                 }
             });
 
+            message.success("公開しました", 7);
+            this.props.publish();
             this.setState({ loading: false });
         } catch (err) {
             message.error(getErrorMessage(err), 7);
@@ -54,4 +54,9 @@ class BookPublishButton extends React.Component {
     }
 }
 
+const mapDispatchToProps = dispatch => ({
+    publish: () => dispatch(publish()),
+})
+
+const BookPublishButton = connect(null, mapDispatchToProps)(BookPublishButtonComponent)
 export default withApollo(BookPublishButton)

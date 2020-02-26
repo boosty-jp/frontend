@@ -7,7 +7,7 @@ import EditSectionForm from 'components/book/edit/section/edit-section'
 import AddPageButton from 'components/book/edit/page/add-page'
 import DeletePage from 'components/book/edit/page/delete-page'
 import ReorderPage from 'components/book/edit/section/reorder-page'
-import { createPageEditLink } from 'utils/link-generator';
+import { createPageEditLink, createPageViewLink } from 'utils/link-generator';
 
 const { Panel } = Collapse;
 
@@ -16,17 +16,16 @@ const BookEditSectionsComponent = (props) => {
         return (
             <Collapse defaultActiveKey={props.sections.map(s => { return s.id })} >
                 {props.sections.map((s, sectionIdx) => {
-                    console.log(s);
                     return (
                         <Panel
                             key={s.id}
                             header={sectionIdx + 1 + ". " + s.title}
                             extra={
-                                <>
+                                <div onClick={e => e.stopPropagation()}>
                                     <EditSectionForm sectionTitle={s.title} id={props.id} sectionId={s.id} />
                                     <ReorderPage bookId={props.id} sectionId={s.id} pages={s.pages} />
                                     <DeleteSection id={props.id} sectionId={s.id} />
-                                </>
+                                </div>
                             }
                         >
                             <List
@@ -43,7 +42,7 @@ const BookEditSectionsComponent = (props) => {
                                         <List.Item
                                             actions={[
                                                 <Link to={createPageEditLink(page.id, props.id)}>
-                                                    <Icon type="edit" />
+                                                    <Icon type="edit" style={{ color: "rgb(0, 0, 0, 0.65)" }} />
                                                 </Link>,
                                                 <DeletePage id={page.id} />
 
@@ -53,10 +52,10 @@ const BookEditSectionsComponent = (props) => {
                                         >
                                             <List.Item.Meta
                                                 title={
-                                                    <>
+                                                    <Link to={createPageViewLink(page.id, props.id)}>
                                                         <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{pageIdx + 1}. </span>
                                                         {page.title}
-                                                    </>
+                                                    </Link>
                                                 }
                                             />
                                         </List.Item>

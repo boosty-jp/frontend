@@ -2,11 +2,11 @@ import React from 'react';
 import withLocation from "components/wrapper/location";
 import { connect } from 'react-redux'
 import { Query } from 'react-apollo';
-import { Icon, Spin } from 'antd';
 import ErrorResult from 'components/error/result';
 import gql from 'graphql-tag';
 import { setPage } from 'modules/page/edit'
 import PageEditForm from 'components/book/edit//page/page-form';
+import PageLoader from 'components/loader/page';
 
 const GET_PAGE = gql`
   query PageToEdit($pageId: ID!) {
@@ -36,16 +36,15 @@ const PageEditComponent = (props) => {
         props.setPage(data.pageToEdit)
       }}
     >
-      {({ loading, error, data }) => {
+      {({ loading, error }) => {
         if (loading) {
           return (
-            <Spin spinning={loading} tip="ロード中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
-              <PageEditForm />
-            </Spin>
+            <PageLoader />
           )
         }
 
         if (error) return <ErrorResult />
+
         return <PageEditForm />
       }}
     </Query>

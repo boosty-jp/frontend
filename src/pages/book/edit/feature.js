@@ -15,7 +15,7 @@ const BookEditFeaturePage = (props) => {
     return (
         <Layout>
             <SEO title="Home" />
-            <div style={{ background: 'white' }}>
+            <div style={{ backgroundColor: '#f0f5ff' }}>
                 <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
                     <BookEditLayout page="feature" id={id}>
                         <BookEditFeatures id={id} />

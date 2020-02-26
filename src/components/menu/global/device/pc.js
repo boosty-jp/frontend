@@ -21,10 +21,10 @@ const UserItems = () => {
     )
 }
 
-const PcGlobalMenu = () => {
+const PcGlobalMenu = ({ maxWidth = 900 }) => {
     return (
         <Header style={{ backgroundColor: 'white', }}>
-            <div style={{ maxWidth: "900px", margin: 'auto', padding: '0px 20px' }}>
+            <div style={{ maxWidth: maxWidth + "px", margin: 'auto', padding: '0px 20px' }}>
                 <Row type="flex" align="middle" >
                     <Col span={8}>
                         <LogoImage />

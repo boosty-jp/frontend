@@ -1,9 +1,11 @@
 import React from "react"
 import { withApollo } from 'react-apollo'
+import { connect } from 'react-redux'
 import gql from 'graphql-tag';
 import { message, Popconfirm, Icon } from 'antd';
 import SimpleBorderedShadowButton from "components/button/simple-border-shadow";
 import { getErrorMessage } from "utils/error-handle";
+import { suspend } from 'modules/book/edit/index'
 
 const SUSPEND_BOOK = gql`
 mutation suspendBook($bookId: ID!) {
@@ -11,14 +13,10 @@ mutation suspendBook($bookId: ID!) {
 }
 `;
 
-class BookSuspendButton extends React.Component {
+class BookSuspendButtonComponent extends React.Component {
     state = { loading: false }
 
     suspendBook = async () => {
-        if (this.props.pages.length >= 20) {
-            message.error("作成できるページは1セクションにつき20までです", 7)
-            return;
-        }
         this.setState({ loading: true });
         try {
             await this.props.client.mutate({
@@ -28,11 +26,12 @@ class BookSuspendButton extends React.Component {
                 }
             });
 
-            this.setState({ loading: false });
+            this.props.suspend();
+            message.success("公開停止しました", 7);
         } catch (err) {
             message.error(getErrorMessage(err), 7);
-            this.setState({ loading: false });
         }
+        this.setState({ loading: false });
     };
 
     render() {
@@ -55,4 +54,9 @@ class BookSuspendButton extends React.Component {
     }
 }
 
+const mapDispatchToProps = dispatch => ({
+    suspend: () => dispatch(suspend()),
+})
+
+const BookSuspendButton = connect(null, mapDispatchToProps)(BookSuspendButtonComponent)
 export default withApollo(BookSuspendButton)

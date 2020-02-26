@@ -44,7 +44,6 @@ export default class CoverImageUploader extends React.Component {
                     this.props.onComplete(imageUrl);
                     onSuccess(null, image);
                 } catch (e) {
-                    console.log(e)
                     message.error("エラーが発生しました。画像の容量をご確認の上、再度お試しください。");
                     onError(e);
                 }

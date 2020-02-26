@@ -15,7 +15,7 @@ const BookEditPage = (props) => {
     return (
         <Layout>
             <SEO title="Home" />
-            <div style={{ background: 'white' }}>
+            <div style={{ backgroundColor: '#F7FAFF' }}>
                 <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
                     <BookEditLayout page="image" id={id}>
                         <BookImageUploader id={id} />

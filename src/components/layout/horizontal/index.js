@@ -6,7 +6,7 @@ import HorizontalFooter from "components/layout/horizontal/footer";
 const { Content } = Layout;
 
 const HorizontalLayout = ({ children, contentBackgroundColor }) => {
-  var content = <Content style={{ backgroundColor: 'white' }}>{children}</Content>
+  var content = <Content style={{ backgroundColor: '#F7FAFF' }}>{children}</Content>
   if (contentBackgroundColor) content = <Content style={{ backgroundColor: contentBackgroundColor }}>{children}</Content>
   return (
     <Layout style={{ minHeight: '100vh' }}>

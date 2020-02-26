@@ -1,4 +1,5 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { Avatar } from 'antd';
 
 const TargetUserDescriptionItem = ({ description }) => {
@@ -8,16 +9,16 @@ const TargetUserDescriptionItem = ({ description }) => {
             marginBottom: '18px',
             margin: '0px 0px 18px 0px',
             padding: '0',
-            textIndent: '-4em',
-            paddingLeft: '4em',
+            textIndent: '-2.4em',
+            paddingLeft: '2.4em',
         }}
         >
-            <Avatar icon="check" size={32} style={{ backgroundColor: "#1890ff", textIndent: '0em' }} />
+            <Avatar icon="check" size={24} style={{ backgroundColor: "#1890ff", textIndent: '0em' }} />
             <span style={{
                 color: 'black',
                 fontSize: '18px',
-                marginLeft: '1.4em',
-                textIndent: '1.4em',
+                marginLeft: '0.5em',
+                textIndent: '0.5em',
                 verticalAlign: 'middle',
             }}>
                 {description}
@@ -26,21 +27,21 @@ const TargetUserDescriptionItem = ({ description }) => {
     )
 }
 
-const items = [
-    "AWSについての前提知識はなくてOK",
-    "クラウド関係の前提知識はなくてOK",
-    "サーバーやネットワークなどの最低限のインフラ知識がある",
-]
-
-const TargetDescriptions = () => {
+const TargetDescriptionsComponent = (props) => {
     return (
         <div style={{ marginTop: '20px' }}>
-            {items.map(i => {
+            {props.descriptions.map(description => {
                 return (
-                    <TargetUserDescriptionItem description={i} key={i} />
+                    <TargetUserDescriptionItem description={description} key={description} />
                 )
             })}
         </div>
     )
 }
+
+const mapStateToProps = state => ({
+    descriptions: state.bookView.targetDescriptions,
+})
+
+const TargetDescriptions = connect(mapStateToProps)(TargetDescriptionsComponent);
 export default TargetDescriptions

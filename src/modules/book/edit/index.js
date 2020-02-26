@@ -11,6 +11,8 @@ const DELETE_SECTION = 'DELETE_SECTION' + SUFFIX;
 const DELETE_PAGE = 'DELETE_PAGE' + SUFFIX;
 const REORDER_SECTIONS = 'REORDER_SECTIONS' + SUFFIX;
 const REORDER_PAGES = 'REORDER_PAGES' + SUFFIX;
+const PUBLISH = 'PUBLISH' + SUFFIX;
+const SUSPEND = 'SUSPEND' + SUFFIX;
 
 export const setBookData = (book) => ({
     type: SET_BOOK_DATA,
@@ -70,18 +72,27 @@ export const reorderPages = (sectionId, pages) => ({
     pages: pages
 })
 
+export const publish = () => ({
+    type: PUBLISH,
+})
+
+export const suspend = () => ({
+    type: SUSPEND,
+})
+
 const initialState = {
     id: "",
     imageUrl: '',
     title: "",
     description: '',
     price: '',
+    canSale: false,
     features: [],
     levelStart: 0,
     levelEnd: 0,
     targetDescriptions: [],
     sections: [],
-    status: "draft",
+    status: "",
     tags: [],
     error: {
         image: { status: "", message: "" },
@@ -102,6 +113,7 @@ export default function BookEdit(state = initialState, action) {
                 imageUrl: action.book.imageUrl,
                 title: action.book.title,
                 price: action.book.price,
+                canSale: action.book.canSale,
                 description: action.book.description,
                 features: action.book.features,
                 levelStart: action.book.targets.levelStart,
@@ -183,6 +195,16 @@ export default function BookEdit(state = initialState, action) {
                     }
                     return section;
                 })
+            }
+        case PUBLISH:
+            return {
+                ...state,
+                status: 'publish',
+            }
+        case SUSPEND:
+            return {
+                ...state,
+                status: 'suspend',
             }
         default:
             return state;

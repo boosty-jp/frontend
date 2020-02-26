@@ -6,9 +6,7 @@ const { Paragraph } = Typography;
 const OwnBookItem = ({ imageUrl, title, author }) => {
     return (
         <div >
-            <div style={{ margin: '0 auto', width: '100%', borderRadius: '0.25rem', overflow: 'hidden' }}>
-                <BookCoverImage imageUrl={imageUrl} />
-            </div>
+            <BookCoverImage imageUrl={imageUrl} boxShadow="2px 2px 4px #cdd0d4, -2px -2px 4px #ffffff" />
             <div style={{ margin: '10px 12px 0px 12px' }}>
                 <Paragraph ellipsis style={{ color: 'black', fontSize: '14px', marginBottom: '4px' }}>
                     {title}

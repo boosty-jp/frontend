@@ -1,6 +1,6 @@
-mark {
+/* mark {
     background: linear-gradient(transparent 75%, #9eceff 75%) !important;
-}
+} */
 
 .cdx-settings-button[data-level='1'],
 .cdx-settings-button[data-level='4'],
@@ -9,9 +9,9 @@ mark {
   display: none;
 }
 
-.image-tool__tune {
+/* .image-tool__tune {
   display: none;
-}
+} */
 
 .cdx-quote-settings{
   display: none;
@@ -67,10 +67,32 @@ body{
   box-shadow: 2px 2px 8px gray !important;
 }
 
+.dev-icon-animation1 {
+  animation: icon_animation1 3s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.dev-icon-animation2 {
+  animation: icon_animation2 1.2s linear infinite;
+  transform-origin: 50% 50%;
+}
+
 @keyframes book_img_cover_animation {
   0% { transform: translateY(0) }
   50% { transform: translateY(-10px) }
   100% { transform: translateY(0) }
+}
+
+@keyframes icon_animation1 {
+  0% { transform: translateY(0) }
+  50% { transform: translateX(-10px) }
+  100% { transform: translateY(0) }
+}
+
+@keyframes icon_animation2 {
+  0% { transform: translateY(5px) }
+  50% { transform: translateY(0px) }
+  100% { transform: translateY(5px) }
 }
 
 .ant-carousel .slick-slide {
@@ -84,4 +106,48 @@ div.ant-slider-disabled .ant-slider-handle {
 
 div.ant-slider-disabled .ant-slider-track{
   background-color:#1890ff !important ;
+}
+
+.image-tool--withBackground .image-tool__image {
+  background: #eff2f5 !important;
+}
+
+.ais-SearchBox-form {
+  border-radius: 1rem;
+}
+
+.ais-SearchBox-input{
+  border-radius: 1rem;
+}
+
+input,
+.StripeElement {
+  display: block;
+  max-width: 500px;
+  padding: 10px 14px;
+  font-size: 1em;
+  font-family: 'Source Code Pro', monospace;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  background: white;
+}
+
+.StripeElement {
+  box-shadow: rgba(50, 50, 93, 0.14902) 4px 4px 8px, rgba(0, 0, 0, 0.0196078) -4px -4px 8px;
+}
+input::placeholder {
+  color: #aab7c4;
+}
+
+input:focus,
+.StripeElement--focus {
+  box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px, rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+}
+
+.StripeElement.IdealBankElement,
+.StripeElement.PaymentRequestButton {
+  padding: 0;
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import MobileGlobalMenu from 'components/menu/global/device/mobile'
 import PcGlobalMenu from 'components/menu/global/device/pc'
 
-const GlobalMenu = () => {
+const GlobalMenu = ({ maxWidth = 900 }) => {
     const [width, setWidth] = useState(0)
     const ref = useRef(null)
 
@@ -11,7 +11,7 @@ const GlobalMenu = () => {
     }, []);
 
     let Contents;
-    if (width > 900) {
+    if (width > maxWidth) {
         Contents = PcGlobalMenu;
     } else {
         Contents = MobileGlobalMenu;
@@ -19,7 +19,7 @@ const GlobalMenu = () => {
 
     return (
         <div ref={ref}>
-            <Contents width={width} />
+            <Contents width={width} maxWidth={maxWidth} />
         </div>
     )
 }

@@ -12,7 +12,7 @@ const ContentLayout = ({ children, contentBackgroundColor }) => {
     var content = <Content >{children}</Content>
     if (contentBackgroundColor) content = <Content style={{ backgroundColor: contentBackgroundColor }}>{children}</Content>
     return (
-        <Layout style={{ minHeight: '100vh', maxWidth: '100vw', backgroundColor: '#f0f5ff', overflow: 'hidden' }}>
+        <Layout style={{ minHeight: '100vh', maxWidth: '100vw', background: '#F7FAFF', overflow: 'hidden' }}>
             <Helmet>
                 <link rel="preload" href='https://fonts.googleapis.com/css?family=Rubik:regular,bold,italic&subset=latin,latin-ext'></link>
             </Helmet>

@@ -9,6 +9,7 @@ import Marker from "@editorjs/marker";
 import InlineCode from "@editorjs/inline-code";
 import Paragraph from "@editorjs/paragraph";
 import SimpleImage from '@editorjs/simple-image'
+import Delimiter from '@editorjs/delimiter'
 import { image } from 'components/editor/tool/image'
 
 export const EDITOR_JS_TOOLS = {
@@ -92,7 +93,14 @@ export const EDITOR_JS_TOOLS = {
             title: '補足情報',
         }
     },
+    delimiter: {
+        class: Delimiter,
+        toolbox: {
+            title: '区切り'
+        }
+    },
     imageUrl: {
         class: SimpleImage,
-    }
+    },
+
 };

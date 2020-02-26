@@ -1,3 +1,5 @@
+import { getCurrentUser } from "services/local-user"
+
 export const createArticleLink = (id) => ("/article/?id=" + id)
 export const createArticleUrl = (id) => ("https://wever.co.jp/article/?id=" + id)
 
@@ -35,3 +37,11 @@ export const createBookEditLink = (id) => ("/book/edit/base/?id=" + id)
 export const createBookSectionsEditLink = (id) => ("/book/edit/sections/?id=" + id)
 
 export const createPageEditLink = (id, bookId) => ("/book/edit/page/?id=" + id + "&bookId=" + bookId)
+
+export const createPageViewLink = (id, bookId) => ("/book/view/page/?id=" + id + "&bookId=" + bookId)
+
+export const createStripeRegistrationLink = () => {
+    const userId = getCurrentUser().userId;
+    const link = process.env.GATSBY_STRIPE_AUTH_LINK;
+    return link + "&state=" + userId;
+}

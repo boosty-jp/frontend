@@ -8,32 +8,42 @@ const { Title, Paragraph, Text } = Typography;
 
 export const convertToJSX = (blocks) => {
     var jsxList = [];
+    var rawTexts = "";
     var textCount = 0;
     var blockCount = 0;
     var anchors = [];
     const countRegexp = /<[^>]*>|\s+|&nbsp;/g
     blocks.forEach((block, idx) => {
         const text = block.data.text
+        let rawText = '';
         switch (block.type) {
             case 'header':
                 jsxList.push(<Title key={"block-" + idx} level={block.data.level} id={text}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
                 anchors.push({ id: text, level: block.data.level });
-                if (text) textCount += text.replace(countRegexp, '').length;
+                if (text) rawText = text.replace(countRegexp, '');
+                if (rawText) {
+                    rawTexts += rawText;
+                    textCount += rawText.length;
+                }
                 blockCount++;
                 break;
             case 'paragraph':
                 jsxList.push(<Paragraph key={"block-" + idx}><span dangerouslySetInnerHTML={{ __html: text }} /></Paragraph>)
-                if (text) textCount += text.replace(countRegexp, '').length;
+                if (text) rawText = text.replace(countRegexp, '');
+                if (rawText) {
+                    rawTexts += rawText;
+                    textCount += rawText.length;
+                }
                 blockCount++;
                 break;
             case 'imageUrl':
-                jsxList.push(<img key={"block-" + idx} src={block.data.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
+                jsxList.push(<ImageBlock block={block} idx={idx} />)
                 blockCount++;
                 break;
             case 'image':
                 if (block.data.file) {
                     if (block.data.file.url) {
-                        jsxList.push(<img key={"block-" + idx} src={block.data.file.url} title={block.data.caption} alt={block.data.caption} style={{ maxWidth: '100%', height: 'auto' }} />)
+                        jsxList.push(<ImageBlock block={block} idx={idx} />)
                     }
                 }
                 blockCount++;
@@ -41,7 +51,11 @@ export const convertToJSX = (blocks) => {
             case 'code':
                 const codeHtml = "<pre><code class=\"hljs \">" + hljs.highlightAuto(block.data.code).value + "</code></pre>";
                 jsxList.push(<Paragraph key={"block-" + idx} code={false}><div dangerouslySetInnerHTML={{ __html: codeHtml }} /></Paragraph>)
-                if (block.data.code) textCount += block.data.code.replace(countRegexp, '').length;
+                if (text) rawText = text.replace(countRegexp, '');
+                if (rawText) {
+                    rawTexts += rawText;
+                    textCount += rawText.length;
+                }
                 blockCount++;
                 break;
             case 'list':
@@ -51,7 +65,15 @@ export const convertToJSX = (blocks) => {
                 } else {
                     listJSX = <ol>{block.data.items.map(i => <li dangerouslySetInnerHTML={{ __html: i }} />)}</ol>
                 }
-                block.data.items.forEach(i => { if (i) textCount += i.replace(countRegexp, '').length })
+                block.data.items.forEach(i => {
+                    if (i) {
+                        rawText = i.replace(countRegexp, '');
+                        if (rawText) {
+                            rawTexts += rawText;
+                            textCount += rawText.length;
+                        }
+                    }
+                })
                 jsxList.push(<Paragraph key={"block-" + idx}>{listJSX}</Paragraph>)
                 blockCount++;
                 break;
@@ -63,6 +85,12 @@ export const convertToJSX = (blocks) => {
                             <iframe title={block.data.caption} type="text/html" style={{ maxWidth: '100%', maxHeight: '500px', width: block.data.width, height: block.data.height }} src={block.data.embed} frameBorder={0} />
                         </Paragraph >
                     </React.Fragment>
+                )
+                blockCount++;
+                break;
+            case 'delimiter':
+                jsxList.push(
+                    <div className="ce-delimiter" />
                 )
                 blockCount++;
                 break;
@@ -78,10 +106,18 @@ export const convertToJSX = (blocks) => {
                     />
                 )
                 if (block.data.title) {
-                    textCount += block.data.title.replace(countRegexp, '').length;
+                    rawText = block.data.title.replace(countRegexp, '');
+                    if (rawText) {
+                        rawTexts += rawText;
+                        textCount += rawText.length;
+                    }
                 }
                 if (block.data.message) {
-                    textCount += block.data.message.replace(countRegexp, '').length;
+                    rawText = block.data.message.replace(countRegexp, '');
+                    if (rawText) {
+                        rawTexts += rawText;
+                        textCount += rawText.length;
+                    }
                 }
                 blockCount++;
                 break;
@@ -126,9 +162,18 @@ export const convertToJSX = (blocks) => {
                     </React.Fragment>
                 )
                 if (block.data.caption) {
-                    textCount += block.data.caption.replace(countRegexp, '').length;
+                    rawText = block.data.caption.replace(countRegexp, '');
+                    if (rawText) {
+                        rawTexts += rawText;
+                        textCount += rawText.length;
+                    }
                 }
                 if (text) {
+                    rawText = text.replace(countRegexp, '');
+                    if (rawText) {
+                        rawTexts += rawText;
+                        textCount += rawText.length;
+                    }
                     textCount += text.replace(countRegexp, '').length;
                 }
                 blockCount++;
@@ -137,7 +182,7 @@ export const convertToJSX = (blocks) => {
                 break;
         }
     })
-    return { text: jsxList, textCount: textCount, blockCount: blockCount, anchors: anchors }
+    return { text: jsxList, rawTexts: rawTexts, textCount: textCount, blockCount: blockCount, anchors: anchors }
 }
 
 export const convertToReferenceJSX = (block) => {
@@ -293,6 +338,30 @@ export const convertToReferenceCard = (block, key) => {
             <span style={{ fontSize: '12px' }}>
                 「<a href={createArticleLink(block.articleId)} target="_blank" rel="noopener noreferrer">{block.articleTitle}</a>」の第{block.idx}ブロックより
             </span>
+        </div>
+    )
+}
+
+const ImageBlock = ({ block, idx }) => {
+    return (
+        <div style={{
+            marginBottom: '16px',
+            background: block.data.withBackground ? "#eff2f5" : 'white',
+            textAlign: block.data.withBackground ? "center" : "left",
+            padding: block.data.withBackground ? "15px" : "0px",
+            border: block.data.withBorder ? "1px solid #eff2f5" : "none",
+        }}>
+            <img
+                key={"block-" + idx}
+                src={block.data.file.url}
+                title={block.data.caption}
+                alt={block.data.caption}
+                style={{
+                    maxWidth: block.data.withBackground ? "60%" : "100%",
+                    width: block.data.stretched ? "100%" : "auto",
+                    height: 'auto'
+                }}
+            />
         </div>
     )
 }

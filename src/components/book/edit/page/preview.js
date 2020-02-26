@@ -1,34 +1,21 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Button, Modal, Tooltip, Typography, Divider } from 'antd';
-
-const { Title } = Typography;
+import { Button, Tooltip } from 'antd';
+import { togglePreview } from "modules/page/edit/index";
 
 class PagePreviewComponent extends React.Component {
-    state = {
-        preview: false,
-    };
-
     render() {
         return (
             <>
                 <Tooltip placement="left" title="プレビュー">
-                    <Button shape="circle" icon="eye" onClick={() => this.setState({ preview: true })} />
+                    <Button
+                        shape="circle"
+                        icon="file-search"
+                        type={this.props.previewMode ? 'primary' : 'default'}
+                        style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
+                        onClick={() => this.props.togglePreview()}
+                    />
                 </Tooltip>
-                <Modal
-                    title="プレビュー"
-                    visible={this.state.preview}
-                    onCancel={() => this.setState({ preview: false })}
-                    footer={[<Button key="back" onClick={() => this.setState({ preview: false })}>閉じる</Button>]}
-                    width={740}
-                    style={{ top: 80 }}
-                >
-                    <Typography>
-                        <Title>{this.props.title}</Title>
-                    </Typography>
-                    <Divider />
-                    {this.props.text}
-                </Modal>
             </>
         )
     }
@@ -37,7 +24,13 @@ class PagePreviewComponent extends React.Component {
 const mapStateToProps = state => ({
     title: state.pageEdit.title,
     text: state.pageEdit.text,
+    blocks: state.pageEdit.blocks,
+    previewMode: state.pageEdit.previewMode,
 })
 
-const PagePreview = connect(mapStateToProps)(PagePreviewComponent)
+const mapDispatchToProps = dispatch => ({
+    togglePreview: () => dispatch(togglePreview()),
+})
+
+const PagePreview = connect(mapStateToProps, mapDispatchToProps)(PagePreviewComponent)
 export default PagePreview;

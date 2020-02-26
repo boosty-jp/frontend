@@ -4,28 +4,28 @@ import { Icon, Affix, Button, Layout, Tooltip } from 'antd';
 import PageEditMenu from "components/menu/page-edit-menu";
 import HorizontalFooter from 'components/layout/horizontal/footer'
 import PagePreview from "components/book/edit/page/preview";
+import PageEditAnchorMenu from "components/book/edit/page/anchor";
+import PageEditHint from "components/book/edit/page/hint";
 
 const { Content } = Layout;
 
 class PageEditLayoutComponent extends React.Component {
+
     render() {
         return (
-            <Layout >
+            <Layout style={{ minHeight: '100vh' }}>
                 <PageEditMenu bookId={this.props.bookId} />
                 <Content style={{ backgroundColor: 'white' }}>
+                    <PageEditAnchorMenu />
                     <div >
                         {this.props.children}
                     </div>
                     <Affix offsetBottom={20} style={{ width: '200px', margin: '0 0px 0 auto' }}>
-                        <div style={{ textAlign: 'right', padding: '20px', }}>
+                        <div style={{ textAlign: 'right', padding: '24px' }}>
                             <div>
                                 <PagePreview />
                             </div>
-                            <div style={{ marginTop: '8px' }}>
-                                <Tooltip placement="left" title="書き方のヒント">
-                                    <Button shape="circle" icon="bulb" />
-                                </Tooltip>
-                            </div>
+                            <PageEditHint />
                             <div style={{ marginTop: '12px' }}>
                                 {this.props.textCount > 20000 ?
                                     <Tooltip placement="left" title="投稿できる最大文字数は20000文字です。">
@@ -55,6 +55,7 @@ class PageEditLayoutComponent extends React.Component {
 
 const mapStateToProps = state => ({
     canPreview: state.pageEdit.canPreview,
+    blocks: state.pageEdit.blocks,
     textCount: state.pageEdit.textCount,
     blockCount: state.pageEdit.blockCount,
 })
