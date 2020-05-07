@@ -2,15 +2,24 @@ import React from "react"
 import { connect } from 'react-redux'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { Form, Icon, Tooltip, message } from 'antd';
+import { Form, Tooltip, message, Button } from 'antd';
 import BookTagSelectForm from "containers/search/book-tag-form";
-import SimpleShadowButton from "components/button/simple-shadow";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const UPDATE_BOOK_TAGS = gql`
 mutation updateBookTags($bookId: ID!, $tagIds: [ID]!){
   updateBookTags(bookId: $bookId, tagIds: $tagIds)
 }
 `;
+
+const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 },
+};
+
+const tailLayout = {
+    wrapperCol: { offset: 4, span: 20 },
+};
 
 class BookEditTagFormComponent extends React.Component {
     state = { loading: false }
@@ -36,12 +45,12 @@ class BookEditTagFormComponent extends React.Component {
     render() {
         return (
             <>
-                <Form>
+                <Form {...layout}>
                     <Form.Item
                         label={
                             <span>タグ&nbsp;
-                        <Tooltip title="検索や本のカテゴライズに用いられます。最大5つまで入力できます">
-                                    <Icon type="question-circle-o" />
+                                <Tooltip title="検索や本のカテゴライズに用いられます。最大5つまで入力できます">
+                                    <QuestionCircleOutlined />
                                 </Tooltip>
                             </span>}
                         validateStatus={this.props.error.tags.status}
@@ -49,8 +58,10 @@ class BookEditTagFormComponent extends React.Component {
                     >
                         <BookTagSelectForm />
                     </Form.Item>
+                    <Form.Item {...tailLayout}>
+                        <Button type="primary" onClick={this.updateTags} loading={this.state.loading} >更新する</Button>
+                    </Form.Item>
                 </Form>
-                <SimpleShadowButton color="#1890ff" text="更新する" onClick={this.updateTags} loading={this.state.loading} />
             </>
         )
     }

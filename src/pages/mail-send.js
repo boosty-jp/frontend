@@ -1,7 +1,8 @@
 import React from "react"
-import { Result, Icon, message } from 'antd';
+import { Result, message } from 'antd';
 import getFirebase from 'utils/firebase'
 import SimpleLayout from 'components/layout/simple-layout'
+import { MailTwoTone } from "@ant-design/icons";
 
 
 const cardStyle = {
@@ -34,7 +35,7 @@ const MailSendPage = () => {
         <SimpleLayout maxWidth="500px" width="100%" >
             <div style={cardStyle}>
                 <Result
-                    icon={<Icon type="mail" theme="twoTone" />}
+                    icon={<MailTwoTone />}
                     title="認証用のメールを送りました。"
                     subTitle={<p>メールから認証を完了してください</p>}
                     extra={[<p>※ メールが届かない場合は<a href="/#" onClick={() => reSend()}>こちら</a>から再送してください</p>]}

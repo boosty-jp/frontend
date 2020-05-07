@@ -3,7 +3,6 @@ import { Layout } from 'antd';
 import PropTypes from "prop-types"
 import GlobalMenu from 'components/menu/global'
 import Footer from "../footer";
-import Helmet from "react-helmet";
 
 const { Content } = Layout;
 
@@ -13,9 +12,6 @@ const ContentLayout = ({ children, contentBackgroundColor }) => {
     if (contentBackgroundColor) content = <Content style={{ backgroundColor: contentBackgroundColor }}>{children}</Content>
     return (
         <Layout style={{ minHeight: '100vh', maxWidth: '100vw', background: '#F7FAFF', overflow: 'hidden' }}>
-            <Helmet>
-                <link rel="preload" href='https://fonts.googleapis.com/css?family=Rubik:regular,bold,italic&subset=latin,latin-ext'></link>
-            </Helmet>
             <GlobalMenu />
             {content}
             <Footer />

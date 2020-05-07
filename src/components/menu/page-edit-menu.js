@@ -7,7 +7,8 @@ import { withApollo } from 'react-apollo'
 import { createBookSectionsEditLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
 import SimpleShadowButton from "components/button/simple-shadow";
-import { getTitleError, getBlocksError, getBlockTextError } from "utils/content-validator";
+import { getTitleError, getTextError } from "utils/content-validator";
+import { SaveOutlined } from '@ant-design/icons'
 const { Header } = Layout;
 
 const isBrowser = typeof window !== 'undefined';
@@ -50,20 +51,17 @@ class EditMenu extends React.Component {
 
     makeRequest = () => {
         const titleError = getTitleError(this.props.title);
-        const blocksError = getBlocksError(this.props.blocks);
-        const textCountError = getBlockTextError(this.props.textCount);
+        const textError = getTextError(this.props.text);
+
         if (titleError.status === 'error') {
             throw new Error(titleError.message);
-        } else if (blocksError.status === 'error') {
-            throw new Error(blocksError.message);
-        } else if (textCountError.status === 'error') {
-            throw new Error(textCountError.message);
+        } else if (textError.status === 'error') {
+            throw new Error(textError.message);
         }
 
         return {
             title: this.props.title,
-            rawTexts: this.props.rawTexts,
-            blocks: this.props.blocks.map(b => { return { type: b.type, data: JSON.stringify(b.data) } }),
+            text: this.props.text,
         }
     }
 
@@ -79,7 +77,7 @@ class EditMenu extends React.Component {
                             <Col span={11} style={{ textAlign: 'right' }}>
                                 <SimpleShadowButton
                                     text="保存"
-                                    icon="save"
+                                    icon={<SaveOutlined />}
                                     color="#1890ff"
                                     loading={this.state.loading}
                                     onClick={this.save}
@@ -97,9 +95,7 @@ class EditMenu extends React.Component {
 const mapStateToProps = state => ({
     id: state.pageEdit.id,
     title: state.pageEdit.title,
-    rawTexts: state.pageEdit.rawTexts,
-    blocks: state.pageEdit.blocks,
-    textCount: state.pageEdit.textCount,
+    text: state.pageEdit.text,
 })
 
 const PageEditMenu = connect(mapStateToProps)(EditMenu)

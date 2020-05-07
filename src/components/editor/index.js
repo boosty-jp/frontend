@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import debounce from "lodash/debounce";
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from 'components/editor/tool'
 import { convertToJSX } from 'utils/html-converter'
 import { updateText } from 'modules/page/edit'
 
 class Editor extends React.Component {
-    constructor(props) {
-        super(props);
-        // this.handleSave = debounce(this.handleSave, 10);
-    }
 
     state = { editorInstance: null, outputs: [] }
 

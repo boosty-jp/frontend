@@ -1,16 +1,14 @@
 import React from "react"
-import { Row, Col } from 'antd';
+import { Affix } from 'antd';
 import { connect } from 'react-redux'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import { setBookData } from 'modules/book/view'
 import { withApollo } from 'react-apollo'
 import ErrorResult from "components/error/result";
-import PageLoader from "components/loader/page";
 import BookViewMenuSections from "./sections";
-import BookViewMenuButtons from 'components/book/view/page/menu/buttons'
-import PageSearchForm from "./search";
 import BookViewMenuHeader from "./header";
+import VerticalMenu from "components/menu/vertical"
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -56,53 +54,54 @@ const GET_BOOK = gql`
 }
 `;
 
-const cardStyle = {
-  backgroundColor: 'white',
-  boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
-  borderRadius: '2rem',
+const bookMenuStyle = {
+  padding: '16px',
   width: '100%',
-  height: '100%',
-  padding: '20px',
-  fontColor: 'black',
-  marginLeft: 'auto',
-  maxWidth: '300px',
+  backgroundColor: '#F7FAFF',
+  height: '100vh',
+  borderRight: '1px solid #d6e4ff',
+}
+
+const gridStyle = {
+  height: "100vh",
+  display: 'grid',
+  gridTemplateColumns: '60px 1fr',
 }
 
 class PcBookViewMenuComponent extends React.Component {
   render() {
     return (
-      <Row>
-        <Col xs={0} sm={0} md={0} lg={0} xl={24} xxl={24}>
-          <div style={{ position: "fixed", left: '0px', padding: '60px 0px 0px 20px', width: 'calc((100% - 800px) / 2)' }}>
-            <div style={cardStyle}>
-              <Query
-                query={GET_BOOK}
-                variables={{ bookId: this.props.bookId }}
-                onCompleted={(data) => {
-                  this.props.setBookData(data.book, false);
-                }}
-              >
-                {({ loading, error }) => {
-                  if (loading) return <PageLoader />
-                  if (error) return <ErrorResult />
-                  return (
-                    <>
-                      <BookViewMenuHeader />
-                      <PageSearchForm />
-                      <div style={{ marginTop: '16px' }}>
-                        <BookViewMenuButtons pageId={this.props.id} />
-                      </div>
-                      <div style={{ marginTop: '16px' }}>
-                        <BookViewMenuSections pageId={this.props.id} />
-                      </div>
-                    </>
-                  )
-                }}
-              </Query >
-            </div>
+      <Affix offsetTop={0}>
+        <div style={gridStyle}>
+          <div style={{ zIndex: '10' }}>
+            <VerticalMenu />
           </div>
-        </Col>
-      </Row>
+          <div style={{ maxWidth: '300px', ...bookMenuStyle }}>
+            <Query
+              query={GET_BOOK}
+              variables={{ bookId: this.props.bookId }}
+              onCompleted={(data) => {
+                this.props.setBookData(data.book, false);
+              }}
+            >
+              {({ loading, error }) => {
+                if (loading) return <></>
+                if (error) return <ErrorResult />
+                return (
+                  <>
+                    <div style={{ padding: '0px 10px', height: '70px' }}>
+                      <BookViewMenuHeader />
+                    </div>
+                    <div style={{ marginTop: '0px', height: 'calc(100vh - 100px)' }}>
+                      <BookViewMenuSections pageId={this.props.id} background="#F7FAFF" />
+                    </div>
+                  </>
+                )
+              }}
+            </Query >
+          </div>
+        </div>
+      </Affix >
     )
   }
 }

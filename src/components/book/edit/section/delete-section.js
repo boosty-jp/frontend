@@ -2,9 +2,10 @@ import React from 'react';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { connect } from 'react-redux'
-import { message, Popconfirm, Icon } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { deleteSection } from 'modules/book/edit'
 import { getErrorMessage } from "utils/error-handle";
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 
 const DELETE_SECTION = gql`
 mutation deleteSection($bookId: ID!, $sectionId: ID!) {
@@ -38,9 +39,9 @@ class DeleteSectionComponent extends React.Component {
                 cancelText="キャンセル"
                 onConfirm={this.deleteSection}
                 title="本当に削除しますか？"
-                icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
+                icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
             >
-                <Icon type="delete" onClick={e => e.stopPropagation()} />
+                <DeleteOutlined onClick={e => e.stopPropagation()} />
             </Popconfirm>
         );
     }

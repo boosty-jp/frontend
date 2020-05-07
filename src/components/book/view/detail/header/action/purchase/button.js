@@ -10,21 +10,13 @@ import BookCoverImage from "components/image/cover";
 import styled from 'styled-components'
 import { getErrorMessage } from "utils/error-handle";
 import PageLoader from 'components/loader/page'
+import { ShoppingCartOutlined } from "@ant-design/icons"
 
 const CustomModal = styled(Modal)`
   .ant-modal-content {
     background: #f0f5ff;
   }
 `;
-
-const purchaseButtonStyle = {
-    borderColor: '#F7FAFF',
-    color: '#1890ff',
-    fontWeight: '500',
-    fontSize: '16px',
-    background: '#F7FAFF',
-    boxShadow: '5px 5px 10px #a3a5a8, -5px -5px 10px #ffffff',
-}
 
 const GET_PAYMENT_INTENT = gql`
   query GetPaymentIntent($bookId: ID!) {
@@ -45,8 +37,9 @@ class BookPurchaseButtonComponent extends React.Component {
                     block
                     size="large"
                     shape="round"
-                    icon="shopping-cart"
-                    style={purchaseButtonStyle}
+                    type="primary"
+                    icon={<ShoppingCartOutlined />}
+                    style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
                     onClick={() => this.setState({ visible: true })}
                 >購入する</Button >
                 <CustomModal

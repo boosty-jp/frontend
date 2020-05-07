@@ -18,7 +18,7 @@ const BookPreviewPageComponent = (props) => {
         <PageViewLayout id={id} bookId={bookId}>
             <SEO title="Home" />
             <div style={{ background: 'white' }}>
-                <div style={{ padding: '20px 0px', maxWidth: '740px', margin: 'auto' }}>
+                <div style={{ padding: '20px 0px' }}>
                     <PageView id={id} bookId={bookId} />
                 </div>
             </div>

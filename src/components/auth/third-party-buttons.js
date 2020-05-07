@@ -6,7 +6,7 @@ import FacebookIcon from 'images/facebook.png'
 
 const shadowButtonStyle = {
     verticalAlign: 'middle',
-    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+    boxShadow: '0 2px 8px 0 rgba(37,44,97,.15), 0 1px 2px 0 rgba(93,100,148,.2)',
 }
 class ThirdPartyButtons extends React.Component {
     state = {

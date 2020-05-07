@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Collapse, List, Empty, Icon } from 'antd'
+import { Collapse, List, Empty } from 'antd'
 import { createPageViewLink } from 'utils/link-generator'
 import { Link } from 'gatsby'
 
@@ -19,17 +19,23 @@ class BookViewMenuSectionsComponent extends React.Component {
             }
         })
         return (
-            <div style={{ overflowY: 'auto', maxHeight: '60vh' }}>
+            <div style={{ overflowY: 'auto', maxHeight: '100%' }}>
                 {this.props.sections.length > 0 &&
-                    <Collapse activeKey={activeSectionIds} onChange={val => this.setState({ activeSectionIds: val })}>
+                    <Collapse
+                        bordered={false}
+                        activeKey={activeSectionIds}
+                        expandIconPosition="right"
+                        onChange={val => this.setState({ activeSectionIds: val })}
+                        style={{ background: this.props.background ? this.props.background : "white" }}
+                    >
                         {this.props.sections.map((s, sectionIdx) => {
                             return (
                                 <Panel
                                     key={s.id}
                                     header={
-                                        <span style={{ fontWeight: '500', fontSize: '16px' }}>{sectionIdx + 1 + ". " + s.title}</span>
+                                        <span style={{ fontSize: '16px' }}>{sectionIdx + 1 + ". " + s.title}</span>
                                     }
-                                    style={{ padding: '0px' }}
+                                    className="book-menu-section-panel"
                                 >
                                     <List
                                         itemLayout="horizontal"
@@ -38,27 +44,26 @@ class BookViewMenuSectionsComponent extends React.Component {
                                             emptyText: (<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="ページがありません" />)
                                         }}
                                         renderItem={(page, pageIdx) => {
-                                            const paddingTop = pageIdx === 0 ? "0px" : "16px";
-                                            const paddingBottom = pageIdx === s.pages.length - 1 ? "0px" : "16px";
-                                            const color = page.id === this.props.pageId ? '#2f54eb' : 'black';
+                                            const color = page.id === this.props.pageId ? '#2f54eb' : '';
+                                            const background = page.id === this.props.pageId ? '#d6e4ff' : '';
 
                                             return (
-                                                <List.Item
-                                                    style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
-                                                    key={page.id}
-                                                    extra={
-                                                        page.id === this.props.pageId ? <Icon type="arrow-left" style={{ color, marginBottom: '4px' }} /> : <></>
-                                                    }
-                                                >
-                                                    <List.Item.Meta
-                                                        title={
-                                                            <Link to={createPageViewLink(page.id, this.props.id)} style={{ color }}>
-                                                                <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{pageIdx + 1}. </span>
-                                                                {page.title}
-                                                            </Link>
-                                                        }
-                                                    />
-                                                </List.Item>
+                                                <Link to={createPageViewLink(page.id, this.props.id)} style={{ fontWeight: '400' }} >
+                                                    <List.Item
+                                                        className="book-menu-page-item"
+                                                        style={{ padding: '4px 8px 0px 8px', border: 'none', background }}
+                                                        key={page.id}
+                                                    >
+                                                        <List.Item.Meta
+                                                            title={
+                                                                <p style={{ marginBottom: '0px', color }}>
+                                                                    <span style={{ marginRight: '8px' }}>{sectionIdx + 1}.{pageIdx + 1} </span>
+                                                                    {page.title}
+                                                                </p>
+                                                            }
+                                                        />
+                                                    </List.Item>
+                                                </Link>
                                             )
                                         }}
                                     />

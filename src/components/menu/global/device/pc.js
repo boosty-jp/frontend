@@ -1,7 +1,6 @@
 import React from "react"
 import { Layout, Row, Col } from 'antd';
 import LogoImage from "components/image/logo";
-import SearchComponent from "components/menu/items/search";
 import OwnBooksIcon from "components/menu/items/own-books-icon";
 import AccountDropdown from "components/menu/items/account-dropdown";
 import { isLoggedIn } from "services/local-user";
@@ -30,7 +29,6 @@ const PcGlobalMenu = ({ maxWidth = 900 }) => {
                         <LogoImage />
                     </Col>
                     <Col span={16} style={{ textAlign: 'right' }}>
-                        <SearchComponent width={320} />
                         <UserItems />
                     </Col >
                 </Row>

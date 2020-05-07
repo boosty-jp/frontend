@@ -1,8 +1,8 @@
 import React from "react"
 import SignUpForm from "components/auth/signup/signup-form"
-import { Icon } from 'antd';
 import { Link } from "gatsby";
 import SimpleLayout from "components/layout/simple-layout";
+import { UserOutlined } from "@ant-design/icons";
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -20,7 +20,7 @@ const SignUpPage = () => (
         </div>
         <div style={{ margin: '24px auto', padding: '10px', textAlign: 'center' }}>
             <Link to="/login">
-                <p><Icon type="user" style={{ marginRight: '8px' }} />すでにアカウントをお持ちの場合は、ログインください</p>
+                <p><UserOutlined style={{ marginRight: '8px' }} />すでにアカウントをお持ちの場合は、ログインください</p>
             </Link>
         </div>
     </SimpleLayout>

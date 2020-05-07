@@ -2,9 +2,10 @@ import React from 'react';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { connect } from 'react-redux'
-import { message, Modal, Button, Form, Input, Tooltip, Icon } from 'antd';
+import { message, Modal, Button, Form, Input, Tooltip } from 'antd';
 import { addSection } from 'modules/book/edit'
 import { getErrorMessage } from "utils/error-handle";
+import { QuestionCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const ADD_SECTION = gql`
 mutation addSection($bookId: ID!, $title: String!) {
@@ -15,7 +16,7 @@ mutation addSection($bookId: ID!, $title: String!) {
 `;
 
 class AddSectionComponent extends React.Component {
-    state = { visible: false, loading: false };
+    state = { visible: false, loading: false, };
 
     showModal = () => {
         if (this.props.sections.length >= 20) {
@@ -27,27 +28,18 @@ class AddSectionComponent extends React.Component {
         });
     };
 
-    handleOk = e => {
-        e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                this.addSection(values.sectionTitle);
-            }
-        });
-    };
-
-    addSection = async (sectionTitle) => {
+    addSection = async values => {
         this.setState({ loading: true });
         try {
             const { data } = await this.props.client.mutate({
                 mutation: ADD_SECTION,
                 variables: {
                     bookId: this.props.id,
-                    title: sectionTitle
+                    title: values.sectionTitle
                 }
             });
 
-            this.props.addSection(data.addSection.id, sectionTitle)
+            this.props.addSection(data.addSection.id, values.sectionTitle)
             message.success("セクションを追加しました。", 7)
             this.setState({ visible: false, loading: false });
         } catch (err) {
@@ -63,44 +55,35 @@ class AddSectionComponent extends React.Component {
     };
 
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
             <>
                 <Button
                     ghost
+                    icon={<PlusOutlined />}
                     type="primary"
-                    icon="plus"
-                    style={{ marginRight: '12px' }}
                     onClick={this.showModal}
+                    style={{ marginRight: '12px' }}
                 >
                     セクションを追加する
                 </Button>
                 <Modal
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
-                    footer={[
-                        <Button key="back" onClick={this.handleCancel}>キャンセル</Button>,
-                        <Button key="submit" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.handleOk}>追加する</Button>,
-                    ]}
+                    footer={null}
                 >
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onFinish={this.addSection} {...layout} style={{ marginTop: '30px' }}>
                         <Form.Item
-                            label={
-                                <span>
-                                    セクション名&nbsp;
-                                            <Tooltip title="40文字まで入力できます">
-                                        <Icon type="question-circle-o" />
-                                    </Tooltip>
-                                </span>
-                            }
+                            name="sectionTitle"
+                            label={<SectionLabel />}
+                            rules={[
+                                { required: true, message: 'セクション名を入力してください', whitespace: true },
+                                { max: 40, message: 'セクション名は40文字までです', whitespace: true },
+                            ]}
                         >
-                            {getFieldDecorator('sectionTitle', {
-                                rules: [
-                                    { required: true, message: 'セクション名を入力してください', whitespace: true },
-                                    { max: 40, message: 'セクション名は40文字までです', whitespace: true },
-                                ],
-                                initialValue: "",
-                            })(<Input />)}
+                            <Input />
+                        </Form.Item>
+                        <Form.Item {...tailLayout}>
+                            <Button key="submit" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.addSection}>追加する</Button>
                         </Form.Item>
                     </Form>
                 </Modal>
@@ -117,5 +100,26 @@ const mapDispatchToProps = dispatch => ({
     addSection: (id, title) => dispatch(addSection(id, title)),
 })
 
-const AddSectionForm = connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'add-section' })(AddSectionComponent));
+const AddSectionForm = connect(mapStateToProps, mapDispatchToProps)(AddSectionComponent);
 export default withApollo(AddSectionForm)
+
+const layout = {
+    labelCol: { span: 7 },
+    wrapperCol: { span: 16 },
+};
+
+const tailLayout = {
+    wrapperCol: { offset: 7, span: 16 },
+};
+
+const SectionLabel = () => {
+    return (
+        <span>
+            セクション名&nbsp;
+            <Tooltip title="40文字まで入力できます">
+                <QuestionCircleOutlined />
+            </Tooltip>
+        </span>
+
+    )
+}

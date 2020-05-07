@@ -1,8 +1,9 @@
 import React from "react"
-import { Button, Empty, Upload, Icon, message, Spin } from 'antd';
+import { Button, Empty, Upload, message, Spin } from 'antd';
 import ThumbnailImage from "components/image/thumbnail";
 import getFirebase from "utils/firebase";
 import uuidv4 from 'uuid/v4'
+import { UploadOutlined, LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
 
 function beforeUpload(file) {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -63,18 +64,20 @@ export default class CoverImageUploader extends React.Component {
                     <>
                         <div style={{ padding: '0px', textAlign: 'center' }}>
                             <ThumbnailImage imageUrl={this.props.imageUrl} />
-                            <Button style={{ marginTop: '12px' }} onClick={this.removeImage}><Icon type="delete" /> 削除する</Button>
+                            <Button style={{ marginTop: '12px' }} onClick={this.removeImage}><DeleteOutlined /> 削除する</Button>
                         </div>
                     </>
                     :
-                    <Spin spinning={this.state.loading} tip="アップロード中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
-                        <Empty description="画像設定なし" image={Empty.PRESENTED_IMAGE_SIMPLE} style={{}} >
+                    <Spin spinning={this.state.loading} tip="アップロード中です" indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+                        <p style={{ textAlign: 'center' }}>カバー画像作成にお困りですか？<br /><a href="/cover-generator" target="_blank">テンプレート</a>からも作成できます!</p>
+                        <Empty description="画像設定なし" image={Empty.PRESENTED_IMAGE_SIMPLE} >
                             <Upload
                                 showUploadList={false}
                                 beforeUpload={beforeUpload}
                                 customRequest={this.customUpload}
+                                style={{ display: 'inline' }}
                             >
-                                <Button><Icon type='upload' /> アップロード</Button>
+                                <Button><UploadOutlined style={{ marginRight: '4px' }} />アップロード</Button>
                             </Upload>
                         </Empty>
                     </Spin>

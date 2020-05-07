@@ -1,5 +1,5 @@
 import React from "react"
-import { Divider, Spin, Icon, message } from 'antd';
+import { Divider, Spin, message } from 'antd';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { setUser } from "services/local-user";
@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import OwnLoginForm from "components/auth/login/own-login-form";
 import ThirdPartyButtons from "components/auth/third-party-buttons";
 import { getErrorMessage } from "utils/error-handle";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -82,7 +83,7 @@ class LoginForm extends React.Component {
             <Spin
                 tip="ロード中です"
                 spinning={this.state.loading}
-                indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
             >
                 <ThirdPartyButtons authType="ログイン" />
                 <LoginDivider>もしくは</LoginDivider>

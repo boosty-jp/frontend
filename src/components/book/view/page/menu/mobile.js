@@ -4,9 +4,8 @@ import { connect } from 'react-redux'
 import { setBookData } from 'modules/book/view'
 import { withApollo } from 'react-apollo'
 import BookViewMenuSections from "./sections";
-import BookViewMenuButtons from 'components/book/view/page/menu/buttons'
-import PageSearchForm from "./search";
 import BookViewMenuHeader from "./header";
+import { MenuOutlined } from "@ant-design/icons";
 
 class MobileBookViewMenuComponent extends React.Component {
     state = { visible: false };
@@ -26,10 +25,10 @@ class MobileBookViewMenuComponent extends React.Component {
     render() {
         return (
             <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={0} xxl={0}>
+                <Col xs={24} sm={24} md={24} lg={0} xl={0} xxl={0}>
                     <Button
                         shape="circle"
-                        icon="menu"
+                        icon={<MenuOutlined />}
                         size="large"
                         style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
                         onClick={this.showDrawer}
@@ -42,10 +41,6 @@ class MobileBookViewMenuComponent extends React.Component {
                     >
                         <div style={{ marginTop: '20px' }}>
                             <BookViewMenuHeader />
-                            <PageSearchForm />
-                            <div style={{ marginTop: '16px' }}>
-                                <BookViewMenuButtons pageId={this.props.id} />
-                            </div>
                             <div style={{ marginTop: '16px' }}>
                                 <BookViewMenuSections pageId={this.props.id} />
                             </div>

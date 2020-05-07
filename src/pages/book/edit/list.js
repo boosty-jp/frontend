@@ -1,15 +1,15 @@
 import React from "react"
 import SEO from "components/seo"
-import Layout from "components/layout/horizontal"
 import BookEditList from "components/book/edit/list";
+import VerticalLayout from "components/layout/vertical";
 
 const BookEditPage = () => (
-    <Layout>
+    <VerticalLayout activeMenuKey="edit">
         <SEO title="Home" />
-        <div style={{ backgroundColor: '#F7FAFF' }}>
+        <div style={{ padding: '20px', maxWidth: '1100px', margin: '0 auto' }}>
             <BookEditList />
         </div>
-    </Layout>
+    </VerticalLayout>
 )
 
 export default BookEditPage

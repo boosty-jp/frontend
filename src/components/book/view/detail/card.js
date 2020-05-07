@@ -7,7 +7,8 @@ import BookSalesPointCard from "./sales-point";
 import BookAuthor from "./author";
 import BookTargetUserCard from "./target-user";
 import { Row, Col, Affix } from 'antd'
-import BookCardList from "components/book/view/list/card-list"
+import FamousSaleBookList from "components/book/view/list/famous/top-sale-list"
+import FamousFreeBookList from "components/book/view/list/famous/top-free-sale-list"
 
 const BookDetailCard = () => {
     return (
@@ -27,10 +28,15 @@ const BookDetailCard = () => {
                     <BookSections />
                     <BookInfo />
                     <BookAuthor />
-                    <p style={{ fontWeight: 'bold', color: 'black', fontSize: '22px', textAlign: 'center', margin: '30px auto 10px auto' }}>
-                        おすすめの教材
+                    <p style={{ fontWeight: 'bold', color: 'black', fontSize: '22px', textAlign: 'center', margin: '50px auto 10px auto' }}>
+                        - おすすめ -
             </p>
-                    <BookCardList />
+                    <div style={{ marginTop: '20px' }}>
+                        <FamousSaleBookList />
+                    </div>
+                    <div style={{ marginTop: '20px' }}>
+                        <FamousFreeBookList />
+                    </div>
                 </Col>
             </Row>
         </>

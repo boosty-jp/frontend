@@ -20,13 +20,14 @@ const BookInfoComponent = (props) => {
             </p>
             <Descriptions
                 bordered
-                column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
+                layout="vertical"
+                // column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
                 style={{ borderRadius: '10rem' }}
             >
-                <Descriptions.Item label="更新日">{props.updateDate}</Descriptions.Item>
+                <Descriptions.Item label="更新日" >{props.updateDate}</Descriptions.Item>
                 <Descriptions.Item label="セクション数">{props.sections.length}</Descriptions.Item>
                 <Descriptions.Item label="ページ数">{props.sections.reduce((prev, x) => { return prev + x.pages.length }, 0)}</Descriptions.Item>
-                <Descriptions.Item label="説明">{props.description}</Descriptions.Item>
+                <Descriptions.Item label="説明" span={3}>{props.description}</Descriptions.Item>
             </Descriptions>
         </div>
     )

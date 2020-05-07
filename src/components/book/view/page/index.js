@@ -11,17 +11,14 @@ import PageLoader from 'components/loader/page';
 const GET_PAGE = gql`
   query Page($bookId:ID!, $pageId: ID!) {
     page(bookId: $bookId, pageId: $pageId) {
-      base{
-        id
-        title
-        canPreview
-        createDate
-        updateDate
-      }
-      blocks {
-        type
-        data
-      }
+      id
+      title
+      text
+      liked
+      likeCount
+      canPreview
+      createDate
+      updateDate
     }
   }
 `;

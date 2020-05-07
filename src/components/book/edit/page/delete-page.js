@@ -2,9 +2,10 @@ import React from 'react';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { connect } from 'react-redux'
-import { message, Popconfirm, Icon } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { deletePage } from 'modules/book/edit'
 import { getErrorMessage } from "utils/error-handle";
+import { ExclamationCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const DELETE_PAGE = gql`
 mutation deletePage($pageId: ID!) {
@@ -37,9 +38,9 @@ class DeletePageComponent extends React.Component {
                 cancelText="キャンセル"
                 onConfirm={this.deletePage}
                 title="本当に削除しますか？"
-                icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
+                icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
             >
-                <Icon type="delete" onClick={e => e.stopPropagation()} style={{ color: "rgb(0, 0, 0, 0.65)" }} />
+                <DeleteOutlined onClick={e => e.stopPropagation()} style={{ color: "rgb(0, 0, 0, 0.65)" }} />
             </Popconfirm>
         );
     }

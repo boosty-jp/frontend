@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { message, Button } from 'antd';
 import { getErrorMessage } from "utils/error-handle";
 import { createPageEditLink } from 'utils/link-generator'
+import { PlusOutlined } from '@ant-design/icons';
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -46,9 +47,9 @@ class AddPageButton extends React.Component {
         return (
             <>
                 <Button
-                    type="primary"
-                    icon="plus"
                     block
+                    type="primary"
+                    icon={<PlusOutlined />}
                     onClick={this.createPage}
                     loading={this.state.loading}
                     disabled={this.props.pages.length >= 20}

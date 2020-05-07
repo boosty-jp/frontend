@@ -1,29 +1,26 @@
 import React from "react"
 import 'devicon/'
 
-const LanguageIcon = ({ iconClassName, idx }) => {
-    var min = 30;
-    var max = 100;
-
-    var size = Math.floor(Math.random() * (max + 1 - min)) + min;
+const LanguageIcon = ({ iconClassName }) => {
+    var size = 50;
     return (
         <div
-            // className={"dev-icon-animation" + (idx % 2 + 1)}
             style={{
-                borderRadius: '1rem',
-                background: 'linear-gradient(145deg, #ffffff, #d8dde6)',
+                borderRadius: '16px',
+                background: 'linear-gradient(145deg, #f0f5ff, #ffffff)',
                 boxShadow: '8px 8px 16px #b4b8bf, -8px -8px 16px #ffffff',
                 width: size + "px",
                 height: size + "px",
-                color: '#325afb',
+                color: '#2f54eb',
                 textAlign: 'center',
                 verticalAlign: 'middle',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                margin: 'auto'
             }}>
             <i
-                class={iconClassName}
+                className={iconClassName}
                 style={{ fontSize: size / 2.1 + 'px' }}
             />
         </div>

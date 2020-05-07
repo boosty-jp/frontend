@@ -1,11 +1,12 @@
 import React from 'react';
-import { message, Button, Icon, Modal } from 'antd'
+import { message, Button, Modal } from 'antd'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { connect } from 'react-redux'
 import { reorderSections } from 'modules/book/edit'
 import { getErrorMessage } from "utils/error-handle";
+import { RetweetOutlined } from '@ant-design/icons';
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -102,7 +103,7 @@ class ReorderSectionComponent extends React.Component {
     render() {
         return (
             <>
-                <Button onClick={this.showModal}><Icon type="retweet" rotate={90} />並び替え</Button>
+                <Button onClick={this.showModal}><RetweetOutlined rotate={90} />並び替え</Button>
                 <Modal
                     title="セクションの並び替え"
                     visible={this.state.visible}

@@ -23,6 +23,7 @@ const GET_BOOK = gql`
             targetDescriptions
         }
         status
+        purchased
         tags {
             id
             name
@@ -38,6 +39,7 @@ const GET_BOOK = gql`
                 canPreview
             }
         }
+        lastViewedPageId
         author {
             id
             displayName
@@ -59,7 +61,7 @@ class BookViewComponent extends React.Component {
                 query={GET_BOOK}
                 variables={{ bookId: this.props.id }}
                 onCompleted={(data) => {
-                    this.props.setBookData(data.book, false);
+                    this.props.setBookData(data.book, this.props.preview);
                 }}
             >
                 {({ loading, error }) => {

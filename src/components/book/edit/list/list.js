@@ -2,13 +2,14 @@ import React from "react"
 import PageLoader from "components/loader/page";
 import ErrorResult from "components/error/result";
 import { withApollo } from 'react-apollo'
-import { Table, Divider, Badge, message, Icon, Popconfirm, Tooltip } from 'antd';
+import { Table, Divider, Badge, message, Popconfirm, Tooltip } from 'antd';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'gatsby';
 import { createBookEditLink, createBookDetailLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
 import { getCondition } from "utils/search-condition";
+import { DeleteOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons'
 
 const GET_BOOK_LIST = gql`
   query CreatedBooksBySelf($searchCondition: SearchCondition) {
@@ -152,7 +153,7 @@ class EditableBookList extends React.Component {
                 }
             },
             {
-                title: '購入者数',
+                title: '読者数',
                 width: '110px',
                 key: 'purchasedCount',
                 dataIndex: 'purchasedCount',
@@ -161,7 +162,7 @@ class EditableBookList extends React.Component {
             },
             {
                 title: '更新日',
-                width: '110px',
+                width: '160px',
                 key: 'updateTime',
                 dataIndex: 'updateTime',
                 defaultSortOrder: 'descend',
@@ -188,9 +189,9 @@ class EditableBookList extends React.Component {
                                         okText="削除"
                                         cancelText="キャンセル"
                                         onConfirm={() => this.delete(data.id)}
-                                        icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
+                                        icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
                                     >
-                                        <a href="/#" ><Icon type="delete" style={{ marginRight: '8px' }} /></a>
+                                        <a href="/#" ><DeleteOutlined style={{ marginRight: '8px' }} /></a>
                                     </Popconfirm>
                                 </Tooltip></>
                         );
@@ -198,7 +199,7 @@ class EditableBookList extends React.Component {
                     return (
                         <>
                             <Tooltip placement="left" title="編集">
-                                <Link to={createBookEditLink(data.id)}><Icon type="edit" style={{ marginRight: '8px' }} /></Link>
+                                <Link to={createBookEditLink(data.id)}><EditOutlined style={{ marginRight: '8px' }} /></Link>
                             </Tooltip>
                             {deleteButton}
                         </>

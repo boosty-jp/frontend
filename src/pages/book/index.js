@@ -1,23 +1,23 @@
 import React from "react"
-import ContentLayout from "components/layout/content-layout";
 import withLocation from "components/wrapper/location";
 import SEO from "components/seo"
 import BookView from "components/book/view/detail"
+import VerticalLayout from "components/layout/vertical";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const BookPage = (props) => {
-    const { id } = props.search
+    const { id, preview } = props.search
     if (!id) navigate("/404");
 
     return (
-        <ContentLayout>
+        <VerticalLayout>
             <SEO title="DEMO" />
-            <div style={{ maxWidth: "900px", margin: 'auto', padding: '20px 16px' }}>
-                <BookView id={id} />
+            <div style={{ maxWidth: "1100px", padding: '20px', margin: '0 auto' }}>
+                <BookView id={id} preview={preview} />
             </div>
-        </ContentLayout >
+        </VerticalLayout>
     );
 }
 

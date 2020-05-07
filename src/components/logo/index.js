@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 
 const Logo = () => {
     return (
-        <Link to="/">
+        <Link to="/home">
             < img alt="ロゴ" src={LogoImage} style={{ width: "120px", marginBottom: '0px' }} />
         </Link>
     )

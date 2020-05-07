@@ -5,23 +5,20 @@ import BookCoverImage from 'components/image/cover'
 import AuthorLabel from "components/avatar/author-label";
 import BookViewActionButton from "./action";
 
-const cardStyle = {
-    background: '#F7FAFF',
-    boxShadow: '10px 10px 20px #a3a5a8, -10px -10px 20px #ffffff',
-    borderRadius: '1rem',
-    width: '100%',
-    height: '100%',
-    padding: '20px',
-    fontColor: 'black',
-}
-
 const bookShadowStyle = {
     margin: '0 auto',
     width: '100%',
     borderRadius: '0.5rem',
     overflow: 'hidden',
-    background: '#F7FAFF',
-    boxShadow: '6px 6px 12px #a3a5a8, -6px -6px 12px #ffffff',
+    boxShadow: '3px 3px 6px #cdd0d4, -3px -3px 6px #ffffff'
+}
+const cardStyle = {
+    backgroundColor: 'white',
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+    borderRadius: '0.5rem',
+    width: '100%',
+    padding: '20px',
+    fontColor: 'black',
 }
 
 const PcBookHeaderCardComponent = (props) => {

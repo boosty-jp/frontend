@@ -1,34 +1,76 @@
-import React, { useState, useEffect, useRef } from "react"
-import { Layout } from 'antd';
-import SmallMenuItems from 'components/menu/vertical-items/small'
-import LargeMenuItems from 'components/menu/vertical-items/large'
-import MediumMenuItems from 'components/menu/vertical-items/medium'
+import React from "react"
+import { Divider, Tooltip } from 'antd';
+import SimpleLogoImage from "components/image/logo/simple";
+import { SearchOutlined, BookOutlined, EditOutlined, UserOutlined, HeartOutlined, HomeOutlined } from "@ant-design/icons";
+import AccountDropdown from "components/menu/items/account-dropdown";
+import { Link } from "gatsby";
+import { isLoggedIn } from "services/local-user";
 
-const { Header } = Layout;
+const appMenuStyle = {
+    padding: '20px 4px 20px 4px',
+    backgroundColor: '#002451',
+    height: '100vh',
+    color: '#bfbfbf',
+    fontSize: '20px',
+    textAlign: 'center',
+    boxShadow: '2px 0 6px rgba(0,21,41,.35)',
+}
 
-const VerticalMenu = ({ title, collapsed, toggle }) => {
-    const [width, setWidth] = useState(0)
-    const ref = useRef(null)
+const pages = [
+    { key: "home", title: "ホーム", icon: <HomeOutlined />, link: "/home" },
+    { key: "shelf", title: "本棚", icon: <BookOutlined />, link: "/book/own" },
+    { key: "like", title: "お気に入り", icon: <HeartOutlined />, link: "/like" },
+    { key: "search", title: "検索", icon: <SearchOutlined />, link: "/search" },
+]
 
-    useEffect(() => {
-        setWidth(ref.current.clientWidth)
-    }, [])
-
-    let MenuItems;
-    if (width > 700) {
-        MenuItems = <LargeMenuItems title={title} collapsed={collapsed} toggle={toggle} />;
-    } else if (width > 450) {
-        MenuItems = <MediumMenuItems title={title} collapsed={collapsed} toggle={toggle} />
-    } else {
-        MenuItems = <SmallMenuItems collapsed={collapsed} toggle={toggle} />
+const AccouontButtons = ({ activeKey }) => {
+    if (!isLoggedIn()) {
+        return (
+            <Tooltip placement="right" title="ログイン">
+                <Link to="/login" style={{ color: 'white' }}>
+                    <UserOutlined />
+                </Link>
+            </Tooltip>
+        )
     }
-
     return (
-        <Header style={{ background: '#fff', padding: 0 }}>
-            <div ref={ref} style={{ textAlign: 'right', paddingRight: '12px' }}>
-                {MenuItems}
+        <>
+            <div style={{ margin: '10px auto' }}>
+                <Tooltip placement="right" title="コンテンツ作成">
+                    <Link to="/book/edit/list" style={{ color: activeKey === "edit" ? "white" : "#ccc" }}>
+                        <EditOutlined />
+                    </Link>
+                </Tooltip>
             </div>
-        </Header>
+            <AccountDropdown placement="topRight" />
+        </>
     )
 }
-export default VerticalMenu
+
+const VerticalMenu = ({ activeKey }) => {
+    return (
+        <div style={{ ...appMenuStyle }}>
+            <div style={{ margin: "0 auto" }}>
+                <SimpleLogoImage style={{ margin: '0 auto' }} />
+            </div>
+            {pages.map(page => {
+                const color = page.key === activeKey ? "white" : "#ccc";
+                return (
+                    <div style={{ marginTop: '20px', }} key={page.key}>
+                        <Tooltip placement="right" title={page.title}>
+                            <Link to={page.link} style={{ color: color }}>
+                                {page.icon}
+                            </Link>
+                        </Tooltip>
+                    </div>
+                );
+            })}
+            <div style={{ position: 'fixed', bottom: '20px', left: '14px' }}>
+                <Divider style={{ background: 'gray', margin: '8px 0px' }} />
+                <AccouontButtons activeKey={activeKey} />
+            </div>
+        </div>
+    )
+}
+
+export default VerticalMenu;

@@ -1,5 +1,5 @@
 import React from "react"
-import { Divider, Spin, Icon, message } from 'antd';
+import { Divider, Spin, message } from 'antd';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { setUser } from "services/local-user";
@@ -7,6 +7,7 @@ import getFirebase from "utils/firebase";
 import styled from 'styled-components'
 import OwnSignUpForm from 'components/auth/signup/own-signup-form'
 import ThirdPartyButtons from "components/auth/third-party-buttons";
+import { LoadingOutlined } from "@ant-design/icons"
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -81,7 +82,7 @@ class SignUpForm extends React.Component {
             <Spin
                 tip="ロード中です"
                 spinning={this.state.loading}
-                indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
             >
                 <ThirdPartyButtons authType="会員登録" />
                 <SignUpDivider>もしくは</SignUpDivider>

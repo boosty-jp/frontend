@@ -2,10 +2,11 @@ import React from "react"
 import { withApollo } from 'react-apollo'
 import { connect } from 'react-redux'
 import gql from 'graphql-tag';
-import { message, Popconfirm, Icon } from 'antd';
+import { message, Popconfirm } from 'antd';
 import SimpleBorderedShadowButton from "components/button/simple-border-shadow";
 import { getErrorMessage } from "utils/error-handle";
 import { suspend } from 'modules/book/edit/index'
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const SUSPEND_BOOK = gql`
 mutation suspendBook($bookId: ID!) {
@@ -41,11 +42,11 @@ class BookSuspendButtonComponent extends React.Component {
                 cancelText="キャンセル"
                 onConfirm={this.suspendBook}
                 title="本当に公開停止しますか？"
-                icon={<Icon type="exclamation-circle" style={{ color: 'red' }} />}
+                icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
             >
                 <SimpleBorderedShadowButton
                     text="公開停止する"
-                    color="#262626"
+                    color="gray"
                     loading={this.state.loading}
                     style={{ marginRight: '10px' }}
                 />

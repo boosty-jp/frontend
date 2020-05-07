@@ -1,23 +1,53 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Button } from 'antd';
+import { withApollo } from 'react-apollo'
+import gql from 'graphql-tag';
+import { message, Button } from 'antd';
+import { PlusOutlined } from "@ant-design/icons";
+import { getErrorMessage } from "utils/error-handle"
+
+const isBrowser = typeof window !== 'undefined';
+const navigate = isBrowser ? require('gatsby').navigate : () => { }
+
+const ADD_BOOK_SHELF = gql`
+mutation AddBookShelf($bookId: ID!){
+  addBookShelf(bookId: $bookId)
+}
+`;
 
 class AddButtonComponent extends React.Component {
+    state = { loading: false }
+
+    handleSubmit = (ev) => {
+        ev.preventDefault();
+        this.setState({ loading: true })
+
+        this.props.client.mutate({
+            mutation: ADD_BOOK_SHELF,
+            variables: {
+                bookId: this.props.id,
+            }
+        }).then(() => {
+            message.info("本棚に追加しました", 10);
+            this.setState({ loading: false });
+            navigate("/book/own");
+        }).catch((err) => {
+            message.error(getErrorMessage(err), 10);
+            this.setState({ loading: false });
+        });
+    };
+
     render() {
         return (
             <Button
-                shape="round"
-                style={{
-                    borderColor: '#F7FAFF',
-                    color: '#1890ff',
-                    fontWeight: '500',
-                    fontSize: '16px',
-                    background: '#F7FAFF',
-                    boxShadow: '5px 5px 10px #a3a5a8, -5px -5px 10px #ffffff',
-                }}
-                size="large"
-                icon="plus"
                 block
+                shape="round"
+                size="large"
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={this.handleSubmit}
+                loading={this.state.loading}
+                style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
             >本棚に追加する</Button >
         )
     }
@@ -28,4 +58,4 @@ const mapStateToProps = state => ({
 })
 
 const AddButton = connect(mapStateToProps)(AddButtonComponent);
-export default AddButton
+export default withApollo(AddButton)

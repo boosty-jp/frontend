@@ -1,25 +1,25 @@
 import React from "react"
 import SEO from "components/seo"
+import { Row, Col } from 'antd'
 import UserProfileHeader from "components/user/header";
-import Layout from "components/layout/horizontal"
-import PublishedBookList from "components/book/view/list/pulished-list";
-import RecentViewedBookList from "components/book/view/list/recent-viiew-list";
+import CreatedBookList from "components/book/view/list/created-list";
+import VerticalLayout from "components/layout/vertical";
 
 const UserProfilePage = () => (
-    <Layout>
+    <VerticalLayout>
         <SEO title="Home" />
-        <div style={{ backgroundColor: '#f0f5ff' }}>
-            <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
+        <Row style={{ padding: '20px' }} gutter={20} style={{ margin: '20px auto', maxWidth: '800px' }}>
+            <Col xs={24} sm={24} style={{ marginBottom: '20px' }}>
                 <UserProfileHeader selfSearch={true} />
-                <div style={{ marginTop: '30px' }}>
-                    <RecentViewedBookList />
+            </Col>
+            <Col xs={24} sm={24} >
+                <div style={{ marginBottom: '20px' }}>
+                    <CreatedBookList />
                 </div>
-                <div style={{ marginTop: '30px' }}>
-                    <PublishedBookList />
-                </div>
-            </div>
-        </div>
-    </Layout>
+
+            </Col>
+        </Row>
+    </VerticalLayout>
 )
 
 export default UserProfilePage

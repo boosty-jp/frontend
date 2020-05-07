@@ -1,8 +1,9 @@
 import React from 'react'
-import { Icon, message, Result, Form, Input, Button, Spin } from 'antd';
+import { message, Result, Form, Input, Button, Spin } from 'antd';
 import { Link } from "gatsby";
+import { LockOutlined, LoadingOutlined } from '@ant-design/icons';
 
-class ResetPasswordFormComponent extends React.Component {
+class PasswordResetForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,9 +25,9 @@ class ResetPasswordFormComponent extends React.Component {
         });
     }
 
-    handleResetPassword = (password) => {
+    handleResetPassword = values => {
         this.setState({ isUpdating: true })
-        this.props.auth.confirmPasswordReset(this.props.actionCode, password).then((response) => {
+        this.props.auth.confirmPasswordReset(this.props.actionCode, values.password).then((response) => {
             this.setState({ passwordUpdated: true, isUpdating: false })
         }).catch((error) => {
             const errorCode = error.code
@@ -45,18 +46,7 @@ class ResetPasswordFormComponent extends React.Component {
         });
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields(((err, values) => {
-            if (!err) {
-                this.handleResetPassword(values.password)
-            }
-        }));
-    };
-
     render() {
-        const { getFieldDecorator } = this.props.form;
-
         var content = <></>;
         if (this.state.invalid) {
             content = (
@@ -68,21 +58,20 @@ class ResetPasswordFormComponent extends React.Component {
             )
         } else if (!this.state.passwordUpdated) {
             content = (
-                <Form onSubmit={this.handleSubmit} className="login-form">
-                    <Form.Item label="新しいパスワード">
-                        {getFieldDecorator('password', {
-                            rules: [
-                                { required: true, message: 'パスワードを入力してください。' },
-                                { min: 6, message: '6文字以上を入力してください' },
-                            ],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                type="password"
-                                placeholder="新しいパスワード"
-                                size="large"
-                            />,
-                        )}
+                <Form onFinish={this.handleResetPassword}>
+                    <Form.Item
+                        name="password"
+                        label="新しいパスワード"
+                        rules={[
+                            { required: true, message: 'パスワードを入力してください。' },
+                            { min: 6, message: '6文字以上を入力してください' },
+                        ]}>
+                        <Input
+                            prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            type="password"
+                            placeholder="新しいパスワード"
+                            size="large"
+                        />
                     </Form.Item>
                     <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
                         <Button loading={this.state.loading} type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>パスワードを変更する</Button>
@@ -103,7 +92,7 @@ class ResetPasswordFormComponent extends React.Component {
             < Spin
                 tip="ロード中です"
                 spinning={this.state.loading || this.state.isUpdating}
-                indicator={< Icon type="loading" style={{ fontSize: 24 }} spin />}
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
             >
                 {content}
             </Spin>
@@ -111,5 +100,4 @@ class ResetPasswordFormComponent extends React.Component {
     }
 }
 
-const PasswordResetForm = Form.create({ name: 'password-reset' })(ResetPasswordFormComponent);
 export default PasswordResetForm;

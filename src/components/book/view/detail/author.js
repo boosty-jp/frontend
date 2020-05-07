@@ -39,7 +39,6 @@ const BookAuthorComponent = (props) => {
                     <p style={{ fontSize: '16px' }}>{props.author.description}</p>
                 </Col>
             </Row>
-
         </div>
     )
 }

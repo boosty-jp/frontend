@@ -1,6 +1,6 @@
 import React from "react"
 
-const BookCoverImage = ({ imageUrl, boxShadow = "18px 18px 36px #cdd0d4, -18px -18px 36px #ffffff" }) => {
+const BookCoverImage = ({ imageUrl, boxShadow = "3px 3px 6px #cdd0d4, -3px -3px 36px #ffffff", borderRadius = "0px" }) => {
     if (!imageUrl) return <></>
 
     return (
@@ -12,6 +12,7 @@ const BookCoverImage = ({ imageUrl, boxShadow = "18px 18px 36px #cdd0d4, -18px -
                 backgroundImage: `url(${imageUrl})`,
                 backgroundPosition: 'center center',
                 boxShadow: boxShadow,
+                borderRadius: borderRadius
             }} />
     )
 }

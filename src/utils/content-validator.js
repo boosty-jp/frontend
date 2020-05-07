@@ -15,29 +15,15 @@ export const getTitleError = (title) => {
     return { status, message };
 }
 
-export const getBlocksError = (blocks) => {
+export const getTextError = (text) => {
     let status = "";
     let message = "";
-    if (!blocks || blocks.length === 0) {
+    if (!text || text.length === 0 || text.search(/\S+/) === -1) {
         status = "error";
         message = "内容を入力してください"
-    } else if (blocks.length > 100) {
+    } else if (text.length > 1000000) {
         status = "error";
-        message = "作成できるブロックは最大100までです"
-    } else {
-        status = "";
-        message = "";
-    }
-
-    return { status, message };
-}
-
-export const getBlockTextError = (textCount) => {
-    let status = "";
-    let message = "";
-    if (textCount > 20000) {
-        status = "error";
-        message = "20000文字以内にしてください"
+        message = "内容が長過ぎます"
     } else {
         status = "";
         message = "";

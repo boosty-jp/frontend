@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from 'react-redux'
 import { Avatar } from 'antd';
+import { CheckOutlined } from "@ant-design/icons";
 
 const TargetUserDescriptionItem = ({ description }) => {
 
@@ -13,7 +14,7 @@ const TargetUserDescriptionItem = ({ description }) => {
             paddingLeft: '2.4em',
         }}
         >
-            <Avatar icon="check" size={24} style={{ backgroundColor: "#1890ff", textIndent: '0em' }} />
+            <Avatar icon={<CheckOutlined />} size={24} style={{ backgroundColor: "#1890ff", textIndent: '0em' }} />
             <span style={{
                 color: 'black',
                 fontSize: '18px',

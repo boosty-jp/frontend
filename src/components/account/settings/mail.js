@@ -1,13 +1,13 @@
 import React from "react"
-import { Form, Input, Button, Icon, Modal, message, Spin } from 'antd';
+import { Form, Input, Button, Modal, message, Spin } from 'antd';
 import getFirebase from 'utils/firebase'
 import ReAuthForm from "components/auth/reauth/reauth-form";
+import { LoadingOutlined, WarningOutlined, MailOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
-class UpdateForm extends React.Component {
-
+class MailUpdateForm extends React.Component {
     state = {
         needReAuth: false,
         loading: true,
@@ -39,15 +39,6 @@ class UpdateForm extends React.Component {
         })
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                this.change(values.mail);
-            }
-        });
-    };
-
     handleAuthError = (error) => {
         const errorCode = error.code;
         this.setState({ updating: false, needReAuth: false });
@@ -66,12 +57,12 @@ class UpdateForm extends React.Component {
         }
     }
 
-    change = (mail) => {
+    change = values => {
         const firebase = getFirebase();
         this.setState({ updating: true });
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                user.updateEmail(mail).then(() => {
+                user.updateEmail(values.mail).then(() => {
                     message.success("メールアドレスを変更しました。", 10)
                     this.mailVerification();
                     this.setState({ updating: false, needReAuth: false });
@@ -98,43 +89,31 @@ class UpdateForm extends React.Component {
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
-
         return (
             <div style={{ maxWidth: '500px', width: '100%' }}>
                 <Spin
                     tip="ロード中です"
                     spinning={this.state.loading}
-                    indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
+                    indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
                 >
-                    <div style={{ fontWeight: '500', fontSize: '14px', marginBottom: '30px' }}>
-                        <p><Icon type="mail" style={{ marginRight: '8px' }} />現在のメールアドレス</p>
-                        <p>{this.state.currentMail}</p>
-                    </div>
-                    <Form onSubmit={this.handleSubmit}>
-                        <Form.Item label='新しいメールアドレス'>
-                            {getFieldDecorator('mail', {
-                                rules: [
-                                    { required: true, message: 'メールアドレスを入力してください', whitespace: true },
-                                ],
-                            })(<Input
-                                prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="メールアドレス"
-                                size="large"
-                            />)}
+                    <Form onFinish={this.handleSubmit} {...layout}>
+                        <Form.Item label='現在のメールアドレス'>
+                            {this.state.currentMail}
                         </Form.Item>
-                        <Form.Item >
-                            <Button
-                                loading={this.state.updating}
-                                type="primary"
-                                htmlType="submit"
-                            >
-                                更新する
-                            </Button>
+
+                        <Form.Item label='新しいメールアドレス' name="mail" rules={[{ required: true, message: 'メールアドレスを入力してください', whitespace: true }]}>
+                            <Input
+                                size="large"
+                                placeholder="メールアドレス"
+                                prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            />
+                        </Form.Item>
+                        <Form.Item {...tailLayout}>
+                            <Button type="primary" htmlType="submit" loading={this.state.updating}>更新する</Button>
                         </Form.Item>
                     </Form >
                     <Modal
-                        title={<><Icon type="warning" theme="twoTone" twoToneColor="#FFCC00" style={{ marginRight: '8px' }} />メールアドレス変更には認証が必要です</>}
+                        title={<><WarningOutlined theme="twoTone" twoToneColor="#FFCC00" style={{ marginRight: '8px' }} />メールアドレス変更には認証が必要です</>}
                         visible={this.state.needReAuth}
                         onCancel={() => this.setState({ needReAuth: false })}
                         footer={null}
@@ -147,5 +126,13 @@ class UpdateForm extends React.Component {
     }
 }
 
-const MailUpdateForm = Form.create({ name: 'mail-update' })(UpdateForm);
 export default MailUpdateForm
+
+const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+};
+
+const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+};

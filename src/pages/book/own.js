@@ -1,16 +1,16 @@
 import React from "react"
 
 import SEO from "components/seo"
-import ContentLayout from "components/layout/content-layout"
 import OwnBookList from "components/book/view/list/own-list"
+import VerticalLayout from "components/layout/vertical"
 
 const OwnedBookPage = () => (
-    <ContentLayout>
+    <VerticalLayout activeMenuKey="shelf">
         <SEO title="DEMO" />
-        <div style={{ maxWidth: "900px", margin: 'auto', padding: '20px' }}>
+        <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             <OwnBookList />
         </div>
-    </ContentLayout>
+    </VerticalLayout>
 )
 
 export default OwnedBookPage

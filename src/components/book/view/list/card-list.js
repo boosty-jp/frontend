@@ -28,7 +28,7 @@ const courses = [
     },
 ]
 
-const CourseCardList = () => (
+const BookCardList = () => (
     <Row type="flex" align="middle" gutter={16} >
         {courses.map(c => {
             return (
@@ -44,4 +44,4 @@ const CourseCardList = () => (
     </Row>
 )
 
-export default CourseCardList
+export default BookCardList

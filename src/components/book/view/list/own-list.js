@@ -1,39 +1,18 @@
 import React from "react"
-
-import Book1Image from 'images/book-cover-1.png'
-import Book2Image from 'images/book-cover-2.png'
-import Book3Image from 'images/book-cover-3.png'
-import Book4Image from 'images/book-cover-4.png'
-import { List, Select } from 'antd'
-import { Link } from "gatsby"
+import { List, Spin, message } from 'antd'
+import { Query } from 'react-apollo'
+import { LoadingOutlined, BookTwoTone } from '@ant-design/icons';
 import OwnBookItem from 'components/book/view/list/item'
+import gql from 'graphql-tag';
+import { withApollo } from 'react-apollo'
+import ErrorResult from "components/error/result";
+import { createPageViewLink } from 'utils/link-generator'
+import { isLoggedIn } from "services/local-user";
+import NeedLoginComponent from "components/auth/need-login"
+import { getErrorMessage } from 'utils/error-handle'
 
-const { Option } = Select
-
-let books = [
-    {
-        title: 'React Redux入門書',
-        imageUrl: Book1Image,
-        author: { name: '金沢 たかし' },
-    },
-    {
-        title: '詳細解説 Vue.js',
-        imageUrl: Book2Image,
-        author: { name: '山下 智己' },
-    },
-    {
-        title: 'Ruby on Rails パーフェクトガイド',
-        imageUrl: Book3Image,
-        author: { name: '池上 拓' },
-    },
-    {
-        title: '今すぐ使えるJavascriptテクニック',
-        imageUrl: Book4Image,
-        author: { name: '渡辺 秀作' },
-    },
-]
-
-books = [...books, ...books, ...books, ...books, ...books, ...books, ...books, ...books, ...books, ...books]
+const isBrowser = typeof window !== 'undefined';
+const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -42,48 +21,133 @@ const cardStyle = {
     width: '100%',
     padding: '20px',
     fontColor: 'black',
+    minHeight: '500px',
 }
 
-const OwnBookList = () => (
-    <div style={cardStyle}>
-        <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'black', textAlign: 'center' }}>本棚</p>
-        <div style={{ textAlign: 'right', marginBottom: '40px' }}>
-            <span style={{ marginRight: '18px' }}>並び替え: </span>
-            <Select defaultValue="history" style={{ width: 150 }} >
-                <Option value="history">最近閲覧した</Option>
-                <Option value="title">タイトル</Option>
-                <Option value="saleDate">発売日</Option>
-                <Option value="updateDate">改定日</Option>
-            </Select>
-        </div>
-        <List
-            grid={{
-                gutter: 16,
-                xs: 3,
-                sm: 4,
-                md: 4,
-                lg: 6,
-                xl: 6,
-                xxl: 6,
-            }}
-            pagination={{
-                onChange: page => {
-                    console.log(page);
-                },
-                pageSize: 12,
-            }}
-            dataSource={books}
-            renderItem={book => (
-                <List.Item>
-                    <Link to="/book">
-                        <div style={{ width: '100%', margin: '0 auto' }}>
-                            <OwnBookItem imageUrl={book.imageUrl} title={book.title} author={book.author} />
-                        </div>
-                    </Link>
-                </List.Item>
-            )}
-        />
-    </div>
-)
+const GET_OWN_BOOKS = gql`
+  query GetOwnBook($page: Int!) {
+    ownBooks(page: $page) {
+      books {
+        id
+        title
+        imageUrl
+        author {
+          displayName
+        }
+      }
+      sumCount
+    }
+}
+`;
 
-export default OwnBookList
+const GET_PAGE_ID_TO_READ = gql`
+  query GetPageIdToRead($bookId: ID!) {
+    pageIdToRead(bookId: $bookId)
+}
+`;
+
+const gridStyle = {
+    gutter: 16,
+    xs: 2,
+    sm: 4,
+    md: 4,
+    lg: 4,
+    xl: 6,
+    xxl: 6,
+}
+class OwnBookList extends React.Component {
+    state = { loading: true, data: null, error: null }
+
+    moveToBookPage = async (bookId) => {
+        this.setState({ loading: true });
+        try {
+            const { data } = await this.props.client.query({
+                query: GET_PAGE_ID_TO_READ,
+                variables: { bookId: bookId }
+            });
+            navigate(createPageViewLink(data.pageIdToRead, bookId));
+        } catch (err) {
+            message.error(getErrorMessage(err), 7)
+        }
+        this.setState({ loading: false });
+    }
+
+    paginate = async page => {
+        this.setState({ loading: true })
+        try {
+            const { data } = await this.props.client.query({
+                query: GET_OWN_BOOKS,
+                variables: { page: page, }
+            });
+            this.setState({ data });
+        } catch (err) {
+            message.error(getErrorMessage(err), 7)
+        }
+        this.setState({ loading: false })
+    }
+
+    handleComplete = data => {
+        this.setState({ loading: false, data })
+    }
+
+    handleError = error => {
+        this.setState({ loading: false, error })
+    }
+
+    render() {
+
+        if (!isLoggedIn()) {
+            return (<NeedLoginComponent />)
+        }
+
+        const data = this.state.data ? this.state.data.ownBooks.books : [];
+        const sumCount = this.state.data ? this.state.data.ownBooks.sumCount : 0;
+
+        return (
+            <Query
+                query={GET_OWN_BOOKS}
+                variables={{ page: 1 }}
+                onError={this.handleError}
+                onCompleted={this.handleComplete}
+            >
+                {() => {
+                    return (
+                        this.state.error ?
+                            <ErrorResult />
+                            :
+                            <Spin
+                                tip="読込中です"
+                                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                                spinning={this.state.loading}
+                            >
+                                <div style={cardStyle}>
+                                    <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'black', textAlign: 'center' }}>
+                                        <BookTwoTone style={{ marginRight: '8px' }} />
+                                        <span>本棚</span>
+                                    </p>
+                                    <List
+                                        grid={gridStyle}
+                                        pagination={{
+                                            onChange: this.paginate,
+                                            pageSize: 24,
+                                            total: sumCount
+                                        }}
+                                        dataSource={data}
+                                        renderItem={book => (
+                                            <List.Item>
+                                                <div style={{ width: '100%', margin: '0 auto', cursor: 'pointer' }} onClick={() => this.moveToBookPage(book.id)}>
+                                                    <OwnBookItem imageUrl={book.imageUrl} title={book.title} author={{ name: book.author.displayName }} />
+                                                </div>
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>
+                            </Spin>
+                    )
+                }}
+            </Query >
+        )
+    }
+}
+
+export default withApollo(OwnBookList)

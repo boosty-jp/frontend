@@ -6,6 +6,9 @@ import EditableBookList from "components/book/edit/list/list";
 import SimpleBorderedShadowButton from "components/button/simple-border-shadow";
 import { createBookEditLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
+import { PlusOutlined } from '@ant-design/icons'
+import { isLoggedIn } from "services/local-user";
+import NeedLoginComponent from "components/auth/need-login";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -50,13 +53,17 @@ class BookEditList extends React.Component {
     };
 
     render() {
+        if (!isLoggedIn()) {
+            return (<NeedLoginComponent />)
+        }
+
         return (
-            <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
+            <div style={{ padding: '20px', width: '100%', margin: 'auto' }}>
                 <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>著書一覧</Paragraph>
                 <div style={cardStyle}>
                     <div style={{ textAlign: 'right', marginBottom: '20px' }}>
                         <SimpleBorderedShadowButton
-                            icon="plus"
+                            icon={<PlusOutlined />}
                             text="新規作成"
                             color="#1890ff"
                             onClick={this.createBook}

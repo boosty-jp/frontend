@@ -1,6 +1,7 @@
 import React from "react"
-import { Typography, Row, Col, Icon } from 'antd';
+import { Typography, Row, Col } from 'antd';
 import LogoInvertImage from "components/image/logo/invert";
+import { TwitterOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
 
@@ -21,7 +22,7 @@ class GlobalFooter extends React.Component {
                         <Col xs={24} sm={24} md={9} lg={9} xl={9} style={{ textAlign: 'center' }}>
                             <Paragraph style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>SNS</Paragraph>
                             <Paragraph ><a href="https://twitter.com/boosty_official" style={{ color: 'white', fontSize: '14px' }}>
-                                <Icon type="twitter" style={{ marginRight: '10px' }} />Twitter</a>
+                                <TwitterOutlined style={{ marginRight: '10px' }} />Twitter</a>
                             </Paragraph>
                             <Paragraph ><a href="https://twitter.com/tom__yam" style={{ color: 'white', fontSize: '14px' }}>開発者</a></Paragraph>
                         </Col >

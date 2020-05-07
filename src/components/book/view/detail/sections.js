@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Collapse, List, Empty } from 'antd'
+import { Collapse, List, Empty, Button } from 'antd'
 import { createPageViewLink } from 'utils/link-generator'
 import { Link } from 'gatsby'
 
@@ -11,7 +11,6 @@ const cardStyle = {
     boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
     borderRadius: '0.5rem',
     width: '100%',
-    height: '100%',
     padding: '20px',
     fontColor: 'black',
 }
@@ -41,18 +40,26 @@ const BookSectionsComponent = (props) => {
                                     renderItem={(page, pageIdx) => {
                                         const paddingTop = pageIdx === 0 ? "0px" : "16px";
                                         const paddingBottom = pageIdx === s.pages.length - 1 ? "0px" : "16px";
+                                        const canRead = page.canPreview || props.purchased || props.price === 0;
 
                                         return (
                                             <List.Item
                                                 style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
                                                 key={page.id}
+                                                actions={canRead ? [<Link to={createPageViewLink(page.id, props.id)}><Button>読む</Button></Link>] : []}
                                             >
                                                 <List.Item.Meta
                                                     title={
-                                                        <Link to={createPageViewLink(page.id, props.id)}>
-                                                            <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{pageIdx + 1}. </span>
-                                                            {page.title}
-                                                        </Link>
+                                                        canRead ?
+                                                            <Link to={createPageViewLink(page.id, props.id)}>
+                                                                <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{pageIdx + 1}. </span>
+                                                                {page.title}
+                                                            </Link>
+                                                            :
+                                                            <>
+                                                                <span style={{ marginRight: '12px' }}>{sectionIdx + 1}-{pageIdx + 1}. </span>
+                                                                {page.title}
+                                                            </>
                                                     }
                                                 />
                                             </List.Item>
@@ -70,6 +77,8 @@ const BookSectionsComponent = (props) => {
 
 const mapStateToProps = state => ({
     id: state.bookView.id,
+    price: state.bookView.price,
+    purchased: state.bookView.purchased,
     sections: state.bookView.sections,
 })
 

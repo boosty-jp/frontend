@@ -8,26 +8,24 @@ const ReadButtonComponent = (props) => {
     let buttonText = "はじめから読む"
     let pageId = props.sections[0].pages[0].id;
 
-    if (props.recentReadPageId) {
-        buttonText = <>続きから読む<br />{props.recentReadPageTitle}</>;
-        pageId = props.recentReadPageId;
+    if (props.lastViewedPageId) {
+        buttonText = "続きから読む";
+        pageId = props.lastViewedPageId;
     }
 
     return (
         <Link to={createPageViewLink(pageId, props.bookId)}>
             <Button
+                type="primary"
                 shape="round"
-                style={{
-                    borderColor: '#F7FAFF',
-                    color: '#1890ff',
-                    fontWeight: '500',
-                    fontSize: '16px',
-                    background: '#F7FAFF',
-                    boxShadow: '5px 5px 10px #a3a5a8, -5px -5px 10px #ffffff',
-                }}
                 size="large"
                 block
             >{buttonText}</Button >
+            {props.lastViewedPageId &&
+                <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                    <Link to={createPageViewLink(props.sections[0].pages[0].id, props.bookId)}>はじめから読む</Link>
+                </div>
+            }
         </Link>
     )
 }
@@ -35,8 +33,7 @@ const ReadButtonComponent = (props) => {
 const mapStateToProps = state => ({
     bookId: state.bookView.id,
     sections: state.bookView.sections,
-    recentReadPageId: state.bookView.recentReadPageId,
-    recentReadPageTitle: state.bookView.recentReadPageTitle
+    lastViewedPageId: state.bookView.lastViewedPageId,
 })
 
 const ReadButton = connect(mapStateToProps)(ReadButtonComponent);

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import { connect } from 'react-redux'
-import { Layout, Menu, Typography, Icon } from 'antd';
+import { Layout, Menu, Typography } from 'antd';
 import { Link } from 'gatsby'
 import BookStatusCard from "./status/status-card";
+import { BarsOutlined } from "@ant-design/icons";
 
 const { Content, Sider } = Layout;
 const { Paragraph } = Typography;
@@ -92,7 +93,7 @@ const BookEditLayoutComponent = (props) => {
     return (
         <div style={{ marginTop: '20px' }}>
             <Link to="book/edit/list" style={{ marginBottom: '16px' }}>
-                <Icon type="bars" style={{ marginRight: '8px' }} />著書一覧へ
+                <BarsOutlined style={{ marginRight: '8px' }} />著書一覧へ
             </Link>
             <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「{bookTitle}」の編集</Paragraph>
             <BookStatusCard id={props.id} />

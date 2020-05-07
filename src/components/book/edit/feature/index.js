@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from 'react-redux'
-import uuidv4 from 'uuid/v4'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { Skeleton } from 'antd';
@@ -57,12 +56,7 @@ class BookEditFeaturesComponents extends React.Component {
                     return (
                         <BookEditFeaturesForm
                             id={this.props.id}
-                            features={
-                                data.book.features.length === 0 ?
-                                    [{ id: uuidv4(), value: "" }]
-                                    :
-                                    data.book.features.map(f => { return { id: uuidv4(), value: f } })
-                            }
+                            features={data.book.features.length === 0 ? [] : data.book.features}
                         />
                     )
                 }}

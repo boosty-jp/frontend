@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, List, Icon, Empty } from 'antd'
+import { Collapse, List, Empty, Switch } from 'antd'
 import { Link } from 'gatsby'
 import { connect } from 'react-redux'
 import DeleteSection from 'components/book/edit/section/delete-section'
@@ -8,6 +8,8 @@ import AddPageButton from 'components/book/edit/page/add-page'
 import DeletePage from 'components/book/edit/page/delete-page'
 import ReorderPage from 'components/book/edit/section/reorder-page'
 import { createPageEditLink, createPageViewLink } from 'utils/link-generator';
+import { EditOutlined } from '@ant-design/icons';
+import TrialReadButton from 'components/book/edit/page/trial-read-button'
 
 const { Panel } = Collapse;
 
@@ -41,8 +43,10 @@ const BookEditSectionsComponent = (props) => {
                                     return (
                                         <List.Item
                                             actions={[
+                                                <TrialReadButton sectionId={s.id} pageId={page.id} checked={page.canPreview} />
+                                                ,
                                                 <Link to={createPageEditLink(page.id, props.id)}>
-                                                    <Icon type="edit" style={{ color: "rgb(0, 0, 0, 0.65)" }} />
+                                                    <EditOutlined style={{ color: "rgb(0, 0, 0, 0.65)" }} />
                                                 </Link>,
                                                 <DeletePage id={page.id} />
 

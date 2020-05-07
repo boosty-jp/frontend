@@ -1,11 +1,12 @@
 import React from "react";
-import { Select, Spin, Divider, message, Icon } from "antd";
+import { Select, Spin, Divider, message } from "antd";
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import debounce from "lodash/debounce";
 import algoliasearch from 'algoliasearch/lite';
 import { getErrorMessage } from "utils/error-handle";
 import { isAbuseWord } from "utils/abuse-word-checker";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -32,7 +33,6 @@ class TagSelectForm extends React.Component {
             searchResults: [],
             fetching: false,
             inputVal: '',
-            open: false,
             loading: false,
         };
     }
@@ -45,10 +45,10 @@ class TagSelectForm extends React.Component {
             return;
         }
 
-        this.setState({ searchResults: [], fetching: true, inputVal: value, open: true });
+        this.setState({ searchResults: [], fetching: true, inputVal: value, });
 
         index.search({ query: value, hitsPerPage: 8 }).then(({ hits }) => {
-            const result = hits.map(hit => {
+            var result = hits.map(hit => {
                 return { id: hit.objectID, key: hit.objectID, name: hit.name }
             })
 
@@ -60,7 +60,6 @@ class TagSelectForm extends React.Component {
         this.setState({
             searchResults: [],
             fetching: false,
-            open: false,
             inputVal: ''
         });
         this.props.updateTags(values.map(v => { return { id: v.key, name: v.label } }));
@@ -68,7 +67,7 @@ class TagSelectForm extends React.Component {
 
     addItem = async () => {
         const { inputVal } = this.state;
-        this.setState({ loading: true, fetching: true, open: false });
+        this.setState({ loading: true, fetching: true, });
         try {
             if (isAbuseWord(inputVal)) {
                 throw new Error("その用語は登録できません");
@@ -87,7 +86,6 @@ class TagSelectForm extends React.Component {
         this.setState({
             searchResults: [],
             fetching: false,
-            open: false,
             inputVal: '',
             loading: false
         });
@@ -124,22 +122,21 @@ class TagSelectForm extends React.Component {
     }
 
     render() {
-        const { fetching, searchResults, inputVal, open, loading } = this.state;
+        const { fetching, searchResults, inputVal, loading } = this.state;
         return (
-            <Spin spinning={loading} tip="更新中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+            <Spin spinning={loading} tip="更新中です" indicator={< LoadingOutlined style={{ fontSize: 24 }} spin />}>
                 <Select
+                    autoFocus
                     size="large"
                     mode="multiple"
                     labelInValue
                     value={this.props.tags.map(t => { return { key: t.id, label: t.name } })}
                     placeholder="タグを選択する"
-                    notFoundContent={fetching ? <Spin size="small" /> : null}
+                    notFoundContent={fetching ? <Spin size="small" /> : <></>}
                     filterOption={false}
                     onSearch={this.fetchTags}
                     onChange={this.handleChange}
                     style={{ width: "100%" }}
-                    open={open}
-                    onBlur={() => this.setState({ open: false })}
                     dropdownRender={menu => (
                         this.displayCreationForm() ?
                             <div>
@@ -151,12 +148,10 @@ class TagSelectForm extends React.Component {
                                     onClick={this.addItem}
                                 >
                                     <strong>「{inputVal}」</strong>を追加する
-                            </div>
+                        </div>
                             </div>
                             :
-                            <>
-                                {menu}
-                            </>
+                            <>{menu}</>
                     )}
                 >
                     {

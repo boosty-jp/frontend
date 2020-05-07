@@ -2,8 +2,9 @@ import React from "react"
 import gql from 'graphql-tag';
 import uuidv4 from 'uuid/v4'
 import { withApollo } from 'react-apollo'
-import { Form, Input, Icon, Button, message } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { getErrorMessage } from 'utils/error-handle';
+import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 
 const UPDATE_BOOK_FEATURES = gql`
 mutation updateBookFeatures($bookId: ID!, $features: [String]!){
@@ -11,7 +12,7 @@ mutation updateBookFeatures($bookId: ID!, $features: [String]!){
 }
 `;
 
-class BookEditFeaturesFormComponent extends React.Component {
+class BookEditFeaturesForm extends React.Component {
     state = { loading: false }
     remove = id => {
         const { form } = this.props;
@@ -35,19 +36,13 @@ class BookEditFeaturesFormComponent extends React.Component {
         });
     };
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                const { features, names } = values;
-                if (!features || features.length === 0) {
-                    message.error("特徴を入力してください。");
-                    return;
-                }
-                this.updateFeatures(features.map(feature => names[feature.id]));
-
-            }
-        });
+    handleSubmit = values => {
+        const { features } = values;
+        if (!features || features.length === 0) {
+            message.error("特徴を入力してください。");
+            return;
+        }
+        this.updateFeatures(features);
     };
 
     updateFeatures = async (features) => {
@@ -69,7 +64,6 @@ class BookEditFeaturesFormComponent extends React.Component {
     }
 
     render() {
-        const { getFieldDecorator, getFieldValue } = this.props.form;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -86,43 +80,46 @@ class BookEditFeaturesFormComponent extends React.Component {
                 sm: { span: 20, offset: 4 },
             },
         };
-        getFieldDecorator('features', { initialValue: this.props.features });
-        const features = getFieldValue('features');
-        const formItems = features.map((f, index) => (
-            <Form.Item
-                {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                label={index === 0 ? '特徴' : ''}
-                required={false}
-                feature={f.id}
-            >
-                {getFieldDecorator(`names[${f.id}]`, {
-                    validateTrigger: ['onChange', 'onBlur'],
-                    rules: [
-                        {
-                            required: true,
-                            whitespace: true,
-                            message: "入力してください",
-                        },
-                    ],
-                    initialValue: f.value
-                })(<Input placeholder="特徴を入力してください" style={{ width: '60%', marginRight: 8 }} />)}
-                {features.length > 1 ? (
-                    <Icon
-                        className="dynamic-delete-button"
-                        type="minus-circle-o"
-                        onClick={() => this.remove(f.id)}
-                    />
-                ) : null}
-            </Form.Item>
-        ));
+
         return (
-            <Form onSubmit={this.handleSubmit}>
-                {formItems}
-                <Form.Item {...formItemLayoutWithOutLabel}>
-                    <Button type="dashed" onClick={this.add} style={{ width: '60%' }}>
-                        <Icon type="plus" />追加する
-          </Button>
-                </Form.Item>
+            <Form name="dynamic_form_item" onFinish={this.handleSubmit} initialValues={{ features: this.props.features }} {...formItemLayoutWithOutLabel}>
+                <Form.List name="features">
+                    {(fields, { add, remove }) => {
+                        return (
+                            <div>
+                                {fields.map((field, index) => (
+                                    <Form.Item
+                                        {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                                        label={index === 0 ? '特徴' : ''}
+                                        required={false}
+                                        key={field.key}
+                                    >
+                                        <Form.Item
+                                            {...field}
+                                            validateTrigger={['onChange', 'onBlur']}
+                                            rules={[{ required: true, whitespace: true, message: "入力してください", }]}
+                                            noStyle
+                                        >
+                                            <Input placeholder="特徴を入力してください" style={{ width: '60%', marginRight: 8 }} />
+                                        </Form.Item>
+                                        {fields.length > 1 ? (
+                                            <MinusCircleOutlined
+                                                className="dynamic-delete-button"
+                                                onClick={() => {
+                                                    remove(field.name);
+                                                }}
+                                            />
+                                        ) : null}
+                                    </Form.Item>
+                                ))}
+                                <Form.Item>
+                                    <Button type="dashed" onClick={() => { add(); }} style={{ width: '60%' }}>
+                                        <PlusOutlined /> 追加する</Button>
+                                </Form.Item>
+                            </div>
+                        );
+                    }}
+                </Form.List>
                 <Form.Item {...formItemLayoutWithOutLabel}>
                     <Button type="primary" htmlType="submit" loading={this.state.loading}>更新する</Button>
                 </Form.Item>
@@ -131,5 +128,4 @@ class BookEditFeaturesFormComponent extends React.Component {
     }
 }
 
-const BookEditFeaturesForm = Form.create({ name: 'FeaturesForm' })(BookEditFeaturesFormComponent);
 export default withApollo(BookEditFeaturesForm);

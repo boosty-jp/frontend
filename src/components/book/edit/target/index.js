@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from 'react-redux'
-import uuidv4 from 'uuid/v4'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { Skeleton } from 'antd';
@@ -59,12 +58,7 @@ class BookEditTargetsComponent extends React.Component {
                             id={this.props.id}
                             levelStart={data.book.targets.levelStart}
                             levelEnd={data.book.targets.levelEnd}
-                            targetDescriptions={
-                                data.book.targets.targetDescriptions.length === 0 ?
-                                    [{ id: uuidv4(), value: "" }]
-                                    :
-                                    data.book.targets.targetDescriptions.map(t => { return { id: uuidv4(), value: t } })
-                            }
+                            targetDescriptions={data.book.targets.targetDescriptions.length === 0 ? [] : data.book.targets.targetDescriptions}
                         />
                     )
                 }}

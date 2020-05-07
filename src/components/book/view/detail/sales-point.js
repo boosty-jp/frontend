@@ -7,7 +7,6 @@ const cardStyle = {
     boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
     borderRadius: '0.5rem',
     width: '100%',
-    height: '100%',
     padding: '20px',
     fontColor: 'black',
 }
@@ -27,6 +26,7 @@ const BookSalesPointCardComponent = (props) => {
                         textIndent: '-2.4em',
                         paddingLeft: '2.4em',
                     }}
+                        key={feature}
                     >
                         <SalesPointNumber number={idx} size={24} style={{ textIndent: '0', fontSize: '14px' }} />
                         <span style={{

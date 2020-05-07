@@ -18,7 +18,7 @@ export const convertToJSX = (blocks) => {
         let rawText = '';
         switch (block.type) {
             case 'header':
-                jsxList.push(<Title key={"block-" + idx} level={block.data.level} id={text}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
+                jsxList.push(<Title key={"block-" + idx} level={block.data.level} id={text} style={{ fontWeight: '400' }}><span dangerouslySetInnerHTML={{ __html: text }} /></Title>)
                 anchors.push({ id: text, level: block.data.level });
                 if (text) rawText = text.replace(countRegexp, '');
                 if (rawText) {

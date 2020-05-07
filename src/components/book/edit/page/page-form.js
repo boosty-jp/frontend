@@ -1,8 +1,8 @@
 import React from 'react';
-import Editor from 'components/editor';
 import { connect } from 'react-redux'
 import { Divider, Typography, Alert } from 'antd';
-import { updateTitle } from 'modules/page/edit'
+import { updateTitle, updateText } from 'modules/page/edit'
+import MarkdownEditor from 'components/editor/simple-mde'
 
 const { Title } = Typography;
 const cardStyle = {
@@ -12,7 +12,7 @@ const cardStyle = {
     width: '100%',
     maxWidth: '800px',
     margin: '0 auto',
-    padding: '20px',
+    padding: '40px 20px',
     fontColor: 'black',
 }
 
@@ -45,7 +45,7 @@ class PageEditFormComponent extends React.Component {
             return (
                 <div style={cardStyle}>
                     <div style={{ backgroundColor: 'white', maxWidth: '700px', margin: '0 auto', padding: '20px', wordBreak: 'break-all' }}>
-                        <Title level={1}>{title}</Title>
+                        <Title level={1} style={{ fontWeight: '500' }}>{title}</Title>
                         <Divider style={{ margin: '8px 0px 24px 0px' }} />
                         {this.props.text}
                     </div>
@@ -54,12 +54,13 @@ class PageEditFormComponent extends React.Component {
         } else {
             return (
                 <div style={cardStyle}>
-                    <div style={{ backgroundColor: 'white', maxWidth: '700px', margin: '0 auto', padding: '20px' }}>
-                        <Title editable={{ onChange: this.onChange }} level={1}>{title}</Title>
+                    <div style={{ backgroundColor: 'white', maxWidth: '700px', margin: '0 auto' }}>
+                        <Title editable={{ onChange: this.onChange }} level={1} style={{ fontWeight: '500' }}>{title}</Title>
                         <TitleError titleError={this.props.titleError} />
-                        <Divider style={{ margin: '8px 0px' }} />
+                        <Divider style={{ margin: '8px 0px 30px 0px' }} />
+                        <MarkdownEditor value={this.props.text} updateText={value => this.props.updateText(value)} />
+                        {/* <Editor /> */}
                     </div>
-                    <Editor blocks={this.props.blocks} />
                 </div>
             )
         }
@@ -76,12 +77,12 @@ const mapStateToProps = state => ({
     title: state.pageEdit.title,
     titleError: state.pageEdit.error.title,
     text: state.pageEdit.text,
-    blocks: state.pageEdit.blocks,
     previewMode: state.pageEdit.previewMode,
 })
 
 const mapDispatchToProps = dispatch => ({
     updateTitle: (title) => dispatch(updateTitle(title)),
+    updateText: (text) => dispatch(updateText(text)),
 })
 
 const PageEditForm = connect(mapStateToProps, mapDispatchToProps)(PageEditFormComponent)

@@ -1,8 +1,9 @@
 import React from "react"
 import getFirebase from 'utils/firebase'
-import { message, Form, Icon, Input, Button } from 'antd';
+import { message, Form, Input, Button } from 'antd';
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 
-class OwnReAuthFormComponent extends React.Component {
+class OwnReAuthForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -10,11 +11,11 @@ class OwnReAuthFormComponent extends React.Component {
         }
     }
 
-    signIn = (mail, password) => {
+    signIn = values => {
         this.setState({ loading: true })
 
         const firebase = getFirebase();
-        firebase.auth().signInWithEmailAndPassword(mail, password)
+        firebase.auth().signInWithEmailAndPassword(values.mail, values.password)
             .then((credential) => {
                 firebase.auth().onAuthStateChanged((user) => {
                     user.reauthenticateWithCredential(credential).then(() => {
@@ -28,7 +29,6 @@ class OwnReAuthFormComponent extends React.Component {
             .catch((error) => {
                 this.handleAuthError(error.code);
             });
-
     }
 
     handleAuthError = (errorCode) => {
@@ -44,52 +44,30 @@ class OwnReAuthFormComponent extends React.Component {
         }
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields(((err, values) => {
-            if (!err) {
-                this.signIn(values.mail, values.password);
-            }
-        }));
-    };
-
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
-            <Form onSubmit={this.handleSubmit} className="login-form">
-                <Form.Item label="メールアドレス">
-                    {getFieldDecorator('mail', {
-                        rules: [{ required: true, message: 'メールアドレスを入力してください' }],
-                    })(
-                        <Input
-                            prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="メールアドレス"
-                            size="large"
-                        />,
-                    )}
+            <Form onFinish={this.signIn}>
+                <Form.Item label="メールアドレス" name="mail" rules={[{ required: true, message: 'メールアドレスを入力してください' }]}>
+                    <Input
+                        size="large"
+                        placeholder="メールアドレス"
+                        prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    />
                 </Form.Item>
-                <Form.Item label="パスワード">
-                    {getFieldDecorator('password', {
-                        rules: [
-                            { required: true, message: 'パスワードを入力してください。' },
-                        ],
-                    })(
-                        <Input
-                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            type="password"
-                            placeholder="パスワード"
-                            size="large"
-                        />,
-                    )}
+                <Form.Item label="パスワード" name="password" rules={[{ required: true, message: 'パスワードを入力してください。' }]}>
+                    <Input
+                        prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        type="password"
+                        placeholder="パスワード"
+                        size="large"
+                    />
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
-                    <Button loading={this.state.loading} type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>再認証する</Button>
+                    <Button loading={this.state.loading} type="primary" htmlType="submit" style={{ width: '100%' }}>再認証する</Button>
                 </Form.Item>
             </Form>
         );
     }
 }
-
-const OwnReAuthForm = Form.create({ name: 'reauth' })(OwnReAuthFormComponent);
 
 export default OwnReAuthForm

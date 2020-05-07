@@ -11,6 +11,7 @@ const DELETE_SECTION = 'DELETE_SECTION' + SUFFIX;
 const DELETE_PAGE = 'DELETE_PAGE' + SUFFIX;
 const REORDER_SECTIONS = 'REORDER_SECTIONS' + SUFFIX;
 const REORDER_PAGES = 'REORDER_PAGES' + SUFFIX;
+const UPDATE_PAGE_TRIAL_READ = 'UPDATE_PAGE_TRIAL_READ' + SUFFIX;
 const PUBLISH = 'PUBLISH' + SUFFIX;
 const SUSPEND = 'SUSPEND' + SUFFIX;
 
@@ -70,6 +71,13 @@ export const reorderPages = (sectionId, pages) => ({
     type: REORDER_PAGES,
     sectionId: sectionId,
     pages: pages
+})
+
+export const updateTrialRead = (sectionId, pageId, checked) => ({
+    type: UPDATE_PAGE_TRIAL_READ,
+    sectionId: sectionId,
+    pageId: pageId,
+    checked: checked
 })
 
 export const publish = () => ({
@@ -195,6 +203,15 @@ export default function BookEdit(state = initialState, action) {
                     }
                     return section;
                 })
+            }
+        case UPDATE_PAGE_TRIAL_READ:
+            const trialTargetSectionIdx = state.sections.findIndex((e) => action.sectionId === e.id);
+            const trialTargetPageIdx = state.sections[trialTargetSectionIdx].pages.findIndex((e) => action.pageId === e.id);
+            let updateTrialSections = state.sections.concat();
+            updateTrialSections[trialTargetSectionIdx].pages[trialTargetPageIdx].canPreview = action.checked;
+            return {
+                ...state,
+                sections: updateTrialSections
             }
         case PUBLISH:
             return {

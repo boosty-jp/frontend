@@ -11,17 +11,12 @@ import PageLoader from 'components/loader/page';
 const GET_PAGE = gql`
   query PageToEdit($pageId: ID!) {
     pageToEdit(pageId: $pageId) {
-      base{
-        id
-        title
-        canPreview
-        createDate
-        updateDate
-      }
-      blocks {
-        type
-        data
-      }
+      id
+      title
+      text
+      canPreview
+      createDate
+      updateDate
     }
   }
 `;

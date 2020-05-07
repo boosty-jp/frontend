@@ -1,33 +1,35 @@
 import React from "react"
-import { Row, Col, Icon } from 'antd';
+import { Row, Col } from 'antd';
 import InvertLogo from "components/logo/invert";
 import { Link } from "gatsby";
+import { GlobalOutlined, QuestionCircleOutlined, HomeOutlined, CopyrightCircleOutlined } from "@ant-design/icons";
 
 const footerSections = [
     {
         title: 'サービス',
-        icon: 'global',
+        icon: <GlobalOutlined />,
         pages: [
-            { title: 'トップページ', link: '/' },
-            { title: 'コースを作成する', link: '/plan/edit' },
-            { title: '記事を作成する', link: '/article/edit' },
+            { title: 'トップページ', link: '/home' },
+            { title: '本棚', link: '/plan/edit' },
+            { title: '著書', link: '/article/edit' },
         ]
     },
     {
         title: 'ヘルプ',
-        icon: 'question-circle',
+        icon: <QuestionCircleOutlined />,
         pages: [
-            { title: '利用規約', link: '/terms' },
-            { title: 'プライバシーポリシー', link: '/privacy' },
+            { title: 'よくある質問', link: '/faq' },
+            { title: 'お知らせ', link: '/' },
+            { title: 'お問い合わせ', link: '/', outerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSfGwFcq1TQGEFSDpnC5THQW2ECsgKMw9c_UnXrFkvgNZbatfQ/viewform?usp=sf_link' },
         ]
     },
     {
         title: '運営会社',
-        icon: 'home',
+        icon: <HomeOutlined />,
         pages: [
-            { title: '会社概要', link: '/company' },
-            // { title: 'お知らせ', link: '/' },
-            { title: 'お問い合わせ', link: '/', outerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSfGwFcq1TQGEFSDpnC5THQW2ECsgKMw9c_UnXrFkvgNZbatfQ/viewform?usp=sf_link' },
+            { title: '会社概要', outerLink: "https://wever.co.jp" },
+            { title: '利用規約', link: '/terms' },
+            { title: 'プライバシーポリシー', link: '/privacy' },
         ]
     },
 ]
@@ -37,23 +39,33 @@ const HorizontalFooter = () => {
     var thisYear = now.getFullYear();
     return (
         <div style={{ backgroundColor: 'black', color: 'white' }}>
-            <div style={{ padding: '20px', maxWidth: '100%', width: "1250px", margin: 'auto', position: 'relative', textAlign: 'center' }}>
-                <Row style={{ padding: '20px', maxWidth: '100%', width: "1250px", margin: 'auto', position: 'relative' }}>
+            <div style={{ padding: '20px', maxWidth: '100%', width: "900px", margin: 'auto', position: 'relative', textAlign: 'center' }}>
+                <Row style={{ padding: '20px', maxWidth: '100%', width: "900px", margin: 'auto', position: 'relative' }}>
                     {footerSections.map((section) => (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} style={{ marginBottom: '12px' }}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} style={{ marginBottom: '12px' }} key={section.title}>
                             <p style={{ fontSize: '16px', fontWeight: '500' }}>
-                                <Icon type={section.icon} style={{ marginRight: '4px' }} />{section.title}
+                                <span style={{ marginRight: '6px' }}>{section.icon}</span>{section.title}
                             </p>
-                            {section.pages.map(p => (
-                                <Link to={p.link}>
-                                    <p style={{ color: 'white' }}>{p.title}</p>
-                                </Link>
-                            ))}
+                            {section.pages.map(p => {
+                                if (p.outerLink) {
+                                    return (
+                                        <a href={p.outerLink} key={p.title}>
+                                            <p style={{ color: 'white' }}>{p.title}</p>
+                                        </a>
+                                    )
+                                }
+                                return (
+                                    <Link to={p.link} key={p.title}>
+                                        <p style={{ color: 'white' }}>{p.title}</p>
+                                    </Link>
+                                )
+                            }
+                            )}
                         </Col>
                     ))}
                 </Row>
                 <InvertLogo />
-                <div style={{ marginTop: '12px' }}>Copyright <Icon type="copyright" />{thisYear} wever Inc.</div>
+                <div style={{ marginTop: '12px' }}>Copyright <CopyrightCircleOutlined />{thisYear} wever Inc.</div>
             </div>
         </div>
     )

@@ -10,6 +10,7 @@ export const createCourseDetailLink = (id) => ("/course/detail/?id=" + id)
 export const createCourseDetailUrl = (id) => ("https://wever.co.jp/course/detail/?id=" + id)
 
 export const createBookDetailLink = (id) => ("/book/?id=" + id)
+export const createBookDetailPreviewLink = (id) => ("/book/?id=" + id + "&preview=1")
 export const createBookDetailUrl = (id) => ("https://boosty.jp/book/?id=" + id)
 
 export const createTestLink = (id) => ("/test/?id=" + id)
@@ -39,6 +40,8 @@ export const createBookSectionsEditLink = (id) => ("/book/edit/sections/?id=" + 
 export const createPageEditLink = (id, bookId) => ("/book/edit/page/?id=" + id + "&bookId=" + bookId)
 
 export const createPageViewLink = (id, bookId) => ("/book/view/page/?id=" + id + "&bookId=" + bookId)
+
+export const createNotificationLink = (slug) => ("/notification/" + slug)
 
 export const createStripeRegistrationLink = () => {
     const userId = getCurrentUser().userId;

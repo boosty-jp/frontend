@@ -1,7 +1,12 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { Row, Col, Button, Tooltip } from 'antd';
 import StatusButton from "./status-button";
 import BookStatusDescription from "./status-description";
+import { FileSearchOutlined } from '@ant-design/icons'
+import { Link } from 'gatsby';
+import { createBookDetailLink, createBookDetailPreviewLink } from 'utils/link-generator'
+
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -12,7 +17,7 @@ const cardStyle = {
     fontColor: 'black',
 }
 
-class BookStatusCard extends React.Component {
+class BookStatusCardComponent extends React.Component {
     render() {
         return (
             <div style={cardStyle}>
@@ -21,10 +26,16 @@ class BookStatusCard extends React.Component {
                         <BookStatusDescription />
                     </Col>
                     <Col span={14} style={{ textAlign: 'right' }} >
-                        <StatusButton />
                         <Tooltip title="プレビューを見る">
-                            <Button shape="circle" icon="file-search" style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }} />
+                            <Link to={createBookDetailPreviewLink(this.props.id)}>
+                                <Button
+                                    shape="circle"
+                                    icon={<FileSearchOutlined />}
+                                    style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)', marginRight: '14px' }}
+                                />
+                            </Link>
                         </Tooltip>
+                        <StatusButton />
                     </Col>
                 </Row>
             </div>
@@ -32,4 +43,9 @@ class BookStatusCard extends React.Component {
     }
 }
 
+const mapStateToProps = state => ({
+    id: state.bookEdit.id,
+})
+
+const BookStatusCard = connect(mapStateToProps)(BookStatusCardComponent)
 export default BookStatusCard

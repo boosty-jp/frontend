@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import { Result, Icon, Spin } from 'antd';
-import { navigate } from '@reach/router';
+import { Result, Spin } from 'antd';
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import SimpleBorderedShadowButton from 'components/button/simple-border-shadow';
 import { getErrorMessage } from 'utils/error-handle';
+import { LoadingOutlined, EditOutlined } from '@ant-design/icons';
 
 
 const REGISTER_STRIPE = gql`
@@ -53,11 +52,7 @@ class StripeCompleteComponent extends React.Component {
                     status="success"
                     title="登録手続きが完了しました"
                     extra={[
-                        <SimpleBorderedShadowButton
-                            text="著書一覧へ"
-                            color="#1890ff"
-                            onClick={() => navigate('/book/edit/list')}
-                        />
+                        <Link to="/book/edit/list"><EditOutlined style={{ marginRight: '8px' }} />著書一覧へ</Link>
                     ]}
                 />
         } else {
@@ -68,7 +63,7 @@ class StripeCompleteComponent extends React.Component {
             <Spin
                 tip="ロード中です"
                 spinning={this.state.loading}
-                indicator={< Icon type="loading" style={{ fontSize: 24 }} spin />}
+                indicator={< LoadingOutlined style={{ fontSize: 24 }} spin />}
             >
                 {content}
             </Spin>

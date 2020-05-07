@@ -1,7 +1,14 @@
 import React from "react"
+import { withApollo } from 'react-apollo'
+import gql from 'graphql-tag';
 import { injectStripe, CardElement } from 'react-stripe-elements';
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { getCurrentUser } from "services/local-user";
+import { getStripeErrorMessage, getErrorMessage } from "utils/error-handle"
+import { PayCircleOutlined } from "@ant-design/icons";
+
+const isBrowser = typeof window !== 'undefined';
+const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const stripeStyleOptions = {
     base: {
@@ -18,15 +25,12 @@ const stripeStyleOptions = {
     },
 };
 
-const purchaseButtonStyle = {
-    borderColor: '#F7FAFF',
-    color: '#1890ff',
-    fontWeight: '500',
-    fontSize: '16px',
-    background: '#F7FAFF',
-    boxShadow: '4px 4px 8px #a3a5a8, -4px -4px 8px #ffffff',
-    marginTop: '20px'
+
+const PURCHASE_BOOK = gql`
+mutation PurchaseBook($paymentIntentId: ID!){
+  purchaseBook(paymentIntentId: $paymentIntentId)
 }
+`;
 
 class BookPurchaseFormComponent extends React.Component {
     state = { loading: false }
@@ -35,71 +39,61 @@ class BookPurchaseFormComponent extends React.Component {
         ev.preventDefault();
         this.setState({ loading: true })
 
-        // See our confirmCardPayment documentation for more:
-        // https://stripe.com/docs/stripe-js/reference#stripe-confirm-card-payment
-        this.props.stripe.confirmCardPayment(this.props.paymentIntentSecret, {
-            payment_method: {
+        let paymentMethod = {};
+        try {
+            paymentMethod = {
                 card: this.props.elements.getElement('card'),
                 billing_details: {
                     name: getCurrentUser().userName,
-                },
+                }
+            };
+        } catch (err) {
+            message.error("エラーが発生しました。再度お試しください。", 10);
+            this.setState({ loading: false })
+        }
+        // See our confirmCardPayment documentation for more:
+        // https://stripe.com/docs/stripe-js/reference#stripe-confirm-card-payment
+        this.props.stripe.confirmCardPayment(
+            this.props.paymentIntentSecret, { payment_method: paymentMethod, }
+        ).then(res => {
+            if (res.paymentIntent.status === 'succeeded') {
+                this.props.client.mutate({
+                    mutation: PURCHASE_BOOK,
+                    variables: {
+                        paymentIntentId: res.paymentIntent.id,
+                    }
+                }).then(() => {
+                    message.info("購入しました。", 10);
+                    this.setState({ loading: false });
+                    navigate("/book/own");
+                }).catch((err) => {
+                    message.error(getErrorMessage(err), 10);
+                    this.setState({ loading: false });
+                });
+            } else {
+                message.error("エラーが発生しました。再度お試しください。", 10);
+                this.setState({ loading: false })
             }
+        }).catch(err => {
+            message.error(getStripeErrorMessage(err), 10);
+            this.setState({ loading: false })
         });
-
-        // //カード情報をiframeより取得し、Stripeに送るリクエスト情報を生成する
-        // // https://stripe.com/docs/js/payment_intents/create_payment_method
-        // const cardElement = this.props.elements.getElement('card');
-        // this.props.stripe
-        //     .createPaymentMethod({
-        //         type: 'card',
-        //         card: cardElement,
-        //         billing_details: { name: 'Jenny Rosen' },
-        //     })
-        //     .then(({ paymentMethod }) => {
-        //         console.log('Received Stripe PaymentMethod:', paymentMethod);
-        //     });
-
-        // // 不正利用のチェック(3Dセキュア)
-        // // https://stripe.com/docs/stripe-js/reference#stripe-confirm-card-payment
-        // this.props.stripe.confirmCardPayment('{PAYMENT_INTENT_CLIENT_SECRET}', {
-        //     payment_method: {
-        //         card: cardElement,
-        //     },
-        // });
-
-        // // カードの検証 confirmCardPaymentとの違い
-        // // https://stripe.com/docs/stripe-js/reference#stripe-confirm-card-payment
-        // this.props.stripe.confirmCardSetup('{PAYMENT_INTENT_CLIENT_SECRET}', {
-        //     payment_method: {
-        //         card: cardElement,
-        //     },
-        // });
-
-        // this.props.stripe.createToken({ type: 'card', name: 'Jenny Rosen' });
-
-        // this.props.stripe.createSource({
-        //     type: 'card',
-        //     owner: {
-        //         name: 'Jenny Rosen',
-        //     },
-        // });
-        this.setState({ loading: false })
     };
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                {/* <AddressSection /> */}
                 <CardElement style={stripeStyleOptions} />
                 <Button
                     block
                     size="large"
                     shape="round"
+                    type="primary"
                     htmlType="submit"
-                    icon="pay-circle"
+                    icon={<PayCircleOutlined />}
                     loading={this.state.loading}
-                    style={purchaseButtonStyle}
                     onClick={this.handleSubmit}
+                    style={{ marginTop: '24px', boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
                 >購入する</Button >
             </form>
         )
@@ -107,4 +101,4 @@ class BookPurchaseFormComponent extends React.Component {
 }
 
 const BookPurchaseForm = injectStripe(BookPurchaseFormComponent);
-export default BookPurchaseForm
+export default withApollo(BookPurchaseForm)

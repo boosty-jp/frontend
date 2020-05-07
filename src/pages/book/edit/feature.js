@@ -1,6 +1,6 @@
 import React from "react"
 import SEO from "components/seo"
-import Layout from "components/layout/horizontal"
+import VerticalLayout from "components/layout/vertical"
 import BookEditLayout from 'components/book/edit/layout'
 import BookEditFeatures from "components/book/edit/feature"
 import withLocation from "components/wrapper/location";
@@ -13,16 +13,16 @@ const BookEditFeaturePage = (props) => {
     if (!id) navigate("/404");
 
     return (
-        <Layout>
+        <VerticalLayout activeMenuKey="edit">
             <SEO title="Home" />
-            <div style={{ backgroundColor: '#f0f5ff' }}>
+            <div style={{ backgroundColor: '#F7FAFF' }}>
                 <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
                     <BookEditLayout page="feature" id={id}>
                         <BookEditFeatures id={id} />
                     </BookEditLayout>
                 </div>
             </div>
-        </Layout>
+        </VerticalLayout>
     )
 }
 
