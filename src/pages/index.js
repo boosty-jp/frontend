@@ -1,9 +1,8 @@
 import React from "react"
 import Layout from "components/layout/horizontal"
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import HeroComponent from "components/landing/hero"
 import LanguageIconsComponent from "components/landing/icons"
-import BookCategoryComponent from "components/landing/category"
 import CreatorRequirementComponent from "components/landing/creator"
 import ScreenComponent from "components/landing/screen"
 

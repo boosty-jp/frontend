@@ -3,11 +3,11 @@ import { Result, Button } from 'antd'
 import { Link } from "gatsby"
 import { IdcardTwoTone } from '@ant-design/icons';
 
-const NeedLoginComponent = () => {
+const NeedLoginComponent = ({ message = "ログインが必要です" }) => {
     return (
         <Result
             icon={<IdcardTwoTone />}
-            title="ログインが必要です"
+            title={message}
             extra={
                 <>
                     <div>

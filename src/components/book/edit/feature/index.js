@@ -10,7 +10,7 @@ import BookEditFeaturesForm from "components/book/edit/feature/form"
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
-    book(bookId: $bookId) {
+    editBook(bookId: $bookId) {
         id
         title
         imageUrl
@@ -48,7 +48,7 @@ class BookEditFeaturesComponents extends React.Component {
             <Query
                 query={GET_BOOK}
                 variables={{ bookId: this.props.id }}
-                onCompleted={(data) => this.props.setBookData(data.book)}
+                onCompleted={(data) => this.props.setBookData(data.editBook)}
             >
                 {({ loading, error, data }) => {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />
@@ -56,7 +56,7 @@ class BookEditFeaturesComponents extends React.Component {
                     return (
                         <BookEditFeaturesForm
                             id={this.props.id}
-                            features={data.book.features.length === 0 ? [] : data.book.features}
+                            features={data.editBook.features.length === 0 ? [] : data.editBook.features}
                         />
                     )
                 }}

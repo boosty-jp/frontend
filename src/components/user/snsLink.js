@@ -1,7 +1,7 @@
 import React from "react"
 import { presetPalettes } from '@ant-design/colors'
 import { TwitterOutlined, LinkOutlined } from "@ant-design/icons";
-import FACEBOOK_IMG from 'images/facebook.png'
+import FACEBOOK_IMG from 'images/facebook_high_res.png'
 
 const SnsLinks = ({ twitterId, facebookId, url }) => {
     if (!twitterId && !facebookId && !url) return <></>
@@ -16,7 +16,7 @@ const SnsLinks = ({ twitterId, facebookId, url }) => {
             }
             {facebookId ?
                 <a href={"https://facebook.com/" + facebookId}>
-                    <img src={FACEBOOK_IMG} style={{ marginRight: '12px', fontSize: '20px', verticalAlign: 'top' }} />
+                    <img src={FACEBOOK_IMG} style={{ marginRight: '12px', width: '20px', height: 'auto', verticalAlign: 'top' }} />
                 </a>
                 :
                 <></>

@@ -4,9 +4,14 @@ import { connect } from 'react-redux'
 import { Query } from 'react-apollo';
 import ErrorResult from 'components/error/result';
 import gql from 'graphql-tag';
+import { Result, Button } from 'antd';
+import { BookOutlined } from '@ant-design/icons';
 import { setPage } from 'modules/page/view'
 import PageViewContent from 'components/book/view/page/content';
 import PageLoader from 'components/loader/page';
+import { needPurchase, getErrorMessage } from 'utils/error-handle';
+import { createBookDetailLink } from 'utils/link-generator';
+import { Link } from 'gatsby'
 
 const GET_PAGE = gql`
   query Page($bookId:ID!, $pageId: ID!) {
@@ -27,7 +32,6 @@ const PageViewComponent = (props) => {
   return (
     <Query
       query={GET_PAGE}
-      fetchPolicy='network-only'
       variables={{ pageId: props.id, bookId: props.bookId }}
       onCompleted={(data) => {
         props.setPage(data.page)
@@ -40,7 +44,16 @@ const PageViewComponent = (props) => {
           )
         }
 
-        if (error) return <ErrorResult />
+        if (error) {
+          if (needPurchase(error)) {
+            return <Result
+              icon={<BookOutlined />}
+              title={<>「購入」または<br />「本棚への追加」が必要です</>}
+              extra={<Link to={createBookDetailLink(props.bookId)}><Button type="primary">詳細ページへ</Button></Link>}
+            />
+          }
+          return <ErrorResult title={getErrorMessage(error)} />
+        }
 
         return <PageViewContent />
       }}

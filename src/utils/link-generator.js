@@ -48,3 +48,8 @@ export const createStripeRegistrationLink = () => {
     const link = process.env.GATSBY_STRIPE_AUTH_LINK;
     return link + "&state=" + userId;
 }
+
+export const createBookOgpImageUrl = imageUrl => {
+    if (!imageUrl) return '';
+    return imageUrl.replace(/\.png$/g, '_ogp.png');
+}

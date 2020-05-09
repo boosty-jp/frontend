@@ -1,10 +1,10 @@
 import React from "react"
-import SEO from "components/seo"
 import withLocation from "components/wrapper/location";
 import { connect } from 'react-redux'
 import PageView from 'components/book/view/page/index'
 import { clearPage } from 'modules/page/edit'
 import PageViewLayout from "components/layout/page-view-layout";
+import PageSEO from "components/seo/page-seo";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -16,7 +16,7 @@ const BookPreviewPageComponent = (props) => {
 
     return (
         <PageViewLayout id={id} bookId={bookId}>
-            <SEO title="Home" />
+            <PageSEO />
             <div style={{ background: 'white' }}>
                 <div style={{ padding: '20px 0px' }}>
                     <PageView id={id} bookId={bookId} />

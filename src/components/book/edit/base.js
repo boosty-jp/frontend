@@ -12,8 +12,8 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Link } from "gatsby";
 
 const GET_BOOK = gql`
-  query GetBook($bookId: ID!) {
-    book(bookId: $bookId) {
+  query GetEditBook($bookId: ID!) {
+    editBook(bookId: $bookId) {
         id
         title
         imageUrl
@@ -94,14 +94,14 @@ class UpdateForm extends React.Component {
                 query={GET_BOOK}
                 variables={{ bookId: this.props.id }}
                 onCompleted={(data) => {
-                    this.setState({ title: data.book.title, description: data.book.description, price: data.book.price });
-                    this.props.setBookData(data.book);
+                    this.setState({ title: data.editBook.title, description: data.editBook.description, price: data.editBook.price });
+                    this.props.setBookData(data.editBook);
                 }}
             >
                 {({ loading, error, data }) => {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />
                     if (error) return <ErrorResult />
-                    const bookData = data.book
+                    const bookData = data.editBook
                     return (
                         <div style={{ width: '100%' }}>
                             <Form

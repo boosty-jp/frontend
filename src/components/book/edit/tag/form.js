@@ -49,7 +49,7 @@ class BookEditTagFormComponent extends React.Component {
                     <Form.Item
                         label={
                             <span>タグ&nbsp;
-                                <Tooltip title="検索や本のカテゴライズに用いられます。最大5つまで入力できます">
+                                <Tooltip title="本のカテゴライズに用いられます。最大5つまで入力できます">
                                     <QuestionCircleOutlined />
                                 </Tooltip>
                             </span>}

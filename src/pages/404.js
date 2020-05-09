@@ -16,7 +16,7 @@ const NotFoundPage = () => (
         <div style={{ margin: '0px auto', padding: '20px', maxWidth: '400px' }}>
           <NotFoundImage />
         </div>
-        <Link to="/" style={{ marginTop: '40px', textAlign: 'center' }}>
+        <Link to="/home" style={{ marginTop: '40px', textAlign: 'center' }}>
           <Button type="primary">ホームへ</Button>
         </Link>
       </div>

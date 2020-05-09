@@ -59,6 +59,7 @@ class BookViewComponent extends React.Component {
         return (
             <Query
                 query={GET_BOOK}
+                fetchPolicy="no-cache"
                 variables={{ bookId: this.props.id }}
                 onCompleted={(data) => {
                     this.props.setBookData(data.book, this.props.preview);

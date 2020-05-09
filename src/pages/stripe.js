@@ -1,5 +1,5 @@
 import React from "react"
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import Layout from "components/layout/horizontal"
 import withLocation from "components/wrapper/location";
 import StripeCompleteComponent from 'components/account/sales/stripe-complete'

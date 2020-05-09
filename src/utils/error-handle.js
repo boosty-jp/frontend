@@ -17,3 +17,7 @@ export const getStripeErrorMessage = (error) => {
         return 'エラーが発生しました。お手数ですが、再度お試しください。';
     }
 }
+
+export const needPurchase = (error) => {
+    return error.message && error.message.match(/購入手続きを行ってください/g);
+}

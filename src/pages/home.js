@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Row, Col } from 'antd'
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import VerticalLayout from "components/layout/vertical"
 import RecentViewedBookList from "components/book/view/list/recent-viiew-list"
 import NewSaleBookList from "components/book/view/list/new/top"

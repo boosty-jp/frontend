@@ -1,10 +1,10 @@
 import React from "react"
-import PropTypes from "prop-types"
+import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 import OGP_IMAGE from 'images/ogp.png'
 
-function NOSEO({ description, meta, title, url }) {
+const UserSeoComponent = (props) => {
     const { site } = useStaticQuery(
         graphql`
       query {
@@ -19,15 +19,15 @@ function NOSEO({ description, meta, title, url }) {
     `
     )
 
-    const metaDescription = description || site.siteMetadata.description
+    const metaDescription = props.description || site.siteMetadata.description
 
     return (
         <Helmet
             htmlAttributes={{
                 lang: `ja`,
             }}
-            title={title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            title={props.displayName}
+            titleTemplate={`%sのプロフィール`}
             meta={[
                 {
                     name: `description`,
@@ -35,11 +35,11 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:url`,
-                    content: url,
+                    content: 'https://boosty.jp/account/' + props.id,
                 },
                 {
                     property: `og:title`,
-                    content: title,
+                    content: props.displayName + 'のプロフィール',
                 },
                 {
                     property: `og:description`,
@@ -59,7 +59,7 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:site_name`,
-                    content: `boosty`,
+                    content: `Boosty`,
                 },
                 {
                     property: `og:locale`,
@@ -71,37 +71,27 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     name: `twitter:title`,
-                    content: title,
+                    content: props.displayName + 'のプロフィール',
                 },
                 {
                     name: `twitter:site`,
-                    content: `@boosty_officail`,
+                    content: `@boosty_official`,
                 },
                 {
                     name: `twitter:description`,
                     content: metaDescription,
                 },
-                {
-                    property: `robots`,
-                    content: `noindex`,
-                },
-            ].concat(meta)}
+            ].concat([])}
         />
     )
 }
 
-NOSEO.defaultProps = {
-    meta: [],
-    description: ``,
-    title: `boosty`,
-    url: `https://boosty.jp`
-}
+const mapStateToProps = state => ({
+    id: state.user.id,
+    displayName: state.user.displayName,
+    description: state.user.description,
+    imageUrl: state.user.imageUrl,
+})
 
-NOSEO.propTypes = {
-    description: PropTypes.string,
-    meta: PropTypes.arrayOf(PropTypes.object),
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-}
-
-export default NOSEO
+const UserSEO = connect(mapStateToProps)(UserSeoComponent)
+export default UserSEO

@@ -34,10 +34,12 @@ const PcBookHeaderCardComponent = (props) => {
                 <div style={{ marginTop: '8px' }}>
                     <AuthorLabel name={props.author.displayName} imageUrl={props.author.imageUrl} />
                 </div>
+                <div style={{ marginTop: '8px' }}>
+                </div>
                 <div style={{ marginTop: '12px' }}>
                     <Statistic value={props.price} suffix="円" />
                 </div>
-                <div style={{ marginTop: '30px' }}>
+                <div style={{ marginTop: '20px' }}>
                     <BookViewActionButton />
                 </div>
             </div>

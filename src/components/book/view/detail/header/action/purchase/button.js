@@ -11,6 +11,8 @@ import styled from 'styled-components'
 import { getErrorMessage } from "utils/error-handle";
 import PageLoader from 'components/loader/page'
 import { ShoppingCartOutlined } from "@ant-design/icons"
+import { isLoggedIn } from "services/local-user";
+import NeedLoginComponent from "components/auth/need-login";
 
 const CustomModal = styled(Modal)`
   .ant-modal-content {
@@ -28,7 +30,15 @@ const GET_PAYMENT_INTENT = gql`
 `;
 
 class BookPurchaseButtonComponent extends React.Component {
-    state = { visible: false }
+    state = { visible: false, loginModalVisible: false }
+
+    handleClick = () => {
+        if (!isLoggedIn()) {
+            this.setState({ loginModalVisible: true });
+            return;
+        }
+        this.setState({ visible: true });
+    }
 
     render() {
         return (
@@ -40,8 +50,16 @@ class BookPurchaseButtonComponent extends React.Component {
                     type="primary"
                     icon={<ShoppingCartOutlined />}
                     style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
-                    onClick={() => this.setState({ visible: true })}
+                    onClick={this.handleClick}
                 >購入する</Button >
+                <Modal
+                    closable
+                    footer={null}
+                    visible={this.state.loginModalVisible}
+                    onCancel={() => this.setState({ loginModalVisible: false })}
+                >
+                    <NeedLoginComponent message="ご購入にはログインが必要です" />
+                </Modal>
                 <CustomModal
                     footer={null}
                     visible={this.state.visible}

@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux'
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import VerticalLayout from "components/layout/vertical"
 import { message, Input, Row, Col, InputNumber } from 'antd';
 import { isLoggedIn } from "services/local-user"

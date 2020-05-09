@@ -93,6 +93,7 @@ class LikedPageList extends React.Component {
 
         return (
             <Query
+                fetchPolicy="no-cache"
                 query={GET_LIKE_PAGES}
                 variables={{ page: 1 }}
                 onError={this.handleError}

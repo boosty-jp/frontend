@@ -1,10 +1,11 @@
 import React from "react"
-import PropTypes from "prop-types"
+import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import OGP_IMAGE from 'images/ogp.png'
+import { createBookDetailUrl, createBookOgpImageUrl } from "utils/link-generator"
+import removeMd from 'remove-markdown'
 
-function NOSEO({ description, meta, title, url }) {
+const PageSeoComponent = (props) => {
     const { site } = useStaticQuery(
         graphql`
       query {
@@ -19,14 +20,14 @@ function NOSEO({ description, meta, title, url }) {
     `
     )
 
-    const metaDescription = description || site.siteMetadata.description
+    const metaDescription = removeMd(props.description).substr(0, 120) || site.siteMetadata.description
 
     return (
         <Helmet
             htmlAttributes={{
                 lang: `ja`,
             }}
-            title={title}
+            title={props.title}
             titleTemplate={`%s | ${site.siteMetadata.title}`}
             meta={[
                 {
@@ -35,11 +36,11 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:url`,
-                    content: url,
+                    content: createBookDetailUrl(props.bookId),
                 },
                 {
                     property: `og:title`,
-                    content: title,
+                    content: props.title,
                 },
                 {
                     property: `og:description`,
@@ -47,7 +48,7 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:image`,
-                    content: OGP_IMAGE,
+                    content: createBookOgpImageUrl(props.imageUrl),
                 },
                 {
                     property: `og:type`,
@@ -59,7 +60,7 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:site_name`,
-                    content: `boosty`,
+                    content: `Boosty`,
                 },
                 {
                     property: `og:locale`,
@@ -71,37 +72,27 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     name: `twitter:title`,
-                    content: title,
+                    content: props.title,
                 },
                 {
                     name: `twitter:site`,
-                    content: `@boosty_officail`,
+                    content: `@boosty_official`,
                 },
                 {
                     name: `twitter:description`,
                     content: metaDescription,
                 },
-                {
-                    property: `robots`,
-                    content: `noindex`,
-                },
-            ].concat(meta)}
+            ].concat([])}
         />
     )
 }
 
-NOSEO.defaultProps = {
-    meta: [],
-    description: ``,
-    title: `boosty`,
-    url: `https://boosty.jp`
-}
+const mapStateToProps = state => ({
+    pageId: state.pageView.id,
+    title: state.pageView.title,
+    text: state.pageView.text,
+    imageUrl: state.bookView.imageUrl,
+})
 
-NOSEO.propTypes = {
-    description: PropTypes.string,
-    meta: PropTypes.arrayOf(PropTypes.object),
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-}
-
-export default NOSEO
+const PageSEO = connect(mapStateToProps)(PageSeoComponent)
+export default PageSEO

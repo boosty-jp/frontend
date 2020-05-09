@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "components/layout/horizontal"
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import { Typography, Collapse } from "antd"
 
 const { Paragraph, Title } = Typography;

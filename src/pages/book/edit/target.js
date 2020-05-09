@@ -1,5 +1,5 @@
 import React from "react"
-import SEO from "components/seo"
+import BookEditSEO from "components/seo/book-edit-seo"
 import VerticalLayout from "components/layout/vertical";
 import BookEditLayout from 'components/book/edit/layout'
 import BookEditTargetPoints from "components/book/edit/target"
@@ -14,7 +14,7 @@ const BookEditPage = (props) => {
 
     return (
         <VerticalLayout activeMenuKey="edit">
-            <SEO title="Home" />
+            <BookEditSEO />
             <div style={{ backgroundColor: '#F7FAFF' }}>
                 <div style={{ padding: '20px', maxWidth: '900px', margin: 'auto' }}>
                     <BookEditLayout page="target" id={id}>

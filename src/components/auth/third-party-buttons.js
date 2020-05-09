@@ -2,7 +2,7 @@ import React from "react"
 import { Button } from 'antd';
 import getFirebase, { getGoogleProvider, getFacebookProvider } from "utils/firebase";
 import GoogleIcon from 'images/google.png'
-import FacebookIcon from 'images/facebook.png'
+import FacebookIcon from 'images/facebook_high_res.png'
 
 const shadowButtonStyle = {
     verticalAlign: 'middle',
@@ -59,7 +59,7 @@ class ThirdPartyButtons extends React.Component {
                     shape="round"
                 >
                     <span style={{ textAlign: 'left', verticalAlign: 'middle' }}>
-                        <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle' }} alt="Facebookロゴ" />
+                        <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle', width: '20px', height: 'auto' }} alt="Facebookロゴ" />
                         Facebookで{this.props.authType}
                     </span>
                 </Button>

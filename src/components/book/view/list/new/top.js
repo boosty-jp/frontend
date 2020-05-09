@@ -36,6 +36,7 @@ const GET_NEW_SALE_BOOKS = gql`
 
 const TopNewSaleBookList = () => (
     <Query
+        fetchPolicy='cache-first'
         query={GET_NEW_SALE_BOOKS}
         variables={{ page: 1 }}
     >

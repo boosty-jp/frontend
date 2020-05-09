@@ -1,5 +1,5 @@
 import React from "react"
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import VerticalLayout from "components/layout/vertical"
 import SearchComponent from "components/search/book"
 

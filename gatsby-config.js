@@ -7,6 +7,7 @@ module.exports = {
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
+    siteUrl: 'https://boosty.jp'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -73,6 +74,8 @@ module.exports = {
         spaceId: process.env.GATSBY_CONTENTFUL_SPACE_ID,
         accessToken: process.env.GATSBY_CONTENTFUL_API_KEY
       }
-    }
+    },
+    'gatsby-plugin-robots-txt',
+    `gatsby-plugin-sitemap`
   ],
 }

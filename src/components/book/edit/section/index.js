@@ -11,7 +11,7 @@ import ErrorResult from "components/error/result";
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
-    book(bookId: $bookId) {
+    editBook(bookId: $bookId) {
         id
         title
         imageUrl
@@ -49,7 +49,7 @@ class BookEditSectionComponent extends React.Component {
             <Query
                 query={GET_BOOK}
                 variables={{ bookId: this.props.id }}
-                onCompleted={(data) => this.props.setBookData(data.book)}
+                onCompleted={(data) => this.props.setBookData(data.editBook)}
             >
                 {({ loading, error, data }) => {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />

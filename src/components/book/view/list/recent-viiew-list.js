@@ -41,6 +41,7 @@ const RecentlyViewBookList = () => {
     return (
         <div style={{ marginBottom: '30px' }}>
             <Query
+                fetchPolicy="no-cache"
                 query={GET_RECENTLY_VIEWED_BOOKS}
             >
                 {({ loading, error, data }) => {

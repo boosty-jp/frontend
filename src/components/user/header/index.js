@@ -1,9 +1,11 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { Skeleton } from 'antd';
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import ErrorResult from 'components/error/result'
 import ProfileHeaderCard from 'components/user/header/card'
+import { setUserData } from 'modules/user'
 
 const GET_USER = gql`
   query GetUser($userId: ID!) {
@@ -52,29 +54,40 @@ const SkeletonCard = () => {
     )
 }
 
-const UserProfileHeader = ({ selfSearch, id }) => {
-    return selfSearch ?
-        <Query
-            query={GET_ACCOUNT}
-        >
-            {({ loading, error, data }) => {
-                if (loading) return <SkeletonCard />
-                if (error) return <ErrorResult />
-                return <ProfileHeaderCard data={data.account.user} selfSearch={selfSearch} />
-            }}
-        </Query >
-        :
+const UserProfileHeaderComponent = (props) => {
+    if (props.selfSearch) {
+        return (
+            <Query
+                query={GET_ACCOUNT}
+                onCompleted={data => props.setUser(data.account.user)}
+            >
+                {({ loading, error, data }) => {
+                    if (loading) return <SkeletonCard />
+                    if (error) return <ErrorResult />
+                    return <ProfileHeaderCard data={data.account.user} selfSearch={props.selfSearch} />
+                }}
+            </Query >
+        );
+    }
+
+    return (
         <Query
             query={GET_USER}
-            variables={{ userId: id }}
+            variables={{ userId: props.id }}
+            onCompleted={data => props.setUser(data.user)}
         >
             {({ loading, error, data }) => {
                 if (loading) return <SkeletonCard />
                 if (error) return <ErrorResult />
-                return <ProfileHeaderCard data={data.user} selfSearch={selfSearch} />
+                return <ProfileHeaderCard data={data.user} selfSearch={props.selfSearch} />
             }}
         </Query >
-
+    )
 }
 
+const mapDispatchToProps = dispatch => ({
+    setUser: (user) => dispatch(setUserData(user)),
+})
+
+const UserProfileHeader = connect(null, mapDispatchToProps)(UserProfileHeaderComponent)
 export default UserProfileHeader;

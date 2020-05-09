@@ -36,6 +36,7 @@ const GET_FAMOUS_FREE_BOOKS = gql`
 
 const FamousFreeBookList = () => (
     <Query
+        fetchPolicy='cache-first'
         query={GET_FAMOUS_FREE_BOOKS}
         variables={{ page: 1 }}
     >

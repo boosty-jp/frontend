@@ -1,5 +1,5 @@
 import React from "react"
-import SEO from "components/seo"
+import BookEditSEO from "components/seo/book-edit-seo"
 import withLocation from "components/wrapper/location";
 import { connect } from 'react-redux'
 import PageEdit from 'components/book/edit/page/index'
@@ -16,7 +16,7 @@ const BookEditPageComponent = (props) => {
 
     return (
         <PageEditLayout bookId={bookId}>
-            <SEO title="Home" />
+            <BookEditSEO />
             <div style={{ backgroundColor: '#F7FAFF' }}>
                 <div style={{ padding: '20px 0px', maxWidth: '900px', margin: 'auto' }}>
                     <PageEdit id={id} />

@@ -2,9 +2,11 @@ import React from "react"
 import { connect } from 'react-redux'
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
-import { message, Button } from 'antd';
+import { message, Button, Modal } from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
 import { getErrorMessage } from "utils/error-handle"
+import NeedLoginComponent from "components/auth/need-login";
+import { isLoggedIn } from "services/local-user";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -16,7 +18,7 @@ mutation AddBookShelf($bookId: ID!){
 `;
 
 class AddButtonComponent extends React.Component {
-    state = { loading: false }
+    state = { loading: false, loginModalVisible: false }
 
     handleSubmit = (ev) => {
         ev.preventDefault();
@@ -37,18 +39,36 @@ class AddButtonComponent extends React.Component {
         });
     };
 
+    handleClick = (e) => {
+        if (!isLoggedIn()) {
+            this.setState({ loginModalVisible: true });
+            return;
+        }
+        this.handleSubmit(e);
+    }
+
     render() {
         return (
-            <Button
-                block
-                shape="round"
-                size="large"
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={this.handleSubmit}
-                loading={this.state.loading}
-                style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
-            >本棚に追加する</Button >
+            <>
+                <Button
+                    block
+                    shape="round"
+                    size="large"
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={this.handleClick}
+                    loading={this.state.loading}
+                    style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
+                >本棚に追加する</Button >
+                <Modal
+                    closable
+                    footer={null}
+                    visible={this.state.loginModalVisible}
+                    onCancel={() => this.setState({ loginModalVisible: false })}
+                >
+                    <NeedLoginComponent message="本棚のご利用はログインが必要です" />
+                </Modal>
+            </>
         )
     }
 }

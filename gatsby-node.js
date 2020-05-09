@@ -11,7 +11,7 @@ exports.onCreateWebpackConfig = ({
     actions,
     getConfig
 }) => {
-    if (stage === 'develop-html') {
+    if (stage === 'develop-html' || stage === 'build-html') {
         actions.setWebpackConfig({
             externals: getConfig().externals.concat(function (context, request, callback) {
                 const regex = /^@?firebase(\/(.+))?/;

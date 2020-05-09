@@ -10,7 +10,7 @@ import BookEditTargetUserForm from "components/book/edit/target/form"
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
-    book(bookId: $bookId) {
+    editBook(bookId: $bookId) {
         id
         title
         imageUrl
@@ -48,7 +48,7 @@ class BookEditTargetsComponent extends React.Component {
             <Query
                 query={GET_BOOK}
                 variables={{ bookId: this.props.id }}
-                onCompleted={(data) => this.props.setBookData(data.book)}
+                onCompleted={(data) => this.props.setBookData(data.editBook)}
             >
                 {({ loading, error, data }) => {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />
@@ -56,9 +56,9 @@ class BookEditTargetsComponent extends React.Component {
                     return (
                         <BookEditTargetUserForm
                             id={this.props.id}
-                            levelStart={data.book.targets.levelStart}
-                            levelEnd={data.book.targets.levelEnd}
-                            targetDescriptions={data.book.targets.targetDescriptions.length === 0 ? [] : data.book.targets.targetDescriptions}
+                            levelStart={data.editBook.targets.levelStart}
+                            levelEnd={data.editBook.targets.levelEnd}
+                            targetDescriptions={data.editBook.targets.targetDescriptions.length === 0 ? [] : data.editBook.targets.targetDescriptions}
                         />
                     )
                 }}

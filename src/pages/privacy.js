@@ -1,5 +1,5 @@
 import React from 'react'
-import SEO from 'components/seo'
+import SEO from 'components/seo/seo'
 import { Typography, Divider } from 'antd';
 import TermLayout from 'components/layout/term-layout';
 

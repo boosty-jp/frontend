@@ -105,6 +105,7 @@ class OwnBookList extends React.Component {
 
         return (
             <Query
+                fetchPolicy="no-cache"
                 query={GET_OWN_BOOKS}
                 variables={{ page: 1 }}
                 onError={this.handleError}

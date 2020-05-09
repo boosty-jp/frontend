@@ -1,6 +1,6 @@
 import React from "react"
 
-import SEO from "components/seo"
+import SEO from "components/seo/seo"
 import VerticalLayout from "components/layout/vertical"
 import LikedPageList from "components/book/view/list/like-list"
 

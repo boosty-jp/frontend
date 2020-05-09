@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from 'antd';
 
-const SimpleShadowButton = ({ color, text, loading = false, onClick, style, htmlType, size, icon }) => {
+const SimpleShadowButton = ({ color, text, loading = false, onClick, style, htmlType, size, icon, disabled = false }) => {
     return (
         <Button
             type="primary"
@@ -18,6 +18,7 @@ const SimpleShadowButton = ({ color, text, loading = false, onClick, style, html
             htmlType={htmlType}
             size={size}
             icon={icon}
+            disabled={disabled}
         >{text}</Button >
     )
 }

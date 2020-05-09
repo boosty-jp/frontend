@@ -2,16 +2,15 @@ import React from "react"
 import { connect } from 'react-redux'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { Skeleton, message, Typography } from 'antd';
+import { Skeleton, message } from 'antd';
 import CoverImageUploader from 'components/image/cover-image-uploader'
 import { setBookData, setImageUrl } from 'modules/book/edit'
-import SimpleShadowButton from "components/button/simple-shadow";
 import { Query } from 'react-apollo'
 import ErrorResult from "components/error/result";
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
-    book(bookId: $bookId) {
+    editBook(bookId: $bookId) {
         id
         title
         imageUrl
@@ -79,7 +78,7 @@ class BookImageUploaderComponent extends React.Component {
             <Query
                 query={GET_BOOK}
                 variables={{ bookId: this.props.id }}
-                onCompleted={(data) => this.props.setBookData(data.book)}
+                onCompleted={(data) => this.props.setBookData(data.editBook)}
             >
                 {({ loading, error }) => {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />
@@ -88,13 +87,14 @@ class BookImageUploaderComponent extends React.Component {
                         <>
                             <div style={{ maxWidth: '250px', margin: '0 auto' }}>
                                 <CoverImageUploader
+                                    bookId={this.props.id}
                                     imageUrl={this.props.imageUrl}
                                     onComplete={(imageUrl) => this.props.setImageUrl(imageUrl)}
                                 />
                             </div>
-                            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                            {/* <div style={{ textAlign: 'center', marginTop: '20px' }}>
                                 <SimpleShadowButton text="更新する" loading={this.state.loading} size="large" onClick={this.updateImage} />
-                            </div>
+                            </div> */}
                         </>
                     )
                 }}

@@ -2,9 +2,10 @@ import { Remarkable } from 'remarkable';
 import { linkify } from 'remarkable/linkify';
 import uuidv4 from 'uuid/v4'
 import hljs from 'highlight.js';
-import Clipboard from 'clipboard';
 import { escapeHtml, replaceEntities, unescapeMd } from 'utils/markdown/escape-html'
 import { toLangTagString } from "utils/markdown/file-lang-tag-creator"
+const isBrowser = typeof window !== 'undefined';
+const Clipboard = isBrowser ? require('clipboard') : () => { };
 
 var MarkdownViewer = new Remarkable('full', {
     html: false,        // Enable HTML tags in source
@@ -123,7 +124,9 @@ MarkdownViewer.use(codeDefaultLang);
 // https:// or http:// をaタグに変換
 MarkdownViewer.use(linkify);
 
-new Clipboard('.code-clip-board-btn');
+if (isBrowser) {
+    new Clipboard('.code-clip-board-btn');
+}
 export default MarkdownViewer;
 
 

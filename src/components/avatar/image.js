@@ -20,7 +20,7 @@ const AvatarImage = ({ imageUrl, displayName, style, size }) => {
     let avatarSize = "default"
     if (size) { avatarSize = size; }
 
-    if (imageUrl) return <Avatar src={imageUrl} style={style} size={avatarSize} />
+    if (imageUrl) return <Avatar src={imageUrl} style={style} size={avatarSize} alt="アカウント画像" />
     if (displayName) return (
         <Avatar size={avatarSize} style={{ ...style, backgroundColor: palettes[displayName.length % 11] }}>{displayName.charAt(0)}</Avatar>
     )

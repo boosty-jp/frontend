@@ -79,7 +79,8 @@ const defaultOptions = {
 export const client = new ApolloClient({
     link: ApolloLink.from([authLink, retryLink, errorLink, httpLink]),
     cache: new InMemoryCache({
-        addTypename: false
+        dataIdFromObject: object => object.id || object.page || null
+        // addTypename: false
     }),
     defaultOptions: defaultOptions,
     fetchOptions: {

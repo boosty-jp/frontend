@@ -40,7 +40,7 @@ const BookSectionsComponent = (props) => {
                                     renderItem={(page, pageIdx) => {
                                         const paddingTop = pageIdx === 0 ? "0px" : "16px";
                                         const paddingBottom = pageIdx === s.pages.length - 1 ? "0px" : "16px";
-                                        const canRead = page.canPreview || props.purchased || props.price === 0;
+                                        const canRead = page.canPreview || props.purchased;
 
                                         return (
                                             <List.Item
