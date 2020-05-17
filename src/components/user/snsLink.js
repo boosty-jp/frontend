@@ -1,10 +1,9 @@
 import React from "react"
 import { presetPalettes } from '@ant-design/colors'
-import { TwitterOutlined, LinkOutlined } from "@ant-design/icons";
-import FACEBOOK_IMG from 'images/facebook_high_res.png'
+import { TwitterOutlined, LinkOutlined, GithubOutlined } from "@ant-design/icons";
 
-const SnsLinks = ({ twitterId, facebookId, url }) => {
-    if (!twitterId && !facebookId && !url) return <></>
+const SnsLinks = ({ twitterId, githubId, url }) => {
+    if (!twitterId && !githubId && !url) return <></>
     return (
         <div style={{ marginBottom: '12px', }}>
             {twitterId ?
@@ -14,9 +13,9 @@ const SnsLinks = ({ twitterId, facebookId, url }) => {
                 :
                 <></>
             }
-            {facebookId ?
-                <a href={"https://facebook.com/" + facebookId}>
-                    <img src={FACEBOOK_IMG} style={{ marginRight: '12px', width: '20px', height: 'auto', verticalAlign: 'top' }} />
+            {githubId ?
+                <a href={"https://github.com/" + githubId}>
+                    <GithubOutlined style={{ color: 'black', marginRight: '8px', fontSize: '20px' }} />
                 </a>
                 :
                 <></>

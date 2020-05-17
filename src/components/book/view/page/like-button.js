@@ -74,7 +74,7 @@ class PageLikeButtonComponent extends React.Component {
                     icon={icon}
                     shape="circle"
                     loading={this.state.loading}
-                    style={{ marginRight: '8px', borderColor, color }}
+                    style={{ marginRight: '8px', borderColor, color, ...this.props.style }}
                     onClick={this.toggleLike}
                 />
                 <span>{this.props.likeCount}</span>

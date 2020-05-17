@@ -51,7 +51,12 @@ class SignUpForm extends React.Component {
     }
 
     createUser = async (user) => {
-        const displayName = user.displayName.length > 30 ? user.displayName.slice(0, 30) : user.displayName;
+        let displayName = '';
+        if (user.displayName) {
+            displayName = user.displayName.length > 30 ? user.displayName.slice(0, 30) : user.displayName;
+        } else {
+            displayName = "ユーザー名未設定";
+        }
         try {
             await this.props.client.mutate({
                 mutation: CREATE_USER,

@@ -3,7 +3,7 @@ import { Result, message } from 'antd';
 import getFirebase from 'utils/firebase'
 import SimpleLayout from 'components/layout/simple-layout'
 import { MailTwoTone } from "@ant-design/icons";
-
+import NOSEO from "components/seo/noseo";
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -33,6 +33,7 @@ const MailSendPage = () => {
 
     return (
         <SimpleLayout maxWidth="500px" width="100%" >
+            <NOSEO title="確認メール送信完了" description="boostyをご利用時の確認メールを送信しました。" />
             <div style={cardStyle}>
                 <Result
                     icon={<MailTwoTone />}

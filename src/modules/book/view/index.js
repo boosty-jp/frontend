@@ -35,7 +35,7 @@ const initialState = {
         description: '',
         url: '',
         twitterId: '',
-        facebookId: '',
+        githubId: '',
     },
     tags: [],
     updateDate: '',

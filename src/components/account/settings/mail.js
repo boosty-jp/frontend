@@ -59,7 +59,7 @@ class MailUpdateForm extends React.Component {
 
     change = values => {
         const firebase = getFirebase();
-        this.setState({ updating: true });
+        this.setState({ updating: true, values: values });
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 user.updateEmail(values.mail).then(() => {
@@ -96,7 +96,7 @@ class MailUpdateForm extends React.Component {
                     spinning={this.state.loading}
                     indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
                 >
-                    <Form onFinish={this.handleSubmit} {...layout}>
+                    <Form onFinish={this.change} {...layout}>
                         <Form.Item label='現在のメールアドレス'>
                             {this.state.currentMail}
                         </Form.Item>
@@ -118,7 +118,7 @@ class MailUpdateForm extends React.Component {
                         onCancel={() => this.setState({ needReAuth: false })}
                         footer={null}
                     >
-                        <ReAuthForm onSuccess={() => { this.handleSubmit(); }} />
+                        <ReAuthForm onSuccess={() => { this.change(this.state.values); }} />
                     </Modal>
                 </Spin>
             </div>

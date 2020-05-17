@@ -55,7 +55,7 @@ const PageViewComponent = (props) => {
           return <ErrorResult title={getErrorMessage(error)} />
         }
 
-        return <PageViewContent />
+        return <PageViewContent pageId={props.id} bookId={props.bookId} />
       }}
     </Query>
   )

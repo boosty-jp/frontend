@@ -10,6 +10,7 @@ import FamousFreeBookList from "components/book/view/list/famous/top-free-sale-l
 import NotificationList from "components/notification/list"
 import LanguageIconsComponent from "components/landing/icons"
 import Helmet from "react-helmet"
+import CreatorSalesBanner from "components/landing/creator/sale-banner"
 
 const boardStyle = {
     background: "white",
@@ -22,7 +23,7 @@ const boardStyle = {
 
 const HomePage = () => (
     <VerticalLayout activeMenuKey="home">
-        <SEO title="DEMO" />
+        <SEO title="ホーム" />
         <div style={{ margin: '0 auto', maxWidth: '900px', padding: '20px 0px' }}>
             <LanguageIconsComponent />
         </div>
@@ -42,6 +43,9 @@ const HomePage = () => (
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={6} xl={7} xxl={6}>
                     <div style={{ width: "100%" }}>
+                        <div style={{ marginBottom: '20px' }}>
+                            <CreatorSalesBanner />
+                        </div>
                         <div style={{ marginBottom: '20px' }}>
                             <NotificationList />
                         </div>

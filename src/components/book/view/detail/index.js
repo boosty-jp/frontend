@@ -47,7 +47,7 @@ const GET_BOOK = gql`
             description
             url
             twitterId
-            facebookId
+            githubId
         }
         updateDate
     }

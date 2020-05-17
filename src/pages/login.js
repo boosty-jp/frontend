@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "gatsby";
+import SEO from 'components/seo/seo'
 import SignInForm from "components/auth/login/login-form"
 import SimpleLayout from "components/layout/simple-layout";
 import { QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
@@ -15,6 +16,7 @@ const cardStyle = {
 
 const LoginPage = () => (
     <SimpleLayout maxWidth="400px" width="100%" >
+        <SEO title="ログイン" />
         <div style={{ ...cardStyle }}>
             <SignInForm />
         </div>

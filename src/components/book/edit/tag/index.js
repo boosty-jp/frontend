@@ -6,7 +6,7 @@ import { Skeleton } from 'antd';
 import { setBookData } from 'modules/book/edit'
 import { Query } from 'react-apollo'
 import ErrorResult from "components/error/result";
-import BookEditTagFormComponent from 'components/book/edit/tag/form'
+import BookEditTagForm from 'components/book/edit/tag/form'
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -54,7 +54,7 @@ class BookEditTagsComponent extends React.Component {
                     if (loading) return <Skeleton active paragraph={{ rows: 6 }} />
                     if (error) return <ErrorResult />
                     return (
-                        <BookEditTagFormComponent id={this.props.id} />
+                        <BookEditTagForm id={this.props.id} tags={data.editBook.tags.map(tag => tag.name)} />
                     )
                 }}
             </Query >

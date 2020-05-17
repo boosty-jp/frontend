@@ -1,8 +1,8 @@
 import React from "react"
 import { Button } from 'antd';
-import getFirebase, { getGoogleProvider, getFacebookProvider } from "utils/firebase";
+import getFirebase, { getGoogleProvider, getTwitterProvider, getGitHubProvider } from "utils/firebase";
 import GoogleIcon from 'images/google.png'
-import FacebookIcon from 'images/facebook_high_res.png'
+import { GithubOutlined, TwitterOutlined } from '@ant-design/icons'
 
 const shadowButtonStyle = {
     verticalAlign: 'middle',
@@ -11,7 +11,8 @@ const shadowButtonStyle = {
 class ThirdPartyButtons extends React.Component {
     state = {
         googleLoading: false,
-        facebookLoading: false,
+        twitterLoading: false,
+        githubLoading: false,
     }
 
     signIn = (type) => {
@@ -24,13 +25,16 @@ class ThirdPartyButtons extends React.Component {
             //ポップアップする画面の言語指定
             firebase.auth().languageCode = 'ja';
             provider = getGoogleProvider();
-        } else if (type === 'Facebook') {
-            this.setState({ facebookLoading: true });
-            provider = getFacebookProvider();
+        } else if (type === 'Twitter') {
+            this.setState({ twitterLoading: true });
+            provider = getTwitterProvider();
+        } else if (type === 'GitHub') {
+            this.setState({ githubLoading: true });
+            provider = getGitHubProvider();
         }
 
         firebase.auth().signInWithRedirect(provider).then(() => {
-            this.setState({ googleLoading: false, facebookLoading: false });
+            this.setState({ googleLoading: false, twitterLoading: false, githubLoading: false });
         });
     }
 
@@ -53,14 +57,27 @@ class ThirdPartyButtons extends React.Component {
                 <Button
                     block
                     size="large"
-                    onClick={() => this.signIn('Facebook')}
-                    loading={this.state.facebookLoading}
+                    onClick={() => this.signIn('Twitter')}
+                    loading={this.state.twitterLoading}
                     style={{ marginTop: '16px', ...shadowButtonStyle }}
                     shape="round"
+                    icon={<TwitterOutlined style={{ verticalAlign: 'middle', color: '#1890ff' }} />}
                 >
                     <span style={{ textAlign: 'left', verticalAlign: 'middle' }}>
-                        <img src={FacebookIcon} style={{ marginRight: '12px', verticalAlign: 'middle', width: '20px', height: 'auto' }} alt="Facebookロゴ" />
-                        Facebookで{this.props.authType}
+                        Twitterで{this.props.authType}
+                    </span>
+                </Button>
+                <Button
+                    block
+                    size="large"
+                    onClick={() => this.signIn('GitHub')}
+                    loading={this.state.githubLoading}
+                    style={{ marginTop: '16px', ...shadowButtonStyle }}
+                    shape="round"
+                    icon={<GithubOutlined style={{ verticalAlign: 'middle', color: 'black' }} />}
+                >
+                    <span style={{ textAlign: 'left', verticalAlign: 'middle' }}>
+                        GitHubで{this.props.authType}
                     </span>
                 </Button>
             </div >

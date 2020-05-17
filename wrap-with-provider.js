@@ -5,7 +5,6 @@ import reducers from './src/modules/index'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'services/apollo/client';
 import { devToolsEnhancer } from 'redux-devtools-extension/logOnlyInProduction';
-import StripeScriptLoader from 'react-stripe-script-loader'
 import { StripeProvider } from 'react-stripe-elements';
 
 const store = createStore(
@@ -13,18 +12,40 @@ const store = createStore(
     devToolsEnhancer()
 )
 
-export default ({ element }) => {
+const wrapWithProvider = ({ element }) => {
     return (
-        <StripeScriptLoader
-            uniqueId='scriptId'
-            script='https://js.stripe.com/v3/'
-            loader="Loading..."
-        >
-            <StripeProvider apiKey={process.env.GATSBY_STRIPE_API_KEY}>
-                <Provider store={store}>
-                    <ApolloProvider client={client}>{element}</ApolloProvider>
-                </Provider>
-            </StripeProvider>
-        </StripeScriptLoader>
+        <App element={element} />
     )
 }
+
+class App extends React.Component {
+    constructor() {
+        super();
+        this.state = { stripe: null };
+    }
+
+    componentDidMount() {
+        if (window.Stripe) {
+            this.setState({ stripe: window.Stripe(process.env.GATSBY_STRIPE_API_KEY) });
+        } else {
+            document.querySelector('#stripe-js').addEventListener('load', () => {
+                // Create Stripe instance once Stripe.js loads
+                this.setState({ stripe: window.Stripe(process.env.GATSBY_STRIPE_API_KEY) });
+            });
+        }
+    }
+
+    render() {
+        return (
+            <StripeProvider stripe={this.state.stripe}>
+                <Provider store={store}>
+                    <ApolloProvider client={client}>
+                        {this.props.element}
+                    </ApolloProvider>
+                </Provider>
+            </StripeProvider >
+        )
+    }
+}
+
+export default wrapWithProvider;

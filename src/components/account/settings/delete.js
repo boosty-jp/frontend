@@ -64,7 +64,7 @@ class UserDeleteForm extends React.Component {
             <>
                 <Alert
                     type="error"
-                    description={<p>アカウント削除した後、そのアカウントの復旧は行なえません。作成したコンテンツもすべて削除されます。同意の上、削除してください。</p>}
+                    description={<p>アカウント削除した後、そのアカウントの復旧は行なえません。<br /><strong>販売中のコンテンツがある場合は、販売停止にしてください。</strong><br />アカウント削除後の売上の振り込みについては保証しかねます。<br />上記の実施及び同意の上、削除してください。<br /></p>}
                     message="この操作は取り消せません"
                     showIcon
                     icon={<WarningOutlined />}

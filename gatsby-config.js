@@ -4,9 +4,9 @@ require("dotenv").config({
 })
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `boosty`,
+    description: `オンライン技術書サービスです。ブラウザ上で技術書が書いて、読むことができます。エンジニアの情報源である技術書をもっと手軽に身近に。`,
+    author: `@boosty_official`,
     siteUrl: 'https://boosty.jp'
   },
   plugins: [

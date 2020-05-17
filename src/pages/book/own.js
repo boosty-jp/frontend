@@ -6,7 +6,10 @@ import VerticalLayout from "components/layout/vertical"
 
 const OwnedBookPage = () => (
     <VerticalLayout activeMenuKey="shelf">
-        <SEO title="DEMO" />
+        <SEO
+            title="本棚"
+            description="購入した技術書の一覧を確認できます。たくさんの技術書から多くのことを学び、あなたのスキルをさらに磨きましょう。"
+        />
         <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             <OwnBookList />
         </div>

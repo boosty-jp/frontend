@@ -6,8 +6,7 @@ import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { updateUser } from "services/local-user";
 import ErrorResult from "components/error/result";
-import FACEBOOK_IMG from 'images/facebook_invert.png'
-import { QuestionCircleOutlined, LinkOutlined, TwitterOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, LinkOutlined, TwitterOutlined, GithubOutlined } from "@ant-design/icons";
 
 const GET_ACCOUNT = gql`
   query GetAccount {
@@ -19,7 +18,7 @@ const GET_ACCOUNT = gql`
             url
             imageUrl
             twitterId
-            facebookId
+            githubId
         }
     }
 }
@@ -47,7 +46,7 @@ class UpdateForm extends React.Component {
                         description: values.profile ? values.profile : "",
                         displayName: values.displayName ? values.displayName : "",
                         twitterId: values.twitterId ? values.twitterId : "",
-                        facebookId: values.facebookId ? values.facebookId : "",
+                        githubId: values.githubId ? values.githubId : "",
                     }
                 }
             });
@@ -81,7 +80,7 @@ class UpdateForm extends React.Component {
                                     description: userData.description,
                                     url: userData.url,
                                     twitterId: userData.twitterId,
-                                    facebookId: userData.facebookId,
+                                    githubId: userData.githubId,
                                 }}
                                 onFinish={this.update}
                             >
@@ -109,8 +108,8 @@ class UpdateForm extends React.Component {
                                 <Form.Item name="twitterId" label={<TwitterLabel />}>
                                     <Input addonBefore="https://twitter.com/" />
                                 </Form.Item>
-                                <Form.Item name="facebookId" label={<FacebookLabel />}>
-                                    <Input addonBefore="https://facebook.com/" />
+                                <Form.Item name="githubId" label={<GitHubLabel />}>
+                                    <Input addonBefore="https://github.com/" />
                                 </Form.Item>
                                 <Form.Item {...tailLayout}>
                                     <Button type="primary" htmlType="submit" loading={this.state.loading} size="large" >
@@ -168,11 +167,11 @@ const TwitterLabel = () => {
     )
 }
 
-const FacebookLabel = () => {
+const GitHubLabel = () => {
     return (
         <span>
-            <img src={FACEBOOK_IMG} style={{ marginRight: '8px', width: '14px', height: 'auto' }} />
-            Facebook ID&nbsp;
+            <GithubOutlined style={{ color: 'black', marginRight: '8px' }} />
+            Github ID&nbsp;
         </span>
     )
 }

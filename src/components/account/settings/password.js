@@ -41,7 +41,7 @@ class PasswordUpdateForm extends React.Component {
     }
 
     change = values => {
-        this.setState({ updating: true });
+        this.setState({ updating: true, values: values });
         const firebase = getFirebase();
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -66,7 +66,7 @@ class PasswordUpdateForm extends React.Component {
                     spinning={this.state.loading}
                     indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
                 >
-                    <Form onFinish={this.handleSubmit} {...layout}>
+                    <Form onFinish={this.change} {...layout}>
                         <Form.Item
                             name="password"
                             label={<PasswordLabel />}
@@ -92,7 +92,7 @@ class PasswordUpdateForm extends React.Component {
                         onCancel={() => this.setState({ needReAuth: false })}
                         title={<><WarningTwoTone twoToneColor="#FFCC00" style={{ marginRight: '8px' }} />パスワード変更には認証が必要です</>}
                     >
-                        <ReAuthForm onSuccess={() => { this.handleSubmit(); }} />
+                        <ReAuthForm onSuccess={() => { this.handleSubmit(this.state.values); }} />
                     </Modal>
                 </Spin>
             </div>

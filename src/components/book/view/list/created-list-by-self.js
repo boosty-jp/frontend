@@ -22,8 +22,8 @@ const cardStyle = {
 
 
 const GET_BOOK_LIST = gql`
-  query CreatedBooks($userId: ID!, $searchCondition: SearchCondition) {
-    createdBooks(userId: $userId, condition: $searchCondition) {
+  query CreatedBooksBySelf($searchCondition: SearchCondition) {
+    createdBooksBySelf(condition: $searchCondition) {
       books {
         id
         title
@@ -38,7 +38,7 @@ const GET_BOOK_LIST = gql`
   }
 `;
 
-class CreatedBookList extends React.Component {
+class CreatedBookListBySelf extends React.Component {
     state = {
         loading: false,
         books: [],
@@ -50,7 +50,7 @@ class CreatedBookList extends React.Component {
             page: 1,
             resultCount: 12,
         },
-        data: { createdBooks: { books: [] } },
+        data: { createdBooksBySelf: { books: [] } },
     }
 
     onChange = async (page, filters, sorter) => {
@@ -59,7 +59,6 @@ class CreatedBookList extends React.Component {
             const { data } = await this.props.client.query({
                 query: GET_BOOK_LIST,
                 variables: {
-                    userId: this.props.id,
                     searchCondition: getCondition(page, filters, sorter),
                 }
             });
@@ -77,7 +76,6 @@ class CreatedBookList extends React.Component {
                 <Query
                     query={GET_BOOK_LIST}
                     variables={{
-                        userId: this.props.id,
                         searchCondition: {
                             filter: "",
                             sortField: "",
@@ -106,7 +104,7 @@ class CreatedBookList extends React.Component {
                                     onChange: page => this.onChange(page, this.state.filter, this.state.resultCount),
                                     pageSize: 12,
                                 }}
-                                dataSource={this.state.data.createdBooks.books}
+                                dataSource={this.state.data.createdBooksBySelf.books}
                                 renderItem={book => (
                                     <List.Item>
                                         <Link to={createBookDetailLink(book.id)}>
@@ -125,4 +123,4 @@ class CreatedBookList extends React.Component {
     }
 }
 
-export default withApollo(CreatedBookList)
+export default withApollo(CreatedBookListBySelf)

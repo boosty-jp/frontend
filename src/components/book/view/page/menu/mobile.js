@@ -5,7 +5,7 @@ import { setBookData } from 'modules/book/view'
 import { withApollo } from 'react-apollo'
 import BookViewMenuSections from "./sections";
 import BookViewMenuHeader from "./header";
-import { MenuOutlined } from "@ant-design/icons";
+import { ReadOutlined } from "@ant-design/icons";
 
 class MobileBookViewMenuComponent extends React.Component {
     state = { visible: false };
@@ -28,7 +28,7 @@ class MobileBookViewMenuComponent extends React.Component {
                 <Col xs={24} sm={24} md={24} lg={0} xl={0} xxl={0}>
                     <Button
                         shape="circle"
-                        icon={<MenuOutlined />}
+                        icon={<ReadOutlined />}
                         size="large"
                         style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
                         onClick={this.showDrawer}

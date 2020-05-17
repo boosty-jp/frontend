@@ -30,7 +30,7 @@ class CoverGeneratePageComponent extends React.Component {
         }
         return (
             <VerticalLayout>
-                <SEO title="Home" />
+                <SEO title="カバー画像ジェネレーター" description="あなた好みの技術書のカバー画像を生成します。配色・テーマを自由に選べます。" />
                 <div style={{ backgroundColor: '#F7FAFF' }}>
                     <div style={{ padding: '80px 20px', margin: '0 auto', maxWidth: '1000px' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', ...boardStyle }}>

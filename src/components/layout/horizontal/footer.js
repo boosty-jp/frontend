@@ -10,8 +10,8 @@ const footerSections = [
         icon: <GlobalOutlined />,
         pages: [
             { title: 'トップページ', link: '/home' },
-            { title: '本棚', link: '/plan/edit' },
-            { title: '著書', link: '/article/edit' },
+            { title: '本棚', link: '/book/own' },
+            { title: '著書', link: '/book/edit/list' },
         ]
     },
     {
@@ -19,8 +19,8 @@ const footerSections = [
         icon: <QuestionCircleOutlined />,
         pages: [
             { title: 'よくある質問', link: '/faq' },
-            { title: 'お知らせ', link: '/' },
-            { title: 'お問い合わせ', link: '/', outerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSfGwFcq1TQGEFSDpnC5THQW2ECsgKMw9c_UnXrFkvgNZbatfQ/viewform?usp=sf_link' },
+            { title: 'お知らせ', link: '/notifications' },
+            { title: 'お問い合わせ', link: '/', outerLink: 'https://form.run/@boosty-help' },
         ]
     },
     {

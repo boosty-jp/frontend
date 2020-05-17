@@ -7,7 +7,7 @@ const VerticalFooter = () => {
     var now = new Date();
     var thisYear = now.getFullYear();
     return (
-        <div style={{ maxWidth: '300px', textAlign: 'center', margin: '40px auto', color: "rgba(0,0,0,0.45)" }}>
+        <div style={{ width: '300px', textAlign: 'center', margin: '40px auto', color: "rgba(0,0,0,0.45)" }}>
             <Row>
                 <Col span={8}><Link to="/notifications" style={{ color: "rgba(0,0,0,0.45)" }}>お知らせ</Link></Col>
                 <Col span={8}><Link to="/faq" style={{ color: "rgba(0,0,0,0.45)" }}>よくある質問</Link></Col>

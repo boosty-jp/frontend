@@ -8,7 +8,7 @@ import 'ant-design-pro/dist/ant-design-pro.css';
 import 'instantsearch.css/themes/reset.css';
 import 'tocbot/dist/tocbot.css';
 
-export const wrapRootElement = wrapWithProvider
+export const wrapRootElement = wrapWithProvider;
 const ReactDOM = require('react-dom')
 
 export function replaceHydrateFunction() {

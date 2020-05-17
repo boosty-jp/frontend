@@ -28,7 +28,7 @@ const NotificationLayout = ({ children, notifications, activePageSlug }) => {
                                     const color = notification.node.slug === activePageSlug ? "rgb(47, 84, 235)" : "rgba(0, 0, 0, 0.65)";
                                     const background = notification.node.slug === activePageSlug ? "rgb(214, 228, 255)" : "#F7FAFF";
                                     return (
-                                        <Link to={createNotificationLink(notification.node.slug)}>
+                                        <Link to={createNotificationLink(notification.node.slug)} key={notification.node.slug}>
                                             <p style={{ color, background, padding: '10px 20px', marginBottom: '0px' }}>{notification.node.title}</p>
                                         </Link>
                                     )

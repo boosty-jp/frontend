@@ -26,7 +26,7 @@ exports.onCreateWebpackConfig = ({
 };
 
 const notificationQuery = `
-  query RecentArticles {
+  query AllNotifications {
     allContentfulNotification(sort: {fields: updatedAt, order: DESC}) {
       edges {
         node {

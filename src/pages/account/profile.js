@@ -2,7 +2,7 @@ import React from "react"
 import UserSEO from "components/seo/user-seo"
 import { Row, Col } from 'antd'
 import UserProfileHeader from "components/user/header";
-import CreatedBookList from "components/book/view/list/created-list";
+import CreatedBookList from "components/book/view/list/created-list-by-self";
 import VerticalLayout from "components/layout/vertical";
 
 const UserProfilePage = () => (

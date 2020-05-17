@@ -37,7 +37,7 @@ const MobileBookHeaderCardComponent = (props) => {
                             {props.title}
                         </span>
                         <div style={{ marginTop: '8px' }}>
-                            <AuthorLabel name={props.author.displayName} imageUrl={props.author.imageUrl} />
+                            <AuthorLabel id={props.author.id} name={props.author.displayName} imageUrl={props.author.imageUrl} />
                         </div>
                         <div style={{ marginTop: '12px' }}>
                             <Statistic value={props.price} suffix="円" />

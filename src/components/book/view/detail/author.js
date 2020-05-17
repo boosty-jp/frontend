@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import AvatarImage from 'components/avatar/image'
 import { Row, Col } from 'antd';
 import SnsLinks from "components/user/snsLink";
+import { createUserLink } from 'utils/link-generator'
+import { Link } from 'gatsby'
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -22,18 +24,22 @@ const BookAuthorComponent = (props) => {
             </p>
             <Row type="flex" align="top" gutter={16}>
                 <Col xs={8} sm={6} md={6} lg={6} xl={6} style={{ textAlign: 'center' }}>
-                    <AvatarImage
-                        size={80}
-                        style={{ fontSize: '40px' }}
-                        imageUrl={props.author.imageUrl}
-                        displayName={props.author.displayName}
-                    />
+                    <Link to={createUserLink(props.author.id)}>
+                        <AvatarImage
+                            size={80}
+                            style={{ fontSize: '40px' }}
+                            imageUrl={props.author.imageUrl}
+                            displayName={props.author.displayName}
+                        />
+                    </Link>
                 </Col>
                 <Col xs={16} sm={18} md={18} lg={18} xl={18} >
-                    <p style={{ color: 'black', fontSize: '18px', marginBottom: '6px' }}>{props.author.displayName}</p>
+                    <Link to={createUserLink(props.author.id)}>
+                        <p style={{ color: 'black', fontSize: '18px', marginBottom: '6px' }}>{props.author.displayName}</p>
+                    </Link>
                     <SnsLinks
                         twitterId={props.author.twitterId}
-                        facebookId={props.author.facebookId}
+                        githubId={props.author.githubId}
                         url={props.author.url}
                     />
                     <p style={{ fontSize: '16px' }}>{props.author.description}</p>

@@ -28,7 +28,7 @@ const ProfileHeaderCard = ({ data, selfSearch }) => {
         <div style={cardStyle}>
             <AvatarImage imageUrl={data.imageUrl} displayName={data.displayName} size={120} />
             <Paragraph ellipsis style={{ fontSize: '20px', marginBottom: '8px', color: 'black' }}>{data.displayName}</Paragraph>
-            <SnsLinks twitterId={data.twitterId} facebookId={data.facebookId} url={data.url} />
+            <SnsLinks twitterId={data.twitterId} githubId={data.githubId} url={data.url} />
             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
                 <UserDescription description={data.description} selfSearch={selfSearch} />
             </div>

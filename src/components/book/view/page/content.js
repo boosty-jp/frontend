@@ -7,6 +7,8 @@ import MarkdownRender from 'utils/markdown/markdown-renderer'
 import Helmet from "react-helmet"
 import { TwitterOutlined } from '@ant-design/icons';
 import PageLikeButton from './like-button';
+import { TwitterShareButton, } from 'react-share'
+import { createPageViewUrl } from 'utils/link-generator'
 
 const { Title } = Typography;
 const cardStyle = {
@@ -77,10 +79,26 @@ class PageViewContentComponent extends React.Component {
                             <PageLikeButton />
                         </div>
                         <div style={{ marginBottom: '20px' }}>
-                            <Button shape="circle" icon={<TwitterOutlined />} />
+                            <TwitterShareButton
+                                title={this.props.title}
+                                url={createPageViewUrl(this.props.pageId, this.props.bookId)}
+                            >
+                                <Button shape="circle" icon={<TwitterOutlined />} />
+                            </TwitterShareButton>
                         </div>
                         <div className="js-toc" />
                     </Affix>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={0}>
+                    <div style={{ position: 'fixed', bottom: '26px', left: '20px' }}>
+                        <TwitterShareButton
+                            title={this.props.title}
+                            url={createPageViewUrl(this.props.pageId, this.props.bookId)}
+                        >
+                            <Button shape="circle" icon={<TwitterOutlined />} style={{ marginRight: '8px', background: 'white', boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }} />
+                        </TwitterShareButton>
+                        <PageLikeButton style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }} />
+                    </div>
                 </Col>
             </Row>
         )
@@ -89,7 +107,6 @@ class PageViewContentComponent extends React.Component {
 
 const mapStateToProps = state => ({
     title: state.pageView.title,
-    titleError: state.pageView.error.title,
     text: state.pageView.text,
     previewMode: state.pageEdit.previewMode,
 })

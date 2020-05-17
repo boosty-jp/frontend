@@ -29,6 +29,7 @@ class AddSectionComponent extends React.Component {
     };
 
     addSection = async values => {
+        console.log(values);
         this.setState({ loading: true });
         try {
             const { data } = await this.props.client.mutate({
@@ -83,7 +84,14 @@ class AddSectionComponent extends React.Component {
                             <Input />
                         </Form.Item>
                         <Form.Item {...tailLayout}>
-                            <Button key="submit" type="primary" htmlType="submit" loading={this.state.loading} onClick={this.addSection}>追加する</Button>
+                            <Button
+                                key="submit"
+                                type="primary"
+                                htmlType="submit"
+                                loading={this.state.loading}
+                            >
+                                追加する
+                            </Button>
                         </Form.Item>
                     </Form>
                 </Modal>

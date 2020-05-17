@@ -40,6 +40,7 @@ const CreatorBanner = () => {
                 執筆者 募集中！
                 <br />
                     <Button type="primary" size={buttonSize} style={buttonStyle} shape="round">{linkMessage}</Button>
+                    <p style={{ fontSize: '14px' }}>販売手数料50% OFF<br />キャンペーン開催中(6/30まで)</p>
                 </Paragraph>
             </div>
         </Link>

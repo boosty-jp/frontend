@@ -1,4 +1,5 @@
 import React from "react"
+import SEO from 'components/seo/seo'
 import SignUpForm from "components/auth/signup/signup-form"
 import { Link } from "gatsby";
 import SimpleLayout from "components/layout/simple-layout";
@@ -15,6 +16,7 @@ const cardStyle = {
 
 const SignUpPage = () => (
     <SimpleLayout maxWidth="400px" width="100%" >
+        <SEO title="会員登録" description="boostyでのユーザー登録を行います。" />
         <div style={cardStyle}>
             <SignUpForm />
         </div>

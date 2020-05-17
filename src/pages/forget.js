@@ -1,4 +1,5 @@
 import React from "react"
+import SEO from 'components/seo/seo'
 import PasswordForgetForm from 'components/auth/password-forget'
 import SimpleLayout from "components/layout/simple-layout"
 
@@ -13,6 +14,7 @@ const cardStyle = {
 
 const ForgetPage = () => (
     <SimpleLayout maxWidth="400px" width="100%">
+        <SEO title="パスワードの再設定" description="boostyにログイン時のパスワードをお忘れの際に、確認メールを送信した後に再設定いただけます。" />
         <div style={{ margin: '0 auto', maxWidth: '400px', padding: '10px' }}>
             <div style={cardStyle}>
                 <PasswordForgetForm />

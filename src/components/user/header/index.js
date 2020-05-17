@@ -16,7 +16,7 @@ const GET_USER = gql`
         url
         imageUrl
         twitterId
-        facebookId
+        githubId
     }
 }
 `;
@@ -31,7 +31,7 @@ const GET_ACCOUNT = gql`
             url
             imageUrl
             twitterId
-            facebookId
+            githubId
         }
     }
 }
