@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import OGP_IMAGE from 'images/ogp_image.png'
+import OGP_IMAGE from 'images/ogp.png'
 
 function NOSEO({ description, meta, title, url }) {
     const { site } = useStaticQuery(
@@ -59,7 +59,7 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:site_name`,
-                    content: `wever`,
+                    content: `boosty`,
                 },
                 {
                     property: `og:locale`,
@@ -75,7 +75,7 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     name: `twitter:site`,
-                    content: `@wever`,
+                    content: `@boosty_officail`,
                 },
                 {
                     name: `twitter:description`,
@@ -93,8 +93,8 @@ function NOSEO({ description, meta, title, url }) {
 NOSEO.defaultProps = {
     meta: [],
     description: ``,
-    title: `wever`,
-    url: `https://wever.co.jp`
+    title: `boosty`,
+    url: `https://boosty.jp`
 }
 
 NOSEO.propTypes = {

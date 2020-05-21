@@ -6,7 +6,7 @@ const getToken = async () => {
         const f_auth = firebase.auth();
         f_auth.onAuthStateChanged(user => {
             if (user) {
-                resolve(user.getIdToken(true));
+                resolve(user.getIdToken(false));
             } else {
                 reject();
             }

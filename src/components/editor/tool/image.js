@@ -1,4 +1,6 @@
 import Image from "@editorjs/image";
+import getFirebase from "utils/firebase";
+import uuidv4 from 'uuid/v4'
 
 export const image =
 {
@@ -17,16 +19,58 @@ export const image =
              * @return {Promise.<{success, file: {url}}>}
              */
             uploadByFile(file) {
-                // your own uploading logic here
+                return uploadImage(file).then(imageUrl => {
+                    return {
+                        success: 1,
+                        file: {
+                            url: imageUrl
+                        }
+                    }
+                }).catch(() => {
+                    return {
+                        success: 0
+                    }
+                })
             },
             uploadByUrl(url) {
-                return {
-                    success: 1,
-                    file: {
-                        url: url
-                    }
-                }
+                return new Promise((resolve, reject) => {
+                    resolve({
+                        success: 1,
+                        file: {
+                            url: url
+                        }
+                    });
+                })
             },
         },
     }
+}
+
+const uploadImage = async file => {
+    const firebase = getFirebase();
+
+    const metadata = {
+        contentType: file.type
+    }
+
+    const storageRef = await firebase.storage().ref()
+
+    return new Promise((resolve, reject) => {
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (!user) {
+                reject();
+            } else {
+                const fileName = 'page-content-' + uuidv4();
+                const imgFile = storageRef.child(`user/${user.uid}/${fileName}.png`)
+
+                try {
+                    const image = await imgFile.put(file, metadata);
+                    const imageUrl = "https://firebasestorage.googleapis.com/v0/b/" + image.metadata.bucket + "/o/" + encodeURIComponent(image.metadata.fullPath) + "?alt=media";
+                    resolve(imageUrl);
+                } catch (e) {
+                    reject();
+                }
+            }
+        })
+    });
 }

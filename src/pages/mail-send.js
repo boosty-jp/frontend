@@ -1,8 +1,18 @@
 import React from "react"
-import { Result, Icon, message } from 'antd';
+import { Result, message } from 'antd';
 import getFirebase from 'utils/firebase'
 import SimpleLayout from 'components/layout/simple-layout'
+import { MailTwoTone } from "@ant-design/icons";
+import NOSEO from "components/seo/noseo";
 
+const cardStyle = {
+    backgroundColor: 'white',
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+    borderRadius: '1rem',
+    margin: '20px',
+    fontSize: 'bold',
+    fontColor: 'black',
+}
 
 const MailSendPage = () => {
     const reSend = () => {
@@ -23,12 +33,13 @@ const MailSendPage = () => {
 
     return (
         <SimpleLayout maxWidth="500px" width="100%" >
-            <div style={{ margin: '20px', padding: '0px', backgroundColor: 'white', borderRadius: '0.25rem' }}>
+            <NOSEO title="確認メール送信完了" description="boostyをご利用時の確認メールを送信しました。" />
+            <div style={cardStyle}>
                 <Result
-                    icon={<Icon type="mail" theme="twoTone" />}
+                    icon={<MailTwoTone />}
                     title="認証用のメールを送りました。"
                     subTitle={<p>メールから認証を完了してください</p>}
-                    extra={[<p>※ メールが届かない場合は<a href="#" onClick={() => reSend()}>こちら</a>から再送してください</p>]}
+                    extra={[<p>※ メールが届かない場合は<a href="/#" onClick={() => reSend()}>こちら</a>から再送してください</p>]}
                 />
             </div>
         </SimpleLayout>

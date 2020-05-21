@@ -1,10 +1,11 @@
 import React from "react"
-import { message, Checkbox, Form, Icon, Input, Button } from 'antd';
+import { message, Checkbox, Form, Input, Button } from 'antd';
 import getFirebase from 'utils/firebase'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { setUser } from "services/local-user";
-import { Link } from "gatsby";
+import { createTermsUrl } from "utils/link-generator";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
@@ -17,7 +18,11 @@ mutation CreateUser($displayName: String!, $imageUrl: String!) {
 }
 `;
 
-class NormalSignUpForm extends React.Component {
+const shadowButtonStyle = {
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+}
+
+class OwnSignUpForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,16 +31,6 @@ class NormalSignUpForm extends React.Component {
             isSignUped: false,
         }
     }
-
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.signUp(values.mail, values.password);
-            }
-        });
-    };
-
 
     getTempDisplayName = (mail) => {
         const target = mail.substring(0, mail.indexOf("@"));
@@ -108,59 +103,37 @@ class NormalSignUpForm extends React.Component {
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
-            <Form onSubmit={this.handleSubmit} className="login-form">
-                <Form.Item label="メールアドレス">
-                    {getFieldDecorator('mail', {
-                        rules: [{ required: true, message: 'メールアドレスを入力してください' }],
-                    })(
-                        <Input
-                            prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="メールアドレス"
-                            size="large"
-                        />,
-                    )}
+            <Form onSubmit={this.signUp} initialValues={{ terms: false }}>
+                <Form.Item name="mail" rules={[{ required: true, message: 'メールアドレスを入力してください' }]}>
+                    <Input
+                        prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        placeholder="メールアドレス"
+                    />
                 </Form.Item>
-                <Form.Item label="パスワード">
-                    {getFieldDecorator('password', {
-                        rules: [
-                            { required: true, message: 'パスワードを入力してください。' },
-                            { min: 6, message: '6文字以上を入力してください' },
-                        ],
-                    })(
-                        <Input
-                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            type="password"
-                            placeholder="パスワード"
-                            size="large"
-                        />,
-                    )}
+                <Form.Item
+                    name="password"
+                    rules={[
+                        { required: true, message: 'パスワードを入力してください。' },
+                        { min: 6, message: '6文字以上を入力してください' },
+                    ]}>
+                    <Input
+                        type="password"
+                        placeholder="パスワード"
+                        prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    />
                 </Form.Item>
-                <Form.Item >
-                    {getFieldDecorator('terms', {
-                        valuePropName: 'checked',
-                        initialValue: false,
-                        rules: [{
-                            required: true,
-                            transform: value => (value || undefined),
-                            type: 'boolean',
-                            message: '利用規約に同意してください',
-                        }],
-                    })
-                        (
-                            <Checkbox>
-                                <Link to="/terms">利用規約</Link>に同意する
-                            </Checkbox>,
-                        )}
+                <Form.Item name="terms" valuePropName="checked" rules={[{ validator: (_, value) => value ? Promise.resolve() : Promise.reject('利用規約に同意してください'), }]}>
+                    <Checkbox><a href={createTermsUrl()} target="_blank" rel="noopener noreferrer">利用規約</a>に同意する</Checkbox>
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
                     <Button
+                        shape="round"
                         type="primary"
                         htmlType="submit"
                         loading={this.state.loading}
                         className="login-form-button"
-                        style={{ width: '100%' }}>会員登録
+                        style={{ width: '100%', ...shadowButtonStyle }}>会員登録
                         </Button>
                 </Form.Item>
             </Form>
@@ -168,5 +141,4 @@ class NormalSignUpForm extends React.Component {
     }
 }
 
-const OwnSignUpForm = Form.create({ name: 'normal_signup' })(NormalSignUpForm);
 export default withApollo(OwnSignUpForm)

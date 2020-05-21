@@ -2,8 +2,9 @@ import React from "react"
 import getFirebase from 'utils/firebase'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { message, Form, Icon, Input, Button } from 'antd';
+import { message, Form, Input, Button } from 'antd';
 import { isLoggedIn, setUser } from "services/local-user";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
 
@@ -16,7 +17,12 @@ const GET_USER = gql`
 }
 `;
 
-class NormalLoginForm extends React.Component {
+const shadowButtonStyle = {
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+    width: '100%',
+}
+
+class OwnLoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,11 +33,11 @@ class NormalLoginForm extends React.Component {
         }
     }
 
-    signIn = (mail, password) => {
+    signIn = values => {
         this.setState({ loading: true })
 
         const firebase = getFirebase();
-        firebase.auth().signInWithEmailAndPassword(mail, password)
+        firebase.auth().signInWithEmailAndPassword(values.mail, values.password)
             .then((result) => {
                 this.mailVerification(result.user.uid)
             })
@@ -69,7 +75,6 @@ class NormalLoginForm extends React.Component {
                 variables: { userId: userId }
             });
             setUser({ userId: userId, imageUrl: data.user.imageUrl, userName: data.user.displayName })
-            setUser({ userId: userId, imageUrl: "https://i.pravatar.cc/150?img=18", userName: "tomokiya" })
         } catch (err) {
             message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
         }
@@ -90,52 +95,40 @@ class NormalLoginForm extends React.Component {
         }
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields(((err, values) => {
-            if (!err) {
-                this.signIn(values.mail, values.password);
-            }
-        }));
-    };
-
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
-            <Form onSubmit={this.handleSubmit} className="login-form">
-                <Form.Item label="メールアドレス">
-                    {getFieldDecorator('mail', {
-                        rules: [{ required: true, message: 'メールアドレスを入力してください' }],
-                    })(
-                        <Input
-                            prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="メールアドレス"
-                            size="large"
-                        />,
-                    )}
+            <Form onFinish={this.signIn}>
+                <Form.Item name="mail" rules={[
+                    { required: true, message: 'メールアドレスを入力してください' },
+                    { type: 'email', message: '無効な形式です' }
+                ]}>
+                    <Input
+                        prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        placeholder="メールアドレス"
+                    />
                 </Form.Item>
-                <Form.Item label="パスワード">
-                    {getFieldDecorator('password', {
-                        rules: [
-                            { required: true, message: 'パスワードを入力してください。' },
-                        ],
-                    })(
-                        <Input
-                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            type="password"
-                            placeholder="パスワード"
-                            size="large"
-                        />,
-                    )}
+                <Form.Item name="password" rules={[{ required: true, message: 'パスワードを入力してください。' },]}>
+                    <Input
+                        prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        type="password"
+                        placeholder="パスワード"
+                    />
                 </Form.Item>
                 <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
-                    <Button loading={this.state.loading} type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>ログイン</Button>
+                    <Button
+                        shape="round"
+                        type="primary"
+                        htmlType="submit"
+                        loading={this.state.loading}
+                        className="login-form-button"
+                        style={shadowButtonStyle}
+                    >
+                        ログイン
+                    </Button>
                 </Form.Item>
             </Form>
         );
     }
 }
-
-const OwnLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
 export default withApollo(OwnLoginForm)

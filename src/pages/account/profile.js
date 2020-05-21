@@ -1,22 +1,24 @@
 import React from "react"
-import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical/account"
-import ProfileContents from "components/account/profile/view/content";
-import UserProfileHeader from "components/user/profile-header";
+import UserSEO from "components/seo/user-seo"
+import { Row, Col } from 'antd'
+import UserProfileHeader from "components/user/header";
+import CreatedBookList from "components/book/view/list/created-list-by-self";
+import VerticalLayout from "components/layout/vertical";
 
 const UserProfilePage = () => (
-    <VerticalLayout pageTitle="プロフィール" selectedMenu="account-profile" openedMenu="account">
-        <SEO title="Home" />
-        <div style={{ margin: '0 auto 0 0' }}>
-            <div style={{ background: 'white' }}>
-                <div style={{ padding: '20px', maxWidth: '1250px' }}>
-                    <UserProfileHeader selfSearch={true} />
+    <VerticalLayout>
+        <UserSEO />
+        <Row gutter={20} style={{ margin: '20px auto', maxWidth: '800px', padding: '20px' }}>
+            <Col xs={24} sm={24} style={{ marginBottom: '20px' }}>
+                <UserProfileHeader selfSearch={true} />
+            </Col>
+            <Col xs={24} sm={24} >
+                <div style={{ marginBottom: '20px' }}>
+                    <CreatedBookList />
                 </div>
-            </div>
-            <div style={{ padding: '20px', maxWidth: '1250px' }}>
-                <ProfileContents />
-            </div>
-        </div>
+
+            </Col>
+        </Row>
     </VerticalLayout>
 )
 

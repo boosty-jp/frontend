@@ -15,7 +15,7 @@ const ReAuthForm = ({ onSuccess }) => {
         <>
             <OwnReAuthForm onSuccess={() => onSuccess()} />
             <LoginDivider>もしくは</LoginDivider>
-            <ThirdPartyButtons />
+            <ThirdPartyButtons authType="再認証" />
         </>
     );
 }

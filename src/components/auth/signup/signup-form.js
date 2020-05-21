@@ -1,5 +1,5 @@
 import React from "react"
-import { Divider, Spin, Icon, message } from 'antd';
+import { Divider, Spin, message } from 'antd';
 import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag';
 import { setUser } from "services/local-user";
@@ -7,6 +7,7 @@ import getFirebase from "utils/firebase";
 import styled from 'styled-components'
 import OwnSignUpForm from 'components/auth/signup/own-signup-form'
 import ThirdPartyButtons from "components/auth/third-party-buttons";
+import { LoadingOutlined } from "@ant-design/icons"
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -50,7 +51,12 @@ class SignUpForm extends React.Component {
     }
 
     createUser = async (user) => {
-        const displayName = user.displayName.length > 30 ? user.displayName.slice(0, 30) : user.displayName;
+        let displayName = '';
+        if (user.displayName) {
+            displayName = user.displayName.length > 30 ? user.displayName.slice(0, 30) : user.displayName;
+        } else {
+            displayName = "ユーザー名未設定";
+        }
         try {
             await this.props.client.mutate({
                 mutation: CREATE_USER,
@@ -68,7 +74,7 @@ class SignUpForm extends React.Component {
 
     handleAuthError = (error) => {
         const errorCode = error.code;
-        if (errorCode == 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
+        if (errorCode === 'auth/account-exists-with-different-credential' || errorCode === 'auth/email-already-in-use' || errorCode === 'auth/credential-already-in-use') {
             // すでにそのメールでアカウントが作成されていた場合
             message.error("すでにweverにアカウントが作成されています。別の認証方式でログインしてください", 7)
         } else {
@@ -81,7 +87,7 @@ class SignUpForm extends React.Component {
             <Spin
                 tip="ロード中です"
                 spinning={this.state.loading}
-                indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
             >
                 <ThirdPartyButtons authType="会員登録" />
                 <SignUpDivider>もしくは</SignUpDivider>

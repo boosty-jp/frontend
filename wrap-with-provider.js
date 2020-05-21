@@ -1,37 +1,51 @@
 import React from 'react'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import createSagaMiddleware from 'redux-saga'
-import rootSaga from './src/sagas/index'
 import reducers from './src/modules/index'
-import Amplify from 'aws-amplify'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from 'services/apollo/client';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { devToolsEnhancer } from 'redux-devtools-extension/logOnlyInProduction';
+import { StripeProvider } from 'react-stripe-elements';
 
-const awsConfig = {
-    "API": {
-        "endpoints": [
-            {
-                "name": "ImageUploader",
-                "region": process.env.GATSBY_AWS_REGION,
-                "endpoint": process.env.GATSBY_AWS_IMAGE_UPLOAD_END_POINT,
-            },
-        ]
-    }
-};
-
-Amplify.configure(awsConfig)
-
-const sagaMiddleware = createSagaMiddleware();
-const devTools = process.env.NODE_ENV === "production" ? applyMiddleware(sagaMiddleware) : composeWithDevTools(applyMiddleware(sagaMiddleware));
 const store = createStore(
     reducers,
-    devTools
+    devToolsEnhancer()
 )
 
-sagaMiddleware.run(rootSaga)
-
-export default ({ element }) => {
-    return <Provider store={store}><ApolloProvider client={client}>{element}</ApolloProvider></Provider>
+const wrapWithProvider = ({ element }) => {
+    return (
+        <App element={element} />
+    )
 }
+
+class App extends React.Component {
+    constructor() {
+        super();
+        this.state = { stripe: null };
+    }
+
+    componentDidMount() {
+        if (window.Stripe) {
+            this.setState({ stripe: window.Stripe(process.env.GATSBY_STRIPE_API_KEY) });
+        } else {
+            document.querySelector('#stripe-js').addEventListener('load', () => {
+                // Create Stripe instance once Stripe.js loads
+                this.setState({ stripe: window.Stripe(process.env.GATSBY_STRIPE_API_KEY) });
+            });
+        }
+    }
+
+    render() {
+        return (
+            <StripeProvider stripe={this.state.stripe}>
+                <Provider store={store}>
+                    <ApolloProvider client={client}>
+                        {this.props.element}
+                    </ApolloProvider>
+                </Provider>
+            </StripeProvider >
+        )
+    }
+}
+
+export default wrapWithProvider;

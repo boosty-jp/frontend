@@ -1,9 +1,10 @@
 import React from "react"
-import { Input, Alert, message, Icon, Button, Modal } from 'antd';
+import { Input, Alert, message, Button, Modal } from 'antd';
 import getFirebase from 'utils/firebase'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { logout } from 'services/local-user'
+import { WarningOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -63,16 +64,16 @@ class UserDeleteForm extends React.Component {
             <>
                 <Alert
                     type="error"
-                    description={<p>アカウント削除した後、そのアカウントの復旧は行なえません。作成したコンテンツもすべて削除されます。同意の上、削除してください。</p>}
+                    description={<p>アカウント削除した後、そのアカウントの復旧は行なえません。<br /><strong>販売中のコンテンツがある場合は、販売停止にしてください。</strong><br />アカウント削除後の売上の振り込みについては保証しかねます。<br />上記の実施及び同意の上、削除してください。<br /></p>}
                     message="この操作は取り消せません"
                     showIcon
-                    icon={<Icon type="warning" />}
+                    icon={<WarningOutlined />}
                 />
                 <div style={{ margin: '20px auto 0px auto' }}>
                     <Button type="danger" onClick={() => this.setState({ deleteModalVisible: true })}>削除する</Button>
                 </div>
                 <Modal
-                    title={<span style={{ color: 'red', fontWeight: '500' }}><Icon type="warning" style={{ marginRight: '8px' }} />アカウントを削除する</span>}
+                    title={<span style={{ color: 'red', fontWeight: '500' }}><WarningOutlined style={{ marginRight: '8px' }} />アカウントを削除する</span>}
                     visible={this.state.deleteModalVisible}
                     onOk={this.delete}
                     onCancel={() => this.setState({ deleteModalVisible: false })}
