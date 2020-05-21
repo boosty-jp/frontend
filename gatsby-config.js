@@ -75,6 +75,15 @@ module.exports = {
         accessToken: process.env.GATSBY_CONTENTFUL_API_KEY
       }
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_UA,
+        head: false,
+        anonymize: true,
+        siteSpeedSampleRate: 10,
+      },
+    },
     'gatsby-plugin-robots-txt',
     `gatsby-plugin-sitemap`
   ],

@@ -16,7 +16,7 @@ const SnsShareButtonsComponent = (props) => {
                 <Button
                     size="large"
                     shape="circle"
-                    icon={<TwitterOutlined style={{ color: '#1890ff', fontSize: '20px', color: 'white' }} />}
+                    icon={<TwitterOutlined style={{ color: '#1890ff', fontSize: '20px' }} />}
                     style={{
                         marginRight: '8px',
                         verticalAlign: 'middle',
@@ -34,7 +34,7 @@ const SnsShareButtonsComponent = (props) => {
                 <Button
                     size="large"
                     shape="circle"
-                    icon={<img src={FACEBOOK_IMG} style={{ width: '24px', height: 'auto', marginTop: '-8px' }} />}
+                    icon={<img src={FACEBOOK_IMG} style={{ width: '24px', height: 'auto', marginTop: '-8px' }} alt="Facebooロゴ" />}
                     style={{
                         marginRight: '8px',
                         verticalAlign: 'middle',

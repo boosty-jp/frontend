@@ -86,10 +86,6 @@ class Pattern3CoverComponent extends React.Component {
         downloadURI(this.stageRef.getStage().toDataURL(), "book-cover.png");
     }
     render() {
-        let url = "";
-        if (this.stageRef) {
-            url = this.stageRef.getStage().toDataURL();
-        }
         const backgroundColor = this.props.mode === 'dark' ? '#262626' : '#FFFFFF';
         const subTitleColor = this.props.mode === 'dark' ? '#FFFFFF' : '#262626';
         return (

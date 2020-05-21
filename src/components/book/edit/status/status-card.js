@@ -5,7 +5,7 @@ import StatusButton from "./status-button";
 import BookStatusDescription from "./status-description";
 import { FileSearchOutlined } from '@ant-design/icons'
 import { Link } from 'gatsby';
-import { createBookDetailLink, createBookDetailPreviewLink } from 'utils/link-generator'
+import { createBookDetailPreviewLink } from 'utils/link-generator'
 
 
 const cardStyle = {

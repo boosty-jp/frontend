@@ -5,7 +5,6 @@ import { Link } from "gatsby"
 import OwnBookItem from 'components/book/view/list/item'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import ErrorResult from "components/error/result";
 import { createBookDetailLink } from 'utils/link-generator'
 import { isLoggedIn } from "services/local-user"
 

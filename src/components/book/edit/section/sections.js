@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, List, Empty, Switch } from 'antd'
+import { Collapse, List, Empty } from 'antd'
 import { Link } from 'gatsby'
 import { connect } from 'react-redux'
 import DeleteSection from 'components/book/edit/section/delete-section'

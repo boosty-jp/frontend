@@ -3,7 +3,7 @@ import React from "react"
 import { Row, Col } from 'antd'
 import SEO from "components/seo/seo"
 import VerticalLayout from "components/layout/vertical"
-import RecentViewedBookList from "components/book/view/list/recent-viiew-list"
+import RecentViewedBookList from "components/book/view/list/recent-view-list"
 import NewSaleBookList from "components/book/view/list/new/top"
 import FamousSaleBookList from "components/book/view/list/famous/top-sale-list"
 import FamousFreeBookList from "components/book/view/list/famous/top-free-sale-list"

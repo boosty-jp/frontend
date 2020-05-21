@@ -1,6 +1,5 @@
 import React from "react"
-import { Typography, Button, Row, Col } from 'antd';
-import BackgroundImage from "images/background1.png"
+import { Typography, Button } from 'antd';
 import PcBannerImage from "images/pc-sales-banner.png"
 import { Link } from "gatsby"
 import { isLoggedIn } from "services/local-user";

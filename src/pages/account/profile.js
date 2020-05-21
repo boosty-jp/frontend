@@ -8,7 +8,7 @@ import VerticalLayout from "components/layout/vertical";
 const UserProfilePage = () => (
     <VerticalLayout>
         <UserSEO />
-        <Row style={{ padding: '20px' }} gutter={20} style={{ margin: '20px auto', maxWidth: '800px' }}>
+        <Row gutter={20} style={{ margin: '20px auto', maxWidth: '800px', padding: '20px' }}>
             <Col xs={24} sm={24} style={{ marginBottom: '20px' }}>
                 <UserProfileHeader selfSearch={true} />
             </Col>

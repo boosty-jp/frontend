@@ -7,7 +7,7 @@ const OrderHistoryItem = ({ orderHistory }) => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: '60px 1fr', width: "100%" }}>
             <div>
-                <img src={orderHistory.imageUrl} style={{ width: '60px', height: 'auto', borderRadius: '2px' }}></img>
+                <img src={orderHistory.imageUrl} style={{ width: '60px', height: 'auto', borderRadius: '2px' }} alt="本のカバー"></img>
             </div>
             <div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', paddingLeft: '12px' }}>
