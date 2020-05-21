@@ -1,4 +1,4 @@
-https://boosty.jp
+URL: https://boosty.jp
 
 ## 開発環境
 ```
