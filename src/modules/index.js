@@ -1,32 +1,18 @@
 import { combineReducers } from 'redux';
-import ArticleView from 'modules/article/view'
-import ArticleEdit from 'modules/article/edit'
-import CourseView from 'modules/course/view'
-import CourseEditBase from 'modules/course/edit/base'
-import CourseEditSections from 'modules/course/edit/sections'
-import CourseEditSection from 'modules/course/edit/section'
-import TestView from 'modules/test/view'
-import TestAnswer from 'modules/test/view/answer'
-import TestEditBase from 'modules/test/edit/base'
-import TestEditQuestion from 'modules/test/edit/question'
-import TestEditQuestions from 'modules/test/edit/questions'
-import TestEditExplanation from 'modules/test/edit/explanation'
-import ReferenceArticle from 'modules/test/edit/reference-article'
+import BookView from 'modules/book/view'
+import BookEdit from 'modules/book/edit'
+import BookGenerator from 'modules/book/edit/generator'
+import PageView from 'modules/page/view'
+import PageEdit from 'modules/page/edit'
+import User from 'modules/user/index'
 
 const reducers = combineReducers({
-    articleView: ArticleView,
-    articleEdit: ArticleEdit,
-    courseView: CourseView,
-    courseEditBase: CourseEditBase,
-    courseEditSections: CourseEditSections,
-    courseEditSection: CourseEditSection,
-    testView: TestView,
-    testAnswer: TestAnswer,
-    testEditBase: TestEditBase,
-    testEditQuestion: TestEditQuestion,
-    testEditQuestions: TestEditQuestions,
-    testEditExplanation: TestEditExplanation,
-    referenceArticle: ReferenceArticle,
+    bookView: BookView,
+    bookEdit: BookEdit,
+    bookGenerator: BookGenerator,
+    pageView: PageView,
+    pageEdit: PageEdit,
+    user: User,
 });
 
 export default reducers;

@@ -1,29 +1,15 @@
 import React from "react"
-import Layout from "components/layout/horizontal"
-import SEO from "components/seo"
-import SearchCategoryForm from "components/search/category";
-import SearchResults from "components/search/result";
-import TwoColumnLayout from "components/layout/two-column";
-import TopicCategoryCard from "components/category/topic-card"
-import TopicUserCard from "components/account/topic-card";
+import SEO from "components/seo/seo"
+import VerticalLayout from "components/layout/vertical"
+import SearchComponent from "components/search/book"
 
-const IndexPage = () => (
-    <Layout>
-        <SEO title="Home" />
-        {/* <SearchForm /> */}
-        <SearchCategoryForm />
-        <TwoColumnLayout
-            left={
-                <SearchResults />
-            }
-            right={
-                <>
-                    <TopicCategoryCard />
-                    <TopicUserCard />
-                </>
-            }
-        />
-    </Layout>
+const SearchPage = () => (
+    <VerticalLayout activeMenuKey="search">
+        <SEO title="検索" description="キーワードより技術書をお探しできます。" />
+        <div style={{ padding: '20px', margin: '20px auto' }}>
+            <SearchComponent />
+        </div>
+    </VerticalLayout>
 )
 
-export default IndexPage
+export default SearchPage

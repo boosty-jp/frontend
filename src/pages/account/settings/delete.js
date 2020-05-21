@@ -1,16 +1,22 @@
 import React from "react"
-import SEO from "components/seo"
-import VerticalLayout from "components/layout/vertical/account"
 import AccountEditLayout from 'components/account/settings/layout'
 import UserDeleteForm from "components/account/settings/delete"
+import VerticalLayout from "components/layout/vertical"
+import SEO from "components/seo/seo"
 
-const AccountDeletePage = () => (
-    <VerticalLayout pageTitle="アカウント削除" selectedMenu="account-settings" openedMenu="account">
-        <SEO title="Home" />
-        <AccountEditLayout page="delete">
-            <UserDeleteForm />
-        </AccountEditLayout>
+const AccountEditPage = () => (
+    <VerticalLayout>
+        <SEO
+            title="アカウント削除"
+            url="https://boosty.jp/accont/settings/delete"
+            description="boostyのアカウント削除を行います。"
+        />
+        <div style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto' }}>
+            <AccountEditLayout page="delete">
+                <UserDeleteForm />
+            </AccountEditLayout>
+        </div>
     </VerticalLayout>
 )
 
-export default AccountDeletePage
+export default AccountEditPage

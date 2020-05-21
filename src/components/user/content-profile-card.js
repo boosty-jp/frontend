@@ -19,7 +19,7 @@ const ContentProfileCard = ({ data }) => {
             </Col>
             <Col xs={24} sm={20} md={21} lg={21} xl={21} xxl={21}>
                 <p style={{ fontWeight: '500', fontSize: '18px', marginBottom: '8px' }}>{data.displayName}</p>
-                <SnsLinks twitterId={data.twitterId} facebookId={data.facebookId} url={data.url} />
+                <SnsLinks twitterId={data.twitterId} githubId={data.githubId} url={data.url} />
                 <p>{data.description}</p>
             </Col>
         </Row>

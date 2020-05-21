@@ -1,5 +1,6 @@
 import React from "react"
 import { Avatar } from 'antd';
+import { UserOutlined } from "@ant-design/icons";
 
 const palettes = [
     "#bae637",
@@ -19,10 +20,10 @@ const AvatarImage = ({ imageUrl, displayName, style, size }) => {
     let avatarSize = "default"
     if (size) { avatarSize = size; }
 
-    if (imageUrl) return <Avatar src={imageUrl} style={style} size={avatarSize} />
+    if (imageUrl) return <Avatar src={imageUrl} style={style} size={avatarSize} alt="アカウント画像" />
     if (displayName) return (
-        <Avatar style={style} size={avatarSize} style={{ ...style, backgroundColor: palettes[displayName.length % 11] }}>{displayName.charAt(0)}</Avatar>
+        <Avatar size={avatarSize} style={{ ...style, backgroundColor: palettes[displayName.length % 11] }}>{displayName.charAt(0)}</Avatar>
     )
-    return (<Avatar icon="user" style={style} size={avatarSize} />)
+    return (<Avatar icon={<UserOutlined />} style={style} size={avatarSize} />)
 }
 export default AvatarImage

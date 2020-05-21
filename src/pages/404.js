@@ -1,9 +1,9 @@
 import React from "react"
 import Layout from "components/layout/horizontal"
 import NOSEO from "components/seo/noseo"
-
-import NOT_FOUND_IMAGE from 'images/404.png'
-import { Typography } from "antd"
+import { Typography, Button } from "antd"
+import NotFoundImage from "components/image/404"
+import { Link } from 'gatsby'
 
 const NotFoundPage = () => (
   <Layout contentBackgroundColor="white">
@@ -13,7 +13,12 @@ const NotFoundPage = () => (
         <Typography style={{ marginTop: '20px' }}>
           <Typography.Title>お探しのページが見つかりません</Typography.Title>
         </Typography>
-        <img src={NOT_FOUND_IMAGE} style={{ margin: '30px auto 0px auto', maxWidth: '500px', height: 'auto', width: '90%' }} />
+        <div style={{ margin: '0px auto', padding: '20px', maxWidth: '400px' }}>
+          <NotFoundImage />
+        </div>
+        <Link to="/home" style={{ marginTop: '40px', textAlign: 'center' }}>
+          <Button type="primary">ホームへ</Button>
+        </Link>
       </div>
     </div>
   </Layout>

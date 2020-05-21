@@ -1,8 +1,9 @@
 import React from "react"
-import { Upload, Button, Icon, message, Avatar, Spin } from 'antd';
+import { Upload, Button, message, Spin } from 'antd';
 import AvatarImage from "components/avatar/image";
 import getFirebase from "utils/firebase";
 import uuidv4 from 'uuid/v4'
+import { LoadingOutlined, DeleteOutlined, UploadOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -69,7 +70,7 @@ class AvatarUploader extends React.Component {
     render() {
         const { imageUrl, loading } = this.state;
         return (
-            <Spin spinning={loading} tip="アップロード中です" indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+            <Spin spinning={loading} tip="アップロード中です" indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
                 <div style={{ textAlign: 'center', padding: '10px' }}>
                     <div style={{ marginTop: '10px' }}>
                         <Upload
@@ -81,12 +82,12 @@ class AvatarUploader extends React.Component {
                             {imageUrl ?
                                 <>
                                     <AvatarImage imageUrl={imageUrl} displayName={this.props.displayName} size={100} style={{ fontSize: '40px' }} />
-                                    <Button type="dashed" block style={{ marginTop: '10px' }} onClick={this.removeImage}><Icon type="delete" /> 削除する</Button>
+                                    <Button type="dashed" block style={{ marginTop: '10px' }} onClick={this.removeImage}><DeleteOutlined /> 削除する</Button>
                                 </>
                                 :
                                 <>
                                     <AvatarImage displayName={this.props.displayName} size={100} style={{ fontSize: '40px' }} />
-                                    <Button block style={{ marginTop: '10px' }}><Icon type="upload" /> アップロード</Button>
+                                    <Button block style={{ marginTop: '10px' }}><UploadOutlined /> アップロード</Button>
                                 </>
                             }
                         </Upload>

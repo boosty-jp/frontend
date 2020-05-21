@@ -1,11 +1,12 @@
 import React from "react"
-import { Skeleton, Form, Input, Tooltip, Icon, Button, message } from 'antd';
+import { Skeleton, Form, Input, Tooltip, message, Button } from 'antd';
 import AvatarUploader from "./avatar-uploader";
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { updateUser } from "services/local-user";
 import ErrorResult from "components/error/result";
+import { QuestionCircleOutlined, LinkOutlined, TwitterOutlined, GithubOutlined } from "@ant-design/icons";
 
 const GET_ACCOUNT = gql`
   query GetAccount {
@@ -17,7 +18,7 @@ const GET_ACCOUNT = gql`
             url
             imageUrl
             twitterId
-            facebookId
+            githubId
         }
     }
 }
@@ -28,24 +29,13 @@ mutation UpdateUser($userInput: UserInput!){
   updateUser(user: $userInput)
 }
 `;
-
 class UpdateForm extends React.Component {
     state = {
-        loading: false
+        loading: false,
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.setState({ loading: true });
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                this.update(values);
-            }
-        });
-    };
-
-
     update = async (values) => {
+        this.setState({ loading: true });
         try {
             await this.props.client.mutate({
                 mutation: UPDATE_USER,
@@ -56,7 +46,7 @@ class UpdateForm extends React.Component {
                         description: values.profile ? values.profile : "",
                         displayName: values.displayName ? values.displayName : "",
                         twitterId: values.twitterId ? values.twitterId : "",
-                        facebookId: values.facebookId ? values.facebookId : "",
+                        githubId: values.githubId ? values.githubId : "",
                     }
                 }
             });
@@ -68,96 +58,63 @@ class UpdateForm extends React.Component {
         } catch (err) {
             message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
         }
-
         this.setState({ loading: false })
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
-
         return (
             <Query
                 query={GET_ACCOUNT}
                 onCompleted={(data) => this.setState({ imageUrl: data.account.user.imageUrl })}
             >
                 {({ loading, error, data }) => {
-                    if (loading) return <Skeleton avatar active paragraph={{ rows: 4 }} />
+                    if (loading) return <Skeleton avatar active paragraph={{ rows: 10 }} />
                     if (error) return <ErrorResult />
                     const userData = data.account.user
                     return (
-                        <div style={{ maxWidth: '500px', width: '100%' }}>
-                            <Form onSubmit={this.handleSubmit}>
+                        <div style={{ width: '100%' }}>
+                            <Form
+                                {...layout}
+                                initialValues={{
+                                    displayName: userData.displayName,
+                                    description: userData.description,
+                                    url: userData.url,
+                                    twitterId: userData.twitterId,
+                                    githubId: userData.githubId,
+                                }}
+                                onFinish={this.update}
+                            >
                                 <AvatarUploader imageUrl={userData.imageUrl} displayName={userData.displayName} onComplete={(imageUrl) => { this.setState({ imageUrl: imageUrl }) }} />
                                 <Form.Item
-                                    label={
-                                        <span>
-                                            表示名&nbsp;
-                                            <Tooltip title="30文字まで入力できます">
-                                                <Icon type="question-circle-o" />
-                                            </Tooltip>
-                                        </span>
-                                    }
+                                    name="displayName"
+                                    label={<DisplayNameLabel />}
+                                    rules={[
+                                        { required: true, message: '表示名を入力してください', whitespace: true },
+                                        { max: 30, message: '最大文字数は30文字です', whitespace: true }
+                                    ]}
                                 >
-                                    {getFieldDecorator('displayName', {
-                                        rules: [
-                                            { required: true, message: '表示名を入力してください', whitespace: true },
-                                            { max: 30, message: '最大文字数は30文字です', whitespace: true },
-                                        ],
-                                        initialValue: userData.displayName,
-                                    })(<Input />)}
+                                    <Input />
                                 </Form.Item>
-                                <Form.Item label={
-                                    <span>
-                                        自己紹介&nbsp;
-                                        <Tooltip title="200文字まで入力できます">
-                                            <Icon type="question-circle-o" />
-                                        </Tooltip>
-                                    </span>
-                                }>
-                                    {getFieldDecorator('profile', {
-                                        // rules: [{ required: true, message: 'Please input website!' }],
-                                        rules: [
-                                            { max: 200, message: '最大文字数は200文字です', whitespace: true },
-                                        ],
-                                        initialValue: userData.description,
-                                    })(
-                                        <Input.TextArea
-                                            autoSize={{ minRows: 3, maxRows: 7 }}
-                                        />
-                                    )}
+                                <Form.Item
+                                    name="profile"
+                                    label={<ProfileLabel />}
+                                    rules={[{ max: 200, message: '最大文字数は200文字です', whitespace: true }]}
+                                >
+                                    <Input.TextArea autoSize={{ minRows: 3, maxRows: 7 }} />
                                 </Form.Item>
-                                <Form.Item label={
-                                    <span>
-                                        <Icon type="link" style={{ marginRight: '8px' }} />
-                                        WebサイトURL&nbsp;
-                                    </span>
-                                }>
-                                    {getFieldDecorator('url', {
-                                        initialValue: userData.url,
-                                    })(<Input />)}
+                                <Form.Item name="url" label={<WebSiteLabel />}>
+                                    <Input />
                                 </Form.Item>
-                                <Form.Item label={
-                                    <span>
-                                        <Icon type="twitter" style={{ marginRight: '8px' }} />
-                                        Twitter ID&nbsp;
-                                    </span>
-                                }>
-                                    {getFieldDecorator('twitterId', {
-                                        initialValue: userData.twitterId,
-                                    })(<Input addonBefore="https://twitter.com/" />)}
+                                <Form.Item name="twitterId" label={<TwitterLabel />}>
+                                    <Input addonBefore="https://twitter.com/" />
                                 </Form.Item>
-                                <Form.Item label={
-                                    <span>
-                                        <Icon type="facebook" theme="filled" style={{ marginRight: '8px' }} />
-                                        Facebook ID&nbsp;
-                                    </span>
-                                }>
-                                    {getFieldDecorator('facebookId', {
-                                        initialValue: userData.facebookId,
-                                    })(<Input addonBefore="https://facebook.com/" />)}
+                                <Form.Item name="githubId" label={<GitHubLabel />}>
+                                    <Input addonBefore="https://github.com/" />
                                 </Form.Item>
-                                <Form.Item >
-                                    <Button type="primary" htmlType="submit" loading={this.state.loading}>更新する</Button>
+                                <Form.Item {...tailLayout}>
+                                    <Button type="primary" htmlType="submit" loading={this.state.loading} size="large" >
+                                        更新する
+                                    </Button>
                                 </Form.Item>
                             </Form >
                         </div>
@@ -167,6 +124,63 @@ class UpdateForm extends React.Component {
         )
     }
 }
+export default withApollo(UpdateForm)
 
-const ProfileBaseUpdateForm = Form.create({ name: 'update' })(UpdateForm);
-export default withApollo(ProfileBaseUpdateForm)
+const DisplayNameLabel = () => {
+    return (
+        <span>
+            表示名&nbsp;
+            <Tooltip title="30文字まで入力できます">
+                <QuestionCircleOutlined />
+            </Tooltip>
+        </span>
+    )
+}
+
+const ProfileLabel = () => {
+    return (
+        <span>
+            自己紹介&nbsp;
+            <Tooltip title="200文字まで入力できます">
+                <QuestionCircleOutlined />
+            </Tooltip>
+        </span>
+
+    )
+}
+
+const WebSiteLabel = () => {
+    return (
+        <span>
+            <LinkOutlined style={{ marginRight: '8px' }} />
+            WebサイトURL&nbsp;
+        </span>
+    )
+}
+
+const TwitterLabel = () => {
+    return (
+        <span>
+            <TwitterOutlined style={{ marginRight: '8px' }} />
+            Twitter ID&nbsp;
+        </span>
+    )
+}
+
+const GitHubLabel = () => {
+    return (
+        <span>
+            <GithubOutlined style={{ color: 'black', marginRight: '8px' }} />
+            Github ID&nbsp;
+        </span>
+    )
+}
+
+const layout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 },
+};
+
+const tailLayout = {
+    wrapperCol: { offset: 6, span: 18 },
+};

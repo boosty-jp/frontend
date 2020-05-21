@@ -6,7 +6,6 @@ import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import getToken from 'services/token/firebase'
-
 const httpLink = createHttpLink({
     uri: process.env.GATSBY_GRAPHQL_END_POINT,
     fetch: fetch,
@@ -80,7 +79,8 @@ const defaultOptions = {
 export const client = new ApolloClient({
     link: ApolloLink.from([authLink, retryLink, errorLink, httpLink]),
     cache: new InMemoryCache({
-        addTypename: false
+        dataIdFromObject: object => object.id || object.page || null
+        // addTypename: false
     }),
     defaultOptions: defaultOptions,
     fetchOptions: {

@@ -1,6 +1,6 @@
-mark {
+/* mark {
     background: linear-gradient(transparent 75%, #9eceff 75%) !important;
-}
+} */
 
 .cdx-settings-button[data-level='1'],
 .cdx-settings-button[data-level='4'],
@@ -9,9 +9,9 @@ mark {
   display: none;
 }
 
-.image-tool__tune {
+/* .image-tool__tune {
   display: none;
-}
+} */
 
 .cdx-quote-settings{
   display: none;
@@ -31,7 +31,7 @@ mark {
 }
 
 ::-webkit-scrollbar{
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar:horizontal {
@@ -39,9 +39,7 @@ mark {
 }
 
 ::-webkit-scrollbar-track{
-  background: #fff;
   border: none;
-  /* border-radius: 6px; */
 }
 
 ::-webkit-scrollbar-thumb{
@@ -56,4 +54,231 @@ mark {
 
 body{
  font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,Segoe UI,Hiragino Kaku Gothic ProN,Hiragino Sans,ヒラギノ角ゴ ProN W3,Arial,メイリオ,Meiryo,sans-serif !important;
+}
+
+.book-image-cover{
+  animation: book_img_cover_animation 3s linear infinite;
+  transform-origin: 50% 50%;
+  margin: 1rem 0 !important;
+  box-shadow: 2px 2px 8px gray !important;
+}
+
+.dev-icon-animation1 {
+  animation: icon_animation1 3s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.dev-icon-animation2 {
+  animation: icon_animation2 1.2s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes book_img_cover_animation {
+  0% { transform: translateY(0) }
+  50% { transform: translateY(-10px) }
+  100% { transform: translateY(0) }
+}
+
+@keyframes icon_animation1 {
+  0% { transform: translateY(0) }
+  50% { transform: translateX(-10px) }
+  100% { transform: translateY(0) }
+}
+
+@keyframes icon_animation2 {
+  0% { transform: translateY(5px) }
+  50% { transform: translateY(0px) }
+  100% { transform: translateY(5px) }
+}
+
+.ant-carousel .slick-slide {
+  padding: 10px;
+}
+
+
+div.ant-slider-disabled .ant-slider-handle {
+  border-color:#1890ff !important ;
+}
+
+div.ant-slider-disabled .ant-slider-track{
+  background-color:#1890ff !important ;
+}
+
+.image-tool--withBackground .image-tool__image {
+  background: #eff2f5 !important;
+}
+
+.ais-SearchBox-form {
+  border-radius: 1rem;
+}
+
+.ais-SearchBox-input{
+  border-radius: 1rem;
+}
+
+.StripeElement {
+  display: block;
+  max-width: 500px;
+  padding: 10px 14px;
+  font-size: 1em;
+  font-family: 'Source Code Pro', monospace;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  background: white;
+}
+
+.StripeElement {
+  box-shadow: rgba(50, 50, 93, 0.14902) 4px 4px 8px, rgba(0, 0, 0, 0.0196078) -4px -4px 8px;
+}
+input::placeholder {
+  color: #aab7c4;
+}
+
+.StripeElement--focus {
+  box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px, rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+}
+
+.StripeElement.IdealBankElement,
+.StripeElement.PaymentRequestButton {
+  padding: 0;
+}
+
+.book-menu-section-panel {
+ padding: 0px;
+ /* background: #F7FAFF; */
+ border: none !important;
+}
+
+.book-menu-section-panel .ant-collapse-header:hover{
+ background: #d6e4ff;
+}
+
+.book-menu-page-item:hover{
+ background: #d6e4ff;
+}
+
+code.hljs{
+  position: relative;
+  padding: 0px;
+  border-radius: 0.5rem;
+}
+
+.markdown-code-file-name {
+  color: #ccc;
+  padding: 12px 24px;
+  outline: 1px solid #7285b7;
+}
+
+.markdown-code-content {
+  margin: 12px 24px;
+  overflow: scroll;
+}
+
+.markdown-code-content::-webkit-scrollbar-corner {
+  background-color: #002451;
+}
+.code-clip-board-btn {
+  position: absolute;
+  right: 30px;
+  cursor : pointer;
+  background-color: #002451;
+  border: none;
+  outline: none;
+  margin-top: 8px;
+}
+
+.code-clip-board-icon {
+  vertical-align: middle;
+  opacity: 0.6;
+}
+
+.code-clip-board-icon:hover {
+  opacity: 1;
+}
+
+.code-clip-board-btn input {
+    display: none;
+}
+
+/*アイコンを表示*/
+.code-clip-board-btn label:before {
+    display: inline-block;
+    content: '\f0c5';
+    font-family: 'FontAwesome';
+    padding-right: 5px;
+    font-size: 12px;
+}
+
+/*アイコンを切り替え*/
+.code-clip-board-btn input:checked + label:before {
+     content: '\f00c';
+     font-family: 'FontAwesome';
+     color: #52c41a;
+     font-size: 12px;
+}
+
+.code-clip-board-btn label {
+    font-weight: bold;
+    opacity: 0.5;
+    cursor :pointer;
+    transition: .5s;
+    font-size: 12px;
+}
+
+.code-clip-board-btn label:hover {
+    opacity: 1;
+}
+
+.ant-typography code {
+    margin: 0 0.2em !important;
+    padding: 0.2em 0.4em 0.1em !important;
+    font-size: 85% !important;
+    background: rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 3px !important;
+}
+
+blockquote{
+  margin: 0;
+  margin-bottom: 16px;
+  margin-top: 0;
+  border-left: .25em solid #dfe2e5;
+  color: #6a737d;
+  padding: 0 1em;
+}
+
+blockquote>:first-child {
+  margin-top: 0;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-image {
+  width: 100%;
+  height: auto;
+}
+
+.editor-preview {
+  background-color: white !important;
+}
+
+.toc-list {
+  list-style-type:none;
+}
+
+/* TOCのラインがはみ出してしまう対策 */
+/* https://github.com/tscanlin/tocbot/issues/130 */
+.js-toc {
+  position: relative;
+  overflow: hidden
+}
+
+/* TOCのアクティブカラー変更 */
+.is-active-link::before {
+  background-color: #1890ff !important;
 }

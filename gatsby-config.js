@@ -4,9 +4,10 @@ require("dotenv").config({
 })
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `boosty`,
+    description: `オンライン技術書サービスです。ブラウザ上で技術書が書いて、読むことができます。エンジニアの情報源である技術書をもっと手軽に身近に。`,
+    author: `@boosty_official`,
+    siteUrl: 'https://boosty.jp'
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -61,5 +62,29 @@ module.exports = {
         style: true
       }
     },
+    {
+      resolve: `gatsby-plugin-stripe`,
+      options: {
+        async: true,
+      },
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: process.env.GATSBY_CONTENTFUL_SPACE_ID,
+        accessToken: process.env.GATSBY_CONTENTFUL_API_KEY
+      }
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_UA,
+        head: false,
+        anonymize: true,
+        siteSpeedSampleRate: 10,
+      },
+    },
+    'gatsby-plugin-robots-txt',
+    `gatsby-plugin-sitemap`
   ],
 }

@@ -1,8 +1,13 @@
 import React from "react"
 import getFirebase from 'utils/firebase'
-import { Form, Icon, Input, Button, Typography, message } from 'antd';
+import { Form, Input, Button, Typography, message } from 'antd';
+import { MailTwoTone, MailOutlined } from "@ant-design/icons";
 
-class ForgetForm extends React.Component {
+const shadowButtonStyle = {
+    width: '100%',
+    boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)',
+}
+class PasswordForgetForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,10 +16,10 @@ class ForgetForm extends React.Component {
         }
     }
 
-    sendMail = (mail) => {
+    sendMail = values => {
         this.setState({ loading: true })
         const firebase = getFirebase();
-        firebase.auth().sendPasswordResetEmail(mail).then(() => {
+        firebase.auth().sendPasswordResetEmail(values.mail).then(() => {
             this.setState({ sendSuccess: true, loading: false })
         }).catch((error) => {
             const errorCode = error.code;
@@ -27,22 +32,12 @@ class ForgetForm extends React.Component {
         });
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields(((err, values) => {
-            if (!err) {
-                this.sendMail(values.mail);
-            }
-        }));
-    };
-
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
             this.state.sendSuccess ?
                 <Typography>
                     <Typography.Paragraph style={{ fontWeight: '500', fontSize: '24px', textAlign: 'center' }}>
-                        <Icon type="mail" theme="twoTone" style={{ marginRight: '8px' }} />メールを送信しました。
+                        <MailTwoTone style={{ marginRight: '8px' }} />メールを送信しました。
                     </Typography.Paragraph>
                     <Typography.Paragraph style={{ textAlign: 'center' }}>メールをご確認の上、パスワード変更をおこなってください。</Typography.Paragraph>
                 </Typography>
@@ -54,25 +49,20 @@ class ForgetForm extends React.Component {
                     </Typography.Paragraph>
                         <Typography.Paragraph>対象のアカウントのメールアドレスを入力してください。パスワード変更用のURLを送ります。</Typography.Paragraph>
                     </Typography >
-                    <Form onSubmit={this.handleSubmit} className="login-form">
-                        <Form.Item label="メールアドレス">
-                            {getFieldDecorator('mail', {
-                                rules: [{ required: true, message: 'メールアドレスを入力してください' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="メールアドレス"
-                                    size="large"
-                                />,
-                            )}
+                    <Form onFinish={this.sendMail}>
+                        <Form.Item name="mail" rules={[{ required: true, message: 'メールアドレスを入力してください' }]}>
+                            <Input
+                                prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="メールアドレス" />
                         </Form.Item>
                         <Form.Item style={{ marginBottom: '0px', textAlign: 'center' }}>
                             <Button
+                                shape="round"
                                 type="primary"
                                 htmlType="submit"
                                 className="login-form-button"
                                 loading={this.state.loading}
-                                style={{ width: '100%' }}>
+                                style={shadowButtonStyle}>
                                 パスワード変更メールを送る
                     </Button>
                         </Form.Item>
@@ -81,7 +71,5 @@ class ForgetForm extends React.Component {
         );
     }
 }
-
-const PasswordForgetForm = Form.create({ name: 'forget' })(ForgetForm);
 
 export default PasswordForgetForm;

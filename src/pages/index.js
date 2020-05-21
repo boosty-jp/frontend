@@ -1,38 +1,32 @@
 import React from "react"
-import Layout from "../components/layout/horizontal"
-import SEO from "../components/seo"
-import TopEyecatch from "components/eyecatch/top"
-import TwoColumnLayout from "components/layout/two-column"
-import LearningCurriculums from "components/course/learnings-partial"
-import TopicCategoryCard from "components/category/topic-card"
-import TopicNotificationCard from "components/notification/topic-card"
-import TopicCurriculums from "components/course/topics"
-import TopicArticles from "components/article/topics"
-import TopicCategoryList from "components/category/topic-list"
-import TopicUserCard from "components/account/topic-card"
+import Layout from "components/layout/horizontal"
+import SEO from "components/seo/seo"
+import HeroComponent from "components/landing/hero"
+import LanguageIconsComponent from "components/landing/icons"
+import CreatorRequirementComponent from "components/landing/creator"
+import ScreenComponent from "components/landing/screen"
+import SalesPoints from "components/landing/sales-points"
 
 const IndexPage = () => {
   return (
     <Layout>
-      <SEO title="Home" />
-      <TopEyecatch />
-      <TwoColumnLayout
-        left={
-          <>
-            <TopicCategoryList />
-            <LearningCurriculums />
-            <TopicCurriculums />
-            <TopicArticles />
-          </>
-        }
-        right={
-          <>
-            <TopicCategoryCard />
-            <TopicNotificationCard />
-            <TopicUserCard />
-          </>
-        }
-      />
+      <SEO title="ホーム" />
+      <HeroComponent />
+      <div style={{ margin: '0 auto', maxWidth: '900px', padding: "20px" }}>
+        <div style={{ paddingTop: '100px' }}>
+          <LanguageIconsComponent />
+        </div>
+        <div style={{ paddingTop: '160px', paddingBottom: '100px' }}>
+          <ScreenComponent />
+        </div>
+        <div style={{ paddingTop: '80px', paddingBottom: '100px' }}>
+          <SalesPoints />
+        </div>
+        {/* <div style={{ paddingTop: '160px', paddingBottom: '100px' }}>
+          <BookCategoryComponent />
+        </div> */}
+      </div>
+      <CreatorRequirementComponent />
     </Layout>
   )
 }

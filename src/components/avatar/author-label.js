@@ -1,16 +1,23 @@
 import React from 'react'
 import AvatarImage from 'components/avatar/image'
+import { Link } from '@reach/router'
+import { createUserLink } from 'utils/link-generator'
 
-const AvatarLabel = ({ image, updateDate, name }) => {
+const AuthorLabel = ({ id, imageUrl, name, size = 26 }) => {
     return (
-        <div style={{ display: 'flex' }}>
-            <AvatarImage imageUrl={image} displayName={name} style={{ flex: '0 0 auto', width: '28px', height: '28px' }} />
-            <div style={{ height: '30px', marginLeft: '4px', fontSize: '12px', color: '#222', fontWeight: '400', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                <p style={{ height: '15px', fontSize: '12px', color: '#222', margin: '0', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</p>
-                <p style={{ height: '15px', fontSize: '12px', color: 'grey', marginBottom: '0px' }}>{updateDate}に更新</p>
-            </div>
+        <div >
+            <Link to={createUserLink(id)}>
+                <AvatarImage imageUrl={imageUrl} displayName={name} style={{ width: size + 'px', height: size + 'px', fontSize: (size / 2) + 'px' }} size={size} />
+                <span style={{
+                    fontSize: ((size / 2) + 1),
+                    color: '#222',
+                    marginLeft: '6px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                }}>{name}</span>
+            </Link>
         </div>
     )
 }
 
-export default AvatarLabel
+export default AuthorLabel
