@@ -27,7 +27,7 @@ const data = [
 
 const HeadingHelp = () => {
     return (
-        <Table columns={columns} dataSource={data} bordered pagination={false} />
+        <Table columns={columns} dataSource={data} bordered pagination={false} showSorterTooltip={false} />
     )
 };
 

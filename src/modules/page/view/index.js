@@ -28,7 +28,6 @@ const initialState = {
     liked: false,
     likeCount: 0,
     canPreview: false,
-    previewMode: false,
     error: {
         title: { status: "", message: "" },
         blocks: { status: "", message: "" },
@@ -45,7 +44,6 @@ export default function PageView(state = initialState, action) {
                 text: action.page.text,
                 liked: action.page.liked,
                 likeCount: action.page.likeCount,
-                previewMode: false,
             };
         case CLEAR_PAGE:
             return { ...initialState }

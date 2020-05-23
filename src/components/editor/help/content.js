@@ -36,7 +36,7 @@ const table = `| 左寄せ | 右寄せ | 中央 |
 `;
 const ContentHelp = () => {
     return (
-        <Table columns={columns} dataSource={data} bordered pagination={false} style={{ width: '100%' }} />
+        <Table columns={columns} dataSource={data} bordered pagination={false} style={{ width: '100%' }} showSorterTooltip={false} />
     )
 };
 

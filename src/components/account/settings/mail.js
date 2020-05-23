@@ -81,7 +81,8 @@ class MailUpdateForm extends React.Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (!user.emailVerified) {
                 user.sendEmailVerification().then(() => {
-                    message.info("新しいメールアドレスに確認メールを送りました。メールをご確認ください", 10)
+                    // メールが届かない場合があるので、メッセージを出さない
+                    // message.info("新しいメールアドレスに確認メールを送りました。メールをご確認ください", 10)
                 }).catch(() => {
                 });
             }

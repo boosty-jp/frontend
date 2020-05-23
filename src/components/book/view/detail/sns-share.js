@@ -16,7 +16,7 @@ const SnsShareButtonsComponent = (props) => {
                 <Button
                     size="large"
                     shape="circle"
-                    icon={<TwitterOutlined style={{ color: '#1890ff', fontSize: '20px' }} />}
+                    icon={<TwitterOutlined style={{ color: 'white', fontSize: '20px' }} />}
                     style={{
                         marginRight: '8px',
                         verticalAlign: 'middle',

@@ -57,7 +57,7 @@ const data = [
 
 const OtherHelp = () => {
     return (
-        <Table columns={columns} dataSource={data} bordered pagination={false} style={{ width: '100%' }} />
+        <Table columns={columns} dataSource={data} bordered pagination={false} style={{ width: '100%' }} showSorterTooltip={false} />
     )
 };
 

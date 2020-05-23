@@ -80,9 +80,10 @@ MarkdownViewer.renderer.rules.image = function (tokens, idx, options /*, env */)
 };
 
 MarkdownViewer.renderer.rules.heading_open = function (tokens, idx /*, options, env */) {
-    return '<h' + tokens[idx].hLevel + ' id=' + tokens[idx + 1].content + ' class="ant-typography">';
+    return '<h' + tokens[idx].hLevel + ' id=' + escape_html(tokens[idx + 1].content) + ' class="ant-typography">';
     // return '<h' + tokens[idx].hLevel + ' class="ant-typography">';
 };
+
 MarkdownViewer.renderer.rules.heading_close = function (tokens, idx /*, options, env */) {
     return '</h' + tokens[idx].hLevel + '>\n';
 };

@@ -142,7 +142,7 @@ export const convertToJSX = (blocks) => {
                     }
                 })
                 jsxList.push(
-                    <Table key={"block-" + idx} tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} />
+                    <Table key={"block-" + idx} tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} showSorterTooltip={false} />
                 )
                 blockCount++;
                 break;
@@ -292,7 +292,7 @@ export const convertToReferenceJSX = (block) => {
 
             AddBlock = () => {
                 return (
-                    <Table tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} />
+                    <Table tableLayout="fixed" size="middle" bordered columns={columns} dataSource={data} pagination={false} showSorterTooltip={false} />
                 )
             }
             break;

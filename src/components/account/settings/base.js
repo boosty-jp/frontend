@@ -77,7 +77,7 @@ class UpdateForm extends React.Component {
                                 {...layout}
                                 initialValues={{
                                     displayName: userData.displayName,
-                                    description: userData.description,
+                                    profile: userData.description,
                                     url: userData.url,
                                     twitterId: userData.twitterId,
                                     githubId: userData.githubId,

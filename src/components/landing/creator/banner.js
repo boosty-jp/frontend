@@ -27,7 +27,7 @@ const CreatorBanner = () => {
     if (width > 1600) {
         fontStyle = { fontSize: "4vw", height: "26vw", padding: '4vw' };
     } else if (width < 700) {
-        fontStyle = { fontSize: "7vw", height: "48vw", padding: '7vw' };
+        fontStyle = { fontSize: "7vw", height: "46vw", padding: '7vw' };
         buttonSize = "middle"
     }
 
@@ -40,7 +40,6 @@ const CreatorBanner = () => {
                 執筆者 募集中！
                 <br />
                     <Button type="primary" size={buttonSize} style={buttonStyle} shape="round">{linkMessage}</Button>
-                    <p style={{ fontSize: '14px' }}>販売手数料50% OFF<br />キャンペーン開催中(6/30まで)</p>
                 </Paragraph>
             </div>
         </Link>

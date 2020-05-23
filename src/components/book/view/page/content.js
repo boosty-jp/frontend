@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import * as tocbot from 'tocbot';
-import { Divider, Typography, Row, Col, Affix, Button } from 'antd';
+import { Divider, Typography, Row, Col, Affix, Button, Alert } from 'antd';
 import RelatedPages from './related-pages';
 import MarkdownRender from 'utils/markdown/markdown-renderer'
 import Helmet from "react-helmet"
@@ -64,6 +64,7 @@ class PageViewContentComponent extends React.Component {
                                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
                             </Helmet>
                             <div style={{ backgroundColor: 'white', margin: '0 auto', wordBreak: 'break-all' }}>
+                                {(this.props.status === 'draft' || this.props.state === 'suspend') && <Alert message="プレビュー状態です。※まだ公開されていません" type="warning" showIcon style={{ marginBottom: '20px' }} />}
                                 <Title level={1} style={{ fontWeight: '500' }}>{title}</Title>
                                 <Divider style={{ margin: '8px 0px 24px 0px' }} />
                                 <div dangerouslySetInnerHTML={{ __html: MarkdownRender.render(this.props.text) }} id="toc" className="js-toc-content" />
@@ -108,7 +109,7 @@ class PageViewContentComponent extends React.Component {
 const mapStateToProps = state => ({
     title: state.pageView.title,
     text: state.pageView.text,
-    previewMode: state.pageEdit.previewMode,
+    status: state.bookView.status,
 })
 
 const PageViewContent = connect(mapStateToProps)(PageViewContentComponent)

@@ -1,5 +1,5 @@
 import React from "react"
-import { Typography, Row, Col } from 'antd';
+import { Typography, Row, Col, Alert } from 'antd';
 import MoneyFeatureImage from "components/image/creator/money";
 import FastFeatureImage from "components/image/creator/fast";
 import MarkdownFeatureImage from "components/image/creator/markdown";
@@ -13,6 +13,21 @@ const CreatorRequirementComponent = () => {
     return (
         <div style={{ background: 'white' }}>
             <CreatorBanner />
+            <div style={{ margin: '0 auto', padding: '20px', maxWidth: '900px' }}>
+                <Alert message={
+                    <>
+                        <span >
+                            販売手数料
+                    <span style={{ fontSize: '22px', fontWeight: 'bold', marginLeft: '4px' }}>50</span>
+                    % OFF!!
+                    </span>
+                        <span>キャンペーン開催中(6/30まで)</span>
+                    </>
+                }
+                    description={<p style={{ marginBottom: '0px' }}>詳しくは<a>こちら</a>をご覧ください</p>}
+                    type="info"
+                />
+            </div>
             <div style={{ margin: '0 auto', padding: '60px 20px 100px 20px', maxWidth: '900px' }}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8} style={{ textAlign: 'center' }}>
