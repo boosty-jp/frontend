@@ -13,7 +13,7 @@ const Component = ({ pageContext }) => {
             <Title level={1}>{notification.title}</Title>
             <Paragraph>{notification.updatedAt}</Paragraph>
             <Divider />
-            <div dangerouslySetInnerHTML={{ __html: MarkdownRender.render(notification.body.body) }} />
+            <div className="book-page-body" dangerouslySetInnerHTML={{ __html: MarkdownRender.render(notification.body.body) }} />
         </NotificationLayout>
     )
 }

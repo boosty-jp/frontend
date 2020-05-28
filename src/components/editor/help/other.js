@@ -8,14 +8,14 @@ const columns = [
         dataIndex: 'input',
         key: 'output',
         width: 400,
-        render: text => <div dangerouslySetInnerHTML={{ __html: MarkdownRender.render(text) }} style={{ padding: '10px', wordWrap: 'break-word', margin: "0px !important", wordBreak: 'break-word' }}></div>
+        render: text => <div className="book-page-body" dangerouslySetInnerHTML={{ __html: MarkdownRender.render(text) }} style={{ padding: '10px', wordWrap: 'break-word', margin: "0px !important", wordBreak: 'break-word' }}></div>
     },
     {
         title: '書き方',
         dataIndex: 'input',
         key: 'input',
         width: 400,
-        render: text => <div style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', wordBreak: 'break-word' }}>{text}</div>
+        render: text => <div className="book-page-body" style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', wordBreak: 'break-word' }}>{text}</div>
     },
 ];
 

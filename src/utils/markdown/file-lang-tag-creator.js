@@ -58,18 +58,19 @@ const langMaps = {
 }
 
 const LangIcon = ({ lang }) => {
-    var langData = langMaps.plain;
 
-    if (lang) {
-        langData.text = lang.toUpperCase();
+    if (lang === 'unknown') {
+        return <></>
     }
 
+    var langData = langMaps.plain;
+    langData.text = lang.toUpperCase();
     if (lang && langMaps[lang]) {
         langData = langMaps[lang];
     }
 
     return (
-        <div style={{ padding: "0px 24px", marginTop: "5px" }}>
+        <div style={{ padding: "0px 24px", marginTop: "6px" }}>
             <span style={{
                 background: langData.background,
                 color: langData.color,

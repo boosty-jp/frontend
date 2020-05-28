@@ -34,8 +34,14 @@ var MarkdownViewer = new Remarkable('full', {
         let codeTag = "";
 
         try {
-            if (lang && hljs.getLanguage(lang)) {
-                codeTag = hljs.highlight(lang, str).value;
+            if (lang) {
+                if (hljs.getLanguage(lang)) {
+                    codeTag = hljs.highlight(lang, str).value;
+                } else if (lang === 'plain' || lang === 'plaintext' || lang === 'text' || lang === 'txt') {
+                    codeTag = hljs.highlight('plaintext', str).value;
+                } else {
+                    codeTag = hljs.highlightAuto(str).value;
+                }
             } else {
                 codeTag = hljs.highlightAuto(str).value;
             }
@@ -43,7 +49,6 @@ var MarkdownViewer = new Remarkable('full', {
             return "";
         }
 
-        // const copyButton = "<button class=\"code-clip-board-btn\" data-clipboard-text=\"" + escape_html(str) + "\">" + ReactDOMServer.renderToStaticMarkup(<FaRegCopy className="code-clip-board-icon" size={18} />) + "</button>"
         const id = uuidv4();
         const copyButton = "<button class=\"code-clip-board-btn\" data-clipboard-text=\"" + escape_html(str) + "\"><input type=\"checkbox\" class=\"code-clip-board-icon\" id=\"" + id + "\"/><label for=\"" + id + "\">copy</label></button>"
 
@@ -117,6 +122,11 @@ MarkdownViewer.renderer.rules.code = function (tokens, idx /*, options, env */) 
         return '<pre><code>' + escapeHtml(tokens[idx].content) + '</code></pre>' + getBreak(tokens, idx);
     }
     return '<span class="ant-typography"><code>' + escapeHtml(tokens[idx].content) + '</code></span>';
+};
+
+MarkdownViewer.renderer.rules.link_open = function (tokens, idx, options /* env */) {
+    var title = tokens[idx].title ? (' title="' + escapeHtml(replaceEntities(tokens[idx].title)) + '"') : '';
+    return '<a href="' + escapeHtml(tokens[idx].href) + '"' + title + 'target="_blank">';
 };
 
 // コードの変換

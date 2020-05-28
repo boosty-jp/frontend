@@ -44,5 +44,5 @@ export const createStripeRegistrationLink = () => {
 
 export const createBookOgpImageUrl = imageUrl => {
     if (!imageUrl) return '';
-    return imageUrl.replace(/\.png$/g, '_ogp.png');
+    return imageUrl.replace(/\.png\?alt=media$/g, '_ogp.png?alt=media');
 }

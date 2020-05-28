@@ -75,6 +75,7 @@ export default class MarkdownEditor extends React.Component {
         var _input = document.getElementById(_input_id);
 
         _input.onchange = (e) => {
+            const loadMessageHide = message.loading('アップロード中です..', 100);
             const reader = new FileReader();
             reader.addEventListener("load", () => {
                 const firebase = getFirebase();
@@ -98,6 +99,7 @@ export default class MarkdownEditor extends React.Component {
                         } catch (e) {
                             message.error("アップロードに失敗しました");
                         }
+                        setTimeout(loadMessageHide, 0);
                     }
                 })
 
@@ -131,7 +133,7 @@ export default class MarkdownEditor extends React.Component {
                             codeSyntaxHighlighting: true,
                         },
                         previewRender: function (plainText) {
-                            const previewHTML = "<div class=\"article-section-markdown\" style=\"overflow: auto;\">" + MarkdownRender.render(plainText) + "</div>"
+                            const previewHTML = "<div class=\"article-section-markdown book-page-body\" style=\"overflow: auto;\">" + MarkdownRender.render(plainText) + "</div>"
                             return previewHTML;
                         }
                     }}

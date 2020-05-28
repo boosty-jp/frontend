@@ -7,7 +7,7 @@ const columns = [
         title: '表示結果',
         dataIndex: 'input',
         key: 'output',
-        render: text => <div dangerouslySetInnerHTML={{ __html: MarkdownRender.render(text) }} ></div>
+        render: text => <div className="book-page-body" dangerouslySetInnerHTML={{ __html: MarkdownRender.render(text) }} ></div>
     },
     {
         title: '書き方',

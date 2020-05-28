@@ -9,7 +9,7 @@ import { UserOutlined, SettingOutlined, MoneyCollectOutlined, LogoutOutlined, Hi
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { };
 
-const AccountDropdown = ({ placement = "bottomRight" }) => {
+const AccountDropdown = ({ placement = "bottomRight", trigger = ['hover'] }) => {
     const avatarImage = getUserImage();
     const userName = getCurrentUser().userName;
 
@@ -56,8 +56,8 @@ const AccountDropdown = ({ placement = "bottomRight" }) => {
 
     return (
         <>
-            <Dropdown overlay={menu} placement={placement}>
-                <span>
+            <Dropdown overlay={menu} placement={placement} trigger={trigger}>
+                <span style={{ cursor: 'pointer' }}>
                     <AvatarImage imageUrl={avatarImage} displayName={userName} />
                 </span>
             </Dropdown>

@@ -42,7 +42,7 @@ const AccouontButtons = ({ activeKey }) => {
                     </Link>
                 </Tooltip>
             </div>
-            <AccountDropdown placement="topRight" />
+            <AccountDropdown placement="topRight" trigger={['click']} />
         </>
     )
 }
