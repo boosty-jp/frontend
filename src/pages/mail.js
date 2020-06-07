@@ -5,6 +5,7 @@ import getFirebase from "utils/firebase";
 import ResetPasswordForm from 'components/auth/password-reset'
 import VerifyMailInfo from 'components/auth/verify-mail'
 import SimpleLayout from "components/layout/simple-layout";
+import RecoverMail from "components/auth/recover-mail";
 
 const MailVerifyPage = ({ search }) => {
     const { mode, oobCode, continueUrl, lang } = search
@@ -23,6 +24,11 @@ const MailVerifyPage = ({ search }) => {
             component = <ResetPasswordForm auth={auth} actionCode={oobCode} continueUrl={continueUrl} lang={lang} />
             title = "パスワードの再設定"
             description = "パスワードを再設定します。6文字以上のパスワードを設定してください。"
+            break;
+        case 'recoverEmail':
+            component = <RecoverMail auth={auth} actionCode={oobCode} />
+            title = "メールアドレスの復元"
+            description = "変更する前のメールアドレスに復元します。"
             break;
         case 'verifyEmail':
             component = <VerifyMailInfo auth={auth} actionCode={oobCode} />

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import { message, Result, Button, Icon, Spin } from 'antd';
+import { message, Result, Button, Spin } from 'antd';
 import { navigate } from '@reach/router';
+import { UserOutlined, LoadingOutlined } from '@ant-design/icons';
 
 export default class VerifyMailInfo extends React.Component {
     constructor(props) {
@@ -80,7 +81,7 @@ export default class VerifyMailInfo extends React.Component {
                     status="success"
                     title="ご登録いただいたメールアドレスを確認いたしました。"
                     extra={[
-                        <Button icon="user" type="primary" onClick={() => navigate('/account/settings/base')}>プロフィールを編集する</Button>
+                        <Button icon={<UserOutlined />} type="primary" onClick={() => navigate('/account/settings/base')}>プロフィールを編集する</Button>
                     ]}
                 />
         } else {
@@ -91,7 +92,7 @@ export default class VerifyMailInfo extends React.Component {
             <Spin
                 tip="ロード中です"
                 spinning={this.state.loading}
-                indicator={< Icon type="loading" style={{ fontSize: 24 }} spin />}
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
             >
                 {content}
             </Spin>

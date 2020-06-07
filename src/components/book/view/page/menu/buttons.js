@@ -1,8 +1,9 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Row, Col, Icon, Button } from 'antd';
+import { Row, Col } from 'antd';
 import { createPageViewLink } from "utils/link-generator";
 import SimpleBorderedShadowButton from "components/button/simple-border-shadow";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
@@ -32,7 +33,7 @@ const BookViewMenuButtonsComponents = (props) => {
                     shape="round"
                     disabled={!previousId}
                     onClick={() => navigate(createPageViewLink(previousId, props.id))}
-                    text={<>< Icon type="left" style={{ marginRight: '8px' }} />前へ</>}
+                    text={<>< LeftOutlined style={{ marginRight: '8px' }} />前へ</>}
                 />
             </Col>
             <Col span={12}>
@@ -42,7 +43,7 @@ const BookViewMenuButtonsComponents = (props) => {
                     shape="round"
                     disabled={!nextId}
                     onClick={() => navigate(createPageViewLink(nextId, props.id))}
-                    text={<>次へ < Icon type="right" style={{ marginLeft: '8px' }} /></>}
+                    text={<>次へ < RightOutlined style={{ marginLeft: '8px' }} /></>}
                 />
             </Col>
         </Row>
