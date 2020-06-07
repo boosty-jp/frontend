@@ -38,9 +38,9 @@ const MailVerifyPage = ({ search }) => {
     }
 
     return (
-        <SimpleLayout maxWidth="600px" width="100%" >
+        <SimpleLayout maxWidth="500px" width="100%" >
             <NOSEO title={title} description={description} />
-            <div style={{ margin: '20px', width: '100%', padding: '20px', backgroundColor: 'white', borderRadius: '0.25rem' }}>
+            <div style={{ margin: '50px auto', width: '100%', padding: '20px', backgroundColor: 'white', borderRadius: '0.5rem', boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}>
                 {component}
             </div>
         </SimpleLayout>

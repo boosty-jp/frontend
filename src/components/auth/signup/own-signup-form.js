@@ -37,7 +37,8 @@ class OwnSignUpForm extends React.Component {
         return target;
     }
 
-    signUp = (mail, password) => {
+    signUp = values => {
+        const { mail, password } = values;
         this.setState({ loading: true })
 
         const firebase = getFirebase();
@@ -45,15 +46,19 @@ class OwnSignUpForm extends React.Component {
         if (this.state.isSignUped) {
             this.createUser(this.getTempDisplayName(mail), this.state.uid);
         } else {
-            firebase.auth().createUserWithEmailAndPassword(mail, password)
-                .then((result) => {
-                    this.setState({ isSignUped: true, uid: result.user.uid })
-                    // BEにユーザー作成する
-                    this.createUser(this.getTempDisplayName(mail), result.user.uid);
-                })
-                .catch((error) => {
-                    this.handleAuthError(error.code);
-                });
+            try {
+                firebase.auth().createUserWithEmailAndPassword(mail, password)
+                    .then((result) => {
+                        this.setState({ isSignUped: true, uid: result.user.uid })
+                        // BEにユーザー作成する
+                        this.createUser(this.getTempDisplayName(mail), result.user.uid);
+                    })
+                    .catch((error) => {
+                        this.handleAuthError(error.code);
+                    });
+            } catch (error) {
+                this.handleAuthError(error.code);
+            }
         }
     }
 
@@ -104,7 +109,7 @@ class OwnSignUpForm extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.signUp} initialValues={{ terms: false }}>
+            <Form onFinish={this.signUp} initialValues={{ terms: false }}>
                 <Form.Item name="mail" rules={[{ required: true, message: 'メールアドレスを入力してください' }]}>
                     <Input
                         prefix={<MailOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}

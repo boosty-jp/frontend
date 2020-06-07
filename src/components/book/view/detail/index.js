@@ -7,6 +7,7 @@ import { withApollo } from 'react-apollo'
 import ErrorResult from "components/error/result";
 import BookDetailCard from "./card";
 import PageLoader from "components/loader/page";
+import { getErrorMessage } from "utils/error-handle";
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -67,7 +68,7 @@ class BookViewComponent extends React.Component {
             >
                 {({ loading, error }) => {
                     if (loading) return <PageLoader />
-                    if (error) return <ErrorResult />
+                    if (error) return <ErrorResult title={getErrorMessage(error)} />
                     return (
                         <BookDetailCard />
                     )

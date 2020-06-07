@@ -9,14 +9,13 @@ const { Panel } = Collapse;
 
 const salesQuestions = [
     { title: '販売手数料はいくらですか？', text: <>7/31まではキャンペーン開催中のため通常の半額の10%となります。それ以降は20%となります。<br /><Link to="notification/service-charge">販売手数料について</Link></> },
-    { title: '売上はいつ振り込まれますか？', text: <>月初(毎月1日)に入金が行われます。<br /><Link to="notification/sale-deposit-timing">売上のふりこみについて</Link></> },
+    { title: '売上はいつ振り込まれますか？', text: <>月初(毎月1日)に入金が行われます。<br /><Link to="notification/sale-deposit-timing">売上の振り込みについて</Link></> },
     { title: '販売金額の上限を上げたい', text: "現在は、50000円が上限となっています。ご了承ください。" },
 ]
 
 const paymentQuestions = [
     { title: 'クレジットカード以外の決済手段はありますか？', text: '現在はクレジットカードのみとなっております。' },
     { title: 'クレジットカードの入力フォームが表示されません', text: 'アドブロッカーなどのブラウザの拡張機能によって、フォームが表示されないようになっている恐れがあります。該当の拡張機能をオフにして再度お試しください。' },
-    { title: 'クレジットカード以外の決済手段はありますか？', text: '現在はクレジットカードのみとなっております。' },
 ]
 
 const contentsQuestions = [

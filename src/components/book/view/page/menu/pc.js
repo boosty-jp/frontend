@@ -9,6 +9,7 @@ import ErrorResult from "components/error/result";
 import BookViewMenuSections from "./sections";
 import BookViewMenuHeader from "./header";
 import VerticalMenu from "components/menu/vertical"
+import { getErrorMessage } from "utils/error-handle";
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -86,7 +87,7 @@ class PcBookViewMenuComponent extends React.Component {
             >
               {({ loading, error }) => {
                 if (loading) return <></>
-                if (error) return <ErrorResult />
+                if (error) return <ErrorResult title={getErrorMessage(error)} />
                 return (
                   <>
                     <div style={{ padding: '0px 10px', height: '70px' }}>

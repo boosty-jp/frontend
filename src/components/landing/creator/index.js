@@ -4,6 +4,7 @@ import MoneyFeatureImage from "components/image/creator/money";
 import FastFeatureImage from "components/image/creator/fast";
 import MarkdownFeatureImage from "components/image/creator/markdown";
 import CreatorBanner from "./banner";
+import { Link } from 'gatsby';
 
 const { Paragraph } = Typography;
 
@@ -24,7 +25,7 @@ const CreatorRequirementComponent = () => {
                         <span>キャンペーン開催中(7/31まで)</span>
                     </>
                 }
-                    description={<p style={{ marginBottom: '0px' }}>詳しくは<a>こちら</a>をご覧ください</p>}
+                    description={<p style={{ marginBottom: '0px' }}>詳しくは<Link to="/notification/service-deposit-campaign">こちら</Link>をご覧ください</p>}
                     type="info"
                 />
             </div>

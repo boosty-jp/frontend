@@ -74,7 +74,6 @@ const RecentlyViewBookList = () => {
                                 }}
                                 dataSource={data.recentlyViewedBooks.books}
                                 renderItem={book => {
-                                    console.log(book.lastViewedPageId);
                                     const link = book.lastViewedPageId ? createPageViewLink(book.lastViewedPageId, book.id) : createBookDetailLink(book.id);
                                     return (
                                         <List.Item>
