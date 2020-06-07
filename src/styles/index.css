@@ -131,6 +131,7 @@ div.ant-slider-disabled .ant-slider-track{
 .StripeElement {
   box-shadow: rgba(50, 50, 93, 0.14902) 4px 4px 8px, rgba(0, 0, 0, 0.0196078) -4px -4px 8px;
 }
+
 input::placeholder {
   color: #aab7c4;
 }
@@ -173,7 +174,7 @@ code.hljs{
 }
 
 .markdown-code-content {
-  margin: 12px 24px;
+  margin: 12px 44px 12px 24px;
   overflow: scroll;
 }
 
@@ -182,7 +183,7 @@ code.hljs{
 }
 .code-clip-board-btn {
   position: absolute;
-  right: 30px;
+  right: 20px;
   cursor : pointer;
   background-color: #002451;
   border: none;
@@ -208,7 +209,6 @@ code.hljs{
     display: inline-block;
     content: '\f0c5';
     font-family: 'FontAwesome';
-    padding-right: 5px;
     font-size: 12px;
 }
 
@@ -230,6 +230,15 @@ code.hljs{
 
 .code-clip-board-btn label:hover {
     opacity: 1;
+}
+
+.code-clip-board-text{
+  display: none;
+}
+
+.code-clip-board-btn:hover .code-clip-board-text{
+  padding-left: 5px;
+  display: inline;
 }
 
 .ant-typography code {
@@ -261,6 +270,7 @@ blockquote>:last-child {
 .markdown-image {
   width: 100%;
   height: auto;
+  margin: 20px auto;
 }
 
 .editor-preview {
@@ -292,4 +302,49 @@ blockquote>:last-child {
 
 .book-page-body code{
   line-height: 1.5rem;
+}
+
+.markdown-table {
+  margin-bottom: 12px;
+}
+
+.markdown-table th, .markdown-table td{
+  min-width: 100px;
+}
+
+.md-code-line-number {
+  text-align: right;
+  padding-right: 4px;
+  color: #bfbfbf;
+  width: 20px;
+  font-size: 14px;
+  min-width: 28px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.md-code-content {
+  text-align: left;
+  padding-left: 14px;
+  width: 100%;
+}
+
+.md-code-table th, .md-code-table td{
+  border-style: none !important;
+  padding: 0px 5px!important;
+}
+
+.md-code-emphasis {
+  background-color: #0A3F80;
+}
+
+/* Technique to disable line numbers from being selected and copied. 
+   Checkout this post for more details http://codepen.io/danoc/pen/ByGKZv */
+[data-pseudo-content]::before,
+[data-pseudo-content--before]::before,
+[data-pseudo-content--after]::after {
+  content: attr(data-pseudo-content);
+}
+
+.book-page-body h1,.book-page-body h2,.book-page-body h3,.book-page-body h4,.book-page-body h5 {
+  margin-top: 2em;
 }

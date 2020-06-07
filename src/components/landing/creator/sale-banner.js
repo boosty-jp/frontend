@@ -37,9 +37,7 @@ const CreatorSalesBanner = () => {
                             </Paragraph>
                 <p style={saleStyle}>
                     販売手数料 <span style={{ fontSize: '24px', marginRight: '4px' }}>50</span>% OFF<br />
-                    <span style={{ fontSize: '14px' }}>
-                        <Link to="" style={{ color: 'white' }}>キャンペーン</Link>開催中(6/30まで)
-                                </span>
+                    <span style={{ fontSize: '14px' }}>キャンペーン開催中(7/31まで)</span>
                 </p>
                 <Link to={link}>
                     <Button type="primary" style={buttonStyle} shape="round">{linkMessage}</Button>

@@ -146,7 +146,7 @@ class MenuDrawer extends React.Component {
 const MobileGlobalMenu = () => {
     return (
         <Affix offsetTop={0}>
-            <Header style={{ backgroundColor: 'white', padding: '0px 20px' }}>
+            <Header style={{ backgroundColor: 'white', padding: '0px 20px', boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}>
                 <Row type="flex" align="middle" >
                     <Col span={11}>
                         <LogoImage />

@@ -42,7 +42,7 @@ const BookAuthorComponent = (props) => {
                         githubId={props.author.githubId}
                         url={props.author.url}
                     />
-                    <p style={{ fontSize: '16px' }}>{props.author.description}</p>
+                    <p style={{ fontSize: '16px', whiteSpace: 'pre-wrap' }}>{props.author.description}</p>
                 </Col>
             </Row>
         </div>

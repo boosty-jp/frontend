@@ -1,10 +1,11 @@
 import React from 'react'
-import { Drawer, message } from 'antd';
+import { Drawer, message, notification } from 'antd';
 import SimpleMDE from 'react-simplemde-editor'
 import MarkdownRender from 'utils/markdown/markdown-renderer'
 import MarkdownHelp from 'components/editor/help'
 import getFirebase from "utils/firebase";
 import uuidv4 from 'uuid/v4'
+import _ from 'lodash';
 
 export default class MarkdownEditor extends React.Component {
     constructor(props) {
@@ -32,8 +33,24 @@ export default class MarkdownEditor extends React.Component {
             "table",
             "|",
             "preview",
-            "side-by-side",
-            "fullscreen",
+            {
+                name: "side-by-side",
+                action: editor => {
+                    editor.toggleSideBySide();
+                    this.setState({ splited: !this.state.splited });
+                },
+                className: "fa fa-columns",
+                title: "2画面表示(F9)"
+            },
+            {
+                name: "fullscreen",
+                action: editor => {
+                    editor.toggleFullScreen();
+                    this.setState({ splited: false });
+                },
+                className: "fa fa-arrows-alt",
+                title: "全画面表示"
+            },
             {
                 name: "guide",
                 action: this.openHelp,
@@ -48,8 +65,13 @@ export default class MarkdownEditor extends React.Component {
             value: props.value,
             isUpdate: props.isUpdate,
             toolIcons: toolIcons,
-            helpOpen: false
+            helpOpen: false,
+            perfomanceIssueCount: 0,
+            splited: false,
         }
+    }
+    toggleSplitScreen = () => {
+        this.setState({ splitScreen: !this.state.splitScreen });
     }
 
     openHelp = () => {
@@ -132,12 +154,31 @@ export default class MarkdownEditor extends React.Component {
                             singleLineBreaks: true,
                             codeSyntaxHighlighting: true,
                         },
-                        previewRender: function (plainText) {
+                        previewRender: _.throttle((plainText) => {
+                            const startTime = Date.now(); // 開始時間
                             const previewHTML = "<div class=\"article-section-markdown book-page-body\" style=\"overflow: auto;\">" + MarkdownRender.render(plainText) + "</div>"
+                            const endTime = Date.now(); // 終了時間
+
+                            if (this.state.splited && endTime - startTime > 250) {
+                                this.setState({ perfomanceIssueCount: this.state.perfomanceIssueCount + 1 });
+                                if (this.state.perfomanceIssueCount == 5) {
+                                    notification.warning({
+                                        message: `描画速度が遅くなっています`,
+                                        description: '2画面での編集は通常よりパフォーマンスを必要とします。快適に編集いただくには、2画面表示から1画面での編集をすることをおすすめします。',
+                                        placement: 'bottomRight',
+                                        duration: 0
+                                    });
+                                }
+                            }
                             return previewHTML;
-                        }
+                        }, 150, { leading: true, trailing: false })
                     }}
                 />
+                {this.state.splitScreen &&
+                    <div className="article-section-markdown book-page-body" style={{ overflow: 'auto' }}>
+                        <div dangerouslySetInnerHTML={{ __html: MarkdownRender.render(this.props.value) }} />
+                    </div>
+                }
                 <Drawer
                     title="Markdownの書き方"
                     width={850}

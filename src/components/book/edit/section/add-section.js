@@ -29,7 +29,6 @@ class AddSectionComponent extends React.Component {
     };
 
     addSection = async values => {
-        console.log(values);
         this.setState({ loading: true });
         try {
             const { data } = await this.props.client.mutate({

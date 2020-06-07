@@ -8,14 +8,14 @@ const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 const BookPage = (props) => {
-    const { id, preview } = props.search
+    const { id } = props.search
     if (!id) navigate("/404");
 
     return (
         <VerticalLayout>
             <BookSEO />
             <div style={{ maxWidth: "1100px", padding: '20px', margin: '0 auto' }}>
-                <BookView id={id} preview={preview} />
+                <BookView id={id} />
             </div>
         </VerticalLayout>
     );

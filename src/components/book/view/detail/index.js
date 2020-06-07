@@ -62,7 +62,7 @@ class BookViewComponent extends React.Component {
                 fetchPolicy="no-cache"
                 variables={{ bookId: this.props.id }}
                 onCompleted={(data) => {
-                    this.props.setBookData(data.book, this.props.preview);
+                    this.props.setBookData(data.book);
                 }}
             >
                 {({ loading, error }) => {
@@ -78,7 +78,7 @@ class BookViewComponent extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setBookData: (book, isPreview) => dispatch(setBookData(book, isPreview)),
+    setBookData: (book) => dispatch(setBookData(book)),
 })
 
 const BookView = connect(null, mapDispatchToProps)(BookViewComponent);

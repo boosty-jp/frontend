@@ -26,6 +26,52 @@ const PageCard = ({ pageId, bookId, text }) => {
     )
 }
 
+const PreviousPageLink = ({ bookId, previousPage }) => {
+    if (!previousPage) {
+        return <></>
+    }
+    return (
+        <PageCard
+            pageId={previousPage.id}
+            bookId={bookId}
+            text={
+                < Row gutter={8} type="flex" align="middle" >
+                    <Col span={4} style={{ textAlign: 'left', fontSize: '18px', color: '#8c8c8c' }}>
+                        <ArrowLeftOutlined />
+                    </Col>
+                    <Col span={20} style={{ textAlign: 'right', color: 'black', fontSize: '18px' }}>
+                        <p style={{ color: '#8c8c8c', fontSize: '14px', marginBottom: '4px' }}>前へ</p>
+                        <Paragraph ellipsis style={{ marginBottom: '0px' }}>{previousPage.title}</Paragraph>
+                    </Col>
+                </Row >
+            }
+        />
+    )
+}
+
+const NextPageLink = ({ bookId, nextPage }) => {
+    if (!nextPage) {
+        return <></>
+    }
+    return (
+        <PageCard
+            pageId={nextPage.id}
+            bookId={bookId}
+            text={
+                <Row gutter={8} type="flex" align="middle">
+                    <Col span={20} style={{ textAlign: 'left', color: 'black', fontSize: '18px' }}>
+                        <p style={{ color: '#8c8c8c', fontSize: '14px', marginBottom: '4px' }}>次へ</p>
+                        <Paragraph ellipsis style={{ marginBottom: '0px' }}>{nextPage.title}</Paragraph>
+                    </Col>
+                    <Col span={4} style={{ textAlign: 'right', fontSize: '18px', color: '#8c8c8c' }}>
+                        <ArrowRightOutlined />
+                    </Col>
+                </Row>
+            }
+        />
+    )
+}
+
 class RelatedPagesComponent extends React.Component {
 
     render() {
@@ -43,47 +89,17 @@ class RelatedPagesComponent extends React.Component {
 
         return (
             <Row gutter={16}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '20px' }}>
-                    {previousPage ?
-                        <PageCard
-                            pageId={previousPage.id}
-                            bookId={this.props.bookId}
-                            text={
-                                <Row gutter={8} type="flex" align="middle">
-                                    <Col span={4} style={{ textAlign: 'left', fontSize: '18px', color: '#8c8c8c' }}>
-                                        <ArrowLeftOutlined />
-                                    </Col>
-                                    <Col span={20} style={{ textAlign: 'right', color: 'black', fontSize: '18px' }}>
-                                        <p style={{ color: '#8c8c8c', fontSize: '14px', marginBottom: '4px' }}>前へ</p>
-                                        <Paragraph ellipsis style={{ marginBottom: '0px' }}>{previousPage.title}</Paragraph>
-                                    </Col>
-                                </Row>
-                            }
-                        />
-                        :
-                        <></>
-                    }
+                <Col xs={0} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '20px' }}>
+                    <PreviousPageLink previousPage={previousPage} bookId={this.props.bookId} />
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '20px' }}>
-                    {nextPage ?
-                        <PageCard
-                            pageId={nextPage.id}
-                            bookId={this.props.bookId}
-                            text={
-                                <Row gutter={8} type="flex" align="middle">
-                                    <Col span={20} style={{ textAlign: 'left', color: 'black', fontSize: '18px' }}>
-                                        <p style={{ color: '#8c8c8c', fontSize: '14px', marginBottom: '4px' }}>次へ</p>
-                                        <Paragraph ellipsis style={{ marginBottom: '0px' }}>{nextPage.title}</Paragraph>
-                                    </Col>
-                                    <Col span={4} style={{ textAlign: 'right', fontSize: '18px', color: '#8c8c8c' }}>
-                                        <ArrowRightOutlined />
-                                    </Col>
-                                </Row>
-                            }
-                        />
-                        :
-                        <></>
-                    }
+                <Col xs={0} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '20px' }}>
+                    <NextPageLink nextPage={nextPage} bookId={this.props.bookId} />
+                </Col>
+                <Col xs={24} sm={0} md={0} lg={0} xl={0} style={{ marginTop: '20px' }}>
+                    <NextPageLink nextPage={nextPage} bookId={this.props.bookId} />
+                </Col>
+                <Col xs={24} sm={0} md={0} lg={0} xl={0} style={{ marginTop: '20px' }}>
+                    <PreviousPageLink previousPage={previousPage} bookId={this.props.bookId} />
                 </Col>
             </Row>
         )

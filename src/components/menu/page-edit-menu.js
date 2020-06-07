@@ -72,7 +72,7 @@ class EditMenu extends React.Component {
                     <div style={{ maxWidth: '900px', width: '100%', margin: '0 auto', padding: '0 20px' }}>
                         <Row>
                             <Col span={13} style={{ textAlign: 'left' }}>
-                                <Logo />
+                                <Logo noLink={true} />
                             </Col>
                             <Col span={11} style={{ textAlign: 'right' }}>
                                 <SimpleShadowButton

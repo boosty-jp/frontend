@@ -13,7 +13,7 @@ const cardStyle = {
 
 const BookSalesPointCardComponent = (props) => {
     return (
-        <div style={{ marginTop: '20px', ...cardStyle }}>
+        <div style={{ ...cardStyle }}>
             <p style={{ fontWeight: 'bold', color: 'black', fontSize: '22px', textAlign: 'center', marginBottom: '20px' }}>
                 特徴
             </p>

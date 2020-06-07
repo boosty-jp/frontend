@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 import OwnBookItem from 'components/book/view/list/item'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
-import { createBookDetailLink } from 'utils/link-generator'
+import { createBookDetailLink, createPageViewLink } from 'utils/link-generator'
 import { isLoggedIn } from "services/local-user"
 
 const cardStyle = {
@@ -28,6 +28,7 @@ const GET_RECENTLY_VIEWED_BOOKS = gql`
         author {
           displayName
         }
+        lastViewedPageId
       }
     }
 }
@@ -55,6 +56,7 @@ const RecentlyViewBookList = () => {
                         )
                     }
                     if (error) return <></>
+                    if (data.recentlyViewedBooks.books.length === 0) return <></>
                     return (
                         <div style={cardStyle}>
                             <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'black', textAlign: 'center' }}>
@@ -71,15 +73,19 @@ const RecentlyViewBookList = () => {
                                     xxl: 6,
                                 }}
                                 dataSource={data.recentlyViewedBooks.books}
-                                renderItem={book => (
-                                    <List.Item>
-                                        <Link to={createBookDetailLink(book.id)}>
-                                            <div style={{ width: '100%', margin: '0 auto' }}>
-                                                <OwnBookItem imageUrl={book.imageUrl} title={book.title} author={{ name: book.author.displayName }} />
-                                            </div>
-                                        </Link>
-                                    </List.Item>
-                                )}
+                                renderItem={book => {
+                                    console.log(book.lastViewedPageId);
+                                    const link = book.lastViewedPageId ? createPageViewLink(book.lastViewedPageId, book.id) : createBookDetailLink(book.id);
+                                    return (
+                                        <List.Item>
+                                            <Link to={link}>
+                                                <div style={{ width: '100%', margin: '0 auto' }}>
+                                                    <OwnBookItem imageUrl={book.imageUrl} title={book.title} author={{ name: book.author.displayName }} />
+                                                </div>
+                                            </Link>
+                                        </List.Item>
+                                    )
+                                }}
                             />
                         </div>
                     )

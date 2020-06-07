@@ -20,7 +20,7 @@ const cardStyle = {
 
 const UserDescription = ({ description, selfSearch }) => {
     if (!description && selfSearch) return <Button onClick={() => navigate('/account/settings/base')}>自己紹介を追加する</Button>
-    return <p>{description}</p>
+    return <p style={{ whiteSpace: 'pre-wrap', textAlign: 'left' }}>{description}</p>
 }
 
 const ProfileHeaderCard = ({ data, selfSearch }) => {

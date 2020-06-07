@@ -6,7 +6,7 @@ import { Table, Divider, Badge, message, Popconfirm, Tooltip } from 'antd';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'gatsby';
-import { createBookEditLink, createBookDetailPreviewLink, createBookDetailUrl, createBookDetailLink } from "utils/link-generator";
+import { createBookEditLink, createBookDetailLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
 import { getCondition } from "utils/search-condition";
 import { DeleteOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons'
@@ -114,16 +114,7 @@ class EditableBookList extends React.Component {
                 key: 'title',
                 width: '340px',
                 dataIndex: 'title',
-                render: (data) => {
-                    if (data.status === 'draft' || data.status === 'suspend') {
-                        return (
-                            <Link to={createBookDetailPreviewLink(data.id)}>{data.title}</Link>
-                        )
-                    }
-                    return (
-                        <Link to={createBookDetailLink(data.id)}>{data.title}</Link>
-                    )
-                }
+                render: (data) => <Link to={createBookDetailLink(data.id)}>{data.title}</Link>
             },
             {
                 title: 'ステータス',

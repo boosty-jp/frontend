@@ -9,7 +9,9 @@ import { TwitterOutlined, EditOutlined } from '@ant-design/icons';
 import PageLikeButton from './like-button';
 import { TwitterShareButton, } from 'react-share'
 import { createPageViewUrl, createPageEditLink } from 'utils/link-generator'
-import { Link } from '@reach/router';
+import { Link } from 'gatsby';
+import { canDisplayPreviewMode } from 'utils/preview-checker';
+import PreviewAlert from '../detail/preview-alert';
 
 const { Title } = Typography;
 const cardStyle = {
@@ -56,6 +58,7 @@ class PageViewContentComponent extends React.Component {
 
     render() {
         const title = this.props.title ? this.props.title : "タイトル未設定"
+        const canPreview = canDisplayPreviewMode(this.props.status, this.props.author);
         return (
             <Row>
                 <Col xs={24} sm={24} md={24} lg={20} xl={19} xxl={19} style={{ padding: '20px' }}>
@@ -65,13 +68,10 @@ class PageViewContentComponent extends React.Component {
                                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
                             </Helmet>
                             <div style={{ backgroundColor: 'white', margin: '0 auto', wordBreak: 'break-all' }}>
-                                {(this.props.status === 'draft' || this.props.state === 'suspend') &&
-                                    <Alert
-                                        showIcon
-                                        type="info"
+                                {canPreview &&
+                                    <PreviewAlert
                                         style={{ marginBottom: '20px' }}
-                                        message="プレビューモードです。※まだ公開されていません"
-                                        closeText={<Link to={createPageEditLink(this.props.pageId, this.props.bookId)}><EditOutlined style={{ marginRight: '4px' }} />編集する</Link>}
+                                        link={createPageEditLink(this.props.pageId, this.props.bookId)}
                                     />
                                 }
                                 <Title level={1} style={{ fontWeight: '500' }}>{title}</Title>
@@ -85,7 +85,7 @@ class PageViewContentComponent extends React.Component {
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={4} xl={5} xxl={5} >
                     <Affix offsetTop={60}>
-                        {this.props.status === 'publish' &&
+                        {!canPreview &&
                             <>
                                 <div style={{ marginBottom: '8px' }}>
                                     <PageLikeButton />
@@ -103,7 +103,7 @@ class PageViewContentComponent extends React.Component {
                         <div className="js-toc" />
                     </Affix>
                 </Col>
-                {this.props.status === 'publish' &&
+                {(this.props.status === 'publish' || this.props.status === 'suspend') &&
                     <Col xs={24} sm={24} md={24} lg={0}>
                         <div style={{ position: 'fixed', bottom: '26px', left: '20px' }}>
                             <TwitterShareButton
@@ -125,6 +125,7 @@ const mapStateToProps = state => ({
     title: state.pageView.title,
     text: state.pageView.text,
     status: state.bookView.status,
+    author: state.bookView.author,
 })
 
 const PageViewContent = connect(mapStateToProps)(PageViewContentComponent)

@@ -49,6 +49,7 @@ const FamousFreeBookList = () => (
                 )
             }
             if (error) return <></>
+            if (data.famousFreeBooks.books.length === 0) return <></>
             return (
                 <div style={cardStyle}>
                     <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'black', textAlign: 'center' }}>人気の無料の本</p>

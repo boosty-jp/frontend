@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'antd';
+import { Table, Typography } from 'antd';
 import MarkdownRender from 'utils/markdown/markdown-renderer'
 
 const columns = [
@@ -12,17 +12,37 @@ const columns = [
     },
     {
         title: '書き方',
-        dataIndex: 'input',
+        dataIndex: ['input', 'isCode'],
         key: 'input',
         width: 400,
-        render: text => <div className="book-page-body" style={{ whiteSpace: 'pre-line', wordWrap: 'break-word', wordBreak: 'break-word' }}>{text}</div>
+        render: (text, record) => {
+            return (
+                <>
+                    <div className="book-page-body" style={{ whiteSpace: 'pre-line', wordWrap: 'break-word', wordBreak: 'break-word' }}>{record.input}</div>
+                    {record.isCode &&
+                        <>
+                            <p style={{ marginBottom: '8px' }}>※ コードの装飾オプションは以下のとおりです。</p>
+                            <Typography.Text code>言語:ファイル名:始まりの行番号:ハイライトする行番号</Typography.Text>
+                            <p style={{ marginBottom: '8px' }}>ハイライトする行番号は<Typography.Text code>,</Typography.Text>区切りで複数指定できます。</p>
+                        </>
+                    }
+                </>
+            )
+        }
     },
 ];
 
+const code = `\`\`\`js:index.js:1:1-3,6,10
+var hoge = function (hoge) {
+    return hoge++;
+};
 
-const code = `\`\`\`js:index.js
-var foo = function (bar) {
-    return bar++;
+var foo = function (foo) {
+    return foo++;
+};
+
+var piyo = function (piyo) {
+    return piyo++;
 };
 \`\`\``;
 
@@ -41,9 +61,9 @@ const ContentHelp = () => {
 };
 
 const data = [
-    { key: '1', input: code },
-    { key: '2', input: img },
-    { key: '3', input: table },
+    { key: '1', input: img, isCode: false },
+    { key: '2', input: table, isCode: false },
+    { key: '4', input: code, isCode: true },
 ];
 
 export default ContentHelp;

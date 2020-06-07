@@ -104,7 +104,6 @@ class BookCoverImageUploaderComponent extends React.Component {
             message.success("更新しました", 7)
             this.setState({ isUpdated: false })
         } catch (err) {
-            console.log(err);
             message.error("エラーが発生しました。お手数ですが、再度お試しください", 7)
         }
 

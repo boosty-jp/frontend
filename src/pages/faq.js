@@ -2,13 +2,14 @@ import React from "react"
 import Layout from "components/layout/horizontal"
 import SEO from "components/seo/seo"
 import { Typography, Collapse } from "antd"
+import { Link } from 'gatsby'
 
 const { Title } = Typography;
 const { Panel } = Collapse;
 
 const salesQuestions = [
-    { title: '販売手数料はいくらですか？', text: <>6/30まではキャンペーン開催中のため10%となります。それ以降は20%となります。販売手数料に関する詳細は、<a href="">こちら</a>をご覧ください。</> },
-    { title: '売上はいつ振り込まれますか？', text: <>月末に振り込まれます。振り込みに関する詳細は、<a href="">こちら</a>をご覧ください。</> },
+    { title: '販売手数料はいくらですか？', text: <>7/31まではキャンペーン開催中のため通常の半額の10%となります。それ以降は20%となります。<br /><Link to="notification/service-charge">販売手数料について</Link></> },
+    { title: '売上はいつ振り込まれますか？', text: <>月初(毎月1日)に入金が行われます。<br /><Link to="notification/sale-deposit-timing">売上のふりこみについて</Link></> },
     { title: '販売金額の上限を上げたい', text: "現在は、50000円が上限となっています。ご了承ください。" },
 ]
 
@@ -19,7 +20,7 @@ const paymentQuestions = [
 ]
 
 const contentsQuestions = [
-    { title: '技術書を執筆したい', text: <>ユーザー登録後、<a href="https://boosty.jp/book/edit/list">こちらから</a>のページの新規作成より執筆いただけます。</> },
+    { title: '技術書を執筆したい', text: <>ユーザー登録後、<a href="https://boosty.jp/book/edit/list">こちら</a>のページの新規作成より執筆いただけます。</> },
     { title: '複数人で執筆したい', text: <>現在は1ユーザーでの執筆のみ可能となっています。複数人での執筆は、今後対応予定です。</> },
     { title: '不適切なコンテンツをみつけた', text: <>お手数ですが、<a href="https://form.run/@boosty-help">こちらから</a>お問い合わせください。運営側で判断し対応させていただきます。</> },
     { title: '正しくページが表示されない', text: <>最新版のブラウザをご利用ください。boostyで対応しているブラウザはGoogle Chrome, Firefox, Safari, Edgeとなります。解消されない場合は<a href="https://form.run/@boosty-help">こちらから</a>お問い合わせください。</> },

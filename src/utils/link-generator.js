@@ -1,7 +1,6 @@
 import { getCurrentUser } from "services/local-user"
 
 export const createBookDetailLink = (id) => ("/book/?id=" + id)
-export const createBookDetailPreviewLink = (id) => ("/book/?id=" + id + "&preview=1")
 export const createBookDetailUrl = (id) => ("https://boosty.jp/book/?id=" + id)
 
 export const createTestLink = (id) => ("/test/?id=" + id)

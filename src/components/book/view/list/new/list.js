@@ -64,6 +64,7 @@ class TopNewSaleBookList extends React.Component {
                         )
                     }
                     if (error) return <ErrorResult />
+                    if (data.newBooks.books.length === 0) return <></>
                     return (
                         <div style={cardStyle}>
                             <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'black', textAlign: 'center' }}>

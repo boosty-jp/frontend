@@ -1,9 +1,10 @@
 import { Remarkable } from 'remarkable';
 import { linkify } from 'remarkable/linkify';
 import uuidv4 from 'uuid/v4'
-import hljs from 'highlight.js';
 import { escapeHtml, replaceEntities, unescapeMd } from 'utils/markdown/escape-html'
 import { toLangTagString } from "utils/markdown/file-lang-tag-creator"
+import hljs from 'highlight.js';
+import { toNumberedContent } from "utils/markdown/code-line-emphasis"
 const isBrowser = typeof window !== 'undefined';
 const Clipboard = isBrowser ? require('clipboard') : () => { };
 
@@ -28,16 +29,18 @@ var MarkdownViewer = new Remarkable('full', {
         const arr = codeInfo.split(':');
         const lang = arr[0];
         const fileName = arr[1];
+        const startNumber = arr[2];
+        const emphasisLines = arr[3];
 
         let fileTag = fileName ? "<div><div class=\"markdown-code-file-name\"><span>" + fileName + "</span></div></div>" : "";
-        let langTag = toLangTagString(lang);
+        let langTag = lang ? toLangTagString(lang) : "";
         let codeTag = "";
 
         try {
             if (lang) {
                 if (hljs.getLanguage(lang)) {
                     codeTag = hljs.highlight(lang, str).value;
-                } else if (lang === 'plain' || lang === 'plaintext' || lang === 'text' || lang === 'txt') {
+                } else if (lang === 'plain' || lang === 'plaintext' || lang === 'text' || lang === 'txt' || lang === 'graphql' || lang === 'gql') {
                     codeTag = hljs.highlight('plaintext', str).value;
                 } else {
                     codeTag = hljs.highlightAuto(str).value;
@@ -49,9 +52,9 @@ var MarkdownViewer = new Remarkable('full', {
             return "";
         }
 
+        codeTag = toNumberedContent(codeTag, startNumber, emphasisLines);
         const id = uuidv4();
-        const copyButton = "<button class=\"code-clip-board-btn\" data-clipboard-text=\"" + escape_html(str) + "\"><input type=\"checkbox\" class=\"code-clip-board-icon\" id=\"" + id + "\"/><label for=\"" + id + "\">copy</label></button>"
-
+        const copyButton = "<button class=\"code-clip-board-btn\" data-clipboard-text=\"" + escape_html(str) + "\"><input type=\"checkbox\" class=\"code-clip-board-icon\" id=\"" + id + "\"/><label for=\"" + id + "\"><span class=\"code-clip-board-text\">copy</span></label></button>"
         return fileTag + langTag + copyButton + "<div class=\"markdown-code-content\">" + codeTag + "</div>";
     }
 });
@@ -94,7 +97,7 @@ MarkdownViewer.renderer.rules.heading_close = function (tokens, idx /*, options,
 };
 
 MarkdownViewer.renderer.rules.table_open = function () {
-    return '<div class="ant-table ant-table-bordered"><div class="ant-table-container"><table>\n';
+    return '<div class="ant-table ant-table-bordered"><div class="ant-table-container"><table class="markdown-table">\n';
 }
 
 MarkdownViewer.renderer.rules.table_close = function () {

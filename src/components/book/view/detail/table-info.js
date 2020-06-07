@@ -27,7 +27,7 @@ const BookInfoComponent = (props) => {
                 <Descriptions.Item label="更新日" >{props.updateDate}</Descriptions.Item>
                 <Descriptions.Item label="セクション数">{props.sections.length}</Descriptions.Item>
                 <Descriptions.Item label="ページ数">{props.sections.reduce((prev, x) => { return prev + x.pages.length }, 0)}</Descriptions.Item>
-                <Descriptions.Item label="説明" span={3}>{props.description}</Descriptions.Item>
+                <Descriptions.Item label="説明" span={3} style={{ whiteSpace: 'pre-wrap' }}>{props.description}</Descriptions.Item>
             </Descriptions>
         </div>
     )

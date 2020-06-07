@@ -5,7 +5,7 @@ import StatusButton from "./status-button";
 import BookStatusDescription from "./status-description";
 import { FileSearchOutlined } from '@ant-design/icons'
 import { Link } from 'gatsby';
-import { createBookDetailPreviewLink } from 'utils/link-generator'
+import { createBookDetailLink } from 'utils/link-generator'
 
 
 const cardStyle = {
@@ -27,7 +27,7 @@ class BookStatusCardComponent extends React.Component {
                     </Col>
                     <Col span={14} style={{ textAlign: 'right' }} >
                         <Tooltip title="プレビューを見る">
-                            <Link to={createBookDetailPreviewLink(this.props.id)}>
+                            <Link to={createBookDetailLink(this.props.id)}>
                                 <Button
                                     shape="circle"
                                     icon={<FileSearchOutlined />}

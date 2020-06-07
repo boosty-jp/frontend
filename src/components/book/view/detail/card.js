@@ -30,14 +30,11 @@ const BookDetailCard = () => {
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={16} lg={16} xl={16} style={{ marginTop: '30px' }}>
-                    <BookTargetUserCard />
                     <BookSalesPointCard />
+                    <BookTargetUserCard />
                     <BookSections />
                     <BookInfo />
                     <BookAuthor />
-                    <p style={{ fontWeight: 'bold', color: 'black', fontSize: '22px', textAlign: 'center', margin: '50px auto 10px auto' }}>
-                        - おすすめ -
-            </p>
                     <div style={{ marginTop: '20px' }}>
                         <FamousSaleBookList />
                     </div>

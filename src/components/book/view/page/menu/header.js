@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Row, Col, Typography } from 'antd'
 import BookCoverImage from 'components/image/cover';
 import { Link } from 'gatsby'
-import { createBookDetailLink } from 'utils/link-generator';
+import { createBookDetailLink, createBookSectionsEditLink } from 'utils/link-generator';
+import { EditOutlined } from '@ant-design/icons';
 
 const { Paragraph } = Typography;
 class BookViewMenuHeaderComponent extends React.Component {
@@ -16,11 +17,18 @@ class BookViewMenuHeaderComponent extends React.Component {
                     </Link>
                 </Col>
                 <Col span={20} style={{ textAlign: 'left' }}>
-                    <Paragraph ellipsis={{ rows: 2 }} style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>
-                        {this.props.title}
-                    </Paragraph>
-                    {/* <span style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>
-                    </span> */}
+                    {this.props.status === 'draft' ?
+                        <>
+                            <Paragraph ellipsis={{ rows: 1 }} style={{ fontWeight: '500', color: 'black', fontSize: '18px', marginBottom: '2px' }}>
+                                {this.props.title}
+                            </Paragraph>
+                            <Link to={createBookSectionsEditLink(this.props.id)}><EditOutlined style={{ marginRight: '4px' }} />編集する</Link>
+                        </>
+                        :
+                        <Paragraph ellipsis={{ rows: 2 }} style={{ fontWeight: '500', color: 'black', fontSize: '18px' }}>
+                            {this.props.title}
+                        </Paragraph>
+                    }
                 </Col>
             </Row>
         );
@@ -32,6 +40,7 @@ const mapStateToProps = state => ({
     title: state.bookView.title,
     imageUrl: state.bookView.imageUrl,
     author: state.bookView.author,
+    status: state.bookView.status,
 })
 
 const BookViewMenuHeader = connect(mapStateToProps)(BookViewMenuHeaderComponent);

@@ -21,7 +21,7 @@ const CreatorRequirementComponent = () => {
                     <span style={{ fontSize: '22px', fontWeight: 'bold', marginLeft: '4px' }}>50</span>
                     % OFF!!
                     </span>
-                        <span>キャンペーン開催中(6/30まで)</span>
+                        <span>キャンペーン開催中(7/31まで)</span>
                     </>
                 }
                     description={<p style={{ marginBottom: '0px' }}>詳しくは<a>こちら</a>をご覧ください</p>}

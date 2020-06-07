@@ -9,6 +9,7 @@ const cardStyle = {
     width: '100%',
     padding: '20px',
     fontColor: 'black',
+    marginTop: '20px'
 }
 
 const BookTargetUserCard = () => {

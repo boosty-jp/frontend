@@ -4,10 +4,10 @@ const SUFFIX = '_BOOK_VIEW';
 const SET_BOOK_DATA = 'SET_BOOK_DATA' + SUFFIX;
 const CLEAR_BOOK_DATA = 'CLEAR_BOOK_DATA' + SUFFIX;
 
-export const setBookData = (book, isPreview) => ({
+export const setBookData = (book) => ({
     type: SET_BOOK_DATA,
     book: book,
-    mode: detectBookViewMode(book, isPreview),
+    mode: detectBookViewMode(book),
 })
 
 export const clearBookData = () => ({
