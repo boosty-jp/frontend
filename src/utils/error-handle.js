@@ -6,6 +6,14 @@ export const getErrorMessage = (error) => {
     }
 }
 
+export const getLoginErrorMessage = (error) => {
+    if (!error.message || error.message.match(/INTERNAL SERVER ERROR/g)) {
+        return 'エラーが発生しました。まだアカウントを作成されていない可能性があります。';
+    } else {
+        return error.message.replace(/Network error: /g, '');
+    }
+}
+
 export const getStripeErrorMessage = (error) => {
     if (error.type === "rate_limit_error") {
         return 'リクエスト制限に達しました。しばらく経ってから、再度お試しください。';

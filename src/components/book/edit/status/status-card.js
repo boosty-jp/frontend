@@ -26,15 +26,17 @@ class BookStatusCardComponent extends React.Component {
                         <BookStatusDescription />
                     </Col>
                     <Col span={14} style={{ textAlign: 'right' }} >
-                        <Tooltip title="プレビューを見る">
-                            <Link to={createBookDetailLink(this.props.id)}>
-                                <Button
-                                    shape="circle"
-                                    icon={<FileSearchOutlined />}
-                                    style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)', marginRight: '14px' }}
-                                />
-                            </Link>
-                        </Tooltip>
+                        {this.props.status === 'draft' &&
+                            <Tooltip title="プレビューを見る">
+                                <Link to={createBookDetailLink(this.props.id)}>
+                                    <Button
+                                        shape="circle"
+                                        icon={<FileSearchOutlined />}
+                                        style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)', marginRight: '14px' }}
+                                    />
+                                </Link>
+                            </Tooltip>
+                        }
                         <StatusButton />
                     </Col>
                 </Row>
@@ -45,6 +47,7 @@ class BookStatusCardComponent extends React.Component {
 
 const mapStateToProps = state => ({
     id: state.bookEdit.id,
+    status: state.bookEdit.status,
 })
 
 const BookStatusCard = connect(mapStateToProps)(BookStatusCardComponent)

@@ -7,7 +7,7 @@ import getFirebase from "utils/firebase";
 import styled from 'styled-components'
 import OwnLoginForm from "components/auth/login/own-login-form";
 import ThirdPartyButtons from "components/auth/third-party-buttons";
-import { getErrorMessage } from "utils/error-handle";
+import { getLoginErrorMessage } from "utils/error-handle";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const isBrowser = typeof window !== 'undefined';
@@ -46,6 +46,7 @@ class LoginForm extends React.Component {
                 this.setState({ loading: false })
             }
         }).catch((error) => {
+            console.log(error);
             this.setState({ loading: false })
             this.handleAuthError(error);
         });
@@ -64,7 +65,8 @@ class LoginForm extends React.Component {
             message.info("ログインしました", 7)
         } catch (err) {
             this.setState({ loading: false })
-            message.error(getErrorMessage(err), 7)
+            console.log(err);
+            message.error(getLoginErrorMessage(err), 7)
         }
     }
 

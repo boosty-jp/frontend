@@ -208,7 +208,7 @@ const PriceTypeTag = ({ price }) => {
     return (
         <>
             <Tag color="cyan">有料公開</Tag>
-            <Link to="/faq">販売手数料</Link>について
+            <Link to="/notification/service-charge">販売手数料</Link>について
         </>
     )
 }
