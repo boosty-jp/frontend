@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { getErrorMessage } from 'utils/error-handle';
 import { LoadingOutlined, EditOutlined } from '@ant-design/icons';
-
+import { createStripeRegistrationLink } from "utils/link-generator";
 
 const REGISTER_STRIPE = gql`
 mutation RegisterStripe($userId: String!, $code: String!){
@@ -40,12 +40,26 @@ class StripeCompleteComponent extends React.Component {
     render() {
         var content = <></>
         if (this.state.errorMessage) {
-            content =
-                <Result
-                    status="error"
-                    title="すでに登録済みです"
-                    subTitle={<><Link to="/book/edit/list">著書一覧</Link>へ</>}
-                />
+            if (getErrorMessage(this.state.errorMessage) === "すでに口座登録が行われています") {
+                content =
+                    <Result
+                        status="error"
+                        title="すでに登録済みです"
+                        subTitle={<><Link to="/book/edit/list">著書一覧</Link>へ</>}
+                    />
+            } else {
+                content =
+                    <Result
+                        status="error"
+                        title="エラーが発生しました。"
+                        subTitle={
+                            <>
+                                <p>お手数ですが、再度Stripeでの認証を行ってください。(登録手続きは省略されます。)</p>
+                                <a href={createStripeRegistrationLink()} >Stripeで再認証する</a>
+                            </>
+                        }
+                    />
+            }
         } else if (this.state.complete) {
             content =
                 <Result
