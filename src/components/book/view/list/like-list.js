@@ -10,6 +10,7 @@ import { createPageViewLink } from 'utils/link-generator'
 import { isLoggedIn } from "services/local-user";
 import NeedLoginComponent from "components/auth/need-login";
 import { getErrorMessage } from "utils/error-handle";
+import BookCoverImage from "components/image/cover";
 
 const { Paragraph } = Typography;
 
@@ -122,9 +123,9 @@ class LikedPageList extends React.Component {
                                                 <Link to={createPageViewLink(page.id, page.bookId)}>
                                                     <div style={cardStyle}>
                                                         <Paragraph style={{ color: 'black', fontWeight: 'bold', fontSize: '16px' }}>{page.title}</Paragraph>
-                                                        <div style={{ overflow: 'hidden', color: 'gray' }}>
-                                                            <img src={page.bookImage} style={{ height: 'auto', width: '18px', marginRight: '8px' }} alt="本の表紙" />
-                                                            <span>「{page.bookTitle}」より</span>
+                                                        <div style={{ overflow: 'hidden', color: 'gray', display: 'grid', gridTemplateColumns: '18px 1fr', width: "100%" }}>
+                                                            <BookCoverImage imageUrl={page.bookImage} boxShadow="2px 2px 4px #cdd0d4, -2px -2px 4px #ffffff" borderRadius="2px" />
+                                                            <div><Paragraph ellipsis style={{ marginBottom: '0px', marginTop: '4px', marginLeft: '4px' }}>「{page.bookTitle}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa」より</Paragraph></div>
                                                         </div>
                                                     </div>
                                                 </Link>

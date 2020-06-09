@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 import ErrorResult from 'components/error/result'
 import ProfileHeaderCard from 'components/user/header/card'
 import { setUserData } from 'modules/user'
+import { getErrorMessage } from "utils/error-handle";
 
 const GET_USER = gql`
   query GetUser($userId: ID!) {
@@ -78,7 +79,7 @@ const UserProfileHeaderComponent = (props) => {
         >
             {({ loading, error, data }) => {
                 if (loading) return <SkeletonCard />
-                if (error) return <ErrorResult />
+                if (error) return <ErrorResult title={getErrorMessage(error)} reload={getErrorMessage(error) === '対象のユーザーが見つかりません'} />
                 return <ProfileHeaderCard data={data.user} selfSearch={props.selfSearch} />
             }}
         </Query >

@@ -1,5 +1,6 @@
 import React from "react"
 import { Typography, Statistic } from 'antd';
+import BookCoverImage from "components/image/cover";
 
 const { Paragraph } = Typography;
 
@@ -7,7 +8,7 @@ const OrderHistoryItem = ({ orderHistory }) => {
     return (
         <div style={{ display: 'grid', gridTemplateColumns: '60px 1fr', width: "100%" }}>
             <div>
-                <img src={orderHistory.imageUrl} style={{ width: '60px', height: 'auto', borderRadius: '2px' }} alt="本のカバー"></img>
+                <BookCoverImage imageUrl={orderHistory.imageUrl} boxShadow="2px 2px 4px #cdd0d4, -2px -2px 4px #ffffff" borderRadius="2px" />
             </div>
             <div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 120px', paddingLeft: '12px' }}>

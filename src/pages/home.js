@@ -31,12 +31,12 @@ const HomePage = () => (
             <Row gutter={20} style={{ padding: '20px' }}>
                 <Col xs={24} sm={24} md={24} lg={18} xl={17} xxl={18} style={{ marginBottom: '20px' }}>
                     <RecentViewedBookList />
-                    <div style={{ marginBottom: "30px" }}>
+                    {/* <div style={{ marginBottom: "30px" }}>
                         <FamousSaleBookList />
                     </div>
                     <div style={{ marginBottom: "30px" }}>
                         <FamousFreeBookList />
-                    </div>
+                    </div> */}
                     <div style={{ marginBottom: "30px" }}>
                         <NewSaleBookList />
                     </div>

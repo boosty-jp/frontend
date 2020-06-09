@@ -13,7 +13,8 @@ const BookCoverImage = ({ imageUrl, boxShadow = "3px 3px 6px #cdd0d4, -3px -3px 
                 backgroundPosition: 'center center',
                 boxShadow: boxShadow,
                 borderRadius: borderRadius
-            }} />
+            }}
+        />
     )
 }
 
