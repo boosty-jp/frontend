@@ -16,13 +16,13 @@ const SalesPoints = () => {
             </Col>
             <Col sm={24} md={8} style={{ marginTop: '20px', marginBottom: '20px', textAlign: 'center' }}>
                 <SalesPoint2Image />
-                <Paragraph style={titleStyle}>見やすいコード</Paragraph>
-                <Paragraph >ハイライトされ、コピペも簡単にでき<br />学びながらコードを書きやすくなってます</Paragraph>
+                <Paragraph style={titleStyle}>コードを扱いやすく</Paragraph>
+                <Paragraph >コードはハイライトされており<br />コピーもできるようになっています</Paragraph>
             </Col>
             <Col sm={24} md={8} style={{ marginTop: '20px', marginBottom: '20px', textAlign: 'center' }}>
                 <SalesPoint3Image />
                 <Paragraph style={titleStyle}>お気に入り登録</Paragraph>
-                <Paragraph >見返したいページをお気に入りし<br />すぐに検索できます</Paragraph>
+                <Paragraph >見返したいページを簡単に<br />探せるようになっています</Paragraph>
             </Col>
         </Row>
     )
