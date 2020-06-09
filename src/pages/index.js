@@ -10,7 +10,7 @@ import SalesPoints from "components/landing/sales-points"
 const IndexPage = () => {
   return (
     <Layout>
-      <SEO title="ホーム" />
+      <SEO noTitle={true} />
       <HeroComponent />
       <div style={{ margin: '0 auto', maxWidth: '900px', padding: "20px" }}>
         <div style={{ paddingTop: '100px' }}>
