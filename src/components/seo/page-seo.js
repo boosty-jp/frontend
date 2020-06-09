@@ -2,26 +2,57 @@ import React from "react"
 import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import { createBookOgpImageUrl, createPageViewLink } from "utils/link-generator"
+import { createBookOgpImageUrl, createPageViewLink, createPageViewUrl } from "utils/link-generator"
 import removeMd from 'remove-markdown'
 
 const PageSeoComponent = (props) => {
-    const { site } = useStaticQuery(
+    const { site, allFile } = useStaticQuery(
         graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
+          query {
+            site {
+              siteMetadata {
+                title
+                description
+                author
+              }
+            }
+            allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+                edges {
+                  node {
+                   publicURL
+                  }
+                }
+              }
+            }
+        `
     )
 
     let metaDescription = removeMd(props.description).substr(0, 120);
     if (!metaDescription) metaDescription = site.siteMetadata.description;
+
+    let title = props.title;
+    if (title) {
+        title = `${title} | boosty`
+    } else {
+        title = site.siteMetadata.title;
+    }
+
+    let url = "";
+    if (props.pageId) {
+        url = createPageViewUrl(props.pageId, props.bookId);
+    } else {
+        url = typeof window !== 'undefined' ? window.location.href : 'https://boosty.jp'
+    }
+
+    let imageUrl = "";
+    if (props.imageUrl) {
+        imageUrl = createBookOgpImageUrl(props.imageUrl)
+    } else {
+        imageUrl = `https://boosty.jp${allFile.edges[0].node.publicURL}`;
+    }
+
+    let cardType = "summary_large_image";
+    if (!props.imageUrl) cardType = "summary";
 
     return (
         <Helmet
@@ -29,7 +60,7 @@ const PageSeoComponent = (props) => {
                 lang: `ja`,
             }}
             title={props.title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            titleTemplate={`%s`}
             meta={[
                 {
                     name: `description`,
@@ -37,11 +68,11 @@ const PageSeoComponent = (props) => {
                 },
                 {
                     property: `og:url`,
-                    content: createPageViewLink(props.pageId, props.bookId),
+                    content: url,
                 },
                 {
                     property: `og:title`,
-                    content: props.title,
+                    content: title,
                 },
                 {
                     property: `og:description`,
@@ -49,7 +80,7 @@ const PageSeoComponent = (props) => {
                 },
                 {
                     property: `og:image`,
-                    content: createBookOgpImageUrl(props.imageUrl),
+                    content: imageUrl,
                 },
                 {
                     property: `og:type`,
@@ -69,11 +100,11 @@ const PageSeoComponent = (props) => {
                 },
                 {
                     name: `twitter:card`,
-                    content: `summary_large_image`,
+                    content: cardType,
                 },
                 {
                     name: `twitter:title`,
-                    content: props.title,
+                    content: title,
                 },
                 {
                     name: `twitter:site`,

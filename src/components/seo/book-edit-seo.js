@@ -2,32 +2,59 @@ import React from "react"
 import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import { createBookDetailUrl, createBookOgpImageUrl } from "utils/link-generator"
+import { createBookEditUrl, createBookOgpImageUrl } from "utils/link-generator"
 
 const BookEditSeoComponent = (props) => {
-    const { site } = useStaticQuery(
+    const { site, allFile } = useStaticQuery(
         graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
+          query {
+            site {
+              siteMetadata {
+                title
+                description
+                author
+              }
+            }
+            allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+                edges {
+                  node {
+                   publicURL
+                  }
+                }
+              }
+            }
+        `
     )
 
     const metaDescription = props.description || site.siteMetadata.description
+    let title = props.title;
+    if (title) {
+        title = `「${title}」の編集`
+    } else {
+        title = site.siteMetadata.title;
+    }
+
+    let url = "";
+    if (props.bookId) {
+        url = createBookEditUrl(props.bookId);
+    } else {
+        url = typeof window !== 'undefined' ? window.location.href : 'https://boosty.jp'
+    }
+
+    let imageUrl = "";
+    if (props.imageUrl) {
+        imageUrl = createBookOgpImageUrl(props.imageUrl)
+    } else {
+        imageUrl = `https://boosty.jp${allFile.edges[0].node.publicURL}`;
+    }
 
     return (
         <Helmet
             htmlAttributes={{
                 lang: `ja`,
             }}
-            title={props.title}
-            titleTemplate={`「%s」の編集`}
+            title={title}
+            titleTemplate={`%s`}
             meta={[
                 {
                     name: `description`,
@@ -35,11 +62,11 @@ const BookEditSeoComponent = (props) => {
                 },
                 {
                     property: `og:url`,
-                    content: createBookDetailUrl(props.bookId),
+                    content: url,
                 },
                 {
                     property: `og:title`,
-                    content: props.title,
+                    content: title,
                 },
                 {
                     property: `og:description`,
@@ -47,7 +74,7 @@ const BookEditSeoComponent = (props) => {
                 },
                 {
                     property: `og:image`,
-                    content: createBookOgpImageUrl(props.imageUrl),
+                    content: imageUrl,
                 },
                 {
                     property: `og:type`,
@@ -71,11 +98,7 @@ const BookEditSeoComponent = (props) => {
                 },
                 {
                     name: `twitter:title`,
-                    content: props.title,
-                },
-                {
-                    name: `twitter:site`,
-                    content: `@boosty_official`,
+                    content: title,
                 },
                 {
                     name: `twitter:description`,

@@ -24,6 +24,7 @@ export const createTermsUrl = () => {
 }
 
 export const createBookEditLink = (id) => ("/book/edit/base/?id=" + id)
+export const createBookEditUrl = (id) => ("https://boosty.jp/book/edit/base/?id=" + id)
 
 export const createBookSectionsEditLink = (id) => ("/book/edit/sections/?id=" + id)
 

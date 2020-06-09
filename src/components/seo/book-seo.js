@@ -6,33 +6,63 @@ import { createBookDetailUrl, createBookOgpImageUrl } from "utils/link-generator
 
 const BookSeoComponent = (props) => {
 
-    const { site } = useStaticQuery(
+    const { site, allFile } = useStaticQuery(
         graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
+          query {
+            site {
+              siteMetadata {
+                title
+                description
+                author
+              }
+            }
+            allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+                edges {
+                  node {
+                   publicURL
+                  }
+                }
+              }
+            }
+        `
     )
 
     const metaDescription = props.description.substr(0, 120) || site.siteMetadata.description
+    let title = props.title;
+    if (title) {
+        title = `${title} | boosty`
+    } else {
+        title = site.siteMetadata.title;
+    }
+
+    let url = "";
+    if (props.bookId) {
+        url = createBookDetailUrl(props.bookId);
+    } else {
+        url = typeof window !== 'undefined' ? window.location.href : 'https://boosty.jp'
+    }
+
+    let imageUrl = "";
+    if (props.imageUrl) {
+        imageUrl = createBookOgpImageUrl(props.imageUrl)
+    } else {
+        imageUrl = `https://boosty.jp${allFile.edges[0].node.publicURL}`;
+    }
+
+    let cardType = "summary_large_image";
+    if (!props.imageUrl) cardType = "summary";
 
     return (
         <Helmet
             htmlAttributes={{
                 lang: `ja`,
             }}
-            title={props.title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            title={title}
+            titleTemplate={`%s`}
             meta={[
                 {
                     name: `title`,
-                    content: props.title,
+                    content: title,
                 },
                 {
                     name: `description`,
@@ -40,11 +70,11 @@ const BookSeoComponent = (props) => {
                 },
                 {
                     property: `og:url`,
-                    content: createBookDetailUrl(props.bookId),
+                    content: url,
                 },
                 {
                     property: `og:title`,
-                    content: props.title,
+                    content: title,
                 },
                 {
                     property: `og:description`,
@@ -52,7 +82,7 @@ const BookSeoComponent = (props) => {
                 },
                 {
                     property: `og:image`,
-                    content: createBookOgpImageUrl(props.imageUrl),
+                    content: imageUrl,
                 },
                 {
                     property: `og:type`,
@@ -72,11 +102,11 @@ const BookSeoComponent = (props) => {
                 },
                 {
                     name: `twitter:card`,
-                    content: `summary_large_image`,
+                    content: cardType,
                 },
                 {
                     name: `twitter:title`,
-                    content: props.title,
+                    content: title,
                 },
                 {
                     name: `twitter:site`,

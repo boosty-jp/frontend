@@ -2,32 +2,47 @@ import React from "react"
 import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import OGP_IMAGE from 'images/ogp.png'
 
 const UserSeoComponent = (props) => {
-    const { site } = useStaticQuery(
+    const { site, allFile } = useStaticQuery(
         graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
+          query {
+            site {
+              siteMetadata {
+                title
+                description
+                author
+              }
+            }
+            allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+                edges {
+                  node {
+                   publicURL
+                  }
+                }
+              }
+            }
+        `
     )
 
     const metaDescription = props.description || site.siteMetadata.description
+    let title = props.displayName + "のプロフィール";
+    if (!props.displayName) {
+        title = "プロフィール"
+    }
+
+    let url = 'https://boosty.jp/user/?id=' + props.id;
+    if (!props.id) {
+        url = typeof window !== 'undefined' ? window.location.href : 'https://boosty.jp';
+    }
 
     return (
         <Helmet
             htmlAttributes={{
                 lang: `ja`,
             }}
-            title={props.displayName}
-            titleTemplate={`%sのプロフィール`}
+            title={title}
+            titleTemplate={`%s`}
             meta={[
                 {
                     name: `description`,
@@ -35,11 +50,11 @@ const UserSeoComponent = (props) => {
                 },
                 {
                     property: `og:url`,
-                    content: 'https://boosty.jp/account/' + props.id,
+                    content: url,
                 },
                 {
                     property: `og:title`,
-                    content: props.displayName + 'のプロフィール',
+                    content: title,
                 },
                 {
                     property: `og:description`,
@@ -47,7 +62,7 @@ const UserSeoComponent = (props) => {
                 },
                 {
                     property: `og:image`,
-                    content: OGP_IMAGE,
+                    content: `https://boosty.jp${allFile.edges[0].node.publicURL}`,
                 },
                 {
                     property: `og:type`,
@@ -71,7 +86,7 @@ const UserSeoComponent = (props) => {
                 },
                 {
                     name: `twitter:title`,
-                    content: props.displayName + 'のプロフィール',
+                    content: title,
                 },
                 {
                     name: `twitter:site`,

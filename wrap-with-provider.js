@@ -36,6 +36,7 @@ class App extends React.Component {
     }
 
     render() {
+        console.log(store);
         return (
             <StripeProvider stripe={this.state.stripe}>
                 <Provider store={store}>

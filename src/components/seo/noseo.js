@@ -7,23 +7,23 @@ import OGP_IMAGE from 'images/ogp.png'
 function NOSEO({ description, meta, title, url }) {
     const { site, allFile } = useStaticQuery(
         graphql`
-        query {
-          site {
-            siteMetadata {
-              title
-              description
-              author
+          query {
+            site {
+              siteMetadata {
+                title
+                description
+                author
+              }
             }
-          }
-          allFile(filter: {relativePath: {eq: "ogp.png"}}) {
-            edges {
-              node {
-               publicURL
+            allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+              edges {
+                node {
+                 publicURL
+                }
               }
             }
           }
-        }
-      `
+        `
     )
 
     const metaDescription = description || site.siteMetadata.description
