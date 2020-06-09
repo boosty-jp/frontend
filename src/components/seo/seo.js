@@ -2,10 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import OGP_IMAGE from 'images/ogp.png'
 
 function SEO({ description, meta, title, url }) {
-  const { site } = useStaticQuery(
+  const { site, allFile } = useStaticQuery(
     graphql`
       query {
         site {
@@ -13,6 +12,13 @@ function SEO({ description, meta, title, url }) {
             title
             description
             author
+          }
+        }
+        allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+          edges {
+            node {
+             publicURL
+            }
           }
         }
       }
@@ -39,7 +45,7 @@ function SEO({ description, meta, title, url }) {
         },
         {
           property: `og:title`,
-          content: title,
+          content: site.siteMetadata.title,
         },
         {
           property: `og:description`,
@@ -47,7 +53,7 @@ function SEO({ description, meta, title, url }) {
         },
         {
           property: `og:image`,
-          content: OGP_IMAGE,
+          content: `https://boosty.jp${allFile.edges[0].node.publicURL}`,
         },
         {
           property: `og:type`,
@@ -71,7 +77,7 @@ function SEO({ description, meta, title, url }) {
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: site.siteMetadata.title,
         },
         {
           name: `twitter:site`,

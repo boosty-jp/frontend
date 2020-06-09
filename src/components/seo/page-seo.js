@@ -20,6 +20,9 @@ const PageSeoComponent = (props) => {
     `
     )
 
+    // reduxのデータが反映されるまで設定しない
+    if (!props.bookId) return <></>
+
     const metaDescription = removeMd(props.description).substr(0, 120) || site.siteMetadata.description
 
     return (

@@ -5,6 +5,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { createBookDetailUrl, createBookOgpImageUrl } from "utils/link-generator"
 
 const BookSeoComponent = (props) => {
+
     const { site } = useStaticQuery(
         graphql`
       query {
@@ -18,6 +19,9 @@ const BookSeoComponent = (props) => {
       }
     `
     )
+
+    // reduxのデータが反映されるまで設定しない
+    if (!props.title) return <></>
 
     const metaDescription = props.description.substr(0, 120) || site.siteMetadata.description
 

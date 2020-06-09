@@ -7,17 +7,26 @@ import OGP_IMAGE from 'images/ogp.png'
 function NOSEO({ description, meta, title, url }) {
     const { site } = useStaticQuery(
         graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
+        query {
+          site {
+            siteMetadata {
+              title
+              description
+              author
+            }
+          }
+          allFile(filter: {relativePath: {eq: "ogp.png"}}) {
+            edges {
+              node {
+               publicURL
+              }
+            }
           }
         }
-      }
-    `
+      `
     )
+
+    if (!title) return <></>
 
     const metaDescription = description || site.siteMetadata.description
 
@@ -47,7 +56,7 @@ function NOSEO({ description, meta, title, url }) {
                 },
                 {
                     property: `og:image`,
-                    content: OGP_IMAGE,
+                    content: `https://boosty.jp${allFile.edges[0].node.publicURL}`,
                 },
                 {
                     property: `og:type`,
