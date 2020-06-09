@@ -46,7 +46,6 @@ class LoginForm extends React.Component {
                 this.setState({ loading: false })
             }
         }).catch((error) => {
-            console.log(error);
             this.setState({ loading: false })
             this.handleAuthError(error);
         });
@@ -65,7 +64,6 @@ class LoginForm extends React.Component {
             message.info("ログインしました", 7)
         } catch (err) {
             this.setState({ loading: false })
-            console.log(err);
             message.error(getLoginErrorMessage(err), 7)
         }
     }

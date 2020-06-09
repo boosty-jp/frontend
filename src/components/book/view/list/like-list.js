@@ -125,7 +125,7 @@ class LikedPageList extends React.Component {
                                                         <Paragraph style={{ color: 'black', fontWeight: 'bold', fontSize: '16px' }}>{page.title}</Paragraph>
                                                         <div style={{ overflow: 'hidden', color: 'gray', display: 'grid', gridTemplateColumns: '18px 1fr', width: "100%" }}>
                                                             <BookCoverImage imageUrl={page.bookImage} boxShadow="2px 2px 4px #cdd0d4, -2px -2px 4px #ffffff" borderRadius="2px" />
-                                                            <div><Paragraph ellipsis style={{ marginBottom: '0px', marginTop: '4px', marginLeft: '4px' }}>「{page.bookTitle}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa」より</Paragraph></div>
+                                                            <div><Paragraph ellipsis style={{ marginBottom: '0px', marginTop: '4px', marginLeft: '4px' }}>「{page.bookTitle}」より</Paragraph></div>
                                                         </div>
                                                     </div>
                                                 </Link>
