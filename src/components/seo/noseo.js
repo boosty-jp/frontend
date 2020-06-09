@@ -5,7 +5,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import OGP_IMAGE from 'images/ogp.png'
 
 function NOSEO({ description, meta, title, url }) {
-    const { site } = useStaticQuery(
+    const { site, allFile } = useStaticQuery(
         graphql`
         query {
           site {
