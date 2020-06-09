@@ -19,8 +19,6 @@ const BookEditSeoComponent = (props) => {
     `
     )
 
-    // reduxのデータが反映されるまで設定しない
-    if (!props.id) return <></>
     const metaDescription = props.description || site.siteMetadata.description
 
     return (

@@ -26,8 +26,6 @@ function NOSEO({ description, meta, title, url }) {
       `
     )
 
-    if (!title) return <></>
-
     const metaDescription = description || site.siteMetadata.description
 
     return (

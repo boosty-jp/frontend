@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
-import { createBookDetailUrl, createBookOgpImageUrl } from "utils/link-generator"
+import { createBookOgpImageUrl, createPageViewLink } from "utils/link-generator"
 import removeMd from 'remove-markdown'
 
 const PageSeoComponent = (props) => {
@@ -20,10 +20,8 @@ const PageSeoComponent = (props) => {
     `
     )
 
-    // reduxのデータが反映されるまで設定しない
-    if (!props.bookId) return <></>
-
-    const metaDescription = removeMd(props.description).substr(0, 120) || site.siteMetadata.description
+    let metaDescription = removeMd(props.description).substr(0, 120);
+    if (!metaDescription) metaDescription = site.siteMetadata.description;
 
     return (
         <Helmet
@@ -39,7 +37,7 @@ const PageSeoComponent = (props) => {
                 },
                 {
                     property: `og:url`,
-                    content: createBookDetailUrl(props.bookId),
+                    content: createPageViewLink(props.pageId, props.bookId),
                 },
                 {
                     property: `og:title`,
@@ -91,6 +89,7 @@ const PageSeoComponent = (props) => {
 }
 
 const mapStateToProps = state => ({
+    bookId: state.bookView.id,
     pageId: state.pageView.id,
     title: state.pageView.title,
     text: state.pageView.text,
