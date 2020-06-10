@@ -35,7 +35,7 @@ const CreatorBanner = () => {
         <Link to={link}>
             <div ref={ref} style={{ backgroundImage: `url(${BackgroundImage})`, width: '100%', backgroundSize: "cover", ...fontStyle }} >
                 <Paragraph style={paragraphStyle}>
-                    Need Writter.
+                    Need Writer.
                 <br />
                 執筆者 募集中！
                 <br />
