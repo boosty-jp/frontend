@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect, useRef } from "react"
 import BookInfo from "./table-info";
 import PcBookHeaderCard from './header/pc'
 import MobileBookHeaderCard from './header/mobile'
@@ -12,16 +12,43 @@ import FamousFreeBookList from "components/book/view/list/famous/top-free-sale-l
 import SnsShareButtons from "./sns-share";
 
 const BookDetailCard = () => {
+    const [height, setHeight] = useState(0)
+    const ref = useRef(null)
+
+    useEffect(() => {
+        setHeight(ref.current.clientHeight)
+    }, [])
+
+    let shouldFixed = true;
+    if (typeof window !== 'undefined') {
+        if (window.outerHeight < height) {
+            shouldFixed = false;
+        }
+    }
+
     return (
         <>
             <Row gutter={32} style={{ paddingBottom: '30px' }}>
                 <Col xs={0} sm={0} md={8} lg={8} xl={8} style={{ marginTop: '30px' }}>
-                    <Affix offsetTop={10}>
-                        <PcBookHeaderCard />
-                        <div style={{ marginTop: '10px' }}>
-                            <SnsShareButtons />
-                        </div>
-                    </Affix>
+                    {shouldFixed ?
+                        <Affix offsetTop={10}>
+                            <div ref={ref}>
+                                <PcBookHeaderCard />
+                            </div>
+                            <div style={{ marginTop: '10px' }}>
+                                <SnsShareButtons />
+                            </div>
+                        </Affix>
+                        :
+                        <>
+                            <div ref={ref}>
+                                <PcBookHeaderCard />
+                            </div>
+                            <div style={{ marginTop: '10px' }}>
+                                <SnsShareButtons />
+                            </div>
+                        </>
+                    }
                 </Col>
                 <Col xs={24} sm={24} md={0} lg={0} xl={0} style={{ marginTop: '30px' }}>
                     <MobileBookHeaderCard />

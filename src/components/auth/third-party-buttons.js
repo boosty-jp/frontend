@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from 'antd';
+import { Button, Alert } from 'antd';
 import getFirebase, { getGoogleProvider, getTwitterProvider, getGitHubProvider } from "utils/firebase";
 import GoogleIcon from 'images/google.png'
 import { GithubOutlined, TwitterOutlined } from '@ant-design/icons'

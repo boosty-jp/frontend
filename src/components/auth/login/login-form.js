@@ -13,6 +13,14 @@ import { LoadingOutlined } from "@ant-design/icons";
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
+const CREATE_USER = gql`
+mutation CreateUser($displayName: String!, $imageUrl: String!) {
+  createUser(displayName: $displayName, imageUrl: $imageUrl){
+      id
+  }
+}
+`;
+
 const GET_USER = gql`
   query GetUser($userId: ID!) {
     user(userId: $userId) {
@@ -41,7 +49,7 @@ class LoginForm extends React.Component {
         firebase.auth().getRedirectResult().then((result) => {
             // サードパーティで認証後にリダイレクトしてきたときの処理
             if (result.user) {
-                this.setLoginData(result.user.uid);
+                this.setLoginData(result.user);
             } else {
                 this.setState({ loading: false })
             }
@@ -51,7 +59,8 @@ class LoginForm extends React.Component {
         });
     }
 
-    setLoginData = async (userId) => {
+    setLoginData = async (user) => {
+        const userId = user.uid;
         try {
             const { data } = await this.props.client.query({
                 query: GET_USER,
@@ -63,8 +72,29 @@ class LoginForm extends React.Component {
             navigate("/")
             message.info("ログインしました", 7)
         } catch (err) {
-            this.setState({ loading: false })
-            message.error(getLoginErrorMessage(err), 7)
+            // ユーザー情報取得できない場合は、boosty上に登録していない可能性があるので、登録のAPIを叩く
+            try {
+                let displayName = '';
+                if (user.displayName) {
+                    displayName = user.displayName.length > 30 ? user.displayName.slice(0, 30) : user.displayName;
+                } else {
+                    displayName = "ユーザー名未設定";
+                }
+
+                await this.props.client.mutate({
+                    mutation: CREATE_USER,
+                    variables: { displayName: displayName, imageUrl: user.photoURL }
+                });
+
+                setUser({ userId: userId, imageUrl: user.photoURL, userName: displayName })
+
+                this.setState({ loading: false })
+                navigate("/")
+                message.info("ログインしました", 7)
+            } catch (err) {
+                this.setState({ loading: false })
+                message.error(getLoginErrorMessage(err), 7)
+            }
         }
     }
 

@@ -6,6 +6,8 @@ import LanguageIconsComponent from "components/landing/icons"
 import CreatorRequirementComponent from "components/landing/creator"
 import ScreenComponent from "components/landing/screen"
 import SalesPoints from "components/landing/sales-points"
+import PickupComponent from "components/landing/pickup"
+import TwitterComponent from "components/landing/twitter"
 
 const IndexPage = () => {
   return (
@@ -19,8 +21,14 @@ const IndexPage = () => {
         <div style={{ paddingTop: '160px', paddingBottom: '100px' }}>
           <ScreenComponent />
         </div>
-        <div style={{ paddingTop: '80px', paddingBottom: '100px' }}>
+        <div style={{ paddingTop: '80px', paddingBottom: '80px' }}>
           <SalesPoints />
+        </div>
+        <div style={{ paddingTop: '60px', paddingBottom: '60px' }}>
+          <PickupComponent />
+        </div>
+        <div style={{ paddingTop: '40px', paddingBottom: '80px' }}>
+          <TwitterComponent />
         </div>
         {/* <div style={{ paddingTop: '160px', paddingBottom: '100px' }}>
           <BookCategoryComponent />
