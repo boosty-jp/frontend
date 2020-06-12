@@ -1,7 +1,5 @@
 import React from "react"
 import { Button, Typography, Result } from 'antd';
-import { Link } from "gatsby";
-import { createBookDetailLink } from "utils/link-generator";
 import { TwitterCircleFilled } from "@ant-design/icons";
 
 const { Paragraph } = Typography;

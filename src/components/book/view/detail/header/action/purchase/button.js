@@ -13,6 +13,8 @@ import PageLoader from 'components/loader/page'
 import { ShoppingCartOutlined } from "@ant-design/icons"
 import { isLoggedIn } from "services/local-user";
 import NeedLoginComponent from "components/auth/need-login";
+import { createPageViewLink } from "utils/link-generator";
+import { Link } from "gatsby"
 
 const CustomModal = styled(Modal)`
   .ant-modal-content {
@@ -29,6 +31,18 @@ const GET_PAYMENT_INTENT = gql`
 }
 `;
 
+const getTrialReadFirstPageId = (sections) => {
+    for (let i = 0; i < sections.length; i++) {
+        for (let j = 0; j < sections[i].pages.length; j++) {
+            if (sections[i].pages[j].canPreview) {
+                return sections[i].pages[j].id;
+                break;
+            }
+        }
+    }
+    return "";
+}
+
 class BookPurchaseButtonComponent extends React.Component {
     state = { visible: false, loginModalVisible: false }
 
@@ -41,6 +55,7 @@ class BookPurchaseButtonComponent extends React.Component {
     }
 
     render() {
+        const trialReadPageId = getTrialReadFirstPageId(this.props.sections);
         return (
             <>
                 <Button
@@ -52,6 +67,18 @@ class BookPurchaseButtonComponent extends React.Component {
                     style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)' }}
                     onClick={this.handleClick}
                 >購入する</Button >
+                {trialReadPageId &&
+                    <Link to={createPageViewLink(trialReadPageId, this.props.id)}>
+                        <Button
+                            block
+                            size="large"
+                            shape="round"
+                            type="link"
+                            style={{ boxShadow: '0 4px 11px 0 rgba(37,44,97,.15), 0 1px 3px 0 rgba(93,100,148,.2)', marginTop: '20px' }}
+                            onClick={this.handleClick}
+                        >試し読みする</Button >
+                    </Link>
+                }
                 <Modal
                     closable
                     footer={null}
@@ -108,6 +135,7 @@ class BookPurchaseButtonComponent extends React.Component {
 const mapStateToProps = state => ({
     id: state.bookView.id,
     title: state.bookView.title,
+    sections: state.bookView.sections,
     imageUrl: state.bookView.imageUrl,
     price: state.bookView.price,
 })

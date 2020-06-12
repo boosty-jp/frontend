@@ -22,7 +22,7 @@ const BookSectionsComponent = (props) => {
                 目次
             </p>
             {props.sections.length > 0 &&
-                <Collapse >
+                <Collapse defaultActiveKey={props.sections.map(s => s.id)}>
                     {props.sections.map((s, sectionIdx) => {
                         return (
                             <Panel
@@ -46,7 +46,7 @@ const BookSectionsComponent = (props) => {
                                             <List.Item
                                                 style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
                                                 key={page.id}
-                                                actions={canRead ? [<Link to={createPageViewLink(page.id, props.id)}><Button>読む</Button></Link>] : []}
+                                                actions={canRead ? [<Link to={createPageViewLink(page.id, props.id)}><Button type="primary" ghost>読む</Button></Link>] : []}
                                             >
                                                 <List.Item.Meta
                                                     title={
