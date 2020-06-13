@@ -16,13 +16,14 @@ const cardStyle = {
 }
 
 const BookSectionsComponent = (props) => {
+    const activeKeys = props.sections.map(s => s.id);
     return (
         <div style={{ marginTop: '20px', ...cardStyle }}>
             <p style={{ fontWeight: 'bold', color: 'black', fontSize: '22px', textAlign: 'center', marginBottom: '40px' }}>
                 目次
             </p>
             {props.sections.length > 0 &&
-                <Collapse defaultActiveKey={props.sections.map(s => s.id)}>
+                <Collapse activeKey={activeKeys}>
                     {props.sections.map((s, sectionIdx) => {
                         return (
                             <Panel
