@@ -1,7 +1,9 @@
 import React from 'react'
 import { message, Result, Button, Spin } from 'antd';
-import { navigate } from '@reach/router';
 import { UserOutlined, LoadingOutlined } from '@ant-design/icons';
+
+const isBrowser = typeof window !== 'undefined';
+const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 export default class RecoverMail extends React.Component {
     constructor(props) {

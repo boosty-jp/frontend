@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import { message, Result, Button, Spin } from 'antd';
-import { navigate } from '@reach/router';
 import { UserOutlined, LoadingOutlined, MailOutlined } from '@ant-design/icons';
+
+const isBrowser = typeof window !== 'undefined';
+const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
 export default class VerifyMailInfo extends React.Component {
     constructor(props) {

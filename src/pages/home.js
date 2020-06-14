@@ -50,7 +50,7 @@ const HomePage = () => (
                             <NotificationList />
                         </div>
                         <div style={boardStyle}>
-                            <a className="twitter-timeline" href="https://twitter.com/boosty_official?ref_src=twsrc%5Etfw">Tweets by boosty_official</a>
+                            <a className="twitter-timeline" href="https://twitter.com/boosty_official?ref_src=twsrc%5Etfw" data-height="500">Tweets by boosty_official</a>
                             <Helmet><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></Helmet>
                         </div>
                     </div>

@@ -10,45 +10,53 @@ import { Row, Col, Affix } from 'antd'
 import FamousSaleBookList from "components/book/view/list/famous/top-sale-list"
 import FamousFreeBookList from "components/book/view/list/famous/top-free-sale-list"
 import SnsShareButtons from "./sns-share";
+import ReactResizeDetector from 'react-resize-detector';
 
-const BookDetailCard = () => {
-    const [height, setHeight] = useState(0)
-    const ref = useRef(null)
-
-    useEffect(() => {
-        setHeight(ref.current.clientHeight)
-    }, [])
-
-    let shouldFixed = true;
-    if (typeof window !== 'undefined') {
-        if (window.outerHeight < height) {
-            shouldFixed = false;
-        }
-    }
-
+const PcHeaderCard = () => {
     return (
-        <>
-            <Row gutter={32} style={{ paddingBottom: '30px' }}>
-                <Col xs={0} sm={0} md={8} lg={8} xl={8} style={{ marginTop: '30px' }}>
-                    {shouldFixed ?
+        <ReactResizeDetector handleWidth handleHeight>
+            {({ width, height }) => {
+                let windowHeight = 0;
+                if (typeof window !== 'undefined') {
+                    windowHeight = window.outerHeight;
+                }
+                if (windowHeight < height) {
+                    return (
+                        <div>
+                            <div>
+                                <PcBookHeaderCard />
+                            </div>
+                            <div style={{ marginTop: '10px' }}>
+                                <SnsShareButtons />
+                            </div>
+                        </div>
+
+                    );
+                }
+                return (
+                    <div>
                         <Affix offsetTop={10}>
-                            <div ref={ref}>
+                            <div >
                                 <PcBookHeaderCard />
                             </div>
                             <div style={{ marginTop: '10px' }}>
                                 <SnsShareButtons />
                             </div>
                         </Affix>
-                        :
-                        <>
-                            <div ref={ref}>
-                                <PcBookHeaderCard />
-                            </div>
-                            <div style={{ marginTop: '10px' }}>
-                                <SnsShareButtons />
-                            </div>
-                        </>
-                    }
+                    </div>
+                )
+            }
+            }
+        </ReactResizeDetector>
+    )
+}
+
+const BookDetailCard = () => {
+    return (
+        <>
+            <Row gutter={32} style={{ paddingBottom: '30px' }}>
+                <Col xs={0} sm={0} md={8} lg={8} xl={8} style={{ marginTop: '30px' }}>
+                    <PcHeaderCard />
                 </Col>
                 <Col xs={24} sm={24} md={0} lg={0} xl={0} style={{ marginTop: '30px' }}>
                     <MobileBookHeaderCard />

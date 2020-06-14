@@ -13,7 +13,6 @@ const UserProfilePage = (props) => {
     const { id } = props.search
     if (!id) navigate("/404");
     return (
-
         <VerticalLayout>
             <UserSEO />
             <Row gutter={20} style={{ margin: '20px auto', maxWidth: '800px', padding: '20px' }}>

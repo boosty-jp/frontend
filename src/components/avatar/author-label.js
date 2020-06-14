@@ -1,6 +1,6 @@
 import React from 'react'
 import AvatarImage from 'components/avatar/image'
-import { Link } from '@reach/router'
+import { Link } from 'gatsby'
 import { createUserLink } from 'utils/link-generator'
 
 const AuthorLabel = ({ id, imageUrl, name, size = 26 }) => {
