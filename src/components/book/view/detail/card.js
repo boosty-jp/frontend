@@ -10,44 +10,44 @@ import { Row, Col, Affix } from 'antd'
 import FamousSaleBookList from "components/book/view/list/famous/top-sale-list"
 import FamousFreeBookList from "components/book/view/list/famous/top-free-sale-list"
 import SnsShareButtons from "./sns-share";
-import ReactResizeDetector from 'react-resize-detector';
+
+const isBrowser = typeof window !== 'undefined';
 
 const PcHeaderCard = () => {
-    return (
-        <ReactResizeDetector handleWidth handleHeight>
-            {({ width, height }) => {
-                let windowHeight = 0;
-                if (typeof window !== 'undefined') {
-                    windowHeight = window.outerHeight;
-                }
-                if (windowHeight < height) {
-                    return (
-                        <div>
-                            <div>
-                                <PcBookHeaderCard />
-                            </div>
-                            <div style={{ marginTop: '10px' }}>
-                                <SnsShareButtons />
-                            </div>
-                        </div>
+    const [width, setWidth] = useState(0)
+    const ref = useRef(null)
 
-                    );
-                }
-                return (
-                    <div>
-                        <Affix offsetTop={10}>
-                            <div >
-                                <PcBookHeaderCard />
-                            </div>
-                            <div style={{ marginTop: '10px' }}>
-                                <SnsShareButtons />
-                            </div>
-                        </Affix>
-                    </div>
-                )
-            }
-            }
-        </ReactResizeDetector>
+    useEffect(() => {
+        setWidth(ref.current.clientWidth)
+    }, [])
+
+    let height = (width - 40) * 1.6 + 310;
+    const windowHeight = isBrowser ? window.outerHeight : 0;
+
+    if (windowHeight < height) {
+        return (
+            <div ref={ref}>
+                <div>
+                    <PcBookHeaderCard />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                    <SnsShareButtons />
+                </div>
+            </div>
+
+        );
+    }
+    return (
+        <div ref={ref}>
+            <Affix offsetTop={10}>
+                <div >
+                    <PcBookHeaderCard />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                    <SnsShareButtons />
+                </div>
+            </Affix>
+        </div>
     )
 }
 
