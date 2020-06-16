@@ -12,7 +12,7 @@ import TwitterComponent from "components/landing/twitter"
 const IndexPage = () => {
   return (
     <Layout>
-      <SEO noTitle={true} />
+      <SEO title="オンライン技術書サービス" />
       <HeroComponent />
       <div style={{ margin: '0 auto', maxWidth: '900px', padding: "20px" }}>
         <div style={{ paddingTop: '100px' }}>
