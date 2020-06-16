@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "gatsby"
 import { createBookDetailLink } from "utils/link-generator"
 import { withApollo } from 'react-apollo'
-import OwnBookItem from 'components/book/view/list/item'
+import OwnBookItem from 'components/book/view/list/own-item'
 import gql from 'graphql-tag';
 import { getErrorMessage } from "utils/error-handle";
 

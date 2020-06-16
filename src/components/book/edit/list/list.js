@@ -9,7 +9,7 @@ import { Link } from 'gatsby';
 import { createBookEditLink, createBookDetailLink } from "utils/link-generator";
 import { getErrorMessage } from "utils/error-handle";
 import { getCondition } from "utils/search-condition";
-import { DeleteOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons'
+import { DeleteOutlined, ExclamationCircleOutlined, EditOutlined, CheckCircleTwoTone } from '@ant-design/icons'
 
 const GET_BOOK_LIST = gql`
   query CreatedBooksBySelf($searchCondition: SearchCondition) {
@@ -19,6 +19,7 @@ const GET_BOOK_LIST = gql`
         title
         imageUrl
         status
+        meaningful
         purchasedCount
         createDate
         updateDate
@@ -76,7 +77,10 @@ class EditableBookList extends React.Component {
                     title: a.title ? a.title : "タイトル未設定",
                 },
                 purchasedCount: a.purchasedCount ? a.purchasedCount : 0,
-                status: a.status,
+                status: {
+                    status: a.status,
+                    meaningful: a.meaningful
+                },
                 action: {
                     id: a.id,
                     status: a.status,
@@ -142,9 +146,12 @@ class EditableBookList extends React.Component {
                 sorter: (a, b) => a.status.length - b.status.length,
                 sortDirections: ['descend', 'ascend'],
                 render: (status) => {
-                    if (status === 'publish') return <><Badge status="processing" />公開中</>
-                    if (status === 'draft') return <><Badge status="default" />下書き</>
-                    if (status === 'suspend') return <><Badge status="error" />公開停止</>
+                    if (status.status === 'publish') {
+                        if (!status.meaningful) return <><Badge status="processing" />公開中</>
+                        return <><Badge status="processing" />公開中 <CheckCircleTwoTone style={{ marginLeft: '4px', color: '#1890ff' }} /></>
+                    }
+                    if (status.status === 'draft') return <><Badge status="default" />下書き</>
+                    if (status.status === 'suspend') return <><Badge status="error" />公開停止</>
                     return <></>
                 }
             },

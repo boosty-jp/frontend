@@ -25,6 +25,8 @@ const GET_BOOK = gql`
         }
         status
         purchased
+        liked
+        likedCount
         tags {
             id
             name

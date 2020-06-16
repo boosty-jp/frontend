@@ -2,10 +2,10 @@ import React from "react"
 import { List, Skeleton } from 'antd'
 import { Query } from 'react-apollo'
 import { Link } from "gatsby"
-import OwnBookItem from 'components/book/view/list/item'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { createBookDetailLink } from 'utils/link-generator'
+import SaleBookItem from "components/book/view/list/sale-item"
 
 const cardStyle = {
     backgroundColor: 'white',
@@ -23,10 +23,12 @@ const GET_NEW_SALE_BOOKS = gql`
       books {
         id
         title
+        price
         imageUrl
-        author{
+        author {
           displayName
         }
+        likedCount
       }
       sumCount
     }
@@ -72,7 +74,13 @@ const TopNewSaleBookList = () => (
                             <List.Item>
                                 <Link to={createBookDetailLink(book.id)}>
                                     <div style={{ width: '100%', margin: '0 auto' }}>
-                                        <OwnBookItem imageUrl={book.imageUrl} title={book.title} author={{ name: book.author.displayName }} />
+                                        <SaleBookItem
+                                            price={book.price}
+                                            title={book.title}
+                                            imageUrl={book.imageUrl}
+                                            likedCount={book.likedCount}
+                                            author={{ name: book.author.displayName }}
+                                        />
                                     </div>
                                 </Link>
                             </List.Item>

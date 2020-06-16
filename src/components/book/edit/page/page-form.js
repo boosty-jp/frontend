@@ -20,6 +20,9 @@ class PageEditFormComponent extends React.Component {
     constructor(props) {
         super(props);
         this.handleBeforeUnload = this.handleBeforeUnload.bind(this);
+        this.state = {
+            isInitial: true
+        }
     }
 
     componentWillMount() {
@@ -39,8 +42,14 @@ class PageEditFormComponent extends React.Component {
         this.props.updateTitle(str);
     };
 
+    onEditStart = () => {
+        if (this.state.isInitial) {
+            this.setState({ isInitial: false });
+        }
+    };
+
     render() {
-        const title = this.props.title ? this.props.title : "タイトル未設定"
+        const title = (!this.props.title && this.state.isInitial) ? "タイトル未設定" : this.props.title;
         if (this.props.previewMode) {
             return (
                 <div style={cardStyle}>
@@ -55,11 +64,16 @@ class PageEditFormComponent extends React.Component {
             return (
                 <div style={cardStyle}>
                     <div style={{ backgroundColor: 'white', maxWidth: '700px', margin: '0 auto' }}>
-                        <Title editable={{ onChange: this.onChange }} level={1} style={{ fontWeight: '500' }}>{title}</Title>
+                        <Title
+                            level={1}
+                            style={{ fontWeight: '500' }}
+                            editable={{ onChange: this.onChange, onStart: this.onEditStart }}
+                        >
+                            {title}
+                        </Title>
                         <TitleError titleError={this.props.titleError} />
                         <Divider style={{ margin: '8px 0px 30px 0px' }} />
                         <MarkdownEditor value={this.props.text} updateText={value => this.props.updateText(value)} />
-                        {/* <Editor /> */}
                     </div>
                 </div>
             )

@@ -2,7 +2,7 @@ import React from "react"
 import { List, Spin, message } from 'antd'
 import { Query } from 'react-apollo'
 import { LoadingOutlined, BookTwoTone } from '@ant-design/icons';
-import OwnBookItem from 'components/book/view/list/item'
+import OwnBookItem from 'components/book/view/list/own-item'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import ErrorResult from "components/error/result";

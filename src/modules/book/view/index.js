@@ -3,11 +3,21 @@ import { detectBookViewMode } from 'utils/book-view-mode-handler'
 const SUFFIX = '_BOOK_VIEW';
 const SET_BOOK_DATA = 'SET_BOOK_DATA' + SUFFIX;
 const CLEAR_BOOK_DATA = 'CLEAR_BOOK_DATA' + SUFFIX;
+const LIKE_BOOK = 'LIKE_BOOK' + SUFFIX;
+const UNLIKE_BOOK = 'UNLIKE_BOOK' + SUFFIX;
 
 export const setBookData = (book) => ({
     type: SET_BOOK_DATA,
     book: book,
     mode: detectBookViewMode(book),
+})
+
+export const likeBook = () => ({
+    type: LIKE_BOOK,
+})
+
+export const unLikeBook = () => ({
+    type: UNLIKE_BOOK,
 })
 
 export const clearBookData = () => ({
@@ -28,6 +38,8 @@ const initialState = {
     lastViewedPageId: "",
     status: "",
     purchased: false,
+    liked: false,
+    likedCount: 0,
     author: {
         id: '',
         displayName: '',
@@ -62,6 +74,8 @@ export default function BookView(state = initialState, action) {
                 description: action.book.description,
                 features: action.book.features,
                 purchased: action.book.purchased,
+                liked: action.book.liked,
+                likedCount: action.book.likedCount,
                 levelStart: action.book.targets.levelStart,
                 levelEnd: action.book.targets.levelEnd,
                 targetDescriptions: action.book.targets.targetDescriptions,
@@ -77,6 +91,19 @@ export default function BookView(state = initialState, action) {
             return {
                 ...initialState
             };
+        case LIKE_BOOK:
+            const addedCount = state.likedCount + 1;
+            return {
+                ...state,
+                liked: true,
+                likedCount: addedCount
+            }
+        case UNLIKE_BOOK:
+            return {
+                ...state,
+                liked: false,
+                likedCount: state.likedCount - 1
+            }
         default:
             return state;
     }

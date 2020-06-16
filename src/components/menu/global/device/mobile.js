@@ -5,7 +5,7 @@ import { isLoggedIn } from "services/local-user";
 import { Link } from 'gatsby'
 import AvatarImage from "components/avatar/image";
 import { getUserImage, getCurrentUser } from "services/local-user";
-import { MenuOutlined, BookOutlined, UserOutlined, HeartOutlined, EditOutlined, SettingOutlined, LogoutOutlined, MoneyCollectOutlined, HistoryOutlined } from "@ant-design/icons";
+import { MenuOutlined, BookOutlined, UserOutlined, HeartOutlined, EditOutlined, SettingOutlined, LogoutOutlined, MoneyCollectOutlined, HistoryOutlined, SearchOutlined } from "@ant-design/icons";
 import getFirebase from "utils/firebase";
 import { logout } from 'services/local-user'
 
@@ -127,6 +127,9 @@ class MenuDrawer extends React.Component {
     render() {
         return (
             <div>
+                <Link to="/search">
+                    <SearchOutlined style={{ marginRight: '12px', fontSize: '16px', color: "#262626" }} />
+                </Link>
                 <Button icon={<MenuOutlined />} type="link" onClick={this.showDrawer} style={{ color: 'black' }} />
                 <Drawer
                     placement="right"

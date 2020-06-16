@@ -2,7 +2,7 @@ import React from "react"
 import { List, Skeleton } from 'antd'
 import { Query } from 'react-apollo'
 import { Link } from "gatsby"
-import OwnBookItem from 'components/book/view/list/item'
+import OwnBookItem from 'components/book/view/list/own-item'
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import { createBookDetailLink, createPageViewLink } from 'utils/link-generator'

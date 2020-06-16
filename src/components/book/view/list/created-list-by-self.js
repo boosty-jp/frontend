@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 import { Link } from 'gatsby';
 import { getErrorMessage } from "utils/error-handle";
 import { getCondition } from "utils/search-condition";
-import OwnBookItem from 'components/book/view/list/item'
+import OwnBookItem from 'components/book/view/list/own-item'
 import { createBookDetailLink } from 'utils/link-generator'
 
 const cardStyle = {

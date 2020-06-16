@@ -5,6 +5,7 @@ import { TwitterOutlined } from "@ant-design/icons"
 import { FacebookShareButton, TwitterShareButton, } from 'react-share'
 import FACEBOOK_IMG from 'images/facebook_high_res.png'
 import { createBookDetailUrl } from "utils/link-generator"
+import BookLikeButton from "components/book/view/detail/like-button";
 
 const SnsShareButtonsComponent = (props) => {
     return (
@@ -45,6 +46,7 @@ const SnsShareButtonsComponent = (props) => {
                 >
                 </Button>
             </FacebookShareButton>
+            <BookLikeButton />
         </div>
     )
 }
