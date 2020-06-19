@@ -7,6 +7,8 @@ import 'highlight.js/styles/tomorrow-night-blue.css';
 import 'ant-design-pro/dist/ant-design-pro.css';
 import 'instantsearch.css/themes/reset.css';
 import 'tocbot/dist/tocbot.css';
+import '@fortawesome/fontawesome-free/js/fontawesome';
+import '@fortawesome/fontawesome-free/js/solid';
 
 export const wrapRootElement = wrapWithProvider;
 const ReactDOM = require('react-dom')

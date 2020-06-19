@@ -5,11 +5,10 @@ import { Divider, Typography, Row, Col, Affix, Button, Alert } from 'antd';
 import RelatedPages from './related-pages';
 import MarkdownRender from 'utils/markdown/markdown-renderer'
 import Helmet from "react-helmet"
-import { TwitterOutlined, EditOutlined } from '@ant-design/icons';
+import { TwitterOutlined } from '@ant-design/icons';
 import PageLikeButton from './like-button';
 import { TwitterShareButton, } from 'react-share'
 import { createPageViewUrl, createPageEditLink } from 'utils/link-generator'
-import { Link } from 'gatsby';
 import { canDisplayPreviewMode } from 'utils/preview-checker';
 import PreviewAlert from '../detail/preview-alert';
 
@@ -64,9 +63,6 @@ class PageViewContentComponent extends React.Component {
                 <Col xs={24} sm={24} md={24} lg={20} xl={19} xxl={19} style={{ padding: '20px' }}>
                     <div style={cardStyle}>
                         <div>
-                            <Helmet>
-                                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
-                            </Helmet>
                             <div style={{ backgroundColor: 'white', margin: '0 auto', wordBreak: 'break-all' }}>
                                 {canPreview &&
                                     <PreviewAlert

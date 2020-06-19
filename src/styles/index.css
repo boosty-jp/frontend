@@ -348,3 +348,13 @@ blockquote>:last-child {
 .book-page-body h1,.book-page-body h2,.book-page-body h3,.book-page-body h4,.book-page-body h5 {
   margin-top: 2em;
 }
+
+.page-edit-delete-button {
+  float: right;
+  color: '#FFFF00' !important;
+}
+
+/* dropdownのコンポーネントより上に表示させるため(book/edit/section/delete-Section.js) */
+.ant-popover {
+  z-index: 1100 !important;
+}

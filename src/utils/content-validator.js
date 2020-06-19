@@ -18,10 +18,7 @@ export const getTitleError = (title) => {
 export const getTextError = (text) => {
     let status = "";
     let message = "";
-    if (!text || text.length === 0 || text.search(/\S+/) === -1) {
-        status = "error";
-        message = "内容を入力してください"
-    } else if (text.length > 1000000) {
+    if (text.length > 30000) {
         status = "error";
         message = "内容が長過ぎます"
     } else {

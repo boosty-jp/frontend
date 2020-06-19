@@ -21,6 +21,7 @@ const paymentQuestions = [
 const contentsQuestions = [
     { title: '技術書を執筆したい', text: <>ユーザー登録後、<a href="https://boosty.jp/book/edit/list">こちら</a>のページの新規作成より執筆いただけます。</> },
     { title: '複数人で執筆したい', text: <>現在は1ユーザーでの執筆のみ可能となっています。複数人での執筆は、今後対応予定です。</> },
+    { title: 'プロフィールや著書でエラー表示される', text: <>お手数ですが、一度ログアウトした後に再度ログインした後、再度ご確認てください。<br />エラーが続く場合は、<a href="https://form.run/@boosty-help">こちらから</a>お問い合わせください。</> },
     { title: '不適切なコンテンツをみつけた', text: <>お手数ですが、<a href="https://form.run/@boosty-help">こちらから</a>お問い合わせください。運営側で判断し対応させていただきます。</> },
     { title: '正しくページが表示されない', text: <>最新版のブラウザをご利用ください。boostyで対応しているブラウザはGoogle Chrome, Firefox, Safari, Edgeとなります。解消されない場合は<a href="https://form.run/@boosty-help">こちらから</a>お問い合わせください。</> },
     { title: '執筆した技術書がトップページやおすすめに表示されない', text: <>boosty運営側で公開された技術書の内容の確認を行っています。<br />確認後、一定の基準を満たしていない技術書に関してはトップページやおすすめに表示されないようになっています。<br />くわしくは<Link to="notification/toppage-display-rule">こちら</Link>をご確認ください。</> },

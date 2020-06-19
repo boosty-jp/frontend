@@ -5,8 +5,8 @@ import { Query } from 'react-apollo';
 import ErrorResult from 'components/error/result';
 import gql from 'graphql-tag';
 import { setPage } from 'modules/page/edit'
-import PageEditForm from 'components/book/edit//page/page-form';
 import PageLoader from 'components/loader/page';
+import PagePreviewHandler from './preview-handler';
 
 const GET_PAGE = gql`
   query PageToEdit($pageId: ID!) {
@@ -40,7 +40,7 @@ const PageEditComponent = (props) => {
 
         if (error) return <ErrorResult />
 
-        return <PageEditForm />
+        return <PagePreviewHandler bookId={props.bookId} />
       }}
     </Query>
   )

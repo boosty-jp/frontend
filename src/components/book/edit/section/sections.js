@@ -67,7 +67,7 @@ const BookEditSectionsComponent = (props) => {
                                 }}
                             />
                             <div style={{ marginTop: '16px' }}>
-                                <AddPageButton pages={s.pages} bookId={props.id} sectionId={s.id} />
+                                <AddPageButton pages={s.pages} bookId={props.id} sectionId={s.id} pageEdit={false} />
                             </div>
                         </Panel>
                     )

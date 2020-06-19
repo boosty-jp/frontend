@@ -9,21 +9,24 @@ import { clearPage } from 'modules/page/edit/index'
 const isBrowser = typeof window !== 'undefined';
 const navigate = isBrowser ? require('gatsby').navigate : () => { }
 
-const BookEditPageComponent = (props) => {
-    const { id, bookId } = props.search
-    if (!id || !bookId) navigate("/404");
-    props.clearPage();
+class BookEditPageComponent extends React.Component {
 
-    return (
-        <PageEditLayout bookId={bookId}>
-            <BookEditSEO />
-            <div style={{ backgroundColor: '#F7FAFF' }}>
-                <div style={{ padding: '20px 0px', maxWidth: '900px', margin: 'auto' }}>
-                    <PageEdit id={id} />
+    render() {
+        const { id, bookId } = this.props.search
+        if (!id || !bookId) navigate("/404");
+        this.props.clearPage();
+
+        return (
+            <PageEditLayout bookId={bookId}>
+                <BookEditSEO />
+                <div style={{ backgroundColor: 'white' }}>
+                    <div style={{ padding: '20px 0px', margin: 'auto' }}>
+                        <PageEdit id={id} bookId={bookId} />
+                    </div>
                 </div>
-            </div>
-        </PageEditLayout>
-    )
+            </PageEditLayout>
+        )
+    }
 }
 
 const mapDispatchToProps = dispatch => ({

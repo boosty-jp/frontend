@@ -37,11 +37,16 @@ class DeleteSectionComponent extends React.Component {
             <Popconfirm
                 okText="削除"
                 cancelText="キャンセル"
-                onConfirm={this.deleteSection}
                 title="本当に削除しますか？"
+                onConfirm={this.deleteSection}
+                onCancel={e => e.stopPropagation()}
                 icon={<ExclamationCircleOutlined style={{ color: 'red' }} />}
             >
-                <DeleteOutlined onClick={e => e.stopPropagation()} />
+                {this.props.children ?
+                    this.props.children
+                    :
+                    <DeleteOutlined onClick={e => e.stopPropagation()} />
+                }
             </Popconfirm>
         );
     }

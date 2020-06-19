@@ -5,7 +5,9 @@ const SET_IMAGE_URL = 'SET_IMAGE_URL' + SUFFIX;
 const CLEAR_BOOK_DATA = 'CLEAR_BOOK_DATA' + SUFFIX;
 const ADD_TAGS = 'ADD_TAGS' + SUFFIX;
 const UPDATE_TAGS = 'UPDATE_TAGS' + SUFFIX;
+const ADD_PAGE = 'ADD_PAGE' + SUFFIX;
 const ADD_SECTION = 'ADD_SECTION' + SUFFIX;
+const UPDATE_PAGE_TITLE = 'UPDATE_PAGE_TITLE' + SUFFIX;
 const UPDATE_SECTION_TITLE = 'UPDATE_SECTION_TITLE' + SUFFIX;
 const DELETE_SECTION = 'DELETE_SECTION' + SUFFIX;
 const DELETE_PAGE = 'DELETE_PAGE' + SUFFIX;
@@ -40,9 +42,21 @@ export const addTag = (tag) => ({
     tag: tag
 })
 
+export const addPage = (sectionId, pageId) => ({
+    type: ADD_PAGE,
+    sectionId: sectionId,
+    pageId: pageId
+})
+
 export const addSection = (id, title) => ({
     type: ADD_SECTION,
     id: id,
+    title: title
+})
+
+export const updatePageTitle = (pageId, title) => ({
+    type: UPDATE_PAGE_TITLE,
+    pageId: pageId,
     title: title
 })
 
@@ -150,6 +164,36 @@ export default function BookEdit(state = initialState, action) {
                 ...state,
                 tags: action.tags,
                 error: { ...state.error, tags: action.error },
+            }
+        case ADD_PAGE:
+            const addedPageSections = state.sections.concat().map(s => {
+                if (s.id === action.sectionId) {
+                    s.pages.push({
+                        id: action.pageId,
+                        number: s.pages.length,
+                        title: "",
+                        canPreview: false
+                    })
+                }
+                return s;
+            })
+            return {
+                ...state,
+                sections: addedPageSections,
+            }
+        case UPDATE_PAGE_TITLE:
+            const updateTitlePageSections = state.sections.concat().map(s => {
+                const updateTitlePages = s.pages.map(p => {
+                    if (p.id === action.pageId) {
+                        p.title = action.title;
+                    }
+                    return p;
+                })
+                return { ...s, pages: updateTitlePages };
+            })
+            return {
+                ...state,
+                sections: updateTitlePageSections,
             }
         case ADD_SECTION:
             const addedSections = state.sections.concat({ id: action.id, title: action.title, pages: [] })

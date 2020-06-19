@@ -44,7 +44,7 @@ const HeroComponent = () => {
                             <Title level={1} style={{ color: 'black', lineHeight: '1.8' }}>技術書をもっと手軽に！</Title>
                             <Paragraph style={{ fontSize: '16px', }}>boosty（ブースティー）はこれまで紙媒体で読んでいた技術書を<br />ブラウザ上でより手軽に見れるサービスです</Paragraph>
                             <Link to="/home">
-                                <Button shape="round" type="primary">技術書を探す</Button>
+                                <Button shape="round" type="primary" size="large">技術書を探す</Button>
                             </Link>
                         </Col>
                         <Col xs={24} sm={0} style={{ textAlign: 'center' }}>

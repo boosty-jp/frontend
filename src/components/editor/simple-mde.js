@@ -23,11 +23,10 @@ export default class MarkdownEditor extends React.Component {
             "unordered-list",
             "ordered-list",
             "link",
-            "image",
             {
                 name: "upload-image",
                 action: this.uploadImage,
-                className: "fa fa-file-image-o",
+                className: "fa fa-image",
                 title: "画像アップロード"
             },
             "table",
@@ -48,7 +47,7 @@ export default class MarkdownEditor extends React.Component {
                     editor.toggleFullScreen();
                     this.setState({ splited: false });
                 },
-                className: "fa fa-arrows-alt",
+                className: "fa fa-expand-arrows-alt",
                 title: "全画面表示"
             },
             {
