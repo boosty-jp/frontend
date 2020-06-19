@@ -36,11 +36,11 @@ class BookViewMenuHeaderComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    id: state.bookEdit.id,
-    title: state.bookEdit.title,
-    imageUrl: state.bookEdit.imageUrl,
-    author: state.bookEdit.author,
-    status: state.bookEdit.status,
+    id: state.bookView.id,
+    title: state.bookView.title,
+    imageUrl: state.bookView.imageUrl,
+    author: state.bookView.author,
+    status: state.bookView.status,
 })
 
 const BookViewMenuHeader = connect(mapStateToProps)(BookViewMenuHeaderComponent);
