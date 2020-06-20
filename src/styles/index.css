@@ -208,14 +208,14 @@ code.hljs{
 .code-clip-board-btn label:before {
     display: inline-block;
     content: '\f0c5';
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
     font-size: 12px;
 }
 
 /*アイコンを切り替え*/
 .code-clip-board-btn input:checked + label:before {
      content: '\f00c';
-     font-family: 'FontAwesome';
+     font-family: 'Font Awesome 5 Free';
      color: #52c41a;
      font-size: 12px;
 }
