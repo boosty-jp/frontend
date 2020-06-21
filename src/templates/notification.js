@@ -9,9 +9,10 @@ const { Title, Paragraph } = Typography;
 const Component = ({ pageContext }) => {
     const notification = pageContext.notification;
     const notifications = pageContext.notifications;
+    const imageRemoveRegexp = '/!.+?\)/gi';
     return (
         <NotificationLayout notifications={notifications} activePageSlug={notification.slug}>
-            <SEO title={notification.title} />
+            <SEO title={notification.title} description={notification.body.body.replace(imageRemoveRegexp, "").slice(0, 120)} />
             <Title level={1}>{notification.title}</Title>
             <Paragraph>{notification.updatedAt}</Paragraph>
             <Divider />

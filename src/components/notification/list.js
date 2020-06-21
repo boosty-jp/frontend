@@ -29,7 +29,7 @@ const NotificationIcon = ({ type, }) => {
 const NotificationList = () => {
   const data = useStaticQuery(graphql`
       query RecentArticles {
-        allContentfulNotification(limit: 10, sort: {fields: updatedAt, order: DESC}) {
+        allContentfulNotification(limit: 5, sort: {fields: updatedAt, order: DESC}) {
           edges {
             node {
               title

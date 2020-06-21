@@ -193,11 +193,17 @@ class BookEditMenuSectionsComponent extends React.Component {
                                                     >
                                                         <List.Item.Meta
                                                             title={
-                                                                <p style={{ marginBottom: '0px', color }}>
-                                                                    <span style={{ marginRight: '8px' }}>{sectionIdx + 1}.{pageIdx + 1} </span>
-                                                                    {page.title}
-                                                                    <span className="page-edit-delete-button"><DeletePage id={page.id} /></span>
-                                                                </p>
+                                                                <div style={{ color, display: 'grid', gridTemplateColumns: '1fr 24px', }}>
+                                                                    <div>
+                                                                        <p style={{ marginBottom: '0px' }}>
+                                                                            <span style={{ marginRight: '8px' }}>{sectionIdx + 1}.{pageIdx + 1} </span>
+                                                                            {page.title}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className="page-edit-delete-button"><DeletePage id={page.id} /></span>
+                                                                    </div>
+                                                                </div>
                                                             }
                                                         />
                                                     </List.Item>
@@ -221,6 +227,7 @@ class BookEditMenuSectionsComponent extends React.Component {
 
 const mapStateToProps = state => ({
     id: state.bookEdit.id,
+    pageId: state.pageEdit.id,
     sections: state.bookEdit.sections,
     currentEditPageId: state.pageEdit.id,
     saved: state.pageEdit.saved

@@ -12,6 +12,7 @@ import { RetweetOutlined, PlusOutlined } from '@ant-design/icons';
 import AddSectionModal from "components/book/edit/section/add-section-modal"
 import ReorderSectionModal from "components/book/edit/section/reoder-section-modal"
 import BookEditMenuHeader from "components/book/edit/page/book-header";
+import { Resizable } from "re-resizable"
 
 const GET_BOOK = gql`
   query GetBook($bookId: ID!) {
@@ -70,6 +71,8 @@ class PcBookEditMenuComponent extends React.Component {
         addSectionModalVisible: false,
         reoderSectionModalVisible: false,
         beforeReorderSections: [],
+        width: "300px",
+        height: "100%",
     }
 
     closeAddSectionModal = e => {
@@ -114,64 +117,76 @@ class PcBookEditMenuComponent extends React.Component {
     render() {
         return (
             <Affix offsetTop={0}>
-                <div style={{ maxWidth: '300px', ...bookMenuStyle }}>
-                    <Query
-                        query={GET_BOOK}
-                        variables={{ bookId: this.props.bookId }}
-                        onCompleted={(data) => {
-                            this.props.setBookData(data.book, false);
-                        }}
-                    >
-                        {({ loading, error }) => {
-                            if (loading) return <></>
-                            if (error) return <ErrorResult title={getErrorMessage(error)} />
-                            return (
-                                <>
-                                    <div style={{ padding: '0px 10px', height: '70px' }}>
-                                        <BookEditMenuHeader />
-                                    </div>
-                                    <div style={{ marginTop: '0px', height: 'calc(100vh - 200px)' }}>
-                                        <BookEditMenuSections pageId={this.props.id} background="#F7FAFF" />
-                                    </div>
-                                </>
-                            )
-                        }}
-                    </Query >
-                </div>
-                <div style={{ position: 'fixed', bottom: '20px', left: '14px', maxWidth: '260px' }}>
-                    <Button
-                        block
-                        shape="round"
-                        onClick={this.showAddSectionModal}
-                        onCancel={this.closeAddSectionModal}
-                        style={{ marginBottom: '10px' }}
-                    >
-                        <PlusOutlined />セクション追加
+                <Resizable
+                    minHeight="100%"
+                    maxHeight="100%"
+                    minWidth="60%"
+                    maxWidth="100%"
+                    defaultSize={{
+                        width: '300px',
+                        height: '100%'
+                    }}
+                >
+                    <div style={{ width: '100%', ...bookMenuStyle }}>
+                        <Query
+                            query={GET_BOOK}
+                            variables={{ bookId: this.props.bookId }}
+                            onCompleted={(data) => {
+                                this.props.setBookData(data.book, false);
+                            }}
+                        >
+                            {({ loading, error }) => {
+                                if (loading) return <></>
+                                if (error) return <ErrorResult title={getErrorMessage(error)} />
+                                return (
+                                    <>
+                                        <div style={{ padding: '0px 10px', height: '70px' }}>
+                                            <BookEditMenuHeader />
+                                        </div>
+                                        <div style={{ marginTop: '0px', height: 'calc(100vh - 200px)' }}>
+                                            <BookEditMenuSections pageId={this.props.id} background="#F7FAFF" />
+                                        </div>
+                                    </>
+                                )
+                            }}
+                        </Query >
+                    </div>
+                    <div style={{ position: 'fixed', bottom: '20px', left: '20px', width: 'inherit' }}>
+                        <Button
+                            block
+                            shape="round"
+                            onClick={this.showAddSectionModal}
+                            onCancel={this.closeAddSectionModal}
+                            style={{ marginBottom: '10px', position: 'relative', width: 'calc(100% - 40px)' }}
+                        >
+                            <PlusOutlined />セクション追加
                     </Button>
-                    <Button
-                        block
-                        shape="round"
-                        onClick={this.showReorderSectionModal}
-                        onCancel={this.cancelReorderSectionModal}
-                    >
-                        <RetweetOutlined rotate={90} />セクション並び替え
+                        <Button
+                            block
+                            shape="round"
+                            onClick={this.showReorderSectionModal}
+                            onCancel={this.cancelReorderSectionModal}
+                            style={{ position: 'relative', width: 'calc(100% - 40px)' }}
+                        >
+                            <RetweetOutlined rotate={90} />セクション並び替え
                     </Button>
-                    <AddSectionModal
-                        id={this.props.bookId}
-                        onCancel={this.closeAddSectionModal}
-                        visible={this.state.addSectionModalVisible}
-                    />
-                    <AddSectionModal
-                        id={this.props.bookId}
-                        onCancel={this.closeAddSectionModal}
-                        visible={this.state.addSectionModalVisible}
-                    />
-                    <ReorderSectionModal
-                        onCancel={this.cancelReorderSectionModal}
-                        onClose={this.closeReorderModal}
-                        visible={this.state.reoderSectionModalVisible}
-                    />
-                </div>
+                        <AddSectionModal
+                            id={this.props.bookId}
+                            onCancel={this.closeAddSectionModal}
+                            visible={this.state.addSectionModalVisible}
+                        />
+                        <AddSectionModal
+                            id={this.props.bookId}
+                            onCancel={this.closeAddSectionModal}
+                            visible={this.state.addSectionModalVisible}
+                        />
+                        <ReorderSectionModal
+                            onCancel={this.cancelReorderSectionModal}
+                            onClose={this.closeReorderModal}
+                            visible={this.state.reoderSectionModalVisible}
+                        />
+                    </div>
+                </Resizable>
             </Affix >
         )
     }
