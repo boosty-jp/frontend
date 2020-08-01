@@ -11,7 +11,7 @@ const footerSections = [
         pages: [
             { title: 'トップページ', link: '/home' },
             { title: '本棚', link: '/book/own' },
-            { title: '著書', link: '/book/edit/list' },
+            { title: '著書・記事一覧', link: '/edit/list' },
         ]
     },
     {

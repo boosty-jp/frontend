@@ -92,7 +92,7 @@ const PageSeoComponent = (props) => {
                 },
                 {
                     property: `og:site_name`,
-                    content: `Boosty`,
+                    content: `boosty`,
                 },
                 {
                     property: `og:locale`,

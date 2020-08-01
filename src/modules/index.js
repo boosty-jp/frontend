@@ -4,6 +4,7 @@ import BookEdit from 'modules/book/edit'
 import BookGenerator from 'modules/book/edit/generator'
 import PageView from 'modules/page/view'
 import PageEdit from 'modules/page/edit'
+import ArticleEdit from 'modules/article/edit'
 import User from 'modules/user/index'
 
 const reducers = combineReducers({
@@ -12,6 +13,7 @@ const reducers = combineReducers({
     bookGenerator: BookGenerator,
     pageView: PageView,
     pageEdit: PageEdit,
+    articleEdit: ArticleEdit,
     user: User,
 });
 

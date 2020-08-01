@@ -1,0 +1,15 @@
+@import "styles/lib/navigation/sidebar/first-bar.mod.scss";
+
+.firstBar {
+    z-index: 2;
+}
+
+.secondBar {
+    z-index: 1;
+}
+
+.grid {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: $firstBarWidth 1fr;
+}

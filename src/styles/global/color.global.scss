@@ -1,0 +1,51 @@
+@function color($color,$tone){
+
+    @warn map-get($palettes,$color);
+
+    @if map-has-key($palettes,$color){
+        $color: map-get($palettes,$color);
+
+            @if map-has-key($color,$tone){
+                $tone: map-get($color,$tone);
+                @return $tone;
+            }
+
+            @warn "unknown tone `#{$tone}` in color";
+            @return null;
+    }
+
+    @warn "unknown color `#{$color}` in palette";
+    @return null;
+}
+
+$palettes: (
+    blue: (
+        base:    #232222,
+        light:   #237783,
+        lighter: #48525C
+    ),
+    yellow: (
+        base:   #ffa949,
+        light:  #992929
+    ),
+    black: (
+        lighter: #f0f0f0,
+        light:   #bfbfbf,
+        base:    #595959,
+        dark:   #262626,
+        darker: #000000,
+    ),
+    white: (
+        lighter: #FFFFFF,
+        light:   #fafafa,
+        base:    #f5f5f5,
+        dark:   #f0f0f0,
+        darker: #CCCCCC,
+    ),
+);
+
+$background: (
+    light: #F7FAFF,
+    primary: #2F54EB,
+    dark: #002451,
+)

@@ -1,0 +1,6 @@
+@import "styles/global/color.global.scss";
+
+.sidebar {
+    padding: 20px;
+    background-color: map-get($background, light);
+}

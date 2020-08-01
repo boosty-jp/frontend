@@ -25,7 +25,7 @@ const CreatorSalesBanner = () => {
     let link = "/signup"
     let linkMessage = "登録する"
     if (isLoggedIn()) {
-        link = "/book/edit/list";
+        link = "/edit/list";
         linkMessage = "執筆する";
     }
 

@@ -1,7 +1,7 @@
 import React from "react"
-import { Divider, Tooltip } from 'antd';
+import { Divider, Tooltip, Badge } from 'antd';
 import SimpleLogoImage from "components/image/logo/simple";
-import { SearchOutlined, BookOutlined, EditOutlined, UserOutlined, HeartOutlined, HomeOutlined } from "@ant-design/icons";
+import { SearchOutlined, ReadOutlined, EditOutlined, UserOutlined, HeartOutlined, HomeOutlined, BellOutlined } from "@ant-design/icons";
 import AccountDropdown from "components/menu/items/account-dropdown";
 import { Link } from "gatsby";
 import { isLoggedIn } from "services/local-user";
@@ -18,7 +18,7 @@ const appMenuStyle = {
 
 const pages = [
     { key: "home", title: "ホーム", icon: <HomeOutlined />, link: "/home" },
-    { key: "shelf", title: "本棚", icon: <BookOutlined />, link: "/book/own" },
+    { key: "shelf", title: "本棚", icon: <ReadOutlined />, link: "/book/own" },
     { key: "like", title: "お気に入り", icon: <HeartOutlined />, link: "/like" },
     { key: "search", title: "検索", icon: <SearchOutlined />, link: "/search" },
 ]
@@ -37,7 +37,16 @@ const AccouontButtons = ({ activeKey }) => {
         <>
             <div style={{ margin: '10px auto' }}>
                 <Tooltip placement="right" title="コンテンツ作成">
-                    <Link to="/book/edit/list" style={{ color: activeKey === "edit" ? "white" : "#ccc" }}>
+                    <Link to="/edit/list" style={{ color: activeKey === "edit" ? "white" : "#ccc" }}>
+                        <Badge count={5} style={{ width: '20px', height: '14px', minWidth: '20px', lineHeight: '14px', padding: '0 3.5px', fontSize: '10px' }}>
+                            <BellOutlined style={{ fontSize: '20px' }} />
+                        </Badge>
+                    </Link>
+                </Tooltip>
+            </div>
+            <div style={{ margin: '10px auto' }}>
+                <Tooltip placement="right" title="コンテンツ作成">
+                    <Link to="/edit/list" style={{ color: activeKey === "edit" ? "white" : "#ccc" }}>
                         <EditOutlined />
                     </Link>
                 </Tooltip>

@@ -27,9 +27,7 @@ const PageEditComponent = (props) => {
       query={GET_PAGE}
       fetchPolicy='network-only'
       variables={{ pageId: props.id }}
-      onCompleted={(data) => {
-        props.setPage(data.pageToEdit)
-      }}
+      onCompleted={data => { props.setPage(data.pageToEdit) }}
     >
       {({ loading, error }) => {
         if (loading) {

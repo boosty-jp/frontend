@@ -1,0 +1,34 @@
+@import "styles/global/color.global.scss";
+@import "styles/global/box-shadow.global.scss";
+
+$firstBarWidth: 60px;
+
+.firstBar {
+    padding: 6px 4px 20px 4px;
+    background-color: map-get($background,dark);
+    height: 100vh;
+    color: color(black, light);
+    font-size: 20px;
+    text-align: center;
+    box-shadow: map-get($boxShadowRight,base),
+}
+
+.logo {
+     margin: 0 auto;
+}
+
+.divider {
+    margin: 8px auto;
+    background: gray;
+}
+
+.lowerItems {
+    padding: 0px 4px;
+    position: fixed;
+    bottom: 20px;
+    left: 14px;
+}
+
+.accountDropdown {
+    margin-top: 10px;
+}

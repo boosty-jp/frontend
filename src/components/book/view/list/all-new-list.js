@@ -1,7 +1,7 @@
 import React from "react"
 import { List, Spin, message } from 'antd'
 import { Query } from 'react-apollo'
-import { LoadingOutlined, BookTwoTone } from '@ant-design/icons';
+import { LoadingOutlined, ReadOutlined } from '@ant-design/icons';
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import ErrorResult from "components/error/result";
@@ -85,7 +85,7 @@ class AllNewList extends React.Component {
                             >
                                 <div style={cardStyle}>
                                     <p style={{ fontSize: '22px', fontWeight: 'bold', color: 'black', textAlign: 'center' }}>
-                                        <BookTwoTone style={{ marginRight: '8px' }} />
+                                        <ReadOutlined style={{ marginRight: '8px' }} />
                                         <span>新刊の本</span>
                                     </p>
                                     <List

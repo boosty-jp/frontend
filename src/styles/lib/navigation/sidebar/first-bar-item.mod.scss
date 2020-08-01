@@ -1,0 +1,23 @@
+@import "styles/global/color.global.scss";
+@import "styles/global/icon.global.scss";
+
+.link {
+    color: color(white, darker);
+}
+
+.activeLink {
+    color: color(white, lighter);
+    font-weight: bold;
+}
+
+.upperItem {
+    margin-top: 20px;
+}
+
+.lowerItem {
+    margin-top: 10px;
+}
+
+.iconSize {
+    font-size: map-get($iconSize, base);
+}

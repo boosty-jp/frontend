@@ -92,7 +92,7 @@ const BookEditLayoutComponent = (props) => {
     const bookTitle = props.title ? props.title : "タイトル未設定の本"
     return (
         <div style={{ marginTop: '20px' }}>
-            <Link to="book/edit/list" style={{ marginBottom: '16px' }}>
+            <Link to="edit/list" style={{ marginBottom: '16px' }}>
                 <BarsOutlined style={{ marginRight: '8px' }} />著書一覧へ
             </Link>
             <Paragraph style={{ textAlign: 'center', fontSize: '28px', color: 'black' }}>「{bookTitle}」の編集</Paragraph>

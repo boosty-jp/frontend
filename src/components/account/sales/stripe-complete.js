@@ -45,7 +45,7 @@ class StripeCompleteComponent extends React.Component {
                     <Result
                         status="error"
                         title="すでに登録済みです"
-                        subTitle={<><Link to="/book/edit/list">著書一覧</Link>へ</>}
+                        subTitle={<><Link to="/edit/list">著書一覧</Link>へ</>}
                     />
             } else {
                 content =
@@ -66,7 +66,7 @@ class StripeCompleteComponent extends React.Component {
                     status="success"
                     title="登録手続きが完了しました"
                     extra={[
-                        <Link to="/book/edit/list"><EditOutlined style={{ marginRight: '8px' }} />著書一覧へ</Link>
+                        <Link to="/edit/list"><EditOutlined style={{ marginRight: '8px' }} />著書一覧へ</Link>
                     ]}
                 />
         } else {

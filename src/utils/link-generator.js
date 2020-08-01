@@ -34,6 +34,8 @@ export const createPageViewLink = (id, bookId) => ("/book/view/page/?id=" + id +
 
 export const createPageViewUrl = (id, bookId) => ("https://boosty.jp/book/view/page/?id=" + id + "&bookId=" + bookId)
 
+export const createArticleEditLink = (id) => ("/article/edit/?id=" + id)
+
 export const createNotificationLink = (slug) => ("/notification/" + slug)
 
 export const createStripeRegistrationLink = () => {

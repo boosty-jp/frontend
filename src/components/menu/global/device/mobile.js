@@ -5,7 +5,7 @@ import { isLoggedIn } from "services/local-user";
 import { Link } from 'gatsby'
 import AvatarImage from "components/avatar/image";
 import { getUserImage, getCurrentUser } from "services/local-user";
-import { MenuOutlined, BookOutlined, UserOutlined, HeartOutlined, EditOutlined, SettingOutlined, LogoutOutlined, MoneyCollectOutlined, HistoryOutlined, SearchOutlined } from "@ant-design/icons";
+import { MenuOutlined, UserOutlined, HeartOutlined, EditOutlined, SettingOutlined, LogoutOutlined, MoneyCollectOutlined, HistoryOutlined, SearchOutlined, ReadOutlined } from "@ant-design/icons";
 import getFirebase from "utils/firebase";
 import { logout } from 'services/local-user'
 
@@ -62,7 +62,7 @@ const UserItems = () => {
             </Link>
             <Link to="/book/own">
                 <Paragraph ellipsis style={linkStyle}>
-                    <BookOutlined style={{ marginRight: '8px' }} /><span>本棚</span>
+                    <ReadOutlined style={{ marginRight: '8px' }} /><span>本棚</span>
                 </Paragraph>
             </Link>
             <Link to="/like">
@@ -70,9 +70,9 @@ const UserItems = () => {
                     <HeartOutlined style={{ marginRight: '8px' }} /><span>お気に入り</span>
                 </Paragraph>
             </Link>
-            <Link to="/book/edit/list">
+            <Link to="/edit/list">
                 <Paragraph ellipsis style={linkStyle}>
-                    <EditOutlined style={{ marginRight: '8px' }} /><span>著書管理</span>
+                    <EditOutlined style={{ marginRight: '8px' }} /><span>著書・記事管理</span>
                 </Paragraph>
             </Link>
             <Divider />

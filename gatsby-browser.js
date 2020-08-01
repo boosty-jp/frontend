@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/regular';
 import '@fortawesome/fontawesome-free/css/solid.min.css';
 import '@fortawesome/fontawesome-free/css/regular.min.css';
+import 'styles/global/color.global.scss';
 import 'styles/index.css'
 
 export const wrapRootElement = wrapWithProvider;
